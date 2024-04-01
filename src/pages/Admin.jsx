@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { gameService } from '../services/game.service.js'
+import { utilService } from '../services/util.service.js'
 
 export function Admin() {
 
@@ -22,7 +23,24 @@ export function Admin() {
         setGame(prevGame => ({ ...prevGame, [name]: value }))
     }
 
+    async function onChangeImg(ev) {
+        console.log('onChangeImg')
+        try {
+            // setIsLoading(true)
+            const media = await utilService.uploadImgToCloudinary(ev)
+            console.log('media:', media)
+            setGame(prevGame => ({ ...prevGame, logo: media }))
+            getColorsFromImg()
+        } catch (err) {
+            console.log('err:', err)
+        } finally {
+            // setIsLoading(false)
+        }
+    }
 
+    function getColorsFromImg() {
+
+    }
 
     function onSubmitForm(ev) {
         ev.preventDefault()
@@ -48,8 +66,10 @@ export function Admin() {
                 <input type="time" name="tiemEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
                 <label htmlFor="logo">לוגו</label>
-                <input type="file" name="logo" id="logo" value={game.logo} onChange={onChangeImg} />
-
+                <div>
+                    <input type="file" name="logo" id="logo" onChange={onChangeImg} />
+                    {game.logo && <img src={game.logo.url} />}
+                </div>
                 <label htmlFor="color1">צבע 1</label>
                 <input type="color" name="color1" id="color1" value={game.colors[0]} onChange={onHandleChange} />
 

@@ -1,4 +1,4 @@
-import { CLOUD_NAME, UPLOAD_PRESET } from '../../dist/pass.js'
+import { CLOUD_NAME, UPLOAD_PRESET } from "../../dist/pass.js"
 
 export const utilService = {
     makeId,
@@ -89,12 +89,13 @@ function getRandomColor() {
 }
 
 async function uploadImgToCloudinary(ev) {
+    console.log('uploadImgToCloudinary')
     const mediaType = ev.target.files[0].type
-    
-    let type 
-    if(mediaType.includes('image')){
+
+    let type
+    if (mediaType.includes('image')) {
         type = 'image'
-    }else if(mediaType.includes('video')){
+    } else if (mediaType.includes('video')) {
         type = 'video'
     }
 
@@ -114,7 +115,7 @@ async function uploadImgToCloudinary(ev) {
         const { url } = await res.json()
 
         const media = {
-            type:mediaType,
+            type: mediaType,
             url
         }
         return media
@@ -170,10 +171,10 @@ function timeDifferenceLong(current, previous) {
     }
 }
 
-function isHebrew(txt){
-   const hebrewLeters = 'אבגדהוזחטיכלמנסעפצקרשת'
-   const parts = txt.split('')
-   return parts.some(letter => hebrewLeters.includes(letter))
+function isHebrew(txt) {
+    const hebrewLeters = 'אבגדהוזחטיכלמנסעפצקרשת'
+    const parts = txt.split('')
+    return parts.some(letter => hebrewLeters.includes(letter))
 }
 
 function isMobile() {
