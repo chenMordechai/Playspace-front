@@ -1,0 +1,12 @@
+.main-layout {
+  @include for-mobile-layout {
+  }
+
+  main {
+    @include for-narrow-layout {
+    }
+
+    @include for-mobile-layout {
+    }
+  }
+}
