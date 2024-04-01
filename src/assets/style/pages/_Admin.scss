@@ -1,2 +1,11 @@
 .admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    form.create-game {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
 }

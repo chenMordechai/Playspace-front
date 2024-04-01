@@ -7,7 +7,8 @@ export const gameService = {
     getById,
     save,
     remove,
-    getActivitiesOfGame
+    getActivitiesOfGame,
+    getEmptyGame,
 }
 
 async function query(filterBy = {}, sortBy = {}) {
@@ -33,4 +34,21 @@ async function save(post) {
 
 async function getActivitiesOfGame() {
 
+}
+
+function getEmptyGame() {
+    return {
+        name: '',
+        dateStart: '',
+        timeStart: '',
+        dateEnd: '',
+        timeEnd: '',
+        colors: ['#ffffff', '#000000'],
+        logo: '',
+        teams: [],
+        guidelines: '',
+        type: '',
+        stages: [],
+
+    }
 }
