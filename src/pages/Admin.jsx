@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { prominent } from 'color.js'
 
 import { gameService } from '../services/game.service.js'
 import { utilService } from '../services/util.service.js'
@@ -30,7 +31,7 @@ export function Admin() {
             const media = await utilService.uploadImgToCloudinary(ev)
             console.log('media:', media)
             setGame(prevGame => ({ ...prevGame, logo: media }))
-            getColorsFromImg()
+            getColorsFromImg(media.url)
         } catch (err) {
             console.log('err:', err)
         } finally {
@@ -38,8 +39,10 @@ export function Admin() {
         }
     }
 
-    function getColorsFromImg() {
-
+    async function getColorsFromImg(imgUrl) {
+        const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
+        console.log(colors) // [241, 221, 63]
+        setGame(prevGame => ({ ...prevGame, colors }))
     }
 
     function onSubmitForm(ev) {
@@ -66,15 +69,15 @@ export function Admin() {
                 <input type="time" name="tiemEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
                 <label htmlFor="logo">לוגו</label>
-                <div>
-                    <input type="file" name="logo" id="logo" onChange={onChangeImg} />
-                    {game.logo && <img src={game.logo.url} />}
-                </div>
-                <label htmlFor="color1">צבע 1</label>
-                <input type="color" name="color1" id="color1" value={game.colors[0]} onChange={onHandleChange} />
+                <input type="file" name="logo" id="logo" onChange={onChangeImg} />
+                {game.logo && <img className="logo-img" src={game.logo.url} />}
 
-                <label htmlFor="color2">צבע 2</label>
-                <input type="color" name="color2" id="color2" value={game.colors[1]} onChange={onHandleChange} />
+                {game.colors.length && <ul className="colors">
+                    {game.colors.map((color, i) => <li>
+                        <input type="color" name="color1" id={`color${i + 1}`} value={color} />
+                    </li>)}
+                </ul>}
+
 
             </form>
         </section>

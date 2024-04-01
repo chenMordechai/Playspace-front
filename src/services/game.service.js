@@ -43,7 +43,7 @@ function getEmptyGame() {
         timeStart: '',
         dateEnd: '',
         timeEnd: '',
-        colors: ['#ffffff', '#000000'],
+        colors: [],
         logo: '',
         teams: [],
         guidelines: '',
