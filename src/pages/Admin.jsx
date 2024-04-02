@@ -13,17 +13,18 @@ export function Admin() {
         // const date = new Date("2024-04-02 11:00")
         // console.log('date:', date.getTime())
         console.log('game:', game)
-        console.log('game.teams.length:', game.teams?.length)
 
     }, [game])
 
     function onHandleChange(ev) {
+        console.log('onHandleChange')
         const { name, value } = ev.target
-        if (name === 'numOfTeams') {
+        if (name === 'teams' || name === 'stages') {
+            const object = name === 'teams' ? gameService.getEmptyTeam() : gameService.getEmptyStage()
             setGame(prevGame => {
-                const diff = value - (prevGame.teams?.length || 0)
-                if (diff > 0) return { ...prevGame, teams: (prevGame.teams?.length) ? [...prevGame.teams, { name: '' }] : [{ name: '' }] }
-                else return { ...prevGame, teams: prevGame.teams.filter((t, i) => i < value) }
+                const diff = value - (prevGame[name]?.length || 0)
+                if (diff > 0) return { ...prevGame, [name]: (prevGame[name]?.length) ? [...prevGame[name], object] : [object] }
+                else return { ...prevGame, [name]: prevGame[name].filter((t, i) => i < value) }
             })
         } else {
             setGame(prevGame => ({ ...prevGame, [name]: value }))
@@ -55,6 +56,27 @@ export function Admin() {
             prevGame.teams[i].name = value
             return { ...prevGame }
         })
+    }
+
+    function onHandleStageChange(ev, i) {
+        const { value, name } = ev.target
+        if (name === 'questions') {
+            const object = gameService.getEmptyQuestion()
+            setGame(prevGame => {
+                const diff = value - (prevGame.stages[i][name]?.length || 0)
+                if (diff > 0) {
+                    prevGame.stages[i][name] = (prevGame.stages[i][name]?.length) ? [...prevGame.stages[i][name], object] : [object]
+                } else {
+                    prevGame.stages[i][name] = prevGame.stages[i][name].filter((t, i) => i < value)
+                }
+                return { ...prevGame }
+            })
+        } else {
+            setGame(prevGame => {
+                prevGame.stages[i][name] = value
+                return { ...prevGame }
+            })
+        }
 
     }
 
@@ -104,15 +126,58 @@ export function Admin() {
                     />
                 </div>} */}
 
-                <label htmlFor="numOfTeams">מספר הקבוצות</label>
-                <input type="number" name="numOfTeams" id="numOfTeams" value={game.teams?.length || 0} onChange={onHandleChange} />
+                <label htmlFor="teams">מספר הקבוצות</label>
+                <input type="number" name="teams" id="teams" value={game.teams?.length || 0} onChange={onHandleChange} />
 
-                {game.teams && <ul className="teams">
-                    {game.teams.map((team, i) => <li key={i}>
-                        <label htmlFor="teamName">שם קבוצה  {i + 1}</label>
-                        <input type="text" name="teamName" id="teamName" value={game.teams[i].name} onChange={() => onHandleTeamNameChange(event, i)} />
-                    </li>)}
-                </ul>}
+                {game.teams && <>
+                    <label >שמות הקבוצות</label>
+                    <ul className="teams">
+                        {game.teams.map((team, i) => <li key={i}>
+                            <label htmlFor="teamName">שם קבוצה  {i + 1}</label>
+                            <input type="text" name="teamName" id="teamName" value={game.teams[i].name} onChange={() => onHandleTeamNameChange(event, i)} />
+                        </li>)}
+                    </ul>
+                </>}
+
+                <label htmlFor="guidelines">הנחיה לשחקנים לפני תחילת המשחק</label>
+                <textarea name="guidelines" id="guidelines" value={game.guidelines} onChange={onHandleChange} cols="30" rows="5"></textarea>
+
+                <label htmlFor="type">אופי המשחק</label>
+                <select name="type" id="type" value={game.type} onChange={onHandleChange} >
+                    <option value="open">פתוח</option>
+                    <option value="onTime">לפי זמנים</option>
+                    <option value="onProgress">לפי התקדמות</option>
+                </select>
+
+                <label htmlFor="stages">מספר שלבי המשחק</label>
+                <input type="number" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
+
+                {game.stages && <>
+                    <span className="stages" >שלבי המשחק</span>
+                    <ul className="stages">
+                        {game.stages.map((stage, i) => <li key={i}>
+                            <span className="stages">שלב  {i + 1}</span>
+
+                            {game.type === 'onTime' && <>
+                                <label htmlFor="time">כמה זמן מוגדר לשלב (בשעות)</label>
+                                <input type="number" name="time" id="time" value={game.stages[i].time} onChange={() => onHandleStageChange(event, i)} />
+                            </>}
+
+                            <label htmlFor="questions">כמה שאלות יש בשלב</label>
+                            <input type="number" name="questions" id="questions" value={game.stages.questions?.length} onChange={() => onHandleStageChange(event, i)} />
+
+                            {/* <label htmlFor="">כמה טעויות מותר</label>
+                            <input type="number" name="" id="" />
+
+                            <label htmlFor="">האם השלב חובה?</label>
+                            <input type="checkbox" name="" id="" />
+
+                            <span className="" >הזנת השאלות</span>
+                            <button>פתיחה</button> */}
+                            {/* <label htmlFor=""></label> */}
+                        </li>)}
+                    </ul>
+                </>}
 
             </form>
         </section>

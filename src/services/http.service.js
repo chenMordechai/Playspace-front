@@ -4,7 +4,7 @@ import Axios from 'axios'
 
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
-    : 'https://62.171.155.24/swagger/v1/swagger.json'
+    : 'https://62.171.155.24/api/'
 
 
 const axios = Axios.create({

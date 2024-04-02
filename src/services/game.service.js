@@ -1,19 +1,23 @@
 import { httpService } from './http.service.js'
+import { utilService } from './util.service.js'
 
 const BASE_URL = 'Game/'
 
 export const gameService = {
-    query,
+    getAdminGames,
     getById,
     save,
     remove,
     getActivitiesOfGame,
     getEmptyGame,
+    getEmptyTeam,
+    getEmptyStage,
+    getEmptyQuestion,
 }
 
-async function query(filterBy = {}, sortBy = {}) {
+async function getAdminGames(filterBy = {}, sortBy = {}) {
     // filterBy = { ...filterBy, ...sortBy }
-    return httpService.get(BASE_URL, filterBy)
+    return httpService.get('Admin/Games', filterBy)
 }
 
 async function getById(postId) {
@@ -48,7 +52,33 @@ function getEmptyGame() {
         teams: null,
         guidelines: '',
         type: '',
-        stages: [],
+        stages: null,
 
+    }
+}
+
+function getEmptyTeam() {
+    return {
+        id: utilService.makeId(),
+        name: ''
+    }
+}
+function getEmptyStage() {
+    return {
+        id: utilService.makeId(),
+        time: '',
+        questions: null,
+        passGrade: '',
+        isRequired: false
+    }
+}
+function getEmptyQuestion() {
+    return {
+        id: utilService.makeId(),
+        type: '',
+        score: '',
+        media: '',
+        moreContent: '',
+        lifeSaver: ''
     }
 }

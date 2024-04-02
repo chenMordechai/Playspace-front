@@ -1,20 +1,35 @@
 import { useEffect } from "react"
-import { loadGames } from "../store/actions/game.action.js"
+import { getAdminGames } from "../store/actions/game.action.js"
+import { httpService } from "../services/http.service.js"
 
 
 
 export function Home() {
 
     useEffect(() => {
-        init()
+        // init()
+        // callAPI()
     }, [])
 
     async function init() {
         try {
-            // await loadGames()
+            const games = await getAdminGames()
+            console.log('games:', games)
         } catch (err) {
             console.log('err:', err)
         }
+    }
+
+    function callAPI() {
+        const postData = {
+            "email": `${Math.random()}@GMAIL.COM`,
+            "name": "AAAA",
+            "password": "string",
+            "gameId": "779CF2C1-3529-4DB2-366B-08DC51029963",
+            "groupId": 0
+        };
+
+        httpService.post('auth/Signup', postData)
     }
 
     return (
