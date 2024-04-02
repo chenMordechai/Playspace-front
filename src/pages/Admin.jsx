@@ -90,12 +90,14 @@ export function Admin() {
 
     }
 
-    function onHandleQuestionChange(ev, i, j) {
+    async function onHandleQuestionChange(ev, i, j) {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
+        else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
+        else if (name === 'options') value = value.split(',')
+
         setGame(prevGame => {
             prevGame.stages[i].questions[j][name] = value
-
             return { ...prevGame }
         })
 
@@ -207,17 +209,38 @@ export function Admin() {
                                 {stage.questions?.map((question, j) => <li key={question.id}>
                                     <span className="question">שאלה {j + 1}</span>
 
+                                    <label htmlFor="txt">השאלה</label>
+                                    <input type="text" name="txt" id="txt" value={question.txt} onChange={() => onHandleQuestionChange(event, i, j)} />
+
                                     <label htmlFor="type">סוג השאלה</label>
                                     <select name="type" id="type" value={stage.questions.type} onChange={() => onHandleQuestionChange(event, i, j)} >
+                                        <option value="open">פתוחה</option>
                                         <option value="multiple">רב ברירה</option>
                                         <option value="yesno">נכון/לא נכון</option>
                                         <option value="typing">הקלדה</option>
-                                        <option value="open">פתוחה</option>
                                     </select>
+
+                                    {question.type === 'multiple' && <>
+                                        <label htmlFor="options">האופציות לתשובה (א,ב,ג)</label>
+                                        <input type="text" name="options" id="options" value={question.options} onChange={() => onHandleQuestionChange(event, i, j)} />
+                                    </>}
+
+                                    <label htmlFor="answer">התשובה</label>
+                                    <input type="text" name="answer" id="answer" value={question.answer} onChange={() => onHandleQuestionChange(event, i, j)} />
 
                                     <label htmlFor="score">ניקוד</label>
                                     <input type="number" min="0" name="score" id="score" value={question.score} onChange={() => onHandleQuestionChange(event, i, j)} />
 
+                                    <label htmlFor="media">תוספת גרפית</label>
+                                    <input type="file" name="media" id="media" onChange={() => onHandleQuestionChange(event, i, j)} />
+
+                                    {question.media && <>
+                                        <span>{question.media.type}</span>
+                                        <img className="media" src={question.media.url} />
+                                    </>}
+
+                                    <label htmlFor="moreContent">תוספת מלל</label>
+                                    <textarea name="moreContent" id="moreContent" value={question.moreContent} onChange={() => onHandleQuestionChange(event, i, j)} cols="30" rows="5"></textarea>
 
                                 </li>)}
                             </ul>}
