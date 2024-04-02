@@ -95,6 +95,7 @@ export function Admin() {
         if (type === 'number') value = +value
         else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
         else if (name === 'options') value = value.split(',')
+        else if (name === 'lifeSaver') value = Array.from(ev.target.selectedOptions, option => option.value)
 
         setGame(prevGame => {
             prevGame.stages[i].questions[j][name] = value
@@ -213,12 +214,13 @@ export function Admin() {
                                     <input type="text" name="txt" id="txt" value={question.txt} onChange={() => onHandleQuestionChange(event, i, j)} />
 
                                     <label htmlFor="type">סוג השאלה</label>
-                                    <select name="type" id="type" value={stage.questions.type} onChange={() => onHandleQuestionChange(event, i, j)} >
+                                    <select name="type" id="type" value={question.type} onChange={() => onHandleQuestionChange(event, i, j)} >
                                         <option value="open">פתוחה</option>
                                         <option value="multiple">רב ברירה</option>
                                         <option value="yesno">נכון/לא נכון</option>
                                         <option value="typing">הקלדה</option>
                                     </select>
+
 
                                     {question.type === 'multiple' && <>
                                         <label htmlFor="options">האופציות לתשובה (א,ב,ג)</label>
@@ -242,6 +244,15 @@ export function Admin() {
                                     <label htmlFor="moreContent">תוספת מלל</label>
                                     <textarea name="moreContent" id="moreContent" value={question.moreContent} onChange={() => onHandleQuestionChange(event, i, j)} cols="30" rows="5"></textarea>
 
+                                    <label htmlFor="lifeSaver">גלגלי הצלה</label>
+                                    <select multiple name="lifeSaver" id="lifeSaver" value={questions.lifeSaver} onChange={() => onHandleQuestionChange(event, i, j)} >
+                                        {question.type === 'multiple' && <option value="fifty">50/50</option>}
+                                        <option value="moreTime">תוספת זמן</option>
+                                        <option value="skip">דלג</option>
+                                    </select>
+
+                                    <label htmlFor="moreContentAfter">תוספת מלל לאחר שאלה</label>
+                                    <textarea name="moreContentAfter" id="moreContentAfter" value={question.moreContentAfter} onChange={() => onHandleQuestionChange(event, i, j)} cols="30" rows="5"></textarea>
                                 </li>)}
                             </ul>}
                         </li>)}

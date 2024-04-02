@@ -82,6 +82,7 @@ function getEmptyQuestion() {
         score: 0,
         media: null,
         moreContent: '',
-        lifeSaver: ''
+        moreContentAfter: '',
+        lifeSaver: []
     }
 }
