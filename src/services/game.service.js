@@ -68,7 +68,7 @@ function getEmptyStage() {
         id: utilService.makeId(),
         time: '',
         questions: null,
-        passGrade: '',
+        numOfMistakes: '',
         isRequired: false
     }
 }

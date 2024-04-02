@@ -17,8 +17,8 @@ export function Admin() {
     }, [game])
 
     function onHandleChange(ev) {
-        console.log('onHandleChange')
-        const { name, value } = ev.target
+        const { name, value, type } = ev.target
+        if (type === 'number') value = +value
         if (name === 'teams' || name === 'stages') {
             const object = name === 'teams' ? gameService.getEmptyTeam() : gameService.getEmptyStage()
             setGame(prevGame => {
@@ -59,7 +59,10 @@ export function Admin() {
     }
 
     function onHandleStageChange(ev, i) {
-        const { value, name } = ev.target
+        let { value, name, type } = ev.target
+        if (type === 'checkbox') value = ev.target.checked
+        if (type === 'number') value = +value
+
         if (name === 'questions') {
             const object = gameService.getEmptyQuestion()
             setGame(prevGame => {
@@ -127,7 +130,7 @@ export function Admin() {
                 </div>} */}
 
                 <label htmlFor="teams">מספר הקבוצות</label>
-                <input type="number" name="teams" id="teams" value={game.teams?.length || 0} onChange={onHandleChange} />
+                <input type="number" min="0" name="teams" id="teams" value={game.teams?.length || 0} onChange={onHandleChange} />
 
                 {game.teams && <>
                     <label >שמות הקבוצות</label>
@@ -150,7 +153,7 @@ export function Admin() {
                 </select>
 
                 <label htmlFor="stages">מספר שלבי המשחק</label>
-                <input type="number" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
+                <input type="number" min="0" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
 
                 {game.stages && <>
                     <span className="stages" >שלבי המשחק</span>
@@ -164,16 +167,17 @@ export function Admin() {
                             </>}
 
                             <label htmlFor="questions">כמה שאלות יש בשלב</label>
-                            <input type="number" name="questions" id="questions" value={game.stages.questions?.length} onChange={() => onHandleStageChange(event, i)} />
+                            <input type="number" min="0" name="questions" id="questions" value={game.stages.questions?.length} onChange={() => onHandleStageChange(event, i)} />
 
-                            {/* <label htmlFor="">כמה טעויות מותר</label>
-                            <input type="number" name="" id="" />
+                            <label htmlFor="numOfMistakes">כמה טעויות מותר</label>
+                            <input type="number" min="0" max={game.stages[i].questions?.length} name="numOfMistakes" id="numOfMistakes" value={game.stages[i].numOfMistakes} onChange={() => onHandleStageChange(event, i)} />
 
-                            <label htmlFor="">האם השלב חובה?</label>
-                            <input type="checkbox" name="" id="" />
+                            <label htmlFor="isRequired">האם השלב חובה?</label>
+                            <input type="checkbox" name="isRequired" id="isRequired" value={game.stages[i].isRequired} onChange={() => onHandleStageChange(event, i)} />
 
                             <span className="" >הזנת השאלות</span>
-                            <button>פתיחה</button> */}
+                            <button>פתיחה</button>
+
                             {/* <label htmlFor=""></label> */}
                         </li>)}
                     </ul>
