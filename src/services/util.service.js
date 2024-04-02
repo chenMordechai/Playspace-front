@@ -89,7 +89,6 @@ function getRandomColor() {
 }
 
 async function uploadImgToCloudinary(ev) {
-    console.log('uploadImgToCloudinary')
     const mediaType = ev.target.files[0].type
 
     let type

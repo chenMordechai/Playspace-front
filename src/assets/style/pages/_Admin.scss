@@ -23,8 +23,24 @@
             margin-bottom: 10px;
         }
 
+        section.stages-container {
+            background-color: lightblue;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            span.stages {
+                // text-align: center;
+            }
+        }
+
+        section.stages-container,
         span.stages,
-        ul.stages {
+        ul.stages,
+        span.question,
+        ul.question {
             grid-column: span 2;
             justify-self: center;
         }
@@ -39,6 +55,12 @@
             gap: 10px;
             align-items: center;
             margin-bottom: 20px;
+        }
+
+        ul.question {
+            background-color: lightpink;
+            padding: 20px;
+            width: 80%;
         }
 
         // .img-color-picker-container {

@@ -8,6 +8,8 @@ import { utilService } from '../services/util.service.js'
 export function Admin() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
+    const [openQuesions, setOpenQuesions] = useState(false)
+    const [score, setScore] = useState(100)
 
     useEffect(() => {
         // const date = new Date("2024-04-02 11:00")
@@ -17,8 +19,9 @@ export function Admin() {
     }, [game])
 
     function onHandleChange(ev) {
-        const { name, value, type } = ev.target
+        let { name, value, type } = ev.target
         if (type === 'number') value = +value
+
         if (name === 'teams' || name === 'stages') {
             const object = name === 'teams' ? gameService.getEmptyTeam() : gameService.getEmptyStage()
             setGame(prevGame => {
@@ -42,6 +45,10 @@ export function Admin() {
         } finally {
             // setIsLoading(false)
         }
+    }
+
+    function onHandleChangeColor() {
+
     }
 
     async function getColorsFromImg(imgUrl) {
@@ -83,13 +90,30 @@ export function Admin() {
 
     }
 
+    function onHandleQuestionChange(ev, i, j) {
+        let { value, name, type } = ev.target
+        if (type === 'number') value = +value
+        setGame(prevGame => {
+            prevGame.stages[i].questions[j][name] = value
+
+            return { ...prevGame }
+        })
+
+    }
+
     function onSubmitForm(ev) {
         ev.preventDefault()
+
+        // check that the question's scores is 100%
     }
 
     function onHandleColorPick(color) {
         console.log('Selected color:', color); // Selected color: rgb(101, 42, 65)
     };
+
+    function onOpenQuestions() {
+        setOpenQuesions(prev => !prev)
+    }
 
     return (
         <section className="admin rtl">
@@ -108,7 +132,7 @@ export function Admin() {
                 <input type="date" name="dateEnd" id="dateEnd" value={game.dateEnd} onChange={onHandleChange} />
 
                 <label htmlFor="timeEnd">שעת סיום</label>
-                <input type="time" name="tiemEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
+                <input type="time" name="timeEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
                 <label htmlFor="logo">לוגו</label>
                 <input type="file" name="logo" id="logo" onChange={onChangeImg} />
@@ -116,7 +140,7 @@ export function Admin() {
 
                 {game.colors && <ul className="colors">
                     {game.colors.map((color, i) => <li key={color}>
-                        <input type="color" name="color1" id={`color${i + 1}`} value={color} />
+                        <input type="color" name="color1" id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} />
                     </li>)}
                 </ul>}
 
@@ -135,9 +159,9 @@ export function Admin() {
                 {game.teams && <>
                     <label >שמות הקבוצות</label>
                     <ul className="teams">
-                        {game.teams.map((team, i) => <li key={i}>
-                            <label htmlFor="teamName">שם קבוצה  {i + 1}</label>
-                            <input type="text" name="teamName" id="teamName" value={game.teams[i].name} onChange={() => onHandleTeamNameChange(event, i)} />
+                        {game.teams.map((team, i) => <li key={team.id}>
+                            <label htmlFor="teamName">קבוצה  {i + 1}</label>
+                            <input type="text" name="teamName" id="teamName" value={team.name} onChange={() => onHandleTeamNameChange(event, i)} />
                         </li>)}
                     </ul>
                 </>}
@@ -155,35 +179,53 @@ export function Admin() {
                 <label htmlFor="stages">מספר שלבי המשחק</label>
                 <input type="number" min="0" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
 
-                {game.stages && <>
+                {game.stages && <section className="stages-container">
                     <span className="stages" >שלבי המשחק</span>
                     <ul className="stages">
-                        {game.stages.map((stage, i) => <li key={i}>
+                        {game.stages.map((stage, i) => <li key={stage.id}>
                             <span className="stages">שלב  {i + 1}</span>
 
                             {game.type === 'onTime' && <>
                                 <label htmlFor="time">כמה זמן מוגדר לשלב (בשעות)</label>
-                                <input type="number" name="time" id="time" value={game.stages[i].time} onChange={() => onHandleStageChange(event, i)} />
+                                <input type="number" min="0" name="time" id="time" value={stage.time} onChange={() => onHandleStageChange(event, i)} />
                             </>}
 
                             <label htmlFor="questions">כמה שאלות יש בשלב</label>
-                            <input type="number" min="0" name="questions" id="questions" value={game.stages.questions?.length} onChange={() => onHandleStageChange(event, i)} />
+                            <input type="number" min="0" name="questions" id="questions" value={stage.questions?.length || 0} onChange={() => onHandleStageChange(event, i)} />
+                            {/* <input type="number" min="0" name="questions" id="questions" value={game.stages[i].questions?.length || 0} onChange={() => onHandleStageChange(event, i)} /> */}
 
                             <label htmlFor="numOfMistakes">כמה טעויות מותר</label>
-                            <input type="number" min="0" max={game.stages[i].questions?.length} name="numOfMistakes" id="numOfMistakes" value={game.stages[i].numOfMistakes} onChange={() => onHandleStageChange(event, i)} />
+                            <input type="number" min="0" max={stage.questions?.length} name="numOfMistakes" id="numOfMistakes" value={stage.numOfMistakes} onChange={() => onHandleStageChange(event, i)} />
 
                             <label htmlFor="isRequired">האם השלב חובה?</label>
-                            <input type="checkbox" name="isRequired" id="isRequired" value={game.stages[i].isRequired} onChange={() => onHandleStageChange(event, i)} />
+                            <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />
 
                             <span className="" >הזנת השאלות</span>
-                            <button>פתיחה</button>
+                            <button onClick={onOpenQuestions}>{openQuesions ? 'סגירה' : 'פתיחה'}</button>
 
-                            {/* <label htmlFor=""></label> */}
+                            {openQuesions && <ul className="question">
+                                {stage.questions?.map((question, j) => <li key={question.id}>
+                                    <span className="question">שאלה {j + 1}</span>
+
+                                    <label htmlFor="type">סוג השאלה</label>
+                                    <select name="type" id="type" value={stage.questions.type} onChange={() => onHandleQuestionChange(event, i, j)} >
+                                        <option value="multiple">רב ברירה</option>
+                                        <option value="yesno">נכון/לא נכון</option>
+                                        <option value="typing">הקלדה</option>
+                                        <option value="open">פתוחה</option>
+                                    </select>
+
+                                    <label htmlFor="score">ניקוד</label>
+                                    <input type="number" min="0" name="score" id="score" value={question.score} onChange={() => onHandleQuestionChange(event, i, j)} />
+
+
+                                </li>)}
+                            </ul>}
                         </li>)}
                     </ul>
-                </>}
+                </section>}
 
             </form>
-        </section>
+        </section >
     )
 }

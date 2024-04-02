@@ -76,8 +76,8 @@ function getEmptyQuestion() {
     return {
         id: utilService.makeId(),
         type: '',
-        score: '',
-        media: '',
+        score: 0,
+        media: null,
         moreContent: '',
         lifeSaver: ''
     }
