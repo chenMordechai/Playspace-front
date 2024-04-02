@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react'
 import { prominent } from 'color.js'
-import { ImageColorPicker } from 'react-image-color-picker';
 
 import { gameService } from '../services/game.service.js'
 import { utilService } from '../services/util.service.js'
+
+import {Colors} from '../cmps/Colors'
 
 export function Admin() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
     const [openQuesions, setOpenQuesions] = useState(false)
-    const [score, setScore] = useState(100)
+    const [colorIdx, setColorIdx] = useState(0)
+    const [colors, setColors] = useState(['#ffffff', '#000000'])
+    const [openColorPicker, setOpenColorPicker] = useState(false)
 
     useEffect(() => {
         // const date = new Date("2024-04-02 11:00")
@@ -112,6 +115,14 @@ export function Admin() {
 
     function onHandleColorPick(color) {
         console.log('Selected color:', color); // Selected color: rgb(101, 42, 65)
+        setColors(prev => {
+            prev[colorIdx] = color
+            return [...prev]
+        } )
+        setColorIdx(prev=>{
+            if(prev === 1) return 0
+            else return prev +1
+        })
     };
 
     function onOpenQuestions() {
@@ -137,24 +148,7 @@ export function Admin() {
                 <label htmlFor="timeEnd">שעת סיום</label>
                 <input type="time" name="timeEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
-                <label htmlFor="logo">לוגו</label>
-                <input type="file" name="logo" id="logo" onChange={onChangeImg} />
-                {game.logo && <img className="logo-img" src={game.logo.url} />}
-
-                {game.colors && <ul className="colors">
-                    {game.colors.map((color, i) => <li key={color}>
-                        <input type="color" name="color1" id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} />
-                    </li>)}
-                </ul>}
-
-                {/* color picker on the logo image */}
-                {/* {game.logo && <div className="img-color-picker-container">
-                    <ImageColorPicker
-                    onColorPick={onHandleColorPick}
-                    imgSrc={game.logo.url}
-                    zoom={1}
-                    />
-                </div>} */}
+                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.colors} colors={colors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} />
 
                 <label htmlFor="teams">מספר הקבוצות</label>
                 <input type="number" min="0" name="teams" id="teams" value={game.teams?.length || 0} onChange={onHandleChange} />

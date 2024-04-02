@@ -15,6 +15,15 @@
 
         .colors {
             display: flex;
+
+            .color-container {
+                height: 30px;
+                width: 30px;
+                border: 1px solid black;
+                border-radius: 8px;
+                margin-left: 5px;
+                cursor: pointer;
+            }
         }
 
         ul.teams li {
@@ -67,8 +76,12 @@
             }
         }
 
-        // .img-color-picker-container {
-        //     height: 200px;
-        // }
+        .img-color-picker-container {
+            position: absolute;
+            top: 100px;
+            left: calc(50vw);
+            height: 300px;
+            width: 300px;
+        }
     }
 }
