@@ -4,7 +4,7 @@ import { prominent } from 'color.js'
 import { gameService } from '../services/game.service.js'
 import { utilService } from '../services/util.service.js'
 
-import {Colors} from '../cmps/Colors'
+import { Colors } from '../cmps/Colors'
 
 export function Admin() {
 
@@ -13,6 +13,7 @@ export function Admin() {
     const [colorIdx, setColorIdx] = useState(0)
     const [colors, setColors] = useState(['#ffffff', '#000000'])
     const [openColorPicker, setOpenColorPicker] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         // const date = new Date("2024-04-02 11:00")
@@ -39,14 +40,14 @@ export function Admin() {
 
     async function onChangeImg(ev) {
         try {
-            // setIsLoading(true)
+            setIsLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev)
             setGame(prevGame => ({ ...prevGame, logo: media }))
             getColorsFromImg(media.url)
         } catch (err) {
             console.log('err:', err)
         } finally {
-            // setIsLoading(false)
+            setIsLoading(false)
         }
     }
 
@@ -114,18 +115,18 @@ export function Admin() {
     }
 
     function onHandleColorPick(color) {
-        if(color.startsWith('rgb')){
-            const parts = color.substring(4,color.length-1).split(', ')
+        if (color.startsWith('rgb')) {
+            const parts = color.substring(4, color.length - 1).split(', ')
             color = utilService.rgbToHex(...parts)
         }
         console.log('Selected color:', color); // Selected color: rgb(101, 42, 65)
         setColors(prev => {
             prev[colorIdx] = color
             return [...prev]
-        } )
-        setColorIdx(prev=>{
-            if(prev === 1) return 0
-            else return prev +1
+        })
+        setColorIdx(prev => {
+            if (prev === 1) return 0
+            else return prev + 1
         })
     };
 
@@ -153,7 +154,7 @@ export function Admin() {
                 <label htmlFor="timeEnd">שעת סיום</label>
                 <input type="time" name="timeEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
-                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.colors} colors={colors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} />
+                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.colors} colors={colors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isLoading={isLoading} />
 
                 <label htmlFor="teams">מספר הקבוצות</label>
                 <input type="number" min="0" name="teams" id="teams" value={game.teams?.length || 0} onChange={onHandleChange} />

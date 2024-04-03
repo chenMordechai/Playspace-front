@@ -1,7 +1,9 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 import './assets/style/main.scss'
 
+import { store } from './store/store'
 import { Login } from './pages/Login'
 import { Home } from './pages/Home'
 import { Admin } from './pages/Admin'
@@ -10,21 +12,23 @@ import { NavLinks } from './cmps/NavLinks'
 
 function App() {
   return (
-    <Router>
-      <section className="main-layout">
-        <NavLinks />
-        <main>
-          <div className="main-container">
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/admin" element={<Admin />} />
-            </Routes>
-          </div>
-        </main>
-      </section>
+    <Provider store={store}>
+      <Router>
+        <section className="main-layout">
+          <NavLinks />
+          <main>
+            <div className="main-container">
+              <Routes>
+                <Route path="/" element={<Login />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/admin" element={<Admin />} />
+              </Routes>
+            </div>
+          </main>
+        </section>
 
-    </Router>
+      </Router>
+    </Provider >
 
   )
 }
