@@ -14,7 +14,7 @@ export function Colors ({onChangeImg, gameLogo , gameColors , colors, onHandleCh
                 <div className="color-container" style={{ backgroundColor: color }} onClick={()=>onHandleColorPick(color)}>
                 </div>
             </li>)}
-                <li onClick={()=>setOpenColorPicker(prev=>!prev)}>בחר מהתמונה</li>
+                <button onClick={()=>setOpenColorPicker(prev=>!prev)}>בחר מהתמונה</button>
         </ul>}
 
         <span>צבעים</span>
@@ -27,6 +27,7 @@ export function Colors ({onChangeImg, gameLogo , gameColors , colors, onHandleCh
         {/* color picker on the logo image */}
 
         {gameLogo && openColorPicker && <div className="img-color-picker-container">
+            <button className="close-btn" onClick={()=>setOpenColorPicker(prev=>!prev)}>X</button>
             <ImageColorPicker
             onColorPick={onHandleColorPick}
             imgSrc={gameLogo.url}

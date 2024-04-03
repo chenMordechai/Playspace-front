@@ -82,6 +82,14 @@
             left: calc(50vw);
             height: 300px;
             width: 300px;
+
+            .close-btn {
+                position: absolute;
+                bottom: 0;
+                z-index: 100;
+                width: 30px;
+                height: 30px;
+            }
         }
     }
 }

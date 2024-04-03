@@ -114,6 +114,10 @@ export function Admin() {
     }
 
     function onHandleColorPick(color) {
+        if(color.startsWith('rgb')){
+            const parts = color.substring(4,color.length-1).split(', ')
+            color = utilService.rgbToHex(...parts)
+        }
         console.log('Selected color:', color); // Selected color: rgb(101, 42, 65)
         setColors(prev => {
             prev[colorIdx] = color
@@ -124,6 +128,7 @@ export function Admin() {
             else return prev +1
         })
     };
+
 
     function onOpenQuestions() {
         setOpenQuesions(prev => !prev)
