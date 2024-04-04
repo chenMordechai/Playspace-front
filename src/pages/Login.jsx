@@ -39,13 +39,7 @@ export function Login() {
         ev.preventDefault();
         try {
             // setCredentials(prev => ({ ...prev, password: 'Aa1234$%' })) // for dev
-            // const userAdmin = await adminLogin(credentials)
-            const userAdmin = {
-                userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
-                name: "anat shapira",
-                isAdmin: true,
-                checkAdmin: true
-            } // for dev
+            const userAdmin = await adminLogin(credentials)
 
             console.log('success AdminLogin', userAdmin)
             navigate('/home')

@@ -1,13 +1,13 @@
-import Axios from 'axios'
+// import Axios from 'axios'
 
-const axios = Axios.create({
-    // withCredentials: true
-    headers: {
-        // 'Content-Type': 'application/json',
-        // 'Accept': 'application/json',
-        // 'Authorization': 'Bearer <token_here>'
-    }
-})
+// const axios = Axios.create({
+//     // withCredentials: true
+//     headers: {
+//         // 'Content-Type': 'application/json',
+//         // 'Accept': 'application/json',
+//         // 'Authorization': 'Bearer <token_here>'
+//     }
+// })
 
 import { httpService } from './http.service.js'
 
@@ -38,17 +38,39 @@ async function adminLogin(adminCred) {
     console.log('adminCred:', adminCred)
     adminCred = { password: 'Aa1234$%' }
 
+    ////////////////////////////////////////////////////////
+    // api call doesn't work
+    // const userAdmin = await httpService.get(`${BASE_URL_AUTH}AdminLogin`, adminCred)
+    // console.log('userAdmin:', userAdmin)
+
+    // userAdmin.isAdmin = true  // for dev
+    // userAdmin.checkAdmin = true // for dev 
+    // if (userAdmin) {
+    const userAdmin = {
+        userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
+        name: "anat shapira",
+        isAdmin: true,
+        checkAdmin: true
+    } // for dev
+    _setLoggedinUser(userAdmin)
+    //     return userAdmin
+    // }
+
+    ////////////////////////////////////////////////////////
+
     // https://62.171.155.24/api/auth/AdminLogin?password=Aa1234$%
 
-    const res = await axios({
-        url: `https://62.171.155.24/api/auth/AdminLogin`,
-        method: 'GET',
-        params: {
-            password: 'Aa1234$%'
-        },
+    // const res = await axios({
+    //     url: `https://62.171.155.24/api/auth/AdminLogin`,
+    //     method: 'GET',
+    //     params: {
+    //         password: 'Aa1234$%'
+    //     },
 
-    })
-    console.log(res.data)
+    // })
+    // console.log(res.data)
+
+    ////////////////////////////////////////////////////////
 
     // const response = await fetch('https://62.171.155.24/api/auth/AdminLogin', {
     //     method: 'GET',
@@ -58,15 +80,6 @@ async function adminLogin(adminCred) {
     // })
     // console.log(await response.json())
 
-    // const userAdmin = await httpService.get(`${BASE_URL_AUTH}AdminLogin`, adminCred)
-    // console.log('userAdmin:', userAdmin)
-
-    // userAdmin.isAdmin = true  // for dev
-    // userAdmin.checkAdmin = true // for dev 
-    // if (userAdmin) {
-    //     _setLoggedinUser(userAdmin)
-    //     return userAdmin
-    // }
 }
 
 async function logout() {
@@ -106,6 +119,8 @@ function _setLoggedinUser(user) {
 
 function getEmptyCredentials() {
     return {
+        // email: 'AAAA@GMAIL.COM',
+        // name: 'AAAA',
         email: 'AnatShapira@gmail.com',
         name: 'Anat Shapira',
         password: 'Aa1234$%'

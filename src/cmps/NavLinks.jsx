@@ -30,9 +30,9 @@ export function NavLinks() {
             <NavLink to="/home" title="Home" >
                 <span>Home</span>
             </NavLink>
-            <NavLink to="/admin" title="Admin" >
+            {loggedinUser?.checkAdmin && <NavLink to="/admin" title="Admin" >
                 <span>Admin</span>
-            </NavLink>
+            </NavLink>}
         </section>
     )
 }
