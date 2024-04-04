@@ -31,7 +31,7 @@ export function NavLinks() {
                 <span>Home</span>
             </NavLink>
             {loggedinUser?.checkAdmin && <NavLink to="/admin" title="Admin" >
-                <span>Admin</span>
+                <span>Create New Game</span>
             </NavLink>}
         </section>
     )

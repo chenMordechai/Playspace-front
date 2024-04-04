@@ -42,6 +42,9 @@ export function Home() {
                 <ul>
                     {games.map(game => <li key={game.id}>
                         {game.name}
+                        <button>Edit</button>
+                        <button>Delete</button>
+                        <button>Play</button>
                     </li>)}
                 </ul>
             </section>}
