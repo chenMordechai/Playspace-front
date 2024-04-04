@@ -12,7 +12,8 @@
 import { httpService } from './http.service.js'
 
 const BASE_URL_AUTH = 'auth/'
-const STORAGE_KEY_LOGGEDIN = 'loggedinUser'
+const STORAGE_KEY_USER = 'loggedinUser'
+const STORAGE_KEY_PLAYER = 'loggedinPlayer'
 
 export const authService = {
     login,
@@ -20,7 +21,8 @@ export const authService = {
     logout,
     signup,
     getLoggedinUser,
-    getEmptyCredentials
+    getEmptyCredentials,
+    getEmptySignupCred
 }
 
 // work
@@ -82,39 +84,49 @@ async function adminLogin(adminCred) {
 
 }
 
+// logout for user and admin
 async function logout() {
-    localStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+    localStorage.removeItem(STORAGE_KEY_USER)
+    localStorage.removeItem(STORAGE_KEY_PLAYER)
     // missing api for logout
     // return await httpService.post(BASE_URL_AUTH + 'logout')
 
 }
 
-async function signup({ username, password, fullname, email }) {
-    const userToSave = {
-        username,
-        password,
-        fullname,
-        email
-    }
-    // console.log('userToSave:', userToSave)
-    const user = await httpService.post(BASE_URL_AUTH + 'signup', userToSave)
-    _setLoggedinUser(user)
-    return user
+// for players
+async function signup({ email,gameId,groupId,name,password }) {
+    const playerToSave = { email,gameId,groupId,name,password }
+
+    const player = await httpService.post(BASE_URL_AUTH + 'signup', playerToSave)
+   console.log('player:', player)
+    _setLoggedinPlayer(player)
+    return player
 
 }
 
 
 
 function getLoggedinUser() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY_LOGGEDIN))
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_USER))
+}
+
+function getLoggedinPlayer() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_PLAYER))
 }
 
 
 function _setLoggedinUser(user) {
     // const { userId, name , isAdmin } = user
     // const userToSave = { userId, name , isAdmin }
-    localStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
+    localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(user))
     return user
+}
+
+function _setLoggedinPlayer(player) {
+    // const { userId, name , isAdmin } = user
+    // const userToSave = { userId, name , isAdmin }
+    localStorage.setItem(STORAGE_KEY_PLAYER, JSON.stringify(player))
+    return player
 }
 
 function getEmptyCredentials() {
@@ -126,3 +138,15 @@ function getEmptyCredentials() {
         password: 'Aa1234$%'
     }
 }
+
+function getEmptySignupCred() {
+    return {
+        email: 'AAAA@GMAIL.COM',
+        name: 'AAAA',
+        password: 'string$%',
+        // gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
+        // groupId: 0
+    }
+}
+
+

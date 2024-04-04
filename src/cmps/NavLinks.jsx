@@ -24,7 +24,7 @@ export function NavLinks() {
             {!loggedinUser && <NavLink to="/" title="Login" >
                 <span>Login</span>
             </NavLink>}
-            <NavLink to="/signup" title="Signup" >
+            <NavLink to="/signup/779CF2C1-3529-4DB2-366B-08DC51029963/0" title="Signup" >
                 <span>Signup</span>
             </NavLink>
             <NavLink to="/home" title="Home" >

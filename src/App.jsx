@@ -21,7 +21,8 @@ function App() {
             <div className="main-container">
               <Routes>
                 <Route path="/" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/signup/:gameId/:groupId" element={<Signup />} />
+                {/* <Route path="/game/:gameId/:groupId" element={<Signup />} /> */}
                 <Route path="/home" element={<Home />} />
                 <Route path="/admin" element={<Admin />} />
               </Routes>

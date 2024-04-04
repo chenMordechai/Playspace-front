@@ -1,5 +1,5 @@
 import { authService } from "../../services/auth.service.js";
-import { SET_LOGGEDIN_USER } from "../reducers/auth.reducer.js";
+import { SET_LOGGEDIN_USER ,SET_LOGGEDIN_PLAYER} from "../reducers/auth.reducer.js";
 
 import { store } from '../store.js'
 
@@ -12,12 +12,10 @@ export async function login(credentials) {
     } catch (err) {
         console.log('user actions -> Cannot login', err)
         throw err
-
     }
 }
 
 export async function adminLogin(credentials) {
-    console.log('adminLogin', credentials)
     try {
         const { password } = credentials
         const adminCred = { password }
@@ -48,5 +46,18 @@ export async function logout() {
         console.error('user actions -> Cannot logout:', err)
         throw err
     }
+}
 
+
+export async function signup(credentials) {
+    console.log('credentials:', credentials)
+    try {
+        const player = await authService.signup(credentials)
+        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+        console.log('player:', player)
+        return player
+    } catch (err) {
+        console.log('user actions -> Cannot signup', err)
+        throw err
+    }
 }
