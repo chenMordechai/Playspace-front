@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 
-import { login } from "../store/actions/auth.action"
+import { login, adminLogin } from "../store/actions/auth.action"
 import { authService } from '../services/auth.service'
 
 export function Login() {
@@ -14,7 +14,9 @@ export function Login() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (loggedinUser) navigate('/home')
+        if (loggedinUser) {
+            if (!loggedinUser.isAdmin) navigate('/home')
+        }
     }, [])
 
     function handleChange(ev) {
@@ -22,41 +24,61 @@ export function Login() {
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
-    async function handleSubmit(ev) {
+    async function handleSubmitLoginForm(ev) {
         ev.preventDefault();
         try {
             const user = await login(credentials)
             console.log('success login', user)
+            if (!user.isAdmin) navigate('/home')
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function handleSubmitAdminForm(ev) {
+        ev.preventDefault();
+        try {
+            // setCredentials(prev => ({ ...prev, password: 'Aa1234$%' })) // for dev
+            // const userAdmin = await adminLogin(credentials)
+            const userAdmin = {
+                userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
+                name: "anat shapira",
+                isAdmin: true,
+                checkAdmin: true
+            } // for dev
+
+            console.log('success AdminLogin', userAdmin)
             navigate('/home')
         } catch (error) {
             console.error('Error:', error);
         }
     }
 
+
+
     return (
         <section className="login">
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
+            <h1>Login Page</h1>
+            {!loggedinUser && <form onSubmit={handleSubmitLoginForm}>
                 <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={credentials.email}
-                    onChange={handleChange}
-                    required
-                />
+                <input type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
+
                 <label htmlFor="name">Name:</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={credentials.name}
-                    onChange={handleChange}
-                    required
-                />
+                <input type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
+
                 <button type="submit">Login</button>
-            </form>
+            </form>}
+
+            {loggedinUser && <section>
+                <h2>Hello {loggedinUser.name}</h2>
+
+                <form onSubmit={handleSubmitAdminForm}>
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" id="password" name="password" value={credentials.password} onChange={handleChange} required />
+
+                    <button type="submit">Login</button>
+                </form>
+            </section>}
         </section>
     )
 }

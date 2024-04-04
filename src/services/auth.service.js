@@ -1,36 +1,72 @@
+import Axios from 'axios'
+
+const axios = Axios.create({
+    // withCredentials: true
+    headers: {
+        // 'Content-Type': 'application/json',
+        // 'Accept': 'application/json',
+        // 'Authorization': 'Bearer <token_here>'
+    }
+})
+
 import { httpService } from './http.service.js'
 
-const BASE_URL_AUTH = 'Auth/'
+const BASE_URL_AUTH = 'auth/'
 const STORAGE_KEY_LOGGEDIN = 'loggedinUser'
 
 export const authService = {
     login,
+    adminLogin,
     logout,
     signup,
     getLoggedinUser,
     getEmptyCredentials
 }
 
+// work
 async function login(userCred) {
     const user = await httpService.get(`${BASE_URL_AUTH}Login`, userCred)
     console.log('user:', user)
+    user.isAdmin = true  // for dev
     if (user) {
         _setLoggedinUser(user)
         return user
     }
+}
 
-    // const response = await fetch('https://62.171.155.24/api/Auth/Login?email=AAA2A2@GMAIL.COM&name=AAAA', {
+async function adminLogin(adminCred) {
+    console.log('adminCred:', adminCred)
+    adminCred = { password: 'Aa1234$%' }
+
+    // https://62.171.155.24/api/auth/AdminLogin?password=Aa1234$%
+
+    const res = await axios({
+        url: `https://62.171.155.24/api/auth/AdminLogin`,
+        method: 'GET',
+        params: {
+            password: 'Aa1234$%'
+        },
+
+    })
+    console.log(res.data)
+
+    // const response = await fetch('https://62.171.155.24/api/auth/AdminLogin', {
     //     method: 'GET',
     //     headers: {
     //         'Content-Type': 'application/json'
     //     },
-    //     // body: JSON.stringify({ username, password })
-    // });
-    // console.log('response:', response)
-    // const user = await httpService.get('https://62.171.155.24/api/Auth/Login?email=AAA2A2@GMAIL.COM&name=AAAA')
-    // const user = await httpService.get(`${BASE_URL_AUTH}Login?email=${userCred.email}&name=${userCred.name}`)
+    // })
+    // console.log(await response.json())
 
+    // const userAdmin = await httpService.get(`${BASE_URL_AUTH}AdminLogin`, adminCred)
+    // console.log('userAdmin:', userAdmin)
 
+    // userAdmin.isAdmin = true  // for dev
+    // userAdmin.checkAdmin = true // for dev 
+    // if (userAdmin) {
+    //     _setLoggedinUser(userAdmin)
+    //     return userAdmin
+    // }
 }
 
 
@@ -49,26 +85,27 @@ async function signup({ username, password, fullname, email }) {
 }
 
 async function logout() {
-    sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+    localStorage.removeItem(STORAGE_KEY_LOGGEDIN)
     return await httpService.post(BASE_URL_AUTH + 'logout')
 
 }
 
 function getLoggedinUser() {
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))
+    return JSON.parse(localStorage.getItem(STORAGE_KEY_LOGGEDIN))
 }
 
 
 function _setLoggedinUser(user) {
-    const { userId, name } = user
-    const userToSave = { userId, name }
-    sessionStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(userToSave))
-    return userToSave
+    // const { userId, name , isAdmin } = user
+    // const userToSave = { userId, name , isAdmin }
+    localStorage.setItem(STORAGE_KEY_LOGGEDIN, JSON.stringify(user))
+    return user
 }
 
 function getEmptyCredentials() {
     return {
-        email: 'AAA2A2@GMAIL.COM',
-        name: 'AAAA',
+        email: 'AnatShapira@gmail.com',
+        name: 'Anat Shapira',
+        password: 'Aa1234$%'
     }
 }
