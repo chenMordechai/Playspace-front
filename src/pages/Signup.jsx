@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
 import { signup } from "../store/actions/auth.action"
 
 export function Signup() {
     const [credentials, setCredentials] = useState(authService.getEmptySignupCred())
+
+    const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
 
     const { gameId, groupId } = useParams()
     // let query = useQuery();
@@ -26,15 +29,18 @@ export function Signup() {
         setCredentials(prev => ({ ...prev, [name]: value }))
 
     }
-  async  function onSubmitSignupForm(ev) {
-            ev.preventDefault()
-            try {
-                const user = await signup(credentials)
-                console.log('success signup', user)
-                // if (!user.isAdmin) navigate('/home')
-            } catch (error) {
-                console.error('Error:', error);
-            }
+    async function onSubmitSignupForm(ev) {
+        ev.preventDefault()
+        console.log('credentials:', credentials)
+        try {
+            const player = await signup(credentials)
+            console.log('success signup', player)
+            // if (!user.isAdmin) navigate('/home')
+
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
 
         // httpService.post('auth/Signup', credentials)
     }
@@ -43,6 +49,7 @@ export function Signup() {
     return (
         <section>
             <h1>Signup</h1>
+            <h1>שחקן נכנס למשחק</h1>
 
             <form onSubmit={onSubmitSignupForm}>
                 <label htmlFor="email">Email:</label>

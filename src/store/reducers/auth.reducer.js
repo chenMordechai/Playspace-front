@@ -6,6 +6,7 @@ export const SET_LOGGEDIN_PLAYER = 'SET_LOGGEDIN_PLAYER'
 
 const initialState = {
     loggedinUser: authService.getLoggedinUser(),
+    loggedinPlayer: authService.getLoggedinPlayer(),
 
 }
 
@@ -14,7 +15,7 @@ export function authReducer(state = initialState, action = {}) {
         case SET_LOGGEDIN_USER:
             return { ...state, loggedinUser: action.user }
         case SET_LOGGEDIN_PLAYER:
-            return { ...state, loggedinUser: action.player }
+            return { ...state, loggedinPlayer: action.player }
         default:
             return state;
     }

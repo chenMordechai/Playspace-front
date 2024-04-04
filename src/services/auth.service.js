@@ -21,6 +21,7 @@ export const authService = {
     logout,
     signup,
     getLoggedinUser,
+    getLoggedinPlayer,
     getEmptyCredentials,
     getEmptySignupCred
 }
@@ -94,11 +95,21 @@ async function logout() {
 }
 
 // for players
-async function signup({ email,gameId,groupId,name,password }) {
-    const playerToSave = { email,gameId,groupId,name,password }
+async function signup({ email, gameId, groupId, name, password }) {
+    const playerToSave = { email, gameId, groupId, name, password }
 
-    const player = await httpService.post(BASE_URL_AUTH + 'signup', playerToSave)
-   console.log('player:', player)
+    const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
+
+    // const response = await fetch('https://62.171.155.24/api/auth/Signup', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(playerToSave)
+    // });
+    // const player = await response.json()
+
+    console.log('player:', player)
     _setLoggedinPlayer(player)
     return player
 
@@ -141,8 +152,8 @@ function getEmptyCredentials() {
 
 function getEmptySignupCred() {
     return {
-        email: 'AAAA@GMAIL.COM',
-        name: 'AAAA',
+        email: 'BBBB@GMAIL.COM',
+        name: 'BBBB',
         password: 'string$%',
         // gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
         // groupId: 0
