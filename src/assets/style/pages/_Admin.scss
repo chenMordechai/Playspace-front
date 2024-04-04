@@ -2,17 +2,27 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    // text-align: center;
 
+    .first-clr {
+        background-color: var(--clr-0);
+    }
+    .second-clr {
+        background-color: var(--clr-1);
+    }
+    .third-clr {
+        background-color: var(--clr-2);
+    }
     form.create-game {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
         align-items: center;
+        padding: 10px;
 
         img.logo-img {
             height: 80px;
         }
-
         .colors {
             display: flex;
 
@@ -44,7 +54,7 @@
                 // text-align: center;
             }
         }
-
+        .loading,
         section.stages-container,
         span.stages,
         ul.stages,

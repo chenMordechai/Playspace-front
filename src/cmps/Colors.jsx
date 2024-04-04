@@ -1,17 +1,17 @@
 import { ImageColorPicker } from 'react-image-color-picker';
 
-export function Colors({ onChangeImg, gameLogo, gameColors, colors, onHandleChangeColor, onHandleColorPick, openColorPicker, setOpenColorPicker, isLoading }) {
+export function Colors({ onChangeImg, gameLogo, gameColors, logoColors, onHandleChangeColor, onHandleColorPick, openColorPicker, setOpenColorPicker, isLoading }) {
 
     return (
         <>
             <label htmlFor="logo">לוגו</label>
             <input type="file" name="logo" id="logo" onChange={onChangeImg} />
-            {isLoading && <span>Loading...</span>}
-            {gameLogo && <img className="logo-img" src={gameLogo.url} />}
+            {isLoading && <span className="loameding">Loading...</span>}
+            {gameLogo && gameColors && <img className="logo-img" src={gameLogo.url} />}
 
-            {gameColors && <ul className="colors">
-                {gameColors.map((color, i) => <li key={color}>
-                    {/* <input type="color" name="color1" id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} /> */}
+            {gameLogo && logoColors && <ul className="colors">
+                {logoColors.map((color, i) => <li key={color}>
+                    {/* <input type="color" na="color1" id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} /> */}
                     <div className="color-container" style={{ backgroundColor: color }} onClick={() => onHandleColorPick(color)}>
                     </div>
                 </li>)}
@@ -20,8 +20,8 @@ export function Colors({ onChangeImg, gameLogo, gameColors, colors, onHandleChan
 
             <span>צבעים</span>
             <ul className="colors">
-                {colors.map((color, i) => <li key={color}>
-                    <input type="color" name="color1" id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} />
+                {gameColors.map((color, i) => <li key={color}>
+                    <input type="color" name={i} id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} />
                 </li>)}
 
             </ul>

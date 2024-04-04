@@ -11,16 +11,26 @@ export function Admin() {
     const [game, setGame] = useState(gameService.getEmptyGame())
     const [openQuesions, setOpenQuesions] = useState(false)
     const [colorIdx, setColorIdx] = useState(0)
-    const [colors, setColors] = useState(['#ffffff', '#000000'])
+    const [logoColors, setLogoColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        // const date = new Date("2024-04-02 11:00")
+        const date = new Date("2024-04-02 11:00")
+        // console.log('date', date)
         // console.log('date:', date.getTime())
         console.log('game:', game)
 
     }, [game])
+
+    useEffect(() => {
+        // when the game colors changes => change the css vars
+        console.log('game.colors', game.colors)
+        const elRoot = document.querySelector(':root')
+        game.colors.forEach((color, i) => {
+            elRoot.style.setProperty(`--clr-${i}`, color);
+        })
+    }, [game.colors])
 
     function onHandleChange(ev) {
         let { name, value, type } = ev.target
@@ -51,15 +61,41 @@ export function Admin() {
         }
     }
 
-    function onHandleChangeColor() {
-
-    }
-
+    // colors from image for the divs 
     async function getColorsFromImg(imgUrl) {
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
-        console.log(colors) // [241, 221, 63]
-        setGame(prevGame => ({ ...prevGame, colors }))
+        console.log(colors)
+        setLogoColors([...colors])
     }
+
+    // change game colors from color inputs 
+    function onHandleChangeColor(ev) {
+        const { value, name: idx } = ev.target
+
+        setGame(prev => {
+            prev.colors[idx] = value
+            prev.colors = [...prev.colors]
+            return { ...prev }
+        })
+    }
+
+    // color from click on image or click on div
+    function onHandleColorPick(color) {
+        if (color.startsWith('rgb')) {
+            const parts = color.substring(4, color.length - 1).split(', ')
+            color = utilService.rgbToHex(...parts)
+        }
+        setColorIdx(prev => {
+            if (prev === 2) return 0
+            else return prev + 1
+        })
+        setGame(prev => {
+            prev.colors[colorIdx] = color
+            prev.colors = [...prev.colors]
+            return { ...prev }
+        })
+    };
+
 
     function onHandleTeamNameChange(ev, i) {
         const { value } = ev.target
@@ -114,23 +150,6 @@ export function Admin() {
         // check that the question's scores is 100%
     }
 
-    function onHandleColorPick(color) {
-        if (color.startsWith('rgb')) {
-            const parts = color.substring(4, color.length - 1).split(', ')
-            color = utilService.rgbToHex(...parts)
-        }
-        console.log('Selected color:', color); // Selected color: rgb(101, 42, 65)
-        setColors(prev => {
-            prev[colorIdx] = color
-            return [...prev]
-        })
-        setColorIdx(prev => {
-            if (prev === 1) return 0
-            else return prev + 1
-        })
-    };
-
-
     function onOpenQuestions() {
         setOpenQuesions(prev => !prev)
     }
@@ -138,6 +157,11 @@ export function Admin() {
     return (
         <section className="admin rtl">
             <h2>יצירת משחק</h2>
+
+            <div className="first-clr">First</div>
+            <div className="second-clr">Second</div>
+            <div className="third-clr">Third</div>
+
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>
                 <input type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
@@ -154,7 +178,7 @@ export function Admin() {
                 <label htmlFor="timeEnd">שעת סיום</label>
                 <input type="time" name="timeEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
-                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.colors} colors={colors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isLoading={isLoading} />
+                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.colors} logoColors={logoColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isLoading={isLoading} />
 
                 <label htmlFor="teams">מספר הקבוצות</label>
                 <input type="number" min="0" name="teams" id="teams" value={game.teams?.length || 0} onChange={onHandleChange} />
