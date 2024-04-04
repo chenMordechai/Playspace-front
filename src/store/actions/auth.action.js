@@ -15,6 +15,7 @@ export async function login(credentials) {
 
     }
 }
+
 export async function adminLogin(credentials) {
     console.log('adminLogin', credentials)
     try {
@@ -27,6 +28,16 @@ export async function adminLogin(credentials) {
     } catch (err) {
         console.log('user actions -> Cannot admin login', err)
         throw err
-
     }
+}
+
+export async function logout() {
+    try {
+        await authService.logout()
+        store.dispatch({ type: SET_LOGGEDIN_USER, user: null })
+    } catch (err) {
+        console.error('user actions -> Cannot logout:', err)
+        throw err
+    }
+
 }

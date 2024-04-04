@@ -69,6 +69,12 @@ async function adminLogin(adminCred) {
     // }
 }
 
+async function logout() {
+    localStorage.removeItem(STORAGE_KEY_LOGGEDIN)
+    // missing api for logout
+    // return await httpService.post(BASE_URL_AUTH + 'logout')
+
+}
 
 async function signup({ username, password, fullname, email }) {
     const userToSave = {
@@ -84,11 +90,7 @@ async function signup({ username, password, fullname, email }) {
 
 }
 
-async function logout() {
-    localStorage.removeItem(STORAGE_KEY_LOGGEDIN)
-    return await httpService.post(BASE_URL_AUTH + 'logout')
 
-}
 
 function getLoggedinUser() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY_LOGGEDIN))
