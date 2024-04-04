@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom"
 import { prominent } from 'color.js'
 
 import { gameService } from '../services/game.service.js'
@@ -15,7 +17,11 @@ export function Admin() {
     const [openColorPicker, setOpenColorPicker] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
+    const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
+    const navigate = useNavigate()
+
     useEffect(() => {
+        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         const date = new Date("2024-04-02 11:00")
         // console.log('date', date)
         // console.log('date:', date.getTime())
@@ -25,7 +31,6 @@ export function Admin() {
 
     useEffect(() => {
         // when the game colors changes => change the css vars
-        console.log('game.colors', game.colors)
         const elRoot = document.querySelector(':root')
         game.colors.forEach((color, i) => {
             elRoot.style.setProperty(`--clr-${i}`, color);

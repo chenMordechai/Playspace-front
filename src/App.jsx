@@ -5,6 +5,7 @@ import './assets/style/main.scss'
 
 import { store } from './store/store'
 import { Login } from './pages/Login'
+import { Signup } from './pages/Signup'
 import { Home } from './pages/Home'
 import { Admin } from './pages/Admin'
 import { NavLinks } from './cmps/NavLinks'
@@ -20,6 +21,7 @@ function App() {
             <div className="main-container">
               <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/admin" element={<Admin />} />
               </Routes>

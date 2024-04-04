@@ -1,4 +1,7 @@
 import { useEffect } from "react"
+import { useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom"
+
 import { getAdminGames } from "../store/actions/game.action.js"
 import { httpService } from "../services/http.service.js"
 
@@ -6,7 +9,12 @@ import { httpService } from "../services/http.service.js"
 
 export function Home() {
 
+    const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
+    const navigate = useNavigate()
+
+
     useEffect(() => {
+        if (!loggedinUser) navigate('/')
         // init()
         // callAPI()
     }, [])
