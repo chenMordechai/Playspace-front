@@ -31,12 +31,21 @@ export function Home() {
         }
     }
 
-
+    async function fetchDataAndPrint() {
+        const url = "https://localhost:7264/api/Admin/Games";
+    
+        try {
+            var data = await httpService.getGames();
+            console.log(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
     return (
         <section className="home">
             <h1>Home Page</h1>
-
+            <button onClick={fetchDataAndPrint}>GetGames</button>
             <h2>Games:</h2>
             {games && <section className="games-container">
                 <ul>

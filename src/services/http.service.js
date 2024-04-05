@@ -2,17 +2,17 @@ import Axios from 'axios'
 
 // console.log('process.env.NODE_ENV', process.env.NODE_ENV);
 
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/api/'
+const BASE_URL =  false 
+    ? 'https://localhost:7264/api/'
     // : ''
     : 'https://62.171.155.24/api/'
 
 
 const axios = Axios.create({
-    // withCredentials: true
-    headers: {
-        'Content-Type': 'application/json'
-    },
+    withCredentials: true,
+    // headers: {
+    //     'Content-Type': 'application/json'
+    // },
 })
 
 export const httpService = {
@@ -27,7 +27,8 @@ export const httpService = {
     },
     delete(endpoint, data) {
         return ajax(endpoint, 'DELETE', data)
-    }
+    },
+    getGames
 }
 
 async function ajax(endpoint, method = 'GET', data = null) {
@@ -36,8 +37,9 @@ async function ajax(endpoint, method = 'GET', data = null) {
             url: `${BASE_URL}${endpoint}`,
             method,
             data,
-            params: (method === 'GET') ? data : null
+            params: (method === 'GET') ? data : null,
         })
+        console.log(res);
         return res.data
     } catch (err) {
         console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: `, data)
@@ -46,5 +48,15 @@ async function ajax(endpoint, method = 'GET', data = null) {
             sessionStorage.clear()
         }
         throw err
+    }
+}
+
+async function getGames() {
+    try {
+        const response = await axios.get('https://62.171.155.24/api/Admin/Games');
+        return response.data; // Assuming the response contains the game data
+    } catch (error) {
+        console.error('Error fetching games:', error);
+        throw error; // Throw error for handling in caller function
     }
 }
