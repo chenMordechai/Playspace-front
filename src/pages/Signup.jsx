@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import { useParams,Link } from "react-router-dom"
 import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
@@ -51,7 +51,7 @@ export function Signup() {
             <h1>Signup</h1>
             <h1>שחקן נכנס למשחק</h1>
 
-            <form onSubmit={onSubmitSignupForm}>
+            {!loggedinPlayer && <form onSubmit={onSubmitSignupForm}>
                 <label htmlFor="email">Email:</label>
                 <input type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
@@ -63,7 +63,12 @@ export function Signup() {
 
                 <button type="submit">Signup</button>
 
-            </form>
+            </form>}
+
+            {loggedinPlayer && <section>
+                <h2>Welcome {loggedinPlayer.name}</h2>
+                <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>
+            </section>}
         </section>
     )
 }

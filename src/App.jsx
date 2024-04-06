@@ -8,6 +8,7 @@ import { Login } from './pages/Login'
 import { Signup } from './pages/Signup'
 import { Home } from './pages/Home'
 import { Admin } from './pages/Admin'
+import { Game } from './pages/Game'
 import { NavLinks } from './cmps/NavLinks'
 
 
@@ -22,7 +23,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/signup/:gameId/:groupId" element={<Signup />} />
-                {/* <Route path="/game/:gameId/:groupId" element={<Signup />} /> */}
+                <Route path="/game/:gameId" element={<Game />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/admin" element={<Admin />} />
               </Routes>

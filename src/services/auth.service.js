@@ -43,18 +43,18 @@ async function adminLogin(adminCred) {
 
     ////////////////////////////////////////////////////////
     // api call doesn't work
-    // const userAdmin = await httpService.get(`${BASE_URL_AUTH}AdminLogin`, adminCred)
-    // console.log('userAdmin:', userAdmin)
+    const userAdmin = await httpService.get(`${BASE_URL_AUTH}AdminLogin`, adminCred)
+    console.log('userAdmin:', userAdmin)
 
     // userAdmin.isAdmin = true  // for dev
     // userAdmin.checkAdmin = true // for dev 
     // if (userAdmin) {
-    const userAdmin = {
-        userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
-        name: "anat shapira",
-        isAdmin: true,
-        checkAdmin: true
-    } // for dev
+    // const userAdmin = {
+    //     userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
+    //     name: "anat shapira",
+    //     isAdmin: true,
+    //     checkAdmin: true
+    // } // for dev
     _setLoggedinUser(userAdmin)
     //     return userAdmin
     // }

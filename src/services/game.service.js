@@ -5,7 +5,7 @@ const BASE_URL = 'Game/'
 
 export const gameService = {
     getGames,
-    getById,
+    getGameById,
     save,
     remove,
     getActivitiesOfGame,
@@ -127,8 +127,8 @@ async function getGames(loggedinUser) {
     ])
 }
 
-async function getById(postId) {
-    return httpService.get(BASE_URL + postId)
+async function getGameById(gameId) {
+    return httpService.get(BASE_URL + gameId)
 }
 
 async function remove(postId) {
