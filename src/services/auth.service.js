@@ -28,7 +28,7 @@ export const authService = {
 
 // work
 async function login(userCred) {
-    const user = await httpService.get(`${BASE_URL_AUTH}Login`, userCred)
+    const user = await httpService.post(`${BASE_URL_AUTH}Login`, userCred)
     console.log('user:', user)
     user.isAdmin = true  // for dev
     if (user) {
@@ -38,6 +38,15 @@ async function login(userCred) {
 }
 
 async function adminLogin(adminCred) {
+    const user = await httpService.post(`${BASE_URL_AUTH}AdminLogin`, {password: "Aa1234$%"})
+    console.log('user:', user)
+    user.isAdmin = true  // for dev
+    if (user) {
+        _setLoggedinUser(user)
+        return user
+    }
+
+
     console.log('adminCred:', adminCred)
     adminCred = { password: 'Aa1234$%' }
 
@@ -146,7 +155,7 @@ function getEmptyCredentials() {
         // name: 'AAAA',
         email: 'AnatShapira@gmail.com',
         name: 'Anat Shapira',
-        password: 'Aa1234$%'
+        // password: 'Aa1234$%'
     }
 }
 

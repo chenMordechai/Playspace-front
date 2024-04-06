@@ -21,13 +21,13 @@ export async function adminLogin(credentials) {
         const adminCred = { password }
 
         const user = await authService.adminLogin(adminCred)
-
-        const userAdmin = {
-            userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
-            name: "anat shapira",
-            isAdmin: true,
-            checkAdmin: true
-        } // for dev
+        const userAdmin = user;
+        // const userAdmin = {
+        //     userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
+        //     name: "anat shapira",
+        //     isAdmin: true,
+        //     checkAdmin: true
+        // } // for dev
 
         store.dispatch({ type: SET_LOGGEDIN_USER, user: userAdmin })
         console.log('userAdmin:', userAdmin)

@@ -13,6 +13,11 @@ export const gameService = {
     getEmptyTeam,
     getEmptyStage,
     getEmptyQuestion,
+    getGames2
+}
+
+async function getGames2() {
+    return await httpService.getGames();
 }
 
 async function getGames(loggedinUser) {
