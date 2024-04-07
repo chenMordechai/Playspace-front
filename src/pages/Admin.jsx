@@ -21,12 +21,12 @@ export function Admin() {
     const [isLoading, setIsLoading] = useState(false)
 
     const [admins , setAdmins] = useState(null)
-console.log('admins:', admins)
    
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
     const navigate = useNavigate()
 
     useEffect(()=>{
+        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         loadAdmins()
     },[])
     
@@ -36,10 +36,6 @@ console.log('admins:', admins)
     }
 
     useEffect(() => {
-        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
-        // const date = new Date("2024-04-02 11:00")
-        // console.log('date', date)
-        // console.log('date:', date.getTime())
         console.log('game:', game)
     }, [game])
 
@@ -172,21 +168,10 @@ console.log('admins:', admins)
 
     function onSubmitForm(ev) {
         ev.preventDefault()
-        // change time to timestamp 
-        // const strGameStartTime = gameTime.dateStart +' ' + gameTime.timeStart
-        // const strGameEndTime = gameTime.dateEnd +' ' + gameTime.timeEnd
-        // const gameStartTime =new Date(strGameStartTime).getTime()
-        // const gameEndTime = new Date(strGameEndTime).getTime()
-        // setGame(prevGame=> ({...prevGame, gameStartTime,gameEndTime}))
-
-        // const strStageStartTime = stageTime.dateStart +' ' + stageTime.timeStart
-        // const strStageEndTime = stageTime.dateEnd +' ' + stageTime.timeEnd
-        // const stageStartTime =new Date(strStageStartTime).getTime()
-        // const stageEndTime = new Date(strStageEndTime).getTime()
-        // setGame(prevGame=> ({...prevGame, stageStartTime,stageEndTime}))
-
-
-
+       
+        // const date = new Date("2024-04-02 11:00")
+        // console.log('date', date)
+        // console.log('date:', date.getTime())
         // check that the activity's scores is 100%
     }
 
@@ -208,7 +193,7 @@ console.log('admins:', admins)
 
                 <label htmlFor="admins">אדמינים</label>
                                     <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
-                                            {admins.map(admin=><option value={admin.userId}>
+                                            {admins?.map(admin=><option key={admin.userId} value={admin.userId}>
                                             {admin.name}
                                         </option>)}
                                     </select>
@@ -241,10 +226,10 @@ console.log('admins:', admins)
                 </>}
 
                 <label htmlFor="messageBefore">הודעה לפני המשחק</label>
-                <textarea name="messageBefore" id="messageBefore" value={game.messageBefore} onChange={onHandleChange} cols="30" rows="5"></textarea>
+                <textarea name="messageBefore" id="messageBefore" value={game.messageBefore} onChange={onHandleChange} cols="30" rows="3"></textarea>
                             
                 <label htmlFor="messageAfter">הודעה אחרי המשחק</label>
-                <textarea name="messageAfter" id="messageAfter" value={game.messageAfter} onChange={onHandleChange} cols="30" rows="5"></textarea>
+                <textarea name="messageAfter" id="messageAfter" value={game.messageAfter} onChange={onHandleChange} cols="30" rows="3"></textarea>
 
                 <label htmlFor="gameType">האם יש שלבים?</label>
                 <input type="checkbox" name="gameType" id="gameType" value={game.gameType} onChange={onHandleChange} />
@@ -262,7 +247,7 @@ console.log('admins:', admins)
                 </select>
 
 
-                {game.gameType === "stages" && game.stages && <section className="stages-container">
+                {game.gameType === "stages" && game.stages?.length && <section className="stages-container">
                     <span className="stages" >שלבי המשחק</span>
                     <ul className="stages">
                         {game.stages.map((stage, i) => <li key={i}>
@@ -272,8 +257,6 @@ console.log('admins:', admins)
                             <input type="text" name="name" id="name" value={stage.name}onChange={() => onHandleStageChange(event, i)} />
 
                             {game.activityProgressType === 'onTime' && <>
-                                {/* <label htmlFor="time">כמה זמן מוגדר לשלב (בשעות)</label>
-                                <input type="number" min="0" name="time" id="time" value={stage.time || 0} onChange={() => onHandleStageChange(event, i)} /> */}
                                <label htmlFor="dateStart">תאריך התחלה</label>
                                <input type="date" name="dateStart" id="dateStart" value={stage.dateStart} onChange={() => onHandleStageChange(event, i)}  />
 
@@ -297,10 +280,10 @@ console.log('admins:', admins)
                             <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />
                           
                             <label htmlFor="messageBefore">הודעה לפני השלב</label>
-                            <textarea name="messageBefore" id="messageBefore" value={stage.messageBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="5"></textarea>
+                            <textarea name="messageBefore" id="messageBefore" value={stage.messageBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
                             
-                            <label htmlFor="messageAfter">הודעה אחרי הלב</label>
-                            <textarea name="messageAfter" id="messageAfter" value={stage.messageAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="5"></textarea>
+                            <label htmlFor="messageAfter">הודעה אחרי השלב</label>
+                            <textarea name="messageAfter" id="messageAfter" value={stage.messageAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
 
                             <span>הזנת השאלות</span>
                             <button onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
@@ -311,6 +294,20 @@ console.log('admins:', admins)
 
                                     <label htmlFor="name">הטקסט</label>
                                     <input type="text" name="name" id="name" value={activity.name} onChange={() => onHandleActivityChange(event, i, j)} />
+
+                                    {game.activityProgressType === 'onTime' && <>
+                                        <label htmlFor="dateStart">תאריך התחלה</label>
+                                        <input type="date" name="dateStart" id="dateStart" value={activity.dateStart} onChange={() => onHandleActivityChange(event, i, j)}  />
+
+                                        <label htmlFor="timeStart">שעת התחלה</label>
+                                        <input type="time" name="timeStart" id="timeStart" value={activity.timeStart} onChange={() => onHandleActivityChange(event, i, j)}  />
+
+                                        <label htmlFor="dateEnd">תאריך סיום</label>
+                                        <input type="date" name="dateEnd" id="dateEnd" value={activity.dateEnd} onChange={() => onHandleActivityChange(event, i, j)}  />
+
+                                        <label htmlFor="timeEnd">שעת סיום</label>
+                                        <input type="time" name="timeEnd" id="timeEnd" value={activity.timeEnd} onChange={() => onHandleActivityChange(event, i, j)}  />
+                                     </>}
 
                                     <label htmlFor="activityType">סוג השאלה</label>
                                     <select name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
@@ -334,16 +331,27 @@ console.log('admins:', admins)
                                     <label htmlFor="maxError">כמה טעויות מותר</label>
                                     <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() =>  onHandleActivityChange(event, i, j)} />
 
-                                    <label htmlFor="media">תוספת גרפית</label>
-                                    <input type="file" name="media" id="media" onChange={() => onHandleActivityChange(event, i, j)} />
+                                    <label htmlFor="messageBefore">הודעה לפני השאלה</label>
+                                    <textarea name="messageBefore" id="messageBefore" value={activity.messageBefore} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
+                            
+                                    <label htmlFor="messageAfter">הודעה אחרי השאלה</label>
+                                    <textarea name="messageAfter" id="messageAfter" value={activity.messageAfter} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
 
-                                    {activity.media && <>
-                                        <span>{activity.media.type}</span>
-                                        <img className="media" src={activity.media.url} />
+                                    <label htmlFor="mediaBefore">תוספת גרפית לפני השאלה</label>
+                                    <input type="file" name="mediaBefore" id="mediaBefore" onChange={() => onHandleActivityChange(event, i, j)} />
+
+                                    {activity.mediaBefore && <>
+                                        <span>{activity.mediaBefore.type}</span>
+                                        <img className="media" src={activity.mediaBefore.url} />
                                     </>}
+                                    
+                                    <label htmlFor="mediaAfter">תוספת גרפית אחרי השאלה</label>
+                                    <input type="file" name="mediaAfter" id="mediaAfter" onChange={() => onHandleActivityChange(event, i, j)} />
 
-                                    <label htmlFor="moreContent">תוספת מלל</label>
-                                    <textarea name="moreContent" id="moreContent" value={activity.moreContent} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="5"></textarea>
+                                    {activity.mediaAfter && <>
+                                        <span>{activity.mediaAfter.type}</span>
+                                        <img className="media" src={activity.mediaAfter.url} />
+                                    </>}
 
                                     <label htmlFor="lifeSaver">גלגלי הצלה</label>
                                     <select multiple name="lifeSaver" id="lifeSaver" value={activities.lifeSaver} onChange={() => onHandleActivityChange(event, i, j)} >
@@ -352,8 +360,6 @@ console.log('admins:', admins)
                                         <option value="skip">דלג</option>
                                     </select>
 
-                                    <label htmlFor="moreContentAfter">תוספת מלל לאחר שאלה</label>
-                                    <textarea name="moreContentAfter" id="moreContentAfter" value={activity.moreContentAfter} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="5"></textarea>
                                 </li>)}
                             </ul>}
                         </li>)}
