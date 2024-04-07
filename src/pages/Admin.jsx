@@ -5,9 +5,10 @@ import { prominent } from 'color.js'
 
 import { gameService } from '../services/game.service.js'
 import { utilService } from '../services/util.service.js'
-import {getAdmins} from '../store/actions/auth.action.js'
+import { getAdmins } from '../store/actions/auth.action.js'
 
 import { Colors } from '../cmps/Colors'
+import { ActivityList } from '../cmps/ActivityList'
 
 export function Admin() {
 
@@ -20,17 +21,17 @@ export function Admin() {
 
     const [isLoading, setIsLoading] = useState(false)
 
-    const [admins , setAdmins] = useState(null)
-   
+    const [admins, setAdmins] = useState(null)
+
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
     const navigate = useNavigate()
 
-    useEffect(()=>{
+    useEffect(() => {
         if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         loadAdmins()
-    },[])
-    
-  async function loadAdmins(){
+    }, [])
+
+    async function loadAdmins() {
         const admins = await getAdmins()
         setAdmins(admins)
     }
@@ -50,13 +51,13 @@ export function Admin() {
     function onHandleChange(ev) {
         let { name, value, type } = ev.target
         if (type === 'number') value = +value
-        if (type === 'checkbox')  value = ev.target.checked
+        if (type === 'checkbox') value = ev.target.checked
         if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => option.value)
-    
-        if(name === 'gameType'){
-            value = (value)? 'stages' :'activities'
+
+        if (name === 'gameType') {
+            value = (value) ? 'stages' : 'activities'
             setGame(prevGame => ({ ...prevGame, [name]: value }))
-        }else if (name === 'groups' || name === 'stages') {
+        } else if (name === 'groups' || name === 'stages') {
             const object = name === 'groups' ? gameService.getEmptyGroup() : gameService.getEmptyStage()
             setGame(prevGame => {
                 const diff = value - (prevGame[name]?.length || 0)
@@ -67,8 +68,8 @@ export function Admin() {
             setGame(prevGame => ({ ...prevGame, [name]: value }))
         }
     }
-    
-   
+
+
 
     async function onChangeImg(ev) {
         try {
@@ -168,7 +169,7 @@ export function Admin() {
 
     function onSubmitForm(ev) {
         ev.preventDefault()
-       
+
         // const date = new Date("2024-04-02 11:00")
         // console.log('date', date)
         // console.log('date:', date.getTime())
@@ -192,11 +193,11 @@ export function Admin() {
                 <input type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
                 <label htmlFor="admins">אדמינים</label>
-                                    <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
-                                            {admins?.map(admin=><option key={admin.userId} value={admin.userId}>
-                                            {admin.name}
-                                        </option>)}
-                                    </select>
+                <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                    {admins?.map(admin => <option key={admin.userId} value={admin.userId}>
+                        {admin.name}
+                    </option>)}
+                </select>
 
                 <label htmlFor="dateStart">תאריך התחלה</label>
                 <input type="date" name="dateStart" id="dateStart" value={game.dateStart} onChange={onHandleChange} />
@@ -227,18 +228,10 @@ export function Admin() {
 
                 <label htmlFor="messageBefore">הודעה לפני המשחק</label>
                 <textarea name="messageBefore" id="messageBefore" value={game.messageBefore} onChange={onHandleChange} cols="30" rows="3"></textarea>
-                            
+
                 <label htmlFor="messageAfter">הודעה אחרי המשחק</label>
                 <textarea name="messageAfter" id="messageAfter" value={game.messageAfter} onChange={onHandleChange} cols="30" rows="3"></textarea>
 
-                <label htmlFor="gameType">האם יש שלבים?</label>
-                <input type="checkbox" name="gameType" id="gameType" value={game.gameType} onChange={onHandleChange} />
-
-               { game.gameType === "stages" &&  <> 
-               <label htmlFor="stages">מספר שלבי המשחק</label>
-                <input type="number" min="0" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
-                </>}
-              
                 <label htmlFor="activityProgressType">אופי המשחק</label>
                 <select name="activityProgressType" id="activityProgressType" value={game.activityProgressType} onChange={onHandleChange} >
                     <option value="open">פתוח</option>
@@ -246,6 +239,16 @@ export function Admin() {
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
+                {/* <label htmlFor="gameType">האם יש שלבים?</label>
+                <input type="checkbox" name="gameType" id="gameType" value={game.gameType} onChange={onHandleChange} /> */}
+
+                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'stages' }))}>משחק עם שלבים</button>
+                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'activities' }))}>משחק בלי שלבים</button>
+
+                {game.gameType === "stages" && <>
+                    <label htmlFor="stages">מספר שלבי המשחק</label>
+                    <input type="number" min="0" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
+                </>}
 
                 {game.gameType === "stages" && game.stages?.length && <section className="stages-container">
                     <span className="stages" >שלבי המשחק</span>
@@ -254,20 +257,20 @@ export function Admin() {
                             <span className="stages">שלב  {i + 1}</span>
 
                             <label htmlFor="name">שם השלב</label>
-                            <input type="text" name="name" id="name" value={stage.name}onChange={() => onHandleStageChange(event, i)} />
+                            <input type="text" name="name" id="name" value={stage.name} onChange={() => onHandleStageChange(event, i)} />
 
                             {game.activityProgressType === 'onTime' && <>
-                               <label htmlFor="dateStart">תאריך התחלה</label>
-                               <input type="date" name="dateStart" id="dateStart" value={stage.dateStart} onChange={() => onHandleStageChange(event, i)}  />
+                                <label htmlFor="dateStart">תאריך התחלה</label>
+                                <input type="date" name="dateStart" id="dateStart" value={stage.dateStart} onChange={() => onHandleStageChange(event, i)} />
 
-                               <label htmlFor="timeStart">שעת התחלה</label>
-                               <input type="time" name="timeStart" id="timeStart" value={stage.timeStart} onChange={() => onHandleStageChange(event, i)}  />
+                                <label htmlFor="timeStart">שעת התחלה</label>
+                                <input type="time" name="timeStart" id="timeStart" value={stage.timeStart} onChange={() => onHandleStageChange(event, i)} />
 
-                               <label htmlFor="dateEnd">תאריך סיום</label>
-                               <input type="date" name="dateEnd" id="dateEnd" value={stage.dateEnd} onChange={() => onHandleStageChange(event, i)}  />
+                                <label htmlFor="dateEnd">תאריך סיום</label>
+                                <input type="date" name="dateEnd" id="dateEnd" value={stage.dateEnd} onChange={() => onHandleStageChange(event, i)} />
 
-                               <label htmlFor="timeEnd">שעת סיום</label>
-                               <input type="time" name="timeEnd" id="timeEnd" value={stage.timeEnd} onChange={() => onHandleStageChange(event, i)}  />
+                                <label htmlFor="timeEnd">שעת סיום</label>
+                                <input type="time" name="timeEnd" id="timeEnd" value={stage.timeEnd} onChange={() => onHandleStageChange(event, i)} />
                             </>}
 
                             <label htmlFor="activities">כמה שאלות יש בשלב</label>
@@ -278,100 +281,28 @@ export function Admin() {
 
                             <label htmlFor="isRequired">האם השלב חובה?</label>
                             <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />
-                          
+
                             <label htmlFor="messageBefore">הודעה לפני השלב</label>
                             <textarea name="messageBefore" id="messageBefore" value={stage.messageBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
-                            
+
                             <label htmlFor="messageAfter">הודעה אחרי השלב</label>
                             <textarea name="messageAfter" id="messageAfter" value={stage.messageAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
 
                             <span>הזנת השאלות</span>
                             <button onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
 
-                            {openActivities && <ul className="activity">
-                                {stage.activities?.map((activity, j) => <li key={j}>
-                                    <span className="activity">שאלה {j + 1}</span>
-
-                                    <label htmlFor="name">הטקסט</label>
-                                    <input type="text" name="name" id="name" value={activity.name} onChange={() => onHandleActivityChange(event, i, j)} />
-
-                                    {game.activityProgressType === 'onTime' && <>
-                                        <label htmlFor="dateStart">תאריך התחלה</label>
-                                        <input type="date" name="dateStart" id="dateStart" value={activity.dateStart} onChange={() => onHandleActivityChange(event, i, j)}  />
-
-                                        <label htmlFor="timeStart">שעת התחלה</label>
-                                        <input type="time" name="timeStart" id="timeStart" value={activity.timeStart} onChange={() => onHandleActivityChange(event, i, j)}  />
-
-                                        <label htmlFor="dateEnd">תאריך סיום</label>
-                                        <input type="date" name="dateEnd" id="dateEnd" value={activity.dateEnd} onChange={() => onHandleActivityChange(event, i, j)}  />
-
-                                        <label htmlFor="timeEnd">שעת סיום</label>
-                                        <input type="time" name="timeEnd" id="timeEnd" value={activity.timeEnd} onChange={() => onHandleActivityChange(event, i, j)}  />
-                                     </>}
-
-                                    <label htmlFor="activityType">סוג השאלה</label>
-                                    <select name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
-                                        <option value="open">פתוחה</option>
-                                        <option value="multiple">רב ברירה</option>
-                                        <option value="yesno">נכון/לא נכון</option>
-                                        <option value="typing">הקלדה</option>
-                                    </select>
-
-                                    {activity.activityType === "multiple" && <>
-                                        <label htmlFor="activityAswers">האופציות לתשובה (א,ב,ג)</label>
-                                        <input type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
-                                    </>}
-
-                                    <label htmlFor="answer">התשובה</label>
-                                    <input type="text" name="answer" id="answer" value={activity.answer} onChange={() => onHandleActivityChange(event, i, j)} />
-
-                                    <label htmlFor="pointsValue">ניקוד</label>
-                                    <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />
-
-                                    <label htmlFor="maxError">כמה טעויות מותר</label>
-                                    <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() =>  onHandleActivityChange(event, i, j)} />
-
-                                    <label htmlFor="messageBefore">הודעה לפני השאלה</label>
-                                    <textarea name="messageBefore" id="messageBefore" value={activity.messageBefore} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
-                            
-                                    <label htmlFor="messageAfter">הודעה אחרי השאלה</label>
-                                    <textarea name="messageAfter" id="messageAfter" value={activity.messageAfter} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
-
-                                    <label htmlFor="mediaBefore">תוספת גרפית לפני השאלה</label>
-                                    <input type="file" name="mediaBefore" id="mediaBefore" onChange={() => onHandleActivityChange(event, i, j)} />
-
-                                    {activity.mediaBefore && <>
-                                        <span>{activity.mediaBefore.type}</span>
-                                        <img className="media" src={activity.mediaBefore.url} />
-                                    </>}
-                                    
-                                    <label htmlFor="mediaAfter">תוספת גרפית אחרי השאלה</label>
-                                    <input type="file" name="mediaAfter" id="mediaAfter" onChange={() => onHandleActivityChange(event, i, j)} />
-
-                                    {activity.mediaAfter && <>
-                                        <span>{activity.mediaAfter.type}</span>
-                                        <img className="media" src={activity.mediaAfter.url} />
-                                    </>}
-
-                                    <label htmlFor="lifeSaver">גלגלי הצלה</label>
-                                    <select multiple name="lifeSaver" id="lifeSaver" value={activities.lifeSaver} onChange={() => onHandleActivityChange(event, i, j)} >
-                                        {activity.activityType === 'multiple' && <option value="fifty">50/50</option>}
-                                        <option value="moreTime">תוספת זמן</option>
-                                        <option value="skip">דלג</option>
-                                    </select>
-
-                                </li>)}
-                            </ul>}
+                            {openActivities && <ActivityList activities={stage.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} i={i} />}
                         </li>)}
                     </ul>
                 </section>}
 
-                { game.gameType === "activities" && <section>
-                    <h2>משחק בלי שלבים</h2>
+                {game.gameType === "activities" && <section className="game-type-activities">
 
-                    </section>}
+                    <label htmlFor="activities">מספר השאלות</label>
+                    {/* <input type="number" min="0" name="activities" id="activities" value={stage.activities?.length || 0} onChange={() => onHandleStageChange(event, i)} /> */}
+                </section>}
 
-                <button type="submit">send</button>
+                {/* <button type="submit">send</button> */}
             </form>
         </section >
     )
@@ -397,7 +328,7 @@ export function Admin() {
 //         "pointsValue": 2147483647, // front
 //         "maxError": 0, // front
 //         "correctAnswerId": 0, // front
-//         "activityAswers": "string",  // front  
+//         "activityAswers": "string",  // front
 //         "mediaBefore": "string", // front
 //         "mediaIdAfter": "string", // front
 //         "testBefore": "string", // front
@@ -406,7 +337,7 @@ export function Admin() {
 //     ],
 //     "stages": null,
 //     "gameStartTime": 0, // front
-//     "gameEndTime": 0, // front   
+//     "gameEndTime": 0, // front
 //     "groups": [ // front
 //         {
 //           "id": 0, // front
@@ -434,13 +365,13 @@ export function Admin() {
 
 
 // {
-//   
+//
 //     "activities":null,
 //     "stages": [ // game with stages
 //       {
 //         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
 //         "name": "string", // front
-//         "activities": [ 
+//         "activities": [
 //           "string" // front + back - object!
 //         ],
 //         "messageBefore": "string", // front

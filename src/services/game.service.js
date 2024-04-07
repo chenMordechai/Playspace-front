@@ -170,11 +170,11 @@ function getEmptyGame() {
         themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v
         logo: '', // ? iconId?
         groups: null, // v
-        gameType: 'activities', // stages or not v
+        gameType: '', // stages or not v
         activityProgressType: 'open', // open/ time/ progress v
-        admins:[], // v
-        messageBefore:'', // v
-        messageAfter:'', // v
+        admins: [], // v
+        messageBefore: '', // v
+        messageAfter: '', // v
     }
 }
 
@@ -182,45 +182,45 @@ function getEmptyGroup() {
     return {
         id: utilService.makeId(), // adding txt from the game name
         name: '', // v
-        additionalScore:0, // after game
+        additionalScore: 0, // after game
     }
 }
 function getEmptyStage() {
-    return { 
-        name:'', // v
+    return {
+        name: '', // v
         activities: null, // v
-        messageBefore:'', // v
-        messageAfter:'', // v
+        messageBefore: '', // v
+        messageAfter: '', // v
         dateStart: '', // for form v
         timeStart: '', // for form v
         dateEnd: '', // for form v
         timeEnd: '', // for form v
-        stageStartTime:0, // after form - if the game.activityProgressType === onTime
-        stageEndTime:0, // after form - if the game.activityProgressType === onTime
+        // stageStartTime:0, // after form - if the game.activityProgressType === onTime
+        // stageEndTime:0, // after form - if the game.activityProgressType === onTime
         maxError: '', // v
         isRequired: false, // v
     }
 }
 function getEmptyActivity() {
-    return { 
-        name:'' ,// v
+    return {
+        name: '',// v
         activityType: 'open', // v open/multiple/yesno/typing
         answer: '', // v
         activityAswers: null, // activityType === 'multiple' v
-        correctAnswerId:0, // after form
-        timeToRespond:0, // on game
+        correctAnswerId: 0, // after form (calc from 2 props above)
+        timeToRespond: 0, // on game
         dateStart: '', // for form v
         timeStart: '', // for form v
         dateEnd: '', // for form v
         timeEnd: '', // for form v
-        activityStartTime:0, // activityProgressType === 'onTime' 
-        activityEndTime:0,
+        // activityStartTime:0, // after form - if the game.activityProgressType === onTime
+        // activityEndTime:0, // after form - if the game.activityProgressType === onTime
         pointsValue: 0, // v
-        maxError:0, // v
-        mediaBefore: null,
-        mediaAfter: null,
-        textBefore: null,
-        textAfter: null,
-        lifeSaver: []
+        maxError: 0, // v
+        mediaBefore: null, // {type : image/video , txt:'' , url:''} v
+        mediaAfter: null, // {type : image/video , txt:'' , url:''} v
+        messageBefore: '', // v
+        messageAfter: '', // v
+        lifeSaver: null // v
     }
 }
