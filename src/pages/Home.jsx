@@ -32,7 +32,7 @@ export function Home() {
     }
 
     async function fetchDataAndPrint() {
-        const url = "https://localhost:7264/api/Admin/Games";
+        const url = "https://62.171.155.24/api/Admin/Games";
     
         try {
             var data = await httpService.getGames();

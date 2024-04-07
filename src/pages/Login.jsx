@@ -24,8 +24,6 @@ export function Login() {
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
-    
-
     async function handleSubmitLoginForm(ev) {
         ev.preventDefault();
         try {
@@ -40,17 +38,13 @@ export function Login() {
     async function handleSubmitAdminForm(ev) {
         ev.preventDefault();
         try {
-            // setCredentials(prev => ({ ...prev, password: 'Aa1234$%' })) // for dev
             const userAdmin = await adminLogin(credentials)
-
             console.log('success AdminLogin', userAdmin)
             navigate('/home')
         } catch (error) {
             console.error('Error:', error);
         }
     }
-
-
 
     return (
         <section className="login">

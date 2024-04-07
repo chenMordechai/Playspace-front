@@ -29,7 +29,6 @@ export const authService = {
 // work
 async function login(userCred) {
     const user = await httpService.post(`${BASE_URL_AUTH}Login`, userCred)
-    console.log('user:', user)
     user.isAdmin = true  // for dev
     if (user) {
         _setLoggedinUser(user)
@@ -37,61 +36,14 @@ async function login(userCred) {
     }
 }
 
+// work
 async function adminLogin(adminCred) {
     const user = await httpService.post(`${BASE_URL_AUTH}AdminLogin`, {password: "Aa1234$%"})
-    console.log('user:', user)
-    user.isAdmin = true  // for dev
+    user.checkAdmin = true  // for dev
     if (user) {
         _setLoggedinUser(user)
         return user
     }
-
-
-    console.log('adminCred:', adminCred)
-    adminCred = { password: 'Aa1234$%' }
-
-    ////////////////////////////////////////////////////////
-    // api call doesn't work
-    const userAdmin = await httpService.get(`${BASE_URL_AUTH}AdminLogin`, adminCred)
-    console.log('userAdmin:', userAdmin)
-
-    // userAdmin.isAdmin = true  // for dev
-    // userAdmin.checkAdmin = true // for dev 
-    // if (userAdmin) {
-    // const userAdmin = {
-    //     userId: "78ddbb27-9fa5-4e24-2127-08dc4f5ff903",
-    //     name: "anat shapira",
-    //     isAdmin: true,
-    //     checkAdmin: true
-    // } // for dev
-    _setLoggedinUser(userAdmin)
-    //     return userAdmin
-    // }
-
-    ////////////////////////////////////////////////////////
-
-    // https://62.171.155.24/api/auth/AdminLogin?password=Aa1234$%
-
-    // const res = await axios({
-    //     url: `https://62.171.155.24/api/auth/AdminLogin`,
-    //     method: 'GET',
-    //     params: {
-    //         password: 'Aa1234$%'
-    //     },
-
-    // })
-    // console.log(res.data)
-
-    ////////////////////////////////////////////////////////
-
-    // const response = await fetch('https://62.171.155.24/api/auth/AdminLogin', {
-    //     method: 'GET',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    // })
-    // console.log(await response.json())
-
 }
 
 // logout for user and admin
@@ -100,31 +52,20 @@ async function logout() {
     localStorage.removeItem(STORAGE_KEY_PLAYER)
     // missing api for logout
     // return await httpService.post(BASE_URL_AUTH + 'logout')
-
+    
 }
 
 // for players
+// work
 async function signup({ email, gameId, groupId, name, password }) {
     const playerToSave = { email, gameId, groupId, name, password }
 
     const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
 
-    // const response = await fetch('https://62.171.155.24/api/auth/Signup', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(playerToSave)
-    // });
-    // const player = await response.json()
-
-    console.log('player:', player)
     _setLoggedinPlayer(player)
     return player
 
 }
-
-
 
 function getLoggedinUser() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY_USER))
@@ -133,7 +74,6 @@ function getLoggedinUser() {
 function getLoggedinPlayer() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY_PLAYER))
 }
-
 
 function _setLoggedinUser(user) {
     // const { userId, name , isAdmin } = user
