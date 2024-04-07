@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 
 import { getGameById } from "../store/actions/game.action.js"
 
-export function Game (){
+export function Game() {
     const [game, setGame] = useState(null)
 
     const { gameId } = useParams()
@@ -17,7 +17,7 @@ export function Game (){
         try {
             const game = await getGameById(game)
             console.log('game:', game)
-            setGames(games)
+            setGame(game)
         } catch (err) {
             console.log('err:', err)
         }

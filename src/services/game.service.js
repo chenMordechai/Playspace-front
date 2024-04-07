@@ -1,7 +1,7 @@
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 
-const BASE_URL = 'Game/'
+const BASE_URL = 'Game'
 
 export const gameService = {
     getGames,
@@ -143,12 +143,13 @@ async function remove(gameId) {
     return httpService.delete(BASE_URL + gameId)
 }
 
+// doesn't work
 async function save(game) {
 
     if (game.id) {
-        return httpService.put(BASE_URL + game.id, game)
+        // return httpService.put(BASE_URL + game.id, game)
     } else {
-        return httpService.post(BASE_URL, post)
+        // return httpService.post(BASE_URL, game)
     }
 }
 

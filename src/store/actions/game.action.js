@@ -22,3 +22,13 @@ export async function getGameById(gameId) {
     }
 }
 
+export async function addGame(game) {
+    try {
+        const newGame = await gameService.save(game)
+        return newGame
+    } catch (err) {
+        console.log('user action -> Cannot add game', err)
+        throw err
+    }
+}
+

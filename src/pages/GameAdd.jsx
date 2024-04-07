@@ -6,11 +6,12 @@ import { prominent } from 'color.js'
 import { gameService } from '../services/game.service.js'
 import { utilService } from '../services/util.service.js'
 import { getAdmins } from '../store/actions/auth.action.js'
+import { addGame } from '../store/actions/game.action.js'
 
 import { Colors } from '../cmps/Colors'
 import { ActivityList } from '../cmps/ActivityList'
 
-export function Admin() {
+export function GameAdd() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
     const [openActivities, setOpenActivities] = useState(false)
@@ -171,13 +172,48 @@ export function Admin() {
         }
     }
 
-    function onSubmitForm(ev) {
+  async function onSubmitForm(ev) {
         ev.preventDefault()
 
-        // const date = new Date("2024-04-02 11:00")
-        // console.log('date', date)
-        // console.log('date:', date.getTime())
-        // check that the activity's scores is 100%
+        // groups id changes
+        game.groups.forEach(group=>{
+            group.id += game.name.substring(0,3)
+        })
+      
+        // time changes
+        const gameStartTime = new Date(game.dateStart +' '+game.timeStart).getTime()
+        const gameEndTime = new Date(game.dateEnd +' '+game.timeEnd).getTime()
+        game.gameStartTime = gameStartTime
+        game.gameEndTime = gameEndTime
+
+        if(game.activityProgressType === 'onTime'){
+            if(game.gameType === 'activities'){
+                game.activities.forEach(activity=>{
+                const gameStartTime = new Date(activity.dateStart +' '+activity.timeStart).getTime()
+                const gameEndTime = new Date( activity.dateEnd +' '+activity.timeEnd).getTime()
+                activity.gameStartTime = gameStartTime
+                activity.gameEndTime = gameEndTime
+            })
+            }else{
+                game.stages.forEach(stage=>{
+                    const gameStartTime = new Date(stage.dateStart +' '+stage.timeStart).getTime()
+                    const gameEndTime = new Date(stage.dateEnd +' '+stage.timeEnd).getTime()
+                    stage.gameStartTime = gameStartTime
+                    stage.gameEndTime = gameEndTime
+                    stage.activities.forEach(activity=>{
+                        const gameStartTime = new Date( activity.dateStart +' '+activity.timeStart).getTime()
+                        const gameEndTime = new Date(activity.dateEnd +' '+activity.timeEnd).getTime()
+                        activity.gameStartTime = gameStartTime
+                        activity.gameEndTime = gameEndTime
+                    })
+                })
+        }
+    }
+
+    console.log('game:', game)
+
+        const newGame = await addGame(game)
+        // console.log('newGame:', newGame)
     }
 
     function onOpenActivities() {
@@ -194,10 +230,10 @@ export function Admin() {
 
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>
-                <input type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
+                <input required type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
                 <label htmlFor="admins">אדמינים</label>
-                <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
                     {admins?.map(admin => <option key={admin.userId} value={admin.userId}>
                         {admin.name}
                     </option>)}
@@ -306,83 +342,10 @@ export function Admin() {
 
                 </section>}
 
-                {/* <button type="submit">send</button> */}
+                <button type="submit" className="btn-sumbit">Create Game</button>
             </form>
         </section >
     )
 }
 
 
-
-// {
-//     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
-//     "name": "string", // front v
-//     "createdDate": 0, // back
-//     "updatedDate": 0, // back
-//     "isDeleted": true, // back
-//     "activities": [ // game without stages
-//       {
-//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
-//         "name": "string", // front
-//         "isDeleted": true, // back
-//         "activityType": 0, // front
-//         "timeToRespond": 0, // front
-//         "activityStartTime": 0, // front
-//         "activityEndTime": 0, // front
-//         "pointsValue": 2147483647, // front
-//         "maxError": 0, // front
-//         "correctAnswerId": 0, // front
-//         "activityAswers": "string",  // front
-//         "mediaBefore": "string", // front
-//         "mediaIdAfter": "string", // front
-//         "testBefore": "string", // front
-//         "testAfter": "string" // front
-//       }
-//     ],
-//     "stages": null,
-//     "gameStartTime": 0, // front
-//     "gameEndTime": 0, // front
-//     "groups": [ // front
-//         {
-//           "id": 0, // front
-//           "name": "string", // front
-//           "additionalScore": 0 // front
-//         }
-//       ],
-//     "themeColors": ['#','#','#'] // front
-//     "iconId": "string", // ? logoUrl?
-//     "description": "string", // front
-//     "gameType": 0, // front
-//     "activityProgressType": 0, // front
-//     "admins": [ // front + back
-//       {
-//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//         "adminId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//         "gameId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//         "isDeleted": true
-//       }
-//     ],
-//     "messageBefore": "string", // front
-//     "messageAfter": "string", // front
-//   }
-
-
-
-// {
-//
-//     "activities":null,
-//     "stages": [ // game with stages
-//       {
-//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
-//         "name": "string", // front
-//         "activities": [
-//           "string" // front + back - object!
-//         ],
-//         "messageBefore": "string", // front
-//         "messageAfter": "string", // front
-//         "stageStartDate": 0, // front
-//         "stageEndDate": 0, // front
-//         "maxError": 0 // front
-//       }
-//     ],
-// }
