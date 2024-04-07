@@ -56,10 +56,12 @@ export function Home() {
                         {game.name}
                         <Link to={`/game/edit/${game.id}`} title="Edit" >
                           <span>Edit</span>
+                          </Link> |
+                        <Link to={`/game/${game.id}`} title="Play" >
+                          <span>Play</span>
                           </Link>
                         <button>Details</button>
                         <button>Delete</button>
-                        <button>Play</button>
                     </li>)}
                 </ul>
             </section>}
