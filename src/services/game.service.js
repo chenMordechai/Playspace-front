@@ -159,8 +159,8 @@ async function getActivitiesOfGame() {
 function getEmptyGame() {
     return {
         name: '', // v
-        activities: null,
-        stages: null,
+        activities: null, // || []
+        stages: null, // || []
         dateStart: '', // for form v
         timeStart: '', // for form v
         dateEnd: '', // for form v
@@ -170,7 +170,7 @@ function getEmptyGame() {
         themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v
         logo: '', // ? iconId?
         groups: null, // v
-        gameType: '', // stages or not v
+        gameType: '', // stages or activities v
         activityProgressType: 'open', // open/ time/ progress v
         admins: [], // v
         messageBefore: '', // v
@@ -206,7 +206,7 @@ function getEmptyActivity() {
         name: '',// v
         activityType: 'open', // v open/multiple/yesno/typing
         answer: '', // v
-        activityAswers: null, // activityType === 'multiple' v
+        activityAswers: null, // if activityType === 'multiple' v
         correctAnswerId: 0, // after form (calc from 2 props above)
         timeToRespond: 0, // on game
         dateStart: '', // for form v

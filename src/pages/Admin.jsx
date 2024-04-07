@@ -57,8 +57,8 @@ export function Admin() {
         if (name === 'gameType') {
             value = (value) ? 'stages' : 'activities'
             setGame(prevGame => ({ ...prevGame, [name]: value }))
-        } else if (name === 'groups' || name === 'stages') {
-            const object = name === 'groups' ? gameService.getEmptyGroup() : gameService.getEmptyStage()
+        } else if (name === 'groups' || name === 'stages' || name === 'activities') {
+            const object = name === 'groups' ? gameService.getEmptyGroup() : name === 'stages' ? gameService.getEmptyStage() : gameService.getEmptyActivity()
             setGame(prevGame => {
                 const diff = value - (prevGame[name]?.length || 0)
                 if (diff > 0) return { ...prevGame, [name]: (prevGame[name]?.length) ? [...prevGame[name], object] : [object] }
@@ -68,8 +68,6 @@ export function Admin() {
             setGame(prevGame => ({ ...prevGame, [name]: value }))
         }
     }
-
-
 
     async function onChangeImg(ev) {
         try {
@@ -160,11 +158,17 @@ export function Admin() {
         else if (name === 'activityAswers') value = value.split(',')
         else if (name === 'lifeSaver') value = Array.from(ev.target.selectedOptions, option => option.value)
 
-        setGame(prevGame => {
-            prevGame.stages[i].activities[j][name] = value
-            return { ...prevGame }
-        })
-
+        if (i === undefined) { // game.activities
+            setGame(prevGame => {
+                prevGame.activities[j][name] = value
+                return { ...prevGame }
+            })
+        } else { // game.stage.activities
+            setGame(prevGame => {
+                prevGame.stages[i].activities[j][name] = value
+                return { ...prevGame }
+            })
+        }
     }
 
     function onSubmitForm(ev) {
@@ -239,11 +243,8 @@ export function Admin() {
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
-                {/* <label htmlFor="gameType">האם יש שלבים?</label>
-                <input type="checkbox" name="gameType" id="gameType" value={game.gameType} onChange={onHandleChange} /> */}
-
-                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'stages' }))}>משחק עם שלבים</button>
-                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'activities' }))}>משחק בלי שלבים</button>
+                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'stages', activities: null }))}>משחק עם שלבים</button>
+                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'activities', stages: null }))}>משחק בלי שלבים</button>
 
                 {game.gameType === "stages" && <>
                     <label htmlFor="stages">מספר שלבי המשחק</label>
@@ -299,7 +300,10 @@ export function Admin() {
                 {game.gameType === "activities" && <section className="game-type-activities">
 
                     <label htmlFor="activities">מספר השאלות</label>
-                    {/* <input type="number" min="0" name="activities" id="activities" value={stage.activities?.length || 0} onChange={() => onHandleStageChange(event, i)} /> */}
+                    <input type="number" min="0" name="activities" id="activities" value={game.activities?.length || 0} onChange={onHandleChange} />
+
+                    {game.activities && <ActivityList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} />}
+
                 </section>}
 
                 {/* <button type="submit">send</button> */}

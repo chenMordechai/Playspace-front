@@ -69,7 +69,9 @@
             width: 100%;
         }
 
-        ul.stages li {
+        ul.stages li,
+        section.game-type-activities,
+        section.game-type-activities li {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
