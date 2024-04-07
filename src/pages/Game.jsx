@@ -10,13 +10,12 @@ export function Game (){
 
     useEffect(() => {
         console.log('gameId', gameId)
-
         init()
     }, [])
 
     async function init() {
         try {
-            const game = await getGameById(gameId)
+            const game = await getGameById(game)
             console.log('game:', game)
             setGames(games)
         } catch (err) {

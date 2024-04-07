@@ -10,16 +10,14 @@ export const gameService = {
     remove,
     getActivitiesOfGame,
     getEmptyGame,
-    getEmptyTeam,
+    getEmptyGroup,
     getEmptyStage,
-    getEmptyQuestion,
+    getEmptyActivity,
     getGames2
 }
 
-async function getGames2() {
-    return await httpService.getGames();
-}
-
+// get demo data
+// doesn't work
 async function getGames(loggedinUser) {
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
     // doesn't work
@@ -132,17 +130,23 @@ async function getGames(loggedinUser) {
     ])
 }
 
+// doesn't work
+async function getGames2() {
+    return await httpService.getGames();
+}
+
 async function getGameById(gameId) {
     return httpService.get(BASE_URL + gameId)
 }
 
-async function remove(postId) {
-    return httpService.delete(BASE_URL + postId)
+async function remove(gameId) {
+    return httpService.delete(BASE_URL + gameId)
 }
 
-async function save(post) {
-    if (post._id) {
-        return httpService.put(BASE_URL + post._id, post)
+async function save(game) {
+
+    if (game.id) {
+        return httpService.put(BASE_URL + game.id, game)
     } else {
         return httpService.post(BASE_URL, post)
     }
@@ -154,47 +158,69 @@ async function getActivitiesOfGame() {
 
 function getEmptyGame() {
     return {
-        name: '',
-        dateStart: '',
-        timeStart: '',
-        dateEnd: '',
-        timeEnd: '',
-        colors: ['#ffffff', '#9e9e9e', '#000000'],
-        logo: '',
-        teams: null,
-        guidelines: '',
-        type: '',
+        name: '', // v
+        activities: null,
         stages: null,
-
+        dateStart: '', // for form v
+        timeStart: '', // for form v
+        dateEnd: '', // for form v
+        timeEnd: '', // for form v
+        // gameStartTime:0, // after form
+        // gameEndTime:0, // after form
+        themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v
+        logo: '', // ? iconId?
+        groups: null, // v
+        gameType: 'activities', // stages or not v
+        activityProgressType: 'open', // open/ time/ progress v
+        admins:[], // v
+        messageBefore:'', // v
+        messageAfter:'', // v
     }
 }
 
-function getEmptyTeam() {
+function getEmptyGroup() {
     return {
-        id: utilService.makeId(),
-        name: ''
+        id: utilService.makeId(), // adding txt from the game name
+        name: '', // v
+        additionalScore:0, // after game
     }
 }
 function getEmptyStage() {
-    return {
-        id: utilService.makeId(),
-        time: '',
-        questions: null,
-        numOfMistakes: '',
-        isRequired: false
+    return { 
+        name:'', // v
+        activities: null, // v
+        messageBefore:'', // v
+        messageAfter:'', // v
+        dateStart: '', // for form v
+        timeStart: '', // for form v
+        dateEnd: '', // for form v
+        timeEnd: '', // for form v
+        stageStartTime:0, // after form - if the game.activityProgressType === onTime
+        stageEndTime:0, // after form - if the game.activityProgressType === onTime
+        maxError: '', // v
+        isRequired: false, // v
     }
 }
-function getEmptyQuestion() {
-    return {
-        id: utilService.makeId(),
-        type: '',
-        txt: '',
-        answer: '',
-        options: [],
-        score: 0,
-        media: null,
-        moreContent: '',
-        moreContentAfter: '',
+function getEmptyActivity() {
+    return { 
+        name:'' ,// v
+        activityType: 'open', // v open/multiple/yesno/typing
+        answer: '', // v
+        activityAswers: null, // activityType === 'multiple' v
+        correctAnswerId:0, // after form
+        timeToRespond:0, // on game
+        dateStart: '', // for form v
+        timeStart: '', // for form v
+        dateEnd: '', // for form v
+        timeEnd: '', // for form v
+        activityStartTime:0, // activityProgressType === 'onTime' 
+        activityEndTime:0,
+        pointsValue: 0, // v
+        maxError:0, // v
+        mediaBefore: null,
+        mediaAfter: null,
+        textBefore: null,
+        textAfter: null,
         lifeSaver: []
     }
 }

@@ -20,6 +20,7 @@ export const authService = {
     adminLogin,
     logout,
     signup,
+    getAdmins,
     getLoggedinUser,
     getLoggedinPlayer,
     getEmptyCredentials,
@@ -38,7 +39,7 @@ async function login(userCred) {
 
 // work
 async function adminLogin(adminCred) {
-    const user = await httpService.post(`${BASE_URL_AUTH}AdminLogin`, {password: "Aa1234$%"})
+    const user = await httpService.post(`${BASE_URL_AUTH}AdminLogin`, adminCred)
     user.checkAdmin = true  // for dev
     if (user) {
         _setLoggedinUser(user)
@@ -66,6 +67,26 @@ async function signup({ email, gameId, groupId, name, password }) {
     return player
 
 }
+
+async function getAdmins() {
+
+    // const admins = await httpService.get('Admins')
+    // return admins
+
+    return Promise.resolve([
+        {
+        userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        name: 'Anat Shapira',
+        isAdmin: true
+      },{
+        userId: "3fa85f64-5717-4562-b3fc-2c963frrrrr",
+        name: 'Adam',
+        isAdmin: true
+      }])
+
+}
+
+
 
 function getLoggedinUser() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY_USER))
@@ -95,6 +116,7 @@ function getEmptyCredentials() {
         // name: 'AAAA',
         email: 'AnatShapira@gmail.com',
         name: 'Anat Shapira',
+        password: ''
         // password: 'Aa1234$%'
     }
 }

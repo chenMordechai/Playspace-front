@@ -39,7 +39,6 @@ export async function logout() {
 
 
 export async function signup(credentials) {
-    console.log('credentials:', credentials)
     try {
         const player = await authService.signup(credentials)
         store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
@@ -47,6 +46,16 @@ export async function signup(credentials) {
         return player
     } catch (err) {
         console.log('user actions -> Cannot signup', err)
+        throw err
+    }
+}
+
+export async function getAdmins() {
+    try {
+        const admins = await authService.getAdmins()
+        return admins
+    } catch (err) {
+        console.log('user actions -> Cannot get admins', err)
         throw err
     }
 }

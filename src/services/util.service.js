@@ -1,4 +1,4 @@
-// import { CLOUD_NAME, UPLOAD_PRESET } from "../../dist/pass.js"
+import { CLOUD_NAME, UPLOAD_PRESET } from "../../dist/pass.js"
 
 export const utilService = {
     makeId,
@@ -90,38 +90,38 @@ function getRandomColor() {
 }
 
 async function uploadImgToCloudinary(ev) {
-    // const mediaType = ev.target.files[0].type
+    const mediaType = ev.target.files[0].type
 
-    // let type
-    // if (mediaType.includes('image')) {
-    //     type = 'image'
-    // } else if (mediaType.includes('video')) {
-    //     type = 'video'
-    // }
+    let type
+    if (mediaType.includes('image')) {
+        type = 'image'
+    } else if (mediaType.includes('video')) {
+        type = 'video'
+    }
 
-    // let UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/upload`
+    let UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${type}/upload`
 
-    // const FORM_DATA = new FormData()
-    // // Bulding the request body
-    // FORM_DATA.append('file', ev.target.files[0])
-    // FORM_DATA.append('upload_preset', UPLOAD_PRESET)
+    const FORM_DATA = new FormData()
+    // Bulding the request body
+    FORM_DATA.append('file', ev.target.files[0])
+    FORM_DATA.append('upload_preset', UPLOAD_PRESET)
 
-    // // Sending a post method request to Cloudinarys API
-    // try {
-    //     const res = await fetch(UPLOAD_URL, {
-    //         method: 'POST',
-    //         body: FORM_DATA,
-    //     })
-    //     const { url } = await res.json()
+    // Sending a post method request to Cloudinarys API
+    try {
+        const res = await fetch(UPLOAD_URL, {
+            method: 'POST',
+            body: FORM_DATA,
+        })
+        const { url } = await res.json()
 
-    //     const media = {
-    //         type: mediaType,
-    //         url
-    //     }
-    //     return media
-    // } catch (err) {
-    //     console.error(err)
-    // }
+        const media = {
+            type: mediaType,
+            url
+        }
+        return media
+    } catch (err) {
+        console.error(err)
+    }
 }
 
 function timeDifference(current, previous) {

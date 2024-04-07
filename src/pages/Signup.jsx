@@ -18,26 +18,18 @@ export function Signup() {
         setCredentials(prev => ({ ...prev, gameId, groupId }))
 
     }, [])
-    // function callAPI() {
-    //   
-
-    //     httpService.post('auth/Signup', postData)
-    // }
 
     function handleChange(ev) {
         let { name, value } = ev.target
         setCredentials(prev => ({ ...prev, [name]: value }))
-
     }
+
     async function onSubmitSignupForm(ev) {
         ev.preventDefault()
-        console.log('credentials:', credentials)
         try {
             const player = await signup(credentials)
             console.log('success signup', player)
             // if (!user.isAdmin) navigate('/home')
-
-
         } catch (error) {
             console.error('Error:', error);
         }

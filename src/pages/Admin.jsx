@@ -5,44 +5,63 @@ import { prominent } from 'color.js'
 
 import { gameService } from '../services/game.service.js'
 import { utilService } from '../services/util.service.js'
+import {getAdmins} from '../store/actions/auth.action.js'
 
 import { Colors } from '../cmps/Colors'
 
 export function Admin() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
-    const [openQuesions, setOpenQuesions] = useState(false)
+    const [openActivities, setOpenActivities] = useState(false)
+
     const [colorIdx, setColorIdx] = useState(0)
     const [logoColors, setLogoColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
+
     const [isLoading, setIsLoading] = useState(false)
 
+    const [admins , setAdmins] = useState(null)
+console.log('admins:', admins)
+   
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
     const navigate = useNavigate()
 
+    useEffect(()=>{
+        loadAdmins()
+    },[])
+    
+  async function loadAdmins(){
+        const admins = await getAdmins()
+        setAdmins(admins)
+    }
+
     useEffect(() => {
         if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
-        const date = new Date("2024-04-02 11:00")
+        // const date = new Date("2024-04-02 11:00")
         // console.log('date', date)
         // console.log('date:', date.getTime())
         console.log('game:', game)
-
     }, [game])
 
     useEffect(() => {
         // when the game colors changes => change the css vars
         const elRoot = document.querySelector(':root')
-        game.colors.forEach((color, i) => {
+        game.themeColors.forEach((color, i) => {
             elRoot.style.setProperty(`--clr-${i}`, color);
         })
-    }, [game.colors])
+    }, [game.themeColors])
 
     function onHandleChange(ev) {
         let { name, value, type } = ev.target
         if (type === 'number') value = +value
-
-        if (name === 'teams' || name === 'stages') {
-            const object = name === 'teams' ? gameService.getEmptyTeam() : gameService.getEmptyStage()
+        if (type === 'checkbox')  value = ev.target.checked
+        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => option.value)
+    
+        if(name === 'gameType'){
+            value = (value)? 'stages' :'activities'
+            setGame(prevGame => ({ ...prevGame, [name]: value }))
+        }else if (name === 'groups' || name === 'stages') {
+            const object = name === 'groups' ? gameService.getEmptyGroup() : gameService.getEmptyStage()
             setGame(prevGame => {
                 const diff = value - (prevGame[name]?.length || 0)
                 if (diff > 0) return { ...prevGame, [name]: (prevGame[name]?.length) ? [...prevGame[name], object] : [object] }
@@ -52,6 +71,8 @@ export function Admin() {
             setGame(prevGame => ({ ...prevGame, [name]: value }))
         }
     }
+    
+   
 
     async function onChangeImg(ev) {
         try {
@@ -78,8 +99,8 @@ export function Admin() {
         const { value, name: idx } = ev.target
 
         setGame(prev => {
-            prev.colors[idx] = value
-            prev.colors = [...prev.colors]
+            prev.themeColors[idx] = value
+            prev.themeColors = [...prev.themeColors]
             return { ...prev }
         })
     }
@@ -95,17 +116,16 @@ export function Admin() {
             else return prev + 1
         })
         setGame(prev => {
-            prev.colors[colorIdx] = color
-            prev.colors = [...prev.colors]
+            prev.themeColors[colorIdx] = color
+            prev.themeColors = [...prev.themeColors]
             return { ...prev }
         })
     };
 
-
-    function onHandleTeamNameChange(ev, i) {
+    function onHandleGroupNameChange(ev, i) {
         const { value } = ev.target
         setGame(prevGame => {
-            prevGame.teams[i].name = value
+            prevGame.groups[i].name = value
             return { ...prevGame }
         })
     }
@@ -115,8 +135,9 @@ export function Admin() {
         if (type === 'checkbox') value = ev.target.checked
         if (type === 'number') value = +value
 
-        if (name === 'questions') {
-            const object = gameService.getEmptyQuestion()
+        if (name === 'activities') {
+            console.log('activities')
+            const object = gameService.getEmptyActivity()
             setGame(prevGame => {
                 const diff = value - (prevGame.stages[i][name]?.length || 0)
                 if (diff > 0) {
@@ -135,15 +156,15 @@ export function Admin() {
 
     }
 
-    async function onHandleQuestionChange(ev, i, j) {
+    async function onHandleActivityChange(ev, i, j) {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
         else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
-        else if (name === 'options') value = value.split(',')
+        else if (name === 'activityAswers') value = value.split(',')
         else if (name === 'lifeSaver') value = Array.from(ev.target.selectedOptions, option => option.value)
 
         setGame(prevGame => {
-            prevGame.stages[i].questions[j][name] = value
+            prevGame.stages[i].activities[j][name] = value
             return { ...prevGame }
         })
 
@@ -151,12 +172,26 @@ export function Admin() {
 
     function onSubmitForm(ev) {
         ev.preventDefault()
+        // change time to timestamp 
+        // const strGameStartTime = gameTime.dateStart +' ' + gameTime.timeStart
+        // const strGameEndTime = gameTime.dateEnd +' ' + gameTime.timeEnd
+        // const gameStartTime =new Date(strGameStartTime).getTime()
+        // const gameEndTime = new Date(strGameEndTime).getTime()
+        // setGame(prevGame=> ({...prevGame, gameStartTime,gameEndTime}))
 
-        // check that the question's scores is 100%
+        // const strStageStartTime = stageTime.dateStart +' ' + stageTime.timeStart
+        // const strStageEndTime = stageTime.dateEnd +' ' + stageTime.timeEnd
+        // const stageStartTime =new Date(strStageStartTime).getTime()
+        // const stageEndTime = new Date(strStageEndTime).getTime()
+        // setGame(prevGame=> ({...prevGame, stageStartTime,stageEndTime}))
+
+
+
+        // check that the activity's scores is 100%
     }
 
-    function onOpenQuestions() {
-        setOpenQuesions(prev => !prev)
+    function onOpenActivities() {
+        setOpenActivities(prev => !prev)
     }
 
     return (
@@ -171,6 +206,13 @@ export function Admin() {
                 <label htmlFor="name">שם המשחק</label>
                 <input type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
+                <label htmlFor="admins">אדמינים</label>
+                                    <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                                            {admins.map(admin=><option value={admin.userId}>
+                                            {admin.name}
+                                        </option>)}
+                                    </select>
+
                 <label htmlFor="dateStart">תאריך התחלה</label>
                 <input type="date" name="dateStart" id="dateStart" value={game.dateStart} onChange={onHandleChange} />
 
@@ -183,112 +225,223 @@ export function Admin() {
                 <label htmlFor="timeEnd">שעת סיום</label>
                 <input type="time" name="timeEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
-                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.colors} logoColors={logoColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isLoading={isLoading} />
+                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.themeColors} logoColors={logoColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isLoading={isLoading} />
 
-                <label htmlFor="teams">מספר הקבוצות</label>
-                <input type="number" min="0" name="teams" id="teams" value={game.teams?.length || 0} onChange={onHandleChange} />
+                <label htmlFor="groups">מספר הקבוצות</label>
+                <input type="number" min="0" name="groups" id="groups" value={game.groups?.length || 0} onChange={onHandleChange} />
 
-                {game.teams && <>
+                {game.groups && <>
                     <label >שמות הקבוצות</label>
-                    <ul className="teams">
-                        {game.teams.map((team, i) => <li key={team.id}>
-                            <label htmlFor="teamName">קבוצה  {i + 1}</label>
-                            <input type="text" name="teamName" id="teamName" value={team.name} onChange={() => onHandleTeamNameChange(event, i)} />
+                    <ul className="groups">
+                        {game.groups.map((group, i) => <li key={group.id}>
+                            <label htmlFor="groupName">קבוצה  {i + 1}</label>
+                            <input type="text" name="teamName" id="groupName" value={group.name} onChange={() => onHandleGroupNameChange(event, i)} />
                         </li>)}
                     </ul>
                 </>}
 
-                <label htmlFor="guidelines">הנחיה לשחקנים לפני תחילת המשחק</label>
-                <textarea name="guidelines" id="guidelines" value={game.guidelines} onChange={onHandleChange} cols="30" rows="5"></textarea>
+                <label htmlFor="messageBefore">הודעה לפני המשחק</label>
+                <textarea name="messageBefore" id="messageBefore" value={game.messageBefore} onChange={onHandleChange} cols="30" rows="5"></textarea>
+                            
+                <label htmlFor="messageAfter">הודעה אחרי המשחק</label>
+                <textarea name="messageAfter" id="messageAfter" value={game.messageAfter} onChange={onHandleChange} cols="30" rows="5"></textarea>
 
-                <label htmlFor="type">אופי המשחק</label>
-                <select name="type" id="type" value={game.type} onChange={onHandleChange} >
+                <label htmlFor="gameType">האם יש שלבים?</label>
+                <input type="checkbox" name="gameType" id="gameType" value={game.gameType} onChange={onHandleChange} />
+
+               { game.gameType === "stages" &&  <> 
+               <label htmlFor="stages">מספר שלבי המשחק</label>
+                <input type="number" min="0" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
+                </>}
+              
+                <label htmlFor="activityProgressType">אופי המשחק</label>
+                <select name="activityProgressType" id="activityProgressType" value={game.activityProgressType} onChange={onHandleChange} >
                     <option value="open">פתוח</option>
                     <option value="onTime">לפי זמנים</option>
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
-                <label htmlFor="stages">מספר שלבי המשחק</label>
-                <input type="number" min="0" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
 
-                {game.stages && <section className="stages-container">
+                {game.gameType === "stages" && game.stages && <section className="stages-container">
                     <span className="stages" >שלבי המשחק</span>
                     <ul className="stages">
-                        {game.stages.map((stage, i) => <li key={stage.id}>
+                        {game.stages.map((stage, i) => <li key={i}>
                             <span className="stages">שלב  {i + 1}</span>
 
-                            {game.type === 'onTime' && <>
-                                <label htmlFor="time">כמה זמן מוגדר לשלב (בשעות)</label>
-                                <input type="number" min="0" name="time" id="time" value={stage.time} onChange={() => onHandleStageChange(event, i)} />
+                            <label htmlFor="name">שם השלב</label>
+                            <input type="text" name="name" id="name" value={stage.name}onChange={() => onHandleStageChange(event, i)} />
+
+                            {game.activityProgressType === 'onTime' && <>
+                                {/* <label htmlFor="time">כמה זמן מוגדר לשלב (בשעות)</label>
+                                <input type="number" min="0" name="time" id="time" value={stage.time || 0} onChange={() => onHandleStageChange(event, i)} /> */}
+                               <label htmlFor="dateStart">תאריך התחלה</label>
+                               <input type="date" name="dateStart" id="dateStart" value={stage.dateStart} onChange={() => onHandleStageChange(event, i)}  />
+
+                               <label htmlFor="timeStart">שעת התחלה</label>
+                               <input type="time" name="timeStart" id="timeStart" value={stage.timeStart} onChange={() => onHandleStageChange(event, i)}  />
+
+                               <label htmlFor="dateEnd">תאריך סיום</label>
+                               <input type="date" name="dateEnd" id="dateEnd" value={stage.dateEnd} onChange={() => onHandleStageChange(event, i)}  />
+
+                               <label htmlFor="timeEnd">שעת סיום</label>
+                               <input type="time" name="timeEnd" id="timeEnd" value={stage.timeEnd} onChange={() => onHandleStageChange(event, i)}  />
                             </>}
 
-                            <label htmlFor="questions">כמה שאלות יש בשלב</label>
-                            <input type="number" min="0" name="questions" id="questions" value={stage.questions?.length || 0} onChange={() => onHandleStageChange(event, i)} />
-                            {/* <input type="number" min="0" name="questions" id="questions" value={game.stages[i].questions?.length || 0} onChange={() => onHandleStageChange(event, i)} /> */}
+                            <label htmlFor="activities">כמה שאלות יש בשלב</label>
+                            <input type="number" min="0" name="activities" id="activities" value={stage.activities?.length || 0} onChange={() => onHandleStageChange(event, i)} />
 
-                            <label htmlFor="numOfMistakes">כמה טעויות מותר</label>
-                            <input type="number" min="0" max={stage.questions?.length} name="numOfMistakes" id="numOfMistakes" value={stage.numOfMistakes} onChange={() => onHandleStageChange(event, i)} />
+                            <label htmlFor="maxError">כמה טעויות מותר</label>
+                            <input type="number" min="0" max={stage.activities?.length} name="maxError" id="maxError" value={stage.maxError} onChange={() => onHandleStageChange(event, i)} />
 
                             <label htmlFor="isRequired">האם השלב חובה?</label>
                             <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />
+                          
+                            <label htmlFor="messageBefore">הודעה לפני השלב</label>
+                            <textarea name="messageBefore" id="messageBefore" value={stage.messageBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="5"></textarea>
+                            
+                            <label htmlFor="messageAfter">הודעה אחרי הלב</label>
+                            <textarea name="messageAfter" id="messageAfter" value={stage.messageAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="5"></textarea>
 
-                            <span className="" >הזנת השאלות</span>
-                            <button onClick={onOpenQuestions}>{openQuesions ? 'סגירה' : 'פתיחה'}</button>
+                            <span>הזנת השאלות</span>
+                            <button onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
 
-                            {openQuesions && <ul className="question">
-                                {stage.questions?.map((question, j) => <li key={question.id}>
-                                    <span className="question">שאלה {j + 1}</span>
+                            {openActivities && <ul className="activity">
+                                {stage.activities?.map((activity, j) => <li key={j}>
+                                    <span className="activity">שאלה {j + 1}</span>
 
-                                    <label htmlFor="txt">השאלה</label>
-                                    <input type="text" name="txt" id="txt" value={question.txt} onChange={() => onHandleQuestionChange(event, i, j)} />
+                                    <label htmlFor="name">הטקסט</label>
+                                    <input type="text" name="name" id="name" value={activity.name} onChange={() => onHandleActivityChange(event, i, j)} />
 
-                                    <label htmlFor="type">סוג השאלה</label>
-                                    <select name="type" id="type" value={question.type} onChange={() => onHandleQuestionChange(event, i, j)} >
+                                    <label htmlFor="activityType">סוג השאלה</label>
+                                    <select name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
                                         <option value="open">פתוחה</option>
                                         <option value="multiple">רב ברירה</option>
                                         <option value="yesno">נכון/לא נכון</option>
                                         <option value="typing">הקלדה</option>
                                     </select>
 
-
-                                    {question.type === 'multiple' && <>
-                                        <label htmlFor="options">האופציות לתשובה (א,ב,ג)</label>
-                                        <input type="text" name="options" id="options" value={question.options} onChange={() => onHandleQuestionChange(event, i, j)} />
+                                    {activity.activityType === "multiple" && <>
+                                        <label htmlFor="activityAswers">האופציות לתשובה (א,ב,ג)</label>
+                                        <input type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
                                     </>}
 
                                     <label htmlFor="answer">התשובה</label>
-                                    <input type="text" name="answer" id="answer" value={question.answer} onChange={() => onHandleQuestionChange(event, i, j)} />
+                                    <input type="text" name="answer" id="answer" value={activity.answer} onChange={() => onHandleActivityChange(event, i, j)} />
 
-                                    <label htmlFor="score">ניקוד</label>
-                                    <input type="number" min="0" name="score" id="score" value={question.score} onChange={() => onHandleQuestionChange(event, i, j)} />
+                                    <label htmlFor="pointsValue">ניקוד</label>
+                                    <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />
+
+                                    <label htmlFor="maxError">כמה טעויות מותר</label>
+                                    <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() =>  onHandleActivityChange(event, i, j)} />
 
                                     <label htmlFor="media">תוספת גרפית</label>
-                                    <input type="file" name="media" id="media" onChange={() => onHandleQuestionChange(event, i, j)} />
+                                    <input type="file" name="media" id="media" onChange={() => onHandleActivityChange(event, i, j)} />
 
-                                    {question.media && <>
-                                        <span>{question.media.type}</span>
-                                        <img className="media" src={question.media.url} />
+                                    {activity.media && <>
+                                        <span>{activity.media.type}</span>
+                                        <img className="media" src={activity.media.url} />
                                     </>}
 
                                     <label htmlFor="moreContent">תוספת מלל</label>
-                                    <textarea name="moreContent" id="moreContent" value={question.moreContent} onChange={() => onHandleQuestionChange(event, i, j)} cols="30" rows="5"></textarea>
+                                    <textarea name="moreContent" id="moreContent" value={activity.moreContent} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="5"></textarea>
 
                                     <label htmlFor="lifeSaver">גלגלי הצלה</label>
-                                    <select multiple name="lifeSaver" id="lifeSaver" value={questions.lifeSaver} onChange={() => onHandleQuestionChange(event, i, j)} >
-                                        {question.type === 'multiple' && <option value="fifty">50/50</option>}
+                                    <select multiple name="lifeSaver" id="lifeSaver" value={activities.lifeSaver} onChange={() => onHandleActivityChange(event, i, j)} >
+                                        {activity.activityType === 'multiple' && <option value="fifty">50/50</option>}
                                         <option value="moreTime">תוספת זמן</option>
                                         <option value="skip">דלג</option>
                                     </select>
 
                                     <label htmlFor="moreContentAfter">תוספת מלל לאחר שאלה</label>
-                                    <textarea name="moreContentAfter" id="moreContentAfter" value={question.moreContentAfter} onChange={() => onHandleQuestionChange(event, i, j)} cols="30" rows="5"></textarea>
+                                    <textarea name="moreContentAfter" id="moreContentAfter" value={activity.moreContentAfter} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="5"></textarea>
                                 </li>)}
                             </ul>}
                         </li>)}
                     </ul>
                 </section>}
 
+                { game.gameType === "activities" && <section>
+                    <h2>משחק בלי שלבים</h2>
+
+                    </section>}
+
+                <button type="submit">send</button>
             </form>
         </section >
     )
 }
+
+
+
+// {
+//     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
+//     "name": "string", // front v
+//     "createdDate": 0, // back
+//     "updatedDate": 0, // back
+//     "isDeleted": true, // back
+//     "activities": [ // game without stages
+//       {
+//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
+//         "name": "string", // front
+//         "isDeleted": true, // back
+//         "activityType": 0, // front
+//         "timeToRespond": 0, // front
+//         "activityStartTime": 0, // front
+//         "activityEndTime": 0, // front
+//         "pointsValue": 2147483647, // front
+//         "maxError": 0, // front
+//         "correctAnswerId": 0, // front
+//         "activityAswers": "string",  // front  
+//         "mediaBefore": "string", // front
+//         "mediaIdAfter": "string", // front
+//         "testBefore": "string", // front
+//         "testAfter": "string" // front
+//       }
+//     ],
+//     "stages": null,
+//     "gameStartTime": 0, // front
+//     "gameEndTime": 0, // front   
+//     "groups": [ // front
+//         {
+//           "id": 0, // front
+//           "name": "string", // front
+//           "additionalScore": 0 // front
+//         }
+//       ],
+//     "themeColors": ['#','#','#'] // front
+//     "iconId": "string", // ? logoUrl?
+//     "description": "string", // front
+//     "gameType": 0, // front
+//     "activityProgressType": 0, // front
+//     "admins": [ // front + back
+//       {
+//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//         "adminId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//         "gameId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//         "isDeleted": true
+//       }
+//     ],
+//     "messageBefore": "string", // front
+//     "messageAfter": "string", // front
+//   }
+
+
+
+// {
+//   
+//     "activities":null,
+//     "stages": [ // game with stages
+//       {
+//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
+//         "name": "string", // front
+//         "activities": [ 
+//           "string" // front + back - object!
+//         ],
+//         "messageBefore": "string", // front
+//         "messageAfter": "string", // front
+//         "stageStartDate": 0, // front
+//         "stageEndDate": 0, // front
+//         "maxError": 0 // front
+//       }
+//     ],
+// }

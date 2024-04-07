@@ -21,6 +21,7 @@ export function Home() {
         init()
     }, [])
 
+    // get demo data
     async function init() {
         try {
             const games = await getGames(loggedinUser)
@@ -31,6 +32,7 @@ export function Home() {
         }
     }
 
+    // doesn't work
     async function fetchDataAndPrint() {
         const url = "https://62.171.155.24/api/Admin/Games";
     
