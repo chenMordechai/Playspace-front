@@ -176,7 +176,7 @@ export function GameAdd() {
         ev.preventDefault()
 
         // groups id changes
-        game.groups.forEach(group=>{
+        game.groups?.forEach(group=>{
             group.id += game.name.substring(0,3)
         })
       
@@ -221,7 +221,7 @@ export function GameAdd() {
     }
 
     return (
-        <section className="admin rtl">
+        <section className="game-add rtl">
             <h2>יצירת משחק</h2>
 
             <div className="first-clr">First</div>
@@ -279,8 +279,8 @@ export function GameAdd() {
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
-                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'stages', activities: null }))}>משחק עם שלבים</button>
-                <button onClick={() => setGame(prev => ({ ...prev, gameType: 'activities', stages: null }))}>משחק בלי שלבים</button>
+                <button type="button" onClick={() => setGame(prev => ({ ...prev, gameType: 'stages', activities: null }))}>משחק עם שלבים</button>
+                <button type="button" onClick={() => setGame(prev => ({ ...prev, gameType: 'activities', stages: null }))}>משחק בלי שלבים</button>
 
                 {game.gameType === "stages" && <>
                     <label htmlFor="stages">מספר שלבי המשחק</label>
@@ -326,7 +326,7 @@ export function GameAdd() {
                             <textarea name="messageAfter" id="messageAfter" value={stage.messageAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
 
                             <span>הזנת השאלות</span>
-                            <button onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
+                            <button type="button"  onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
 
                             {openActivities && <ActivityList activities={stage.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} i={i} />}
                         </li>)}
@@ -349,3 +349,75 @@ export function GameAdd() {
 }
 
 
+// {
+//     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
+//     "name": "string", // front v
+//     "createdDate": 0, // back
+//     "updatedDate": 0, // back
+//     "isDeleted": true, // back
+//     "activities": [ // game without stages
+//       {
+//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
+//         "name": "string", // front
+//         "isDeleted": true, // back
+//         "activityType": 0, // front
+//         "timeToRespond": 0, // front
+//         "activityStartTime": 0, // front
+//         "activityEndTime": 0, // front
+//         "pointsValue": 2147483647, // front
+//         "maxError": 0, // front
+//         "correctAnswerId": 0, // front
+//         "activityAswers": "string",  // front
+//         "mediaBefore": "string", // front
+//         "mediaIdAfter": "string", // front
+//         "testBefore": "string", // front
+//         "testAfter": "string" // front
+//       }
+//     ],
+//     "stages": null,
+//     "gameStartTime": 0, // front
+//     "gameEndTime": 0, // front
+//     "groups": [ // front
+//         {
+//           "id": 0, // front
+//           "name": "string", // front
+//           "additionalScore": 0 // front
+//         }
+//       ],
+//     "themeColors": ['#','#','#'] // front
+//     "iconId": "string", // ? logoUrl?
+//     "description": "string", // front
+//     "gameType": 0, // front
+//     "activityProgressType": 0, // front
+//     "admins": [ // front + back
+//       {
+//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//         "adminId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//         "gameId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//         "isDeleted": true
+//       }
+//     ],
+//     "messageBefore": "string", // front
+//     "messageAfter": "string", // front
+//   }
+
+
+
+// {
+//
+//     "activities":null,
+//     "stages": [ // game with stages
+//       {
+//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
+//         "name": "string", // front
+//         "activities": [
+//           "string" // front + back - object!
+//         ],
+//         "messageBefore": "string", // front
+//         "messageAfter": "string", // front
+//         "stageStartDate": 0, // front
+//         "stageEndDate": 0, // front
+//         "maxError": 0 // front
+//       }
+//     ],
+// }

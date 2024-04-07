@@ -1,7 +1,8 @@
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
+import { demoDataService } from './demoData.service.js'
 
-const BASE_URL = 'Game'
+const BASE_URL = 'Game/'
 
 export const gameService = {
     getGames,
@@ -136,7 +137,10 @@ async function getGames2() {
 }
 
 async function getGameById(gameId) {
-    return httpService.get(BASE_URL + gameId)
+    console.log('getGameById')
+    // doesn't work
+    // return httpService.get(BASE_URL + gameId)
+    return demoDataService.getGame1()
 }
 
 async function remove(gameId) {
@@ -225,3 +229,4 @@ function getEmptyActivity() {
         lifeSaver: null // v
     }
 }
+

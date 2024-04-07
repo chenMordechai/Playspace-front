@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux'
-import { useNavigate } from "react-router-dom"
+import { useNavigate,Link } from "react-router-dom"
+
 
 import { getGames } from "../store/actions/game.action.js"
 import { httpService } from "../services/http.service.js"
@@ -53,7 +54,10 @@ export function Home() {
                 <ul>
                     {games.map(game => <li key={game.id}>
                         {game.name}
-                        <button>Edit</button>
+                        <Link to={`/game/edit/${game.id}`} title="Edit" >
+                          <span>Edit</span>
+                          </Link>
+                        <button>Details</button>
                         <button>Delete</button>
                         <button>Play</button>
                     </li>)}

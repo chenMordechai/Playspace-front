@@ -16,6 +16,7 @@ export async function getGameById(gameId) {
     try {
         const game = await gameService.getGameById(gameId)
         // store.dispatch({ type: SET_GAME, game })
+        return game
     } catch (err) {
         console.log('user action -> Cannot get game', err)
         throw err
