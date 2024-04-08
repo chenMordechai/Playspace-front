@@ -3,6 +3,11 @@
   }
 
   main {
+    .main-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     @include for-narrow-layout {
     }
 

@@ -1,20 +1,20 @@
 
 // game with stages:
 const game1 ={
-    "name": "sss",
+    "name": "המשחק הראשון שלי",
     "activities": null,
     "stages": [
         {
-            "name": "a",
+            "name": "שלב ראשון",
             "activities": [
                 {
-                    "name": "??",
+                    "name": "מה קורה הכל בסדר?",
                     "activityType": "multiple",
-                    "answer": "y",
-                    "activityAswers": [
-                        "t",
-                        "c",
-                        "y"
+                    "answer": "כן",
+                    "activityAnswers": [
+                        "כן",
+                        "לא",
+                        "ככה ככה"
                     ],
                     "correctAnswerId": 0,
                     "timeToRespond": 0,
@@ -26,17 +26,42 @@ const game1 ={
                     "maxError": 1,
                     "mediaBefore": null,
                     "mediaAfter": null,
-                    "messageBefore": "2e2",
-                    "messageAfter": "sasas",
+                    "messageBefore": "בוקר טוב! השאלה הראשונה ממש פה, מוכן להתחיל?",
+                    "messageAfter": "תודה רבה שענית, מקווים שיהיה לך יום מדהים",
                     "lifeSaver": [
                         "fifty"
                     ],
                     "gameStartTime": 1712571900000,
                     "gameEndTime": 1712586540000
-                }
+                },
+                {
+                    "name": "עכשיו באמת איך אתה מרגיש?",
+                    "activityType": "open",
+                    "answer": "סבבה וכו",
+                    "activityAswers": null,
+                    "correctAnswerId": 0,
+                    "timeToRespond": 0,
+                    "dateStart": "2024-04-09",
+                    "timeStart": "13:25",
+                    "dateEnd": "2024-04-09",
+                    "timeEnd": "17:29",
+                    "pointsValue": 4,
+                    "maxError": 2,
+                    "mediaBefore": {
+                        "type": "image/png",
+                        "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521622/ops4it8mbxfdwqwxr7an.png"
+                    },
+                    "mediaAfter": {
+                        "type": "image/jpeg",
+                        "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521628/lgs8vl4uqnafeupbuvps.jpg"
+                    },
+                    "messageBefore": "הנה תמונה מרגשת להשראה לקראת השאלה הבאה",
+                    "messageAfter": "עוד תמונה מרגשת לסוף השאלה",
+                    "lifeSaver": null
+                },
             ],
-            "messageBefore": "fe",
-            "messageAfter": "gt",
+            "messageBefore": "זו הודעה לפני השלב הראשון",
+            "messageAfter": "זו הודעה אחרי השלב הראשון",
             "dateStart": "2024-04-09",
             "timeStart": "15:26",
             "dateEnd": "2024-04-10",
@@ -47,12 +72,12 @@ const game1 ={
             "gameEndTime": 1712744640000
         },
         {
-            "name": "b",
+            "name": "שלב שני",
             "activities": [
                 {
-                    "name": "sss",
+                    "name": "מה המצב בשטחים?",
                     "activityType": "open",
-                    "answer": "kdow",
+                    "answer": "ברוך ה' הכל בסדר",
                     "activityAswers": null,
                     "correctAnswerId": 0,
                     "timeToRespond": 0,
@@ -64,8 +89,8 @@ const game1 ={
                     "maxError": 0,
                     "mediaBefore": null,
                     "mediaAfter": null,
-                    "messageBefore": "fw",
-                    "messageAfter": "fw",
+                    "messageBefore": "הודעה לפני השאלה",
+                    "messageAfter": "הודעה אחרי השאלה",
                     "lifeSaver": [
                         "moreTime"
                     ],
@@ -73,8 +98,8 @@ const game1 ={
                     "gameEndTime": 1712694300000
                 }
             ],
-            "messageBefore": "dw",
-            "messageAfter": "as",
+            "messageBefore": "זוהי הודעה לפני השלב השני",
+            "messageAfter": "זוהי הודעה אחרי השלב השני",
             "dateStart": "2024-04-09",
             "timeStart": "01:26",
             "dateEnd": "2024-04-09",
