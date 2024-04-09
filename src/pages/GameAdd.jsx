@@ -17,7 +17,7 @@ export function GameAdd() {
     const [openActivities, setOpenActivities] = useState(false)
 
     const [colorIdx, setColorIdx] = useState(0)
-    const [logoColors, setLogoColors] = useState(null)
+    const [iconColors, setLogoColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false)
@@ -74,7 +74,7 @@ export function GameAdd() {
         try {
             setIsLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev)
-            setGame(prevGame => ({ ...prevGame, logo: media }))
+            setGame(prevGame => ({ ...prevGame, icon: media }))
             getColorsFromImg(media.url)
         } catch (err) {
             console.log('err:', err)
@@ -172,45 +172,45 @@ export function GameAdd() {
         }
     }
 
-  async function onSubmitForm(ev) {
+    async function onSubmitForm(ev) {
         ev.preventDefault()
 
         // groups id changes
-        game.groups?.forEach(group=>{
-            group.id += game.name.substring(0,3)
+        game.groups?.forEach(group => {
+            group.id += game.name.substring(0, 3)
         })
-      
-        // time changes
-        const gameStartTime = new Date(game.dateStart +' '+game.timeStart).getTime()
-        const gameEndTime = new Date(game.dateEnd +' '+game.timeEnd).getTime()
-        game.gameStartTime = gameStartTime
-        game.gameEndTime = gameEndTime
 
-        if(game.activityProgressType === 'onTime'){
-            if(game.gameType === 'activities'){
-                game.activities.forEach(activity=>{
-                const gameStartTime = new Date(activity.dateStart +' '+activity.timeStart).getTime()
-                const gameEndTime = new Date( activity.dateEnd +' '+activity.timeEnd).getTime()
-                activity.gameStartTime = gameStartTime
-                activity.gameEndTime = gameEndTime
-            })
-            }else{
-                game.stages.forEach(stage=>{
-                    const gameStartTime = new Date(stage.dateStart +' '+stage.timeStart).getTime()
-                    const gameEndTime = new Date(stage.dateEnd +' '+stage.timeEnd).getTime()
-                    stage.gameStartTime = gameStartTime
-                    stage.gameEndTime = gameEndTime
-                    stage.activities.forEach(activity=>{
-                        const gameStartTime = new Date( activity.dateStart +' '+activity.timeStart).getTime()
-                        const gameEndTime = new Date(activity.dateEnd +' '+activity.timeEnd).getTime()
-                        activity.gameStartTime = gameStartTime
-                        activity.gameEndTime = gameEndTime
+        // time changes
+        const gameStartTimestamp = new Date(game.dateStart + ' ' + game.timeStart).getTime()
+        const gameEndTimestamp = new Date(game.dateEnd + ' ' + game.timeEnd).getTime()
+        game.gameStartTimestamp = gameStartTimestamp
+        game.gameEndTimestamp = gameEndTimestamp
+
+        if (game.activityProgressType === 'onTime') {
+            if (game.gameType === 'activities') {
+                game.activities.forEach(activity => {
+                    const activityStartTimestamp = new Date(activity.dateStart + ' ' + activity.timeStart).getTime()
+                    const activityEndTimestamp = new Date(activity.dateEnd + ' ' + activity.timeEnd).getTime()
+                    activity.activityStartTimestamp = activityStartTimestamp
+                    activity.activityEndTimestamp = activityEndTimestamp
+                })
+            } else {
+                game.stages.forEach(stage => {
+                    const stageStartTimestamp = new Date(stage.dateStart + ' ' + stage.timeStart).getTime()
+                    const stageEndTimestamp = new Date(stage.dateEnd + ' ' + stage.timeEnd).getTime()
+                    stage.stageStartTimestamp = stageStartTimestamp
+                    stage.stageEndTimestamp = stageEndTimestamp
+                    stage.activities.forEach(activity => {
+                        const activityStartTimestamp = new Date(activity.dateStart + ' ' + activity.timeStart).getTime()
+                        const activityEndTimestamp = new Date(activity.dateEnd + ' ' + activity.timeEnd).getTime()
+                        activity.activity.StartTimestamp = activityStartTimestamp
+                        activity.activity.EndTimestamp = activityEndTimestamp
                     })
                 })
+            }
         }
-    }
 
-    console.log('game:', game)
+        console.log('game:', game)
 
         const newGame = await addGame(game)
         // console.log('newGame:', newGame)
@@ -251,7 +251,7 @@ export function GameAdd() {
                 <label htmlFor="timeEnd">שעת סיום</label>
                 <input type="time" name="timeEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
 
-                <Colors onChangeImg={onChangeImg} gameLogo={game.logo} gameColors={game.themeColors} logoColors={logoColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isLoading={isLoading} />
+                <Colors onChangeImg={onChangeImg} gameLogo={game.icon} gameColors={game.themeColors} iconColors={iconColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isLoading={isLoading} />
 
                 <label htmlFor="groups">מספר הקבוצות</label>
                 <input type="number" min="0" name="groups" id="groups" value={game.groups?.length || 0} onChange={onHandleChange} />
@@ -266,11 +266,11 @@ export function GameAdd() {
                     </ul>
                 </>}
 
-                <label htmlFor="messageBefore">הודעה לפני המשחק</label>
-                <textarea name="messageBefore" id="messageBefore" value={game.messageBefore} onChange={onHandleChange} cols="30" rows="3"></textarea>
+                <label htmlFor="textBefore">הודעה לפני המשחק</label>
+                <textarea name="textBefore" id="textBefore" value={game.textBefore} onChange={onHandleChange} cols="30" rows="3"></textarea>
 
-                <label htmlFor="messageAfter">הודעה אחרי המשחק</label>
-                <textarea name="messageAfter" id="messageAfter" value={game.messageAfter} onChange={onHandleChange} cols="30" rows="3"></textarea>
+                <label htmlFor="textAfter">הודעה אחרי המשחק</label>
+                <textarea name="textAfter" id="textAfter" value={game.textAfter} onChange={onHandleChange} cols="30" rows="3"></textarea>
 
                 <label htmlFor="activityProgressType">אופי המשחק</label>
                 <select name="activityProgressType" id="activityProgressType" value={game.activityProgressType} onChange={onHandleChange} >
@@ -319,14 +319,14 @@ export function GameAdd() {
                             <label htmlFor="isRequired">האם השלב חובה?</label>
                             <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />
 
-                            <label htmlFor="messageBefore">הודעה לפני השלב</label>
-                            <textarea name="messageBefore" id="messageBefore" value={stage.messageBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
+                            <label htmlFor="textBefore">הודעה לפני השלב</label>
+                            <textarea name="textBefore" id="textBefore" value={stage.textBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
 
-                            <label htmlFor="messageAfter">הודעה אחרי השלב</label>
-                            <textarea name="messageAfter" id="messageAfter" value={stage.messageAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
+                            <label htmlFor="textAfter">הודעה אחרי השלב</label>
+                            <textarea name="textAfter" id="textAfter" value={stage.textAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
 
                             <span>הזנת השאלות</span>
-                            <button type="button"  onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
+                            <button type="button" onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
 
                             {openActivities && <ActivityList activities={stage.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} i={i} />}
                         </li>)}
@@ -362,8 +362,8 @@ export function GameAdd() {
 //         "isDeleted": true, // back
 //         "activityType": 0, // front
 //         "timeToRespond": 0, // front
-//         "activityStartTime": 0, // front
-//         "activityEndTime": 0, // front
+//         "activityStartTimestamp": 0, // front
+//         "activityEndTimestamp": 0, // front
 //         "pointsValue": 2147483647, // front
 //         "maxError": 0, // front
 //         "correctAnswerId": 0, // front
@@ -375,8 +375,8 @@ export function GameAdd() {
 //       }
 //     ],
 //     "stages": null,
-//     "gameStartTime": 0, // front
-//     "gameEndTime": 0, // front
+//     "gameStartTimestamp": 0, // front
+//     "gameEndTimestamp": 0, // front
 //     "groups": [ // front
 //         {
 //           "id": 0, // front
@@ -385,7 +385,7 @@ export function GameAdd() {
 //         }
 //       ],
 //     "themeColors": ['#','#','#'] // front
-//     "iconId": "string", // ? logoUrl?
+//     "iconId": "string", // ? iconUrl?
 //     "description": "string", // front
 //     "gameType": 0, // front
 //     "activityProgressType": 0, // front
@@ -397,8 +397,8 @@ export function GameAdd() {
 //         "isDeleted": true
 //       }
 //     ],
-//     "messageBefore": "string", // front
-//     "messageAfter": "string", // front
+//     "textBefore": "string", // front
+//     "textAfter": "string", // front
 //   }
 
 
@@ -413,8 +413,8 @@ export function GameAdd() {
 //         "activities": [
 //           "string" // front + back - object!
 //         ],
-//         "messageBefore": "string", // front
-//         "messageAfter": "string", // front
+//         "textBefore": "string", // front
+//         "textAfter": "string", // front
 //         "stageStartDate": 0, // front
 //         "stageEndDate": 0, // front
 //         "maxError": 0 // front

@@ -1,37 +1,38 @@
-import {useState,useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
-import {ActivityPreview} from './ActivityPreview'
+import { ActivityPreview } from './ActivityPreview'
 
-export function StagePreview ({stage,moveToNextStage}){
+export function StagePreview({ stage, moveToNextStage }) {
     console.log('stage:', stage)
     const [activityIdx, setActivityIdx] = useState(0)
     const [isStageOn, setIsStageOn] = useState(false)
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('activityIdx:', activityIdx)
-        if(activityIdx === stage?.activities?.length){
+        if (activityIdx === stage?.activities?.length) {
             moveToNextStage()
+            setIsStageOn(false)
         }
-    },[activityIdx])
+    }, [activityIdx])
 
-    useEffect(()=>{
+    useEffect(() => {
         setActivityIdx(0)
-    },[stage])
+    }, [stage])
 
-    function onMoveToNextActivity(){
-        setActivityIdx(prev=>prev+1)
+    function onMoveToNextActivity() {
+        setActivityIdx(prev => prev + 1)
     }
-if(!stage) return ''
+    if (!stage) return ''
     return (
         <section className="stage-preview">
-           {!isStageOn && <><h2> StagePreview</h2>
-           <h3>שם השלב:{stage.name}</h3>
-           <p>ההודעה לפני:{stage.messageBefore}</p>
+            {!isStageOn && <><h2> StagePreview</h2>
+                <h3>שם השלב:{stage.name}</h3>
+                <p>ההודעה לפני:{stage.TextBefore}</p>
 
-           <button onClick={()=>setIsStageOn(prev=>!prev)}>התחל שלב</button>
-           </>}
+                <button onClick={() => setIsStageOn(prev => !prev)}>התחל שלב</button>
+            </>}
 
-           {isStageOn && <ActivityPreview activity={stage?.activities[activityIdx]} moveToNextActivity={onMoveToNextActivity}/>}
+            {isStageOn && <ActivityPreview activity={stage?.activities[activityIdx]} moveToNextActivity={onMoveToNextActivity} />}
         </section>
     )
 }

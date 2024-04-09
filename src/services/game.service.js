@@ -163,23 +163,27 @@ async function getActivitiesOfGame() {
 
 function getEmptyGame() {
     return {
+        id: null,
         name: '', // v
+        isDeleted: false,
         activities: null, // || []
         stages: null, // || []
+        createDate: '',
+        updatedDate: '',
         dateStart: '', // for form v
         timeStart: '', // for form v
         dateEnd: '', // for form v
         timeEnd: '', // for form v
-        // gameStartTime:0, // after form
-        // gameEndTime:0, // after form
+        gameStartTimestamp: 0, // after form
+        gameEndTimestamp: 0, // after form
         themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v
-        logo: '', // ? iconId?
+        icon: '', // ? iconId?
         groups: null, // v
         gameType: '', // stages or activities v
         activityProgressType: 'open', // open/ time/ progress v
         admins: [], // v
-        messageBefore: '', // v
-        messageAfter: '', // v
+        textBefore: '', // v
+        textAfter: '', // v
     }
 }
 
@@ -187,30 +191,32 @@ function getEmptyGroup() {
     return {
         id: utilService.makeId(), // adding txt from the game name
         name: '', // v
-        additionalScore: 0, // after game
+        adminAdditionalScore: 0, // after game
     }
 }
 function getEmptyStage() {
     return {
+        id: null,
         name: '', // v
         activities: null, // v
-        messageBefore: '', // v
-        messageAfter: '', // v
         dateStart: '', // for form v
         timeStart: '', // for form v
         dateEnd: '', // for form v
         timeEnd: '', // for form v
-        // stageStartTime:0, // after form - if the game.activityProgressType === onTime
-        // stageEndTime:0, // after form - if the game.activityProgressType === onTime
+        stageStartTimestamp: 0, // after form - if the game.activityProgressType === onTime
+        stageEndTimestamp: 0, // after form - if the game.activityProgressType === onTime
+        textBefore: '', // v
+        textAfter: '', // v
         maxError: '', // v
         isRequired: false, // v
     }
 }
 function getEmptyActivity() {
     return {
+        id: null,
         name: '',// v
         activityType: 'open', // v open/multiple/yesno/typing
-        answer: '', // v
+        correctAnswer: '', // v
         activityAswers: null, // if activityType === 'multiple' v
         correctAnswerId: 0, // after form (calc from 2 props above)
         timeToRespond: 0, // on game
@@ -218,15 +224,15 @@ function getEmptyActivity() {
         timeStart: '', // for form v
         dateEnd: '', // for form v
         timeEnd: '', // for form v
-        // activityStartTime:0, // after form - if the game.activityProgressType === onTime
-        // activityEndTime:0, // after form - if the game.activityProgressType === onTime
+        activityStartTimestamp: 0, // after form - if the game.activityProgressType === onTime
+        activityEndTimestamp: 0, // after form - if the game.activityProgressType === onTime
         pointsValue: 0, // v
         maxError: 0, // v
         mediaBefore: null, // {type : image/video , txt:'' , url:''} v
         mediaAfter: null, // {type : image/video , txt:'' , url:''} v
-        messageBefore: '', // v
-        messageAfter: '', // v
-        lifeSaver: null // v
+        textBefore: '', // v
+        textAfter: '', // v
+        lifeSaver: null // v []
     }
 }
 

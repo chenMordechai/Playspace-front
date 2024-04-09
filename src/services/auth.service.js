@@ -53,7 +53,7 @@ async function logout() {
     localStorage.removeItem(STORAGE_KEY_PLAYER)
     // missing api for logout
     // return await httpService.post(BASE_URL_AUTH + 'logout')
-    
+
 }
 
 // for players
@@ -75,14 +75,14 @@ async function getAdmins() {
 
     return Promise.resolve([
         {
-        userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        name: 'Anat Shapira',
-        isAdmin: true
-      },{
-        userId: "3fa85f64-5717-4562-b3fc-2c963frrrrr",
-        name: 'Adam',
-        isAdmin: true
-      }])
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            name: 'Anat Shapira',
+            isAdmin: true
+        }, {
+            userId: "3fa85f64-5717-4562-b3fc-2c963frrrrr",
+            name: 'Adam',
+            isAdmin: true
+        }])
 
 }
 
@@ -116,7 +116,7 @@ function getEmptyCredentials() {
         // name: 'AAAA',
         email: 'AnatShapira@gmail.com',
         name: 'Anat Shapira',
-        password: ''
+        // password: ''
         // password: 'Aa1234$%'
     }
 }

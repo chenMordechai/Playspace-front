@@ -1,16 +1,21 @@
 
 // game with stages:
-const game1 ={
-    "name": "המשחק הראשון שלי",
+const game1 = {
+    "id": null,// back
+    "name": "המשחק הראשון שלי", // front
+    "isDeleted": false, // back
     "activities": null,
     "stages": [
         {
+            "id": null,
             "name": "שלב ראשון",
             "activities": [
                 {
+                    "id": null,
                     "name": "מה קורה הכל בסדר?",
+                    "isDeleted": false,
                     "activityType": "multiple",
-                    "answer": "כן",
+                    "currectAnswer": "כן",
                     "activityAnswers": [
                         "כן",
                         "לא",
@@ -18,6 +23,8 @@ const game1 ={
                     ],
                     "correctAnswerId": 0,
                     "timeToRespond": 0,
+                    "activityStartTime": 1620000000,
+                    "activityEndTime": 1620003600,
                     "dateStart": "2024-04-08",
                     "timeStart": "13:25",
                     "dateEnd": "2024-04-08",
@@ -26,21 +33,24 @@ const game1 ={
                     "maxError": 1,
                     "mediaBefore": null,
                     "mediaAfter": null,
-                    "messageBefore": "בוקר טוב! השאלה הראשונה ממש פה, מוכן להתחיל?",
-                    "messageAfter": "תודה רבה שענית, מקווים שיהיה לך יום מדהים",
+                    "textBefore": "בוקר טוב! השאלה הראשונה ממש פה, מוכן להתחיל?",
+                    "textAfter": "תודה רבה שענית, מקווים שיהיה לך יום מדהים",
                     "lifeSaver": [
                         "fifty"
                     ],
-                    "gameStartTime": 1712571900000,
-                    "gameEndTime": 1712586540000
+
                 },
                 {
+                    "id": null,
                     "name": "עכשיו באמת איך אתה מרגיש?",
+                    "isDeleted": false,
                     "activityType": "open",
-                    "answer": "סבבה וכו",
+                    "currectAnswer": "סבבה וכו",
                     "activityAswers": null,
                     "correctAnswerId": 0,
                     "timeToRespond": 0,
+                    "activityStartTime": 1620000000,
+                    "activityEndTime": 1620003600,
                     "dateStart": "2024-04-09",
                     "timeStart": "13:25",
                     "dateEnd": "2024-04-09",
@@ -55,29 +65,30 @@ const game1 ={
                         "type": "image/jpeg",
                         "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521628/lgs8vl4uqnafeupbuvps.jpg"
                     },
-                    "messageBefore": "הנה תמונה מרגשת להשראה לקראת השאלה הבאה",
-                    "messageAfter": "עוד תמונה מרגשת לסוף השאלה",
+                    "textBefore": "הנה תמונה מרגשת להשראה לקראת השאלה הבאה",
+                    "textAfter": "עוד תמונה מרגשת לסוף השאלה",
                     "lifeSaver": null
                 },
             ],
-            "messageBefore": "זו הודעה לפני השלב הראשון",
-            "messageAfter": "זו הודעה אחרי השלב הראשון",
+            "textBefore": "זו הודעה לפני השלב הראשון",
+            "textAfter": "זו הודעה אחרי השלב הראשון",
+            "stageStartTimestamp": 0,
+            "stageEndTimestamp": 0,
             "dateStart": "2024-04-09",
             "timeStart": "15:26",
             "dateEnd": "2024-04-10",
             "timeEnd": "13:24",
             "maxError": 1,
             "isRequired": true,
-            "gameStartTime": 1712665560000,
-            "gameEndTime": 1712744640000
         },
         {
+            "id": null,
             "name": "שלב שני",
             "activities": [
                 {
                     "name": "מה המצב בשטחים?",
                     "activityType": "open",
-                    "answer": "ברוך ה' הכל בסדר",
+                    "correctAnswer": "ברוך ה' הכל בסדר",
                     "activityAswers": null,
                     "correctAnswerId": 0,
                     "timeToRespond": 0,
@@ -89,72 +100,80 @@ const game1 ={
                     "maxError": 0,
                     "mediaBefore": null,
                     "mediaAfter": null,
-                    "messageBefore": "הודעה לפני השאלה",
-                    "messageAfter": "הודעה אחרי השאלה",
+                    "textBefore": "הודעה לפני השאלה",
+                    "textAfter": "הודעה אחרי השאלה",
                     "lifeSaver": [
                         "moreTime"
                     ],
-                    "gameStartTime": 1712694300000,
-                    "gameEndTime": 1712694300000
+                    "gameStartTimestamp": 1712694300000,
+                    "gameEndTimestamp": 1712694300000
                 }
             ],
-            "messageBefore": "זוהי הודעה לפני השלב השני",
-            "messageAfter": "זוהי הודעה אחרי השלב השני",
+            "textBefore": "זוהי הודעה לפני השלב השני",
+            "textAfter": "זוהי הודעה אחרי השלב השני",
+            "stageStartTimestamp": 0,
+            "stageEndTimestamp": 0,
             "dateStart": "2024-04-09",
             "timeStart": "01:26",
             "dateEnd": "2024-04-09",
             "timeEnd": "04:29",
             "maxError": 0,
             "isRequired": false,
-            "gameStartTime": 1712615160000,
-            "gameEndTime": 1712626140000
+
         }
     ],
+    "createdDate": "2024-04-08T18:57:43.474Z", // back
+    "updatedDate": "2024-04-08T18:57:43.474Z", // back
     "dateStart": "2024-04-09",
     "timeStart": "01:20",
     "dateEnd": "2024-04-13",
     "timeEnd": "00:19",
+    "gameStartTimestamp": 1712614800000,
+    "gameEndTimestamp": 1712956740000,
     "themeColors": [
         "#c86400",
         "#c80064",
         "#c8c8c8"
     ],
-    "logo": {
+    "icon": {
         "type": "image/png",
         "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521101/lytvxwhqgnywbcaqnoy9.png"
     },
     "groups": [
         {
-            "id": "iw5k9Pssssssssssssssssss",
-            "name": "x",
-            "additionalScore": 0
+            "id": "group1",
+            "name": "Group 1",
+            "adminAdditionalScore": 0
         },
         {
-            "id": "eXc0sMssssssssssssssssss",
-            "name": "y",
-            "additionalScore": 0
+            "id": "group2",
+            "name": "Group 2",
+            "adminAdditionalScore": 0
         }
     ],
     "gameType": "stages",
     "activityProgressType": "onTime",
     "admins": [
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-    ],
-    "messageBefore": "vvv",
-    "messageAfter": "fff",
-    "gameStartTime": 1712614800000,
-    "gameEndTime": 1712956740000
+        {
+            "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
+        }],
+    "textBefore": "vvv",
+    "textAfter": "fff",
 }
 
 
 // game with activities
-const game2 ={
-    "name": "sss",
+const game2 = {
+    "id": null, //back
+    "name": "My Game",
+    "isDeleted": false, // back
     "activities": [
         {
-            "name": "s",
+            "id": null, //back
+            "name": "Updated Test Activity 1",
+            "isDeleted": false,
             "activityType": "open",
-            "answer": "ss",
+            "correctAnswer": "Hello",
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
@@ -162,6 +181,8 @@ const game2 ={
             "timeStart": "",
             "dateEnd": "",
             "timeEnd": "",
+            "activityStartTimestamp": 1620000000,
+            "activityEndTimestamp": 1620003600,
             "pointsValue": 4,
             "maxError": 2,
             "mediaBefore": {
@@ -172,14 +193,15 @@ const game2 ={
                 "type": "image/jpeg",
                 "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521628/lgs8vl4uqnafeupbuvps.jpg"
             },
-            "messageBefore": "sqe",
-            "messageAfter": "r3r3",
+            "textBefore": "sqe",
+            "textAfter": "r3r3",
             "lifeSaver": null
         },
         {
-            "name": "fe",
+            "name": "Updated Test Activity 2",
             "activityType": "yesno",
-            "answer": "fwfw",
+            "isDeleted": false,
+            "correctAnswer": "Hello2",
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
@@ -187,20 +209,23 @@ const game2 ={
             "timeStart": "",
             "dateEnd": "",
             "timeEnd": "",
+            "activityStartTimestamp": 1620000000,
+            "activityEndTimestamp": 1620003600,
             "pointsValue": 4,
             "maxError": 0,
             "mediaBefore": null,
             "mediaAfter": null,
-            "messageBefore": "csewf",
-            "messageAfter": "ve",
+            "textBefore": "csewf",
+            "textAfter": "ve",
             "lifeSaver": [
                 "skip"
             ]
         },
         {
-            "name": "dwdw",
+            "name": "Updated Test Activity 3",
             "activityType": "typing",
-            "answer": "fwfws",
+            "isDeleted": false,
+            "correctAnswer": "Hello3",
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
@@ -208,28 +233,34 @@ const game2 ={
             "timeStart": "",
             "dateEnd": "",
             "timeEnd": "",
+            "activityStartTimestamp": 1620000000,
+            "activityEndTimestamp": 1620003600,
             "pointsValue": 5,
             "maxError": 0,
             "mediaBefore": null,
             "mediaAfter": null,
-            "messageBefore": "fdwfd",
-            "messageAfter": "fdwfdw",
+            "textBefore": "fdwfd",
+            "textAfter": "fdwfdw",
             "lifeSaver": [
                 "skip"
             ]
         }
     ],
     "stages": null,
+    "createdDate": "2024-04-08T18:57:43.474Z", //back
+    "updatedDate": "2024-04-08T18:57:43.474Z", //back
     "dateStart": "2024-04-09",
     "timeStart": "01:20",
     "dateEnd": "2024-04-13",
     "timeEnd": "00:19",
+    "gameStartTimestamp": 1712614800000,
+    "gameEndTimestampstamp": 1712956740000,
     "themeColors": [
         "#c86400",
         "#c80064",
         "#c8c8c8"
     ],
-    "logo": {
+    "icon": {
         "type": "image/png",
         "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521101/lytvxwhqgnywbcaqnoy9.png"
     },
@@ -237,33 +268,182 @@ const game2 ={
         {
             "id": "iw5k9Psssssssssssssssssssss",
             "name": "x",
-            "additionalScore": 0
+            "adminAdditionalScore": 0
         },
         {
             "id": "eXc0sMsssssssssssssssssssss",
             "name": "y",
-            "additionalScore": 0
+            "adminAdditionalScore": 0
         }
     ],
     "gameType": "activities",
     "activityProgressType": "onProgress",
     "admins": [
-        "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-    ],
-    "messageBefore": "vvv",
-    "messageAfter": "fff",
-    "gameStartTime": 1712614800000,
-    "gameEndTime": 1712956740000
+        {
+            "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
+        }],
+    "textBefore": "Welcome to My Game!",
+    "textAfter": "Congratulations! You have completed My Game successfully.",
 }
 
-function getGame1(){
+// avishai activities
+const game3 = {
+    "id": null,
+    "name": "My Game",
+    "createdDate": "2024-04-08T18:57:43.474Z",
+    "updatedDate": "2024-04-08T18:57:43.474Z",
+    "gameStartTimestamp": 0,
+    "gameEndTimestampstamp": 0,
+    "startDate": "2024-04-10",
+    "endDate": "2024-04-20",
+    "startTime": "10:00 AM",
+    "endTime": "5:00 PM",
+    "isDeleted": false,
+    "activities": [
+        {
+            "name": "Updated Test Activity 1",
+            "isDeleted": false,
+            "activityType": "multiple",
+            "timeToRespond": 30,
+            "activityStartTime": 1620000000,
+            "activityEndTime": 1620003600,
+            "pointsValue": 100,
+            "maxError": 5,
+            "correctAnswerId": 1,
+            "activityAnswers": ["option1", "option2", "option3"],
+            "mediaBefore": { "type": "image", "url": "https://example.com/image1.jpg" },
+            "mediaAfter": { "type": "video", "url": "https://example.com/video1.mp4" },
+            "textBefore": "Sample pre-test instructions",
+            "textAfter": "Sample post-test instructions"
+        },
+        {
+            "name": "Updated Test Activity 2",
+            "isDeleted": false,
+            "activityType": "typing",
+            "timeToRespond": 45,
+            "activityStartTime": 1620007200,
+            "activityEndTime": 1620010800,
+            "pointsValue": 150,
+            "maxError": 3,
+            "correctAnswerId": 2,
+            "activityAnswers": null,
+            "mediaBefore": { "type": "audio", "url": "https://example.com/audio1.mp3" },
+            "mediaAfter": { "type": "image", "url": "https://example.com/image2.jpg" },
+            "textBefore": "Instructions for the activity",
+            "textAfter": "Follow-up instructions"
+        }],
+    "groups": [
+        {
+            "Id": "group1",
+            "name": "Group 1",
+            "adminAdditionalScore": 10
+        },
+        {
+            "Id": "group2",
+            "name": "Group 2",
+            "adminAdditionalScore": 15
+        }],
+    "themeColors": ["blue", "green", "yellow"],
+    "icon": { "type": "png", "url": "https://example.com/icon.png" },
+    "gameType": "activities",
+    "activityProgressType": "Percentage",
+    "admins": [
+        {
+            "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
+        }],
+    "textBefore": "Welcome to My Game!",
+    "textAfter": "Congratulations! You have completed My Game successfully."
+}
+
+// avishai stages
+const game4 = {
+    "id": null,
+    "name": "My Game",
+    "createdDate": "2024-04-08T18:57:43.474Z",
+    "updatedDate": "2024-04-08T18:57:43.474Z",
+    "gameStartTimestamp": 0,
+    "gameEndTimestampstamp": 0,
+    "startDate": "2024-04-10",
+    "endDate": "2024-04-20",
+    "startTime": "10:00 AM",
+    "endTime": "5:00 PM",
+    "isDeleted": false,
+    "activities": null,
+    "stages": [
+        {
+            "id": null,
+            "gameId": null,
+            "name": "Stage 1",
+            "activities": [
+                {
+                    "name": "Updated Test Activity 1",
+                    "isDeleted": false,
+                    "activityType": "multipleChoice",
+                    "timeToRespond": 30,
+                    "activityStartTime": 1620000000,
+                    "activityEndTime": 1620003600,
+                    "pointsValue": 100,
+                    "maxError": 5,
+                    "correctAnswerId": 1,
+                    "activityAnswers": ["option1", "option2", "option3"],
+                    "mediaBefore": { "type": "image", "url": "https://example.com/image1.jpg" },
+                    "mediaAfter": { "type": "video", "url": "https://example.com/video1.mp4" },
+                    "testBefore": "Sample pre-test instructions",
+                    "testAfter": "Sample post-test instructions"
+                },
+                {
+                    "name": "Updated Test Activity 2",
+                    "isDeleted": false,
+                    "activityType": "fillInTheBlanks",
+                    "timeToRespond": 45,
+                    "activityStartTime": 1620007200,
+                    "activityEndTime": 1620010800,
+                    "pointsValue": 150,
+                    "maxError": 3,
+                    "correctAnswerId": 2,
+                    "activityAnswers": ["answer1", "answer2", "answer3"],
+                    "mediaBefore": { "type": "audio", "url": "https://example.com/audio1.mp3" },
+                    "mediaAfter": { "type": "image", "url": "https://example.com/image2.jpg" },
+                    "testBefore": "Instructions for the activity",
+                    "testAfter": "Follow-up instructions"
+                }],
+            "textBefore": "Welcome to Stage 1",
+            "textAfter": "Stage 1 completed successfully",
+            "stageStartDate": 0,
+            "stageEndDate": 0,
+            "maxError": 0
+        }],
+    "groups": [
+        {
+            "Id": "group1",
+            "name": "Group 1",
+            "adminAdditionalScore": 10
+        },
+        {
+            "Id": "group2",
+            "name": "Group 2",
+            "adminAdditionalScore": 15
+        }],
+    "themeColors": ["blue", "green", "yellow"],
+    "icon": { "type": "png", "url": "https://example.com/icon.png" },
+    "gameType": "stages",
+    "activityProgressType": "Percentage",
+    "admins": [
+        {
+            "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
+        }],
+    "textBefore": "Welcome to My Game!",
+    "textAfter": "Congratulations! You have completed My Game successfully."
+}
+
+function getGame1() {
     return Promise.resolve(game1)
 }
-function getGame2(){
+function getGame2() {
     return Promise.resolve(game2)
 }
 
 export const demoDataService = {
-  getGame1,
-  getGame2
+    getGame1,
+    getGame2
 }

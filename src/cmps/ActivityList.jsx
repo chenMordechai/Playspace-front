@@ -35,8 +35,8 @@ export function ActivityList({ activities, onHandleActivityChange, activityProgr
                     <input type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
                 </>}
 
-                <label htmlFor="answer">התשובה</label>
-                <input type="text" name="answer" id="answer" value={activity.answer} onChange={() => onHandleActivityChange(event, i, j)} />
+                <label htmlFor="correctAnswer">התשובה</label>
+                <input type="text" name="correctAnswer" id="correctAnswer" value={activity.correctAnswer} onChange={() => onHandleActivityChange(event, i, j)} />
 
                 <label htmlFor="pointsValue">ניקוד</label>
                 <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />
@@ -44,11 +44,11 @@ export function ActivityList({ activities, onHandleActivityChange, activityProgr
                 <label htmlFor="maxError">כמה טעויות מותר</label>
                 <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() => onHandleActivityChange(event, i, j)} />
 
-                <label htmlFor="messageBefore">הודעה לפני השאלה</label>
-                <textarea name="messageBefore" id="messageBefore" value={activity.messageBefore} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
+                <label htmlFor="textBefore">הודעה לפני השאלה</label>
+                <textarea name="textBefore" id="textBefore" value={activity.textBefore} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
 
-                <label htmlFor="messageAfter">הודעה אחרי השאלה</label>
-                <textarea name="messageAfter" id="messageAfter" value={activity.messageAfter} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
+                <label htmlFor="textAfter">הודעה אחרי השאלה</label>
+                <textarea name="textAfter" id="textAfter" value={activity.textAfter} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
 
                 <label htmlFor="mediaBefore">תוספת גרפית לפני השאלה</label>
                 <input type="file" name="mediaBefore" id="mediaBefore" onChange={() => onHandleActivityChange(event, i, j)} />
