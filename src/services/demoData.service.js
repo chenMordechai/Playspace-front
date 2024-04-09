@@ -1,8 +1,8 @@
 
 // game with stages:
 const game1 = {
-    "id": null,// back
-    "name": "המשחק הראשון שלי", // front
+    "id": null, // back
+    "name": "המשחק הראשון שלי", // v
     "isDeleted": false, // back
     "activities": null,
     "stages": [
@@ -124,12 +124,12 @@ const game1 = {
     ],
     "createdDate": "2024-04-08T18:57:43.474Z", // back
     "updatedDate": "2024-04-08T18:57:43.474Z", // back
-    "dateStart": "2024-04-09",
-    "timeStart": "01:20",
-    "dateEnd": "2024-04-13",
-    "timeEnd": "00:19",
-    "gameStartTimestamp": 1712614800000,
-    "gameEndTimestamp": 1712956740000,
+    "dateStart": "2024-04-09", // v
+    "timeStart": "01:20", // v
+    "dateEnd": "2024-04-13", // v
+    "timeEnd": "00:19", // v
+    "gameStartTimestamp": Date.now() + 1000 * 60 * 60 * 24, // v
+    "gameEndTimestamp": 1712956740000, // v
     "themeColors": [
         "#c86400",
         "#c80064",
@@ -157,7 +157,7 @@ const game1 = {
         {
             "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
         }],
-    "textBefore": "vvv",
+    "textBefore": "ממש עוד רגע התחיל את המשחק המרגש! מוכנים?",
     "textAfter": "fff",
 }
 

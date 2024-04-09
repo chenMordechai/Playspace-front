@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams,Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useSelector } from 'react-redux'
 
 import { gameService } from '../services/game.service.js'
@@ -9,7 +9,7 @@ import { Colors } from '../cmps/Colors'
 import { ActivityList } from '../cmps/ActivityList'
 
 
-export function GameEdit (){
+export function GameEdit() {
     const [game, setGame] = useState(gameService.getEmptyGame())
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
 
@@ -52,7 +52,7 @@ export function GameEdit (){
         }
     }
 
-    function onSubmitForm(ev){
+    function onSubmitForm(ev) {
         ev.preventDefault()
 
     }
@@ -60,9 +60,9 @@ export function GameEdit (){
         <section className="game-add rtl">
             <h2>עריכת משחק</h2>
 
-            <div className="first-clr">First</div>
-            <div className="second-clr">Second</div>
-            <div className="third-clr">Third</div>
+            <div className="clr1">First</div>
+            <div className="clr2">Second</div>
+            <div className="clr3">Third</div>
 
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>
@@ -107,7 +107,7 @@ export function GameEdit (){
                     <option value="onTime">לפי זמנים</option>
                     <option value="onProgress">לפי התקדמות</option>
                 </select> */}
-{/* 
+                {/* 
                 <button onClick={() => setGame(prev => ({ ...prev, gameType: 'stages', activities: null }))}>משחק עם שלבים</button>
                 <button onClick={() => setGame(prev => ({ ...prev, gameType: 'activities', stages: null }))}>משחק בלי שלבים</button>
 

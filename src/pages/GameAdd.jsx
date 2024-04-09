@@ -28,7 +28,7 @@ export function GameAdd() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        // if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         loadAdmins()
     }, [])
 
@@ -224,9 +224,9 @@ export function GameAdd() {
         <section className="game-add rtl">
             <h2>יצירת משחק</h2>
 
-            <div className="first-clr">First</div>
-            <div className="second-clr">Second</div>
-            <div className="third-clr">Third</div>
+            <div className="clr1">First</div>
+            <div className="clr2">Second</div>
+            <div className="clr3">Third</div>
 
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>

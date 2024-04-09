@@ -4,15 +4,6 @@
     align-items: center;
     // text-align: center;
 
-    .first-clr {
-        background-color: var(--clr-0);
-    }
-    .second-clr {
-        background-color: var(--clr-1);
-    }
-    .third-clr {
-        background-color: var(--clr-2);
-    }
     form.create-game {
         display: grid;
         grid-template-columns: 1fr 1fr;
