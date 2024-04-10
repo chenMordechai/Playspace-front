@@ -12,6 +12,16 @@ export function Game() {
     const [currStageIdx, setCurrStageIdx] = useState(0)
     const [currGameStepIdx, setCurrGameStepIdx] = useState(0) // 0:before ,1:stages/activities , 2:end
 
+    const [currActivityIdx, setCurrActivityIdx] = useState(0)
+
+    function onMoveToNextActivity() {
+        setCurrActivityIdx(prev => prev + 1)
+    }
+
+    function onResetActivityIdx() {
+        setCurrActivityIdx(0)
+    }
+
     const { gameId } = useParams()
 
     useEffect(() => {
@@ -24,9 +34,12 @@ export function Game() {
     }, [game])
 
     useEffect(() => {
-        console.log('stageIdx', currStageIdx)
         if (currStageIdx === game?.stages.length) setCurrGameStepIdx(prev => prev + 1)
     }, [currStageIdx])
+
+    useEffect(() => {
+        if (currActivityIdx === game?.activities.length) setCurrGameStepIdx(prev => prev + 1)
+    }, [currActivityIdx])
 
     useEffect(() => {
         console.log('currGameStepIdx', currGameStepIdx)
@@ -86,8 +99,8 @@ export function Game() {
 
             {/* game stages / activities */}
             {currGameStepIdx === 1 && <>
-                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} />}
-                {game.gameType === 'activities' && <ActivityPreview />}
+                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} />}
+                {game.gameType === 'activities' && <ActivityPreview activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} />}
             </>}
 
             {/* end game */}

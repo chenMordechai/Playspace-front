@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react'
 
 import { ActivityPreview } from './ActivityPreview'
 
-export function StagePreview({ stage, moveToNextStage }) {
+export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity }) {
     console.log('stage:', stage)
     const [currStageStepIdx, setCurrStageStepIdx] = useState(0)
-    const [activityIdx, setActivityIdx] = useState(0)
+    // const [activityIdx, setActivityIdx] = useState(0)
 
     useEffect(() => {
         console.log('activityIdx:', activityIdx)
@@ -16,12 +16,14 @@ export function StagePreview({ stage, moveToNextStage }) {
     }, [activityIdx])
 
     useEffect(() => {
-        setActivityIdx(0)
+        // setActivityIdx(0)
+        onResetActivityIdx()
     }, [stage])
 
-    function onMoveToNextActivity() {
-        setActivityIdx(prev => prev + 1)
-    }
+
+    // function onMoveToNextActivity() {
+    //     setActivityIdx(prev => prev + 1)
+    // }
 
     function onMoveToNextStage() {
         moveToNextStage()

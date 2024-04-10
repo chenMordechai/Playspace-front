@@ -201,7 +201,7 @@ const game2 = {
             "name": "Updated Test Activity 2",
             "activityType": "yesno",
             "isDeleted": false,
-            "correctAnswer": "Hello2",
+            "correctAnswer": "yes",
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,

@@ -1,25 +1,37 @@
 import { useState } from 'react'
 import { Media } from './Media'
 
+import { ActivityType } from './ActivityType'
+
 export function ActivityPreview({ activity, moveToNextActivity }) {
     console.log('activity:', activity)
     const [currActivityStepIdx, setCurrActivityStepIdx] = useState(0)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
-    const [textAreaValue, setTextAreaValue] = useState('')
+    const [inputOpenValue, setInputOpenValue] = useState('')
+    const [inputTypingValue, setInputTypingValue] = useState('')
 
-
+    // maybe one func for checking
     function checkMultipleAnswer(i) {
         if (i === activity.correctAnswerId) setIsAnswerCorrect(true)
         else {
             // check max error
         }
-
     }
 
     function checkOpenAnswer() {
-        if (!textAreaValue) setIsAnswerCorrect(false)
+        if (!inputOpenValue) setIsAnswerCorrect(false)
         else setIsAnswerCorrect(true)
+    }
+
+    function checkTypingAnswer() {
+        if (!inputTypingValue) setIsAnswerCorrect(false)
+        else if (inputTypingValue === activity.correctAnswer) setIsAnswerCorrect(true)
+
+    }
+
+    function checkYesNoAnswer(answer) {
+        if (answer === activity.correctAnswer) setIsAnswerCorrect(true)
     }
 
     function onMoveToNextActivity() {
@@ -29,10 +41,10 @@ export function ActivityPreview({ activity, moveToNextActivity }) {
     }
 
     function handlaChange(ev) {
-        const { value } = ev.target
-        setTextAreaValue(value)
+        const { value, name } = ev.target
+        if (name === 'open') setInputOpenValue(value)
+        else if (name === 'typing') setInputTypingValue(value)
     }
-
 
 
     if (!activity) return ''
@@ -51,21 +63,7 @@ export function ActivityPreview({ activity, moveToNextActivity }) {
                 <h3>השאלה: {activity.name}</h3>
                 <section className="answer-container">
                     <h2>Answer:</h2>
-                    {activity.activityType === 'multiple' &&
-                        <div className="multiple-answer">
-                            {activity.activityAnswers.map((a, i) =>
-                                <button key={a}
-                                    onClick={() => checkMultipleAnswer(i)}>
-                                    {a}
-                                </button>)}
-                        </div>}
-
-                    {activity.activityType === 'open' &&
-                        <div className="open-answer">
-                            <textarea value={textAreaValue} onChange={handlaChange} />
-
-                            <button onClick={checkOpenAnswer}> שלח תשובה </button>
-                        </div>}
+                    <ActivityType activity={activity} checkMultipleAnswer={checkMultipleAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} checkOpenAnswer={checkOpenAnswer} checkYesNoAnswer={checkYesNoAnswer} inputTypingValue={inputTypingValue} checkTypingAnswer={checkTypingAnswer} />
                 </section>
 
                 {isAnswerCorrect && <section>
