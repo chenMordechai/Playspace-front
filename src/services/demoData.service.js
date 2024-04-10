@@ -158,7 +158,7 @@ const game1 = {
             "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
         }],
     "textBefore": "ממש עוד רגע התחיל את המשחק המרגש! מוכנים?",
-    "textAfter": "fff",
+    "textAfter": "המשחק המרגש הסתיים",
 }
 
 

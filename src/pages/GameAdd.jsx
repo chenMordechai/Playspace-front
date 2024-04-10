@@ -9,7 +9,7 @@ import { getAdmins } from '../store/actions/auth.action.js'
 import { addGame } from '../store/actions/game.action.js'
 
 import { Colors } from '../cmps/Colors'
-import { ActivityList } from '../cmps/ActivityList'
+import { ActivityFormList } from '../cmps/ActivityFormList'
 
 export function GameAdd() {
 

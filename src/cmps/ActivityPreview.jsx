@@ -1,10 +1,9 @@
 import { useState } from 'react'
+import { Media } from './Media'
 
 export function ActivityPreview({ activity, moveToNextActivity }) {
     console.log('activity:', activity)
-    const [closeTextBefore, setCloseTextBefore] = useState(false)
-    const [closeTextAfter, setCloseTextAfter] = useState(false)
-    const [openModal, setOpenModal] = useState(false)
+    const [currActivityStepIdx, setCurrActivityStepIdx] = useState(0)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [textAreaValue, setTextAreaValue] = useState('')
@@ -26,6 +25,7 @@ export function ActivityPreview({ activity, moveToNextActivity }) {
     function onMoveToNextActivity() {
         moveToNextActivity()
         setIsAnswerCorrect(false)
+        setCurrActivityStepIdx(0)
     }
 
     function handlaChange(ev) {
@@ -33,19 +33,22 @@ export function ActivityPreview({ activity, moveToNextActivity }) {
         setTextAreaValue(value)
     }
 
+
+
     if (!activity) return ''
     return (
         <section className="activity-preview">
-            <h2>ActivityPreview</h2>
-            {activity.textBefore && !closeTextBefore && <>
-                <h3>ההודעה לפני:{activity.textBefore}</h3>
-                <button onClick={() => setCloseTextBefore(prev => !prev)}>התקדם לשאלה</button>
+
+            {/* start activity */}
+            {currActivityStepIdx === 0 && <>
+                {activity.textBefore && <h3>ההודעה לפני:{activity.textBefore}</h3>}
+                <Media media={activity.mediaBefore} />
+                <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>
             </>}
 
-
-            {closeTextBefore && <section>
+            {/* activity */}
+            {currActivityStepIdx === 1 && <section>
                 <h3>השאלה: {activity.name}</h3>
-
                 <section className="answer-container">
                     <h2>Answer:</h2>
                     {activity.activityType === 'multiple' &&
@@ -65,19 +68,18 @@ export function ActivityPreview({ activity, moveToNextActivity }) {
                         </div>}
                 </section>
 
-
-
                 {isAnswerCorrect && <section>
                     {/* תגובה נכונה לכל זוג של שאלה */}
                     <h3>יופי !!  תשובה נכונה</h3>
-                    <button onClick={onMoveToNextActivity}>מעבר לשאלה הבאה</button>
+                    <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>סיימתי</button>
                 </section>}
             </section>}
 
-
-            {activity.textAfter && !closeTextAfter && <>
-                <h3>ההודעה לפני:{activity.textAfter}</h3>
-                <button onClick={() => setCloseTextAfter(prev => !prev)}>התקדם לשאלה</button>
+            {/* end activity */}
+            {currActivityStepIdx === 2 && <>
+                {activity.textAfter && <h3>ההודעה אחרי:{activity.textAfter}</h3>}
+                <Media media={activity.mediaAfter} />
+                <button onClick={onMoveToNextActivity}>התקדם לשאלה הבאה</button>
             </>}
 
         </section>
