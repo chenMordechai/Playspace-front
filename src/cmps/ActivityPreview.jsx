@@ -3,9 +3,8 @@ import { Media } from './Media'
 
 import { ActivityType } from './ActivityType'
 
-export function ActivityPreview({ activity, moveToNextActivity }) {
+export function ActivityPreview({ activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
     console.log('activity:', activity)
-    const [currActivityStepIdx, setCurrActivityStepIdx] = useState(0)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')

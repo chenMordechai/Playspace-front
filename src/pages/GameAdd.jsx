@@ -11,6 +11,7 @@ import { addGame } from '../store/actions/game.action.js'
 import { Colors } from '../cmps/Colors'
 import { ActivityFormList } from '../cmps/ActivityFormList'
 
+// game/add
 export function GameAdd() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
@@ -176,9 +177,9 @@ export function GameAdd() {
         ev.preventDefault()
 
         // groups id changes
-        game.groups?.forEach(group => {
-            group.id += game.name.substring(0, 3)
-        })
+        // game.groups?.forEach(group => {
+        //     group.id += game.name.substring(0, 3)
+        // })
 
         // time changes
         const gameStartTimestamp = new Date(game.dateStart + ' ' + game.timeStart).getTime()
@@ -213,7 +214,7 @@ export function GameAdd() {
         console.log('game:', game)
 
         const newGame = await addGame(game)
-        // console.log('newGame:', newGame)
+        console.log('newGame:', newGame)
     }
 
     function onOpenActivities() {
@@ -233,7 +234,7 @@ export function GameAdd() {
                 <input required type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
                 <label htmlFor="admins">אדמינים</label>
-                <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
                     {admins?.map(admin => <option key={admin.userId} value={admin.userId}>
                         {admin.name}
                     </option>)}

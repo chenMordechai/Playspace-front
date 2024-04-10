@@ -137,7 +137,6 @@ async function getGames2() {
 }
 
 async function getGameById(gameId) {
-    console.log('getGameById')
     // doesn't work
     // return httpService.get(BASE_URL + gameId)
     return demoDataService.getGame1()
@@ -151,9 +150,9 @@ async function remove(gameId) {
 async function save(game) {
 
     if (game.id) {
-        // return httpService.put(BASE_URL + game.id, game)
+        return httpService.put(BASE_URL + game.id, game)
     } else {
-        // return httpService.post(BASE_URL, game)
+        return httpService.post(BASE_URL, game)
     }
 }
 

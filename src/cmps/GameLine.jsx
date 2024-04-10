@@ -1,6 +1,6 @@
 
 
-export function GameLine({ stages, activities, onChangeStageIdx }) {
+export function GameLine({ stages, activities, onChangeStageIdx, onChangeActivityIdx }) {
     return (
         <section className="game-line">
             {stages && <ul className="stage-line" >
@@ -8,8 +8,9 @@ export function GameLine({ stages, activities, onChangeStageIdx }) {
                     onClick={() => onChangeStageIdx(i)}>
                     {stage.name}
                     <ul className="activity-line">
-                        {stage.activities.map((activity, j) => <li>
-                            {j}
+                        {stage.activities.map((activity, j) => <li key={activity.name}
+                            onClick={() => onChangeActivityIdx(i, j)}>
+                            שאלה {j + 1}
                         </li>)}
                     </ul>
                 </li>)}

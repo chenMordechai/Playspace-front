@@ -2,23 +2,23 @@ import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 
 import { getGameById } from "../store/actions/game.action.js"
-import { StagePreview } from "../cmps/StagePreview"
 import { ActivityPreview } from "../cmps/ActivityPreview"
+import { StagePreview } from "../cmps/StagePreview"
 import { GameLine } from "../cmps/GameLine"
 
 // game/:gameId
 
 export function Game() {
     const [game, setGame] = useState(null)
-    const [currStageIdx, setCurrStageIdx] = useState(0)
     const [currGameStepIdx, setCurrGameStepIdx] = useState(0) // 0:before ,1:stages/activities , 2:end
-
+    const [currStageIdx, setCurrStageIdx] = useState(0)
     const [currActivityIdx, setCurrActivityIdx] = useState(0)
+
+    const [currActivityStepIdx, setCurrActivityStepIdx] = useState(0)
 
     const { gameId } = useParams()
 
     useEffect(() => {
-        console.log('gameId', gameId)
         init()
     }, [])
 
@@ -27,15 +27,17 @@ export function Game() {
     }, [game])
 
     useEffect(() => {
+        console.log('currStageIdx:', currStageIdx)
         if (currStageIdx === game?.stages?.length) setCurrGameStepIdx(prev => prev + 1)
     }, [currStageIdx])
 
     useEffect(() => {
+        console.log('currActivityIdx:', currActivityIdx)
         if (currActivityIdx === game?.activities?.length) setCurrGameStepIdx(prev => prev + 1)
     }, [currActivityIdx])
 
     useEffect(() => {
-        console.log('currGameStepIdx', currGameStepIdx)
+        console.log('currGameStepIdx:', currGameStepIdx)
     }, [currGameStepIdx])
 
 
@@ -43,7 +45,6 @@ export function Game() {
         try {
             const game = await getGameById(gameId)
             console.log('game:', game)
-
             // const shallowGame = 
             setGame(game)
         } catch (err) {
@@ -61,7 +62,6 @@ export function Game() {
     function getClockForGame() {
         const now = Date.now()
         const diff = game.gameStartTimestamp - now
-        console.log('diff:', diff)
         return diff + 'ms'
 
     }
@@ -80,6 +80,11 @@ export function Game() {
 
     function onChangeStageIdx(idx) {
         setCurrStageIdx(idx)
+    }
+    function onChangeActivityIdx(stageIdx, activityIdx) {
+        setCurrActivityIdx(activityIdx)
+        setCurrStageIdx(stageIdx)
+        setCurrActivityStepIdx(0)
     }
 
     if (!game) return ''
@@ -104,11 +109,11 @@ export function Game() {
             </>}
 
             {/* gameline  */}
-            {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} />}
+            {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />}
             {/* game stages / activities */}
             {currGameStepIdx === 1 && <>
-                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} />}
-                {game.gameType === 'activities' && <ActivityPreview activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} />}
+                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
+                {game.gameType === 'activities' && <ActivityPreview activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
             </>}
 
             {/* end game */}
