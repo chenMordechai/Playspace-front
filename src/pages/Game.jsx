@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { getGameById } from "../store/actions/game.action.js"
 import { StagePreview } from "../cmps/StagePreview"
 import { ActivityPreview } from "../cmps/ActivityPreview"
+import { GameLine } from "../cmps/GameLine"
 
 // game/:gameId
 
@@ -13,14 +14,6 @@ export function Game() {
     const [currGameStepIdx, setCurrGameStepIdx] = useState(0) // 0:before ,1:stages/activities , 2:end
 
     const [currActivityIdx, setCurrActivityIdx] = useState(0)
-
-    function onMoveToNextActivity() {
-        setCurrActivityIdx(prev => prev + 1)
-    }
-
-    function onResetActivityIdx() {
-        setCurrActivityIdx(0)
-    }
 
     const { gameId } = useParams()
 
@@ -34,11 +27,11 @@ export function Game() {
     }, [game])
 
     useEffect(() => {
-        if (currStageIdx === game?.stages.length) setCurrGameStepIdx(prev => prev + 1)
+        if (currStageIdx === game?.stages?.length) setCurrGameStepIdx(prev => prev + 1)
     }, [currStageIdx])
 
     useEffect(() => {
-        if (currActivityIdx === game?.activities.length) setCurrGameStepIdx(prev => prev + 1)
+        if (currActivityIdx === game?.activities?.length) setCurrGameStepIdx(prev => prev + 1)
     }, [currActivityIdx])
 
     useEffect(() => {
@@ -77,9 +70,22 @@ export function Game() {
         setCurrStageIdx(prev => prev + 1)
     }
 
+    function onMoveToNextActivity() {
+        setCurrActivityIdx(prev => prev + 1)
+    }
+
+    function onResetActivityIdx() {
+        setCurrActivityIdx(0)
+    }
+
+    function onChangeStageIdx(idx) {
+        setCurrStageIdx(idx)
+    }
+
     if (!game) return ''
     return (
         <section className="game-container rtl">
+
             {/* game color theme */}
             <div className="clr1">First</div>
             <div className="clr2">Second</div>
@@ -97,9 +103,11 @@ export function Game() {
                 <button onClick={() => setCurrGameStepIdx(prev => prev + 1)}>התחל לשחק</button>
             </>}
 
+            {/* gameline  */}
+            {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} />}
             {/* game stages / activities */}
             {currGameStepIdx === 1 && <>
-                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} />}
+                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} />}
                 {game.gameType === 'activities' && <ActivityPreview activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} />}
             </>}
 

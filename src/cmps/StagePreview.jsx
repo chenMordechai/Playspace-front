@@ -2,18 +2,18 @@ import { useState, useEffect } from 'react'
 
 import { ActivityPreview } from './ActivityPreview'
 
-export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity }) {
+export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity, currActivityIdx }) {
     console.log('stage:', stage)
     const [currStageStepIdx, setCurrStageStepIdx] = useState(0)
-    // const [activityIdx, setActivityIdx] = useState(0)
+    // const [currActivityIdx, setActivityIdx] = useState(0)
 
     useEffect(() => {
-        console.log('activityIdx:', activityIdx)
-        if (activityIdx === stage?.activities?.length) {
+        console.log('currActivityIdx:', currActivityIdx)
+        if (currActivityIdx === stage?.activities?.length) {
             moveToNextStage()
             setCurrStageStepIdx(prev => prev + 1)
         }
-    }, [activityIdx])
+    }, [currActivityIdx])
 
     useEffect(() => {
         // setActivityIdx(0)
@@ -46,7 +46,7 @@ export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMov
                 <button onClick={() => setCurrStageStepIdx(prev => prev + 1)}>סיום שלב</button>
             </>} */}
             {/* real */}
-            {currStageStepIdx === 1 && <ActivityPreview activity={stage?.activities[activityIdx]} moveToNextActivity={onMoveToNextActivity} />}
+            {currStageStepIdx === 1 && <ActivityPreview activity={stage?.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} />}
 
             {/* end stage*/}
             {currStageStepIdx === 2 && <>
