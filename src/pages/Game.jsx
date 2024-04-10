@@ -14,6 +14,7 @@ export function Game() {
     const [currStageIdx, setCurrStageIdx] = useState(0)
     const [currActivityIdx, setCurrActivityIdx] = useState(0)
 
+    const [currStageStepIdx, setCurrStageStepIdx] = useState(0)
     const [currActivityStepIdx, setCurrActivityStepIdx] = useState(0)
 
     const { gameId } = useParams()
@@ -80,11 +81,17 @@ export function Game() {
 
     function onChangeStageIdx(idx) {
         setCurrStageIdx(idx)
+        // setCurrStageStepIdx(0)
     }
-    function onChangeActivityIdx(stageIdx, activityIdx) {
+    function onChangeActivityIdx(activityIdx, stageIdx) {
         setCurrActivityIdx(activityIdx)
-        setCurrStageIdx(stageIdx)
         setCurrActivityStepIdx(0)
+
+        if (stageIdx !== undefined) {
+            if (currStageStepIdx === 0) return
+            setCurrStageIdx(stageIdx)
+
+        }
     }
 
     if (!game) return ''
@@ -112,7 +119,7 @@ export function Game() {
             {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />}
             {/* game stages / activities */}
             {currGameStepIdx === 1 && <>
-                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
+                {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
                 {game.gameType === 'activities' && <ActivityPreview activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
             </>}
 

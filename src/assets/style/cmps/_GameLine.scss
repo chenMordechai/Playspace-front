@@ -15,8 +15,8 @@
             align-items: center;
             width: 50px;
             height: 50px;
-            background-color: rgb(33, 60, 183);
             border-radius: 50%;
+            background-color: rgb(33, 60, 183);
             cursor: pointer;
         }
     }
@@ -31,6 +31,10 @@
             align-items: center;
             justify-content: center;
             background-color: darkcyan;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
         }
     }
 }

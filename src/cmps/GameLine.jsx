@@ -9,12 +9,21 @@ export function GameLine({ stages, activities, onChangeStageIdx, onChangeActivit
                     {stage.name}
                     <ul className="activity-line">
                         {stage.activities.map((activity, j) => <li key={activity.name}
-                            onClick={() => onChangeActivityIdx(i, j)}>
+                            onClick={() => onChangeActivityIdx(j, i)}>
                             שאלה {j + 1}
                         </li>)}
                     </ul>
                 </li>)}
             </ul>}
+
+            {activities && <ul className="activity-line">
+                {activities.map((activity, i) => <li key={activity.name}
+                    onClick={() => onChangeActivityIdx(i)}>
+                    שאלה {i + 1}
+                </li>)}
+            </ul>}
+
+
 
         </section>
     )

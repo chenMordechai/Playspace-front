@@ -139,7 +139,8 @@ async function getGames2() {
 async function getGameById(gameId) {
     // doesn't work
     // return httpService.get(BASE_URL + gameId)
-    return demoDataService.getGame1()
+    return demoDataService.getGame2()
+    // return demoDataService.getGame1()
 }
 
 async function remove(gameId) {
