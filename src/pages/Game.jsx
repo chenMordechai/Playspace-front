@@ -5,6 +5,9 @@ import { getGameById } from "../store/actions/game.action.js"
 import { ActivityPreview } from "../cmps/ActivityPreview"
 import { StagePreview } from "../cmps/StagePreview"
 import { GameLine } from "../cmps/GameLine"
+import { demoDataService } from "../services/demoData.service.js"
+
+
 
 // game/:gameId
 
@@ -44,7 +47,12 @@ export function Game() {
 
     async function init() {
         try {
-            const game = await getGameById(gameId)
+            // game with stages - onTime:
+            const game = await demoDataService.getGame1()
+            // game with activities - onProgress:
+            // const game = await demoDataService.getGame2()
+            // game with activities - open:
+            // const game = await demoDataService.getGame3()
             console.log('game:', game)
             // const shallowGame = 
             setGame(game)

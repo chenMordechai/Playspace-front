@@ -1,5 +1,5 @@
 
-// game with stages:
+// game with stages - onTime:
 const game1 = {
     "id": null, // back
     "name": "המשחק הראשון שלי", // v
@@ -161,8 +161,7 @@ const game1 = {
     "textAfter": "המשחק המרגש הסתיים",
 }
 
-
-// game with activities
+// game with activities - onProgress
 const game2 = {
     "id": null, //back
     "name": "My Game",
@@ -249,10 +248,10 @@ const game2 = {
     "stages": null,
     "createdDate": "2024-04-08T18:57:43.474Z", //back
     "updatedDate": "2024-04-08T18:57:43.474Z", //back
-    "dateStart": "2024-04-09",
-    "timeStart": "01:20",
-    "dateEnd": "2024-04-13",
-    "timeEnd": "00:19",
+    "dateStart": "",
+    "timeStart": "",
+    "dateEnd": "",
+    "timeEnd": "",
     "gameStartTimestamp": 1712614800000,
     "gameEndTimestampstamp": 1712956740000,
     "themeColors": [
@@ -286,8 +285,132 @@ const game2 = {
     "textAfter": "Congratulations! You have completed My Game successfully.",
 }
 
-// avishai activities
+// game with activities - open
 const game3 = {
+    "id": null, //back
+    "name": "My Game",
+    "isDeleted": false, // back
+    "activities": [
+        {
+            "id": null, //back
+            "name": "Updated Test Activity 1",
+            "isDeleted": false,
+            "activityType": "open",
+            "correctAnswer": "Hello",
+            "activityAswers": null,
+            "correctAnswerId": 0,
+            "timeToRespond": 0,
+            "dateStart": "",
+            "timeStart": "",
+            "dateEnd": "",
+            "timeEnd": "",
+            "activityStartTimestamp": 1620000000,
+            "activityEndTimestamp": 1620003600,
+            "pointsValue": 4,
+            "maxError": 2,
+            "mediaBefore": {
+                "type": "image/png",
+                "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521622/ops4it8mbxfdwqwxr7an.png"
+            },
+            "mediaAfter": {
+                "type": "image/jpeg",
+                "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521628/lgs8vl4uqnafeupbuvps.jpg"
+            },
+            "textBefore": "sqe",
+            "textAfter": "r3r3",
+            "lifeSaver": null
+        },
+        {
+            "name": "Updated Test Activity 2",
+            "activityType": "yesno",
+            "isDeleted": false,
+            "correctAnswer": "yes",
+            "activityAswers": null,
+            "correctAnswerId": 0,
+            "timeToRespond": 0,
+            "dateStart": "",
+            "timeStart": "",
+            "dateEnd": "",
+            "timeEnd": "",
+            "activityStartTimestamp": 1620000000,
+            "activityEndTimestamp": 1620003600,
+            "pointsValue": 4,
+            "maxError": 0,
+            "mediaBefore": null,
+            "mediaAfter": null,
+            "textBefore": "csewf",
+            "textAfter": "ve",
+            "lifeSaver": [
+                "skip"
+            ]
+        },
+        {
+            "name": "Updated Test Activity 3",
+            "activityType": "typing",
+            "isDeleted": false,
+            "correctAnswer": "Hello3",
+            "activityAswers": null,
+            "correctAnswerId": 0,
+            "timeToRespond": 0,
+            "dateStart": "",
+            "timeStart": "",
+            "dateEnd": "",
+            "timeEnd": "",
+            "activityStartTimestamp": 1620000000,
+            "activityEndTimestamp": 1620003600,
+            "pointsValue": 5,
+            "maxError": 0,
+            "mediaBefore": null,
+            "mediaAfter": null,
+            "textBefore": "fdwfd",
+            "textAfter": "fdwfdw",
+            "lifeSaver": [
+                "skip"
+            ]
+        }
+    ],
+    "stages": null,
+    "createdDate": "2024-04-08T18:57:43.474Z", //back
+    "updatedDate": "2024-04-08T18:57:43.474Z", //back
+    "dateStart": "",
+    "timeStart": "",
+    "dateEnd": "",
+    "timeEnd": "",
+    "gameStartTimestamp": 1712614800000,
+    "gameEndTimestampstamp": 1712956740000,
+    "themeColors": [
+        "#c86400",
+        "#c80064",
+        "#c8c8c8"
+    ],
+    "icon": {
+        "type": "image/png",
+        "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521101/lytvxwhqgnywbcaqnoy9.png"
+    },
+    "groups": [
+        {
+            "id": "iw5k9Psssssssssssssssssssss",
+            "name": "x",
+            "adminAdditionalScore": 0
+        },
+        {
+            "id": "eXc0sMsssssssssssssssssssss",
+            "name": "y",
+            "adminAdditionalScore": 0
+        }
+    ],
+    "gameType": "activities",
+    "activityProgressType": "open",
+    "admins": [
+        {
+            "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
+        }],
+    "textBefore": "Welcome to My Game!",
+    "textAfter": "Congratulations! You have completed My Game successfully.",
+}
+
+// avishai activities
+const game33 = {
     "id": null,
     "name": "My Game",
     "createdDate": "2024-04-08T18:57:43.474Z",
@@ -356,7 +479,7 @@ const game3 = {
 }
 
 // avishai stages
-const game4 = {
+const game44 = {
     "id": null,
     "name": "My Game",
     "createdDate": "2024-04-08T18:57:43.474Z",
@@ -442,8 +565,12 @@ function getGame1() {
 function getGame2() {
     return Promise.resolve(game2)
 }
+function getGame3() {
+    return Promise.resolve(game3)
+}
 
 export const demoDataService = {
     getGame1,
-    getGame2
+    getGame2,
+    getGame3
 }
