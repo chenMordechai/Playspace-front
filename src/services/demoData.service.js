@@ -74,11 +74,11 @@ const game1 = {
             "textAfter": "זו הודעה אחרי השלב הראשון",
             "stageStartTimestamp": 0,
             "stageEndTimestamp": 0,
-            "dateStart": "2024-04-09",
-            "timeStart": "15:26",
-            "dateEnd": "2024-04-10",
-            "timeEnd": "13:24",
-            "maxError": 1,
+            "dateStart": "2024-02-01", // past
+            "timeStart": "08:00", // past
+            "dateEnd": "2024-02-11", //past
+            "timeEnd": "08:00",
+            "maxError": 1, //past
             "isRequired": true,
         },
         {
@@ -124,12 +124,31 @@ const game1 = {
     ],
     "createdDate": "2024-04-08T18:57:43.474Z", // back
     "updatedDate": "2024-04-08T18:57:43.474Z", // back
-    "dateStart": "2024-04-09", // v
-    "timeStart": "01:20", // v
-    "dateEnd": "2024-04-13", // v
-    "timeEnd": "00:19", // v
-    "gameStartTimestamp": Date.now() + 1000 * 60 * 60 * 24, // v
-    "gameEndTimestamp": 1712956740000, // v
+
+    // option 1 - !start & !end future
+    // "dateStart": "2024-06-01", // v // future
+    // "timeStart": "08:00", // v // future
+    // "dateEnd": "2024-07-01", // v // future
+    // "timeEnd": "08:00", // v // future
+    // "gameStartTimestamp": 1717218000000, // v // future
+    // "gameEndTimestamp": 1717218000000, // v // future
+
+    // option 2 - start & end past
+    // "dateStart": "2024-02-01", // past
+    // "timeStart": "08:00", // past
+    // "dateEnd": "2024-03-01", // past
+    // "timeEnd": "08:00", // past
+    // "gameStartTimestamp": 1706767200000, // past
+    // "gameEndTimestamp": 1709272800000, // past
+
+    // option 3 - start & !end present
+    "dateStart": "2024-02-01", // past
+    "timeStart": "08:00", // past
+    "gameStartTimestamp": 1706767200000, // past
+    "dateEnd": "2024-07-01", // v // future
+    "timeEnd": "08:00", // v // future
+    "gameEndTimestamp": 1717218000000, // v // future
+
     "themeColors": [
         "#c86400",
         "#c80064",

@@ -1,5 +1,5 @@
 
-export function ActivityFormList({ activities, onHandleActivityChange, activityProgressType, i }) {
+export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType }) {
     return (
         <ul className="activity-list">
             {activities?.map((activity, j) => <li key={j}>
