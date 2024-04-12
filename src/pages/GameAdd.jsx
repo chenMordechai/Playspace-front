@@ -10,6 +10,7 @@ import { addGame } from '../store/actions/game.action.js'
 
 import { Colors } from '../cmps/Colors'
 import { ActivityFormList } from '../cmps/ActivityFormList'
+import { StagesFormList } from '../cmps/StagesFormList.jsx'
 
 // game/add
 export function GameAdd() {
@@ -30,10 +31,13 @@ export function GameAdd() {
 
     useEffect(() => {
         // if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        //! Chen - after admin login push the admin id to game.admins (default in the form)
+        // if (loggedinUser) game.admins.push(loggedinUser) 
         loadAdmins()
     }, [])
 
     async function loadAdmins() {
+        //! Avishai get admins
         const admins = await getAdmins()
         setAdmins(admins)
     }
@@ -54,8 +58,8 @@ export function GameAdd() {
         let { name, value, type } = ev.target
         if (type === 'number') value = +value
         if (type === 'checkbox') value = ev.target.checked
-        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => option.value)
-
+        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => ({adminId: option.value}))
+        console.log(name, value);
         if (name === 'gameType') {
             value = (value) ? 'stages' : 'activities'
             setGame(prevGame => ({ ...prevGame, [name]: value }))
@@ -213,6 +217,7 @@ export function GameAdd() {
 
         console.log('game:', game)
 
+        //! Avishai add game
         const newGame = await addGame(game)
         console.log('newGame:', newGame)
     }
@@ -235,7 +240,7 @@ export function GameAdd() {
 
                 <label htmlFor="admins">אדמינים</label>
                 <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
-                    {admins?.map(admin => <option key={admin.userId} value={admin.userId}>
+                    {admins?.map(admin => <option key={admin.id} value={admin.id}>
                         {admin.name}
                     </option>)}
                 </select>
@@ -289,49 +294,7 @@ export function GameAdd() {
                 </>}
 
                 {game.gameType === "stages" && game.stages?.length && <section className="stages-container">
-                    <span className="stages" >שלבי המשחק</span>
-                    <ul className="stages">
-                        {game.stages.map((stage, i) => <li key={i}>
-                            <span className="stages">שלב  {i + 1}</span>
-
-                            <label htmlFor="name">שם השלב</label>
-                            <input type="text" name="name" id="name" value={stage.name} onChange={() => onHandleStageChange(event, i)} />
-
-                            {game.activityProgressType === 'onTime' && <>
-                                <label htmlFor="dateStart">תאריך התחלה</label>
-                                <input type="date" name="dateStart" id="dateStart" value={stage.dateStart} onChange={() => onHandleStageChange(event, i)} />
-
-                                <label htmlFor="timeStart">שעת התחלה</label>
-                                <input type="time" name="timeStart" id="timeStart" value={stage.timeStart} onChange={() => onHandleStageChange(event, i)} />
-
-                                <label htmlFor="dateEnd">תאריך סיום</label>
-                                <input type="date" name="dateEnd" id="dateEnd" value={stage.dateEnd} onChange={() => onHandleStageChange(event, i)} />
-
-                                <label htmlFor="timeEnd">שעת סיום</label>
-                                <input type="time" name="timeEnd" id="timeEnd" value={stage.timeEnd} onChange={() => onHandleStageChange(event, i)} />
-                            </>}
-
-                            <label htmlFor="activities">כמה שאלות יש בשלב</label>
-                            <input type="number" min="0" name="activities" id="activities" value={stage.activities?.length || 0} onChange={() => onHandleStageChange(event, i)} />
-
-                            <label htmlFor="maxError">כמה טעויות מותר</label>
-                            <input type="number" min="0" max={stage.activities?.length} name="maxError" id="maxError" value={stage.maxError} onChange={() => onHandleStageChange(event, i)} />
-
-                            <label htmlFor="isRequired">האם השלב חובה?</label>
-                            <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />
-
-                            <label htmlFor="textBefore">הודעה לפני השלב</label>
-                            <textarea name="textBefore" id="textBefore" value={stage.textBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
-
-                            <label htmlFor="textAfter">הודעה אחרי השלב</label>
-                            <textarea name="textAfter" id="textAfter" value={stage.textAfter} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
-
-                            <span>הזנת השאלות</span>
-                            <button type="button" onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
-
-                            {openActivities && <ActivityList activities={stage.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} i={i} />}
-                        </li>)}
-                    </ul>
+                    <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} />
                 </section>}
 
                 {game.gameType === "activities" && <section className="game-type-activities">
@@ -339,7 +302,7 @@ export function GameAdd() {
                     <label htmlFor="activities">מספר השאלות</label>
                     <input type="number" min="0" name="activities" id="activities" value={game.activities?.length || 0} onChange={onHandleChange} />
 
-                    {game.activities && <ActivityList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} />}
+                    {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} />}
 
                 </section>}
 

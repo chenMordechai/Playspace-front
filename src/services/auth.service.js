@@ -70,8 +70,8 @@ async function signup({ email, gameId, groupId, name, password }) {
 
 async function getAdmins() {
 
-    // const admins = await httpService.get('Admins')
-    // return admins
+    const admins = await httpService.get('Game/Admins')
+    return admins
 
     return Promise.resolve([
         {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux'
-import { useNavigate,Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 
 import { getGames } from "../store/actions/game.action.js"
@@ -17,7 +17,7 @@ export function Home() {
 
 
     useEffect(() => {
-        if (!loggedinUser) navigate('/')
+        // if (!loggedinUser) navigate('/')
 
         init()
     }, [])
@@ -36,7 +36,7 @@ export function Home() {
     // doesn't work
     async function fetchDataAndPrint() {
         const url = "https://62.171.155.24/api/Admin/Games";
-    
+
         try {
             var data = await httpService.getGames();
             console.log(data);
@@ -55,11 +55,11 @@ export function Home() {
                     {games.map(game => <li key={game.id}>
                         {game.name}
                         <Link to={`/game/edit/${game.id}`} title="Edit" >
-                          <span>Edit</span>
-                          </Link> |
+                            <span>Edit</span>
+                        </Link> |
                         <Link to={`/game/${game.id}`} title="Play" >
-                          <span>Play</span>
-                          </Link>
+                            <span>Play</span>
+                        </Link>
                         <button>Details</button>
                         <button>Delete</button>
                     </li>)}

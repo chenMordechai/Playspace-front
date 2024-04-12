@@ -69,9 +69,10 @@ export function Game() {
     }
 
     function getClockForGame() {
+        console.log('game:', game)
         const now = Date.now()
-        const diff = game.gameStartTimestamp - now
-        return diff + 'ms'
+        let diff = game.gameStartTimestamp - now
+        return diff
 
     }
 
@@ -87,11 +88,16 @@ export function Game() {
         setCurrActivityIdx(0)
     }
 
+    // click on the gameLine
     function onChangeStageIdx(idx) {
+        if (game.activityProgressType !== 'open') return
         setCurrStageIdx(idx)
         // setCurrStageStepIdx(0)
     }
+
+    // click on the gameLine
     function onChangeActivityIdx(activityIdx, stageIdx) {
+        if (game.activityProgressType !== 'open') return
         setCurrActivityIdx(activityIdx)
         setCurrActivityStepIdx(0)
 
@@ -100,6 +106,22 @@ export function Game() {
             setCurrStageIdx(stageIdx)
 
         }
+    }
+
+    function onSetCurrGameStepIdx() {
+        if (game.activityProgressType === 'onTime') {
+            console.log(game.gameStartTimestamp > Date.now() || game.gameEndTimestamp < Date.now())
+            if (game.gameStartTimestamp > Date.now() || game.gameEndTimestamp < Date.now()) return
+        }
+        setCurrGameStepIdx(prev => prev + 1)
+    }
+
+    function isGameStart() {
+        return game.gameStartTimestamp < Date.now()
+    }
+
+    function isGameEnd() {
+        return game.gameEndTimestamp < Date.now()
     }
 
     if (!game) return ''
@@ -114,13 +136,33 @@ export function Game() {
             {/* start game */}
             {currGameStepIdx === 0 && <> <h1>ברוך הבא למשחק</h1>
                 <h2>שם המשחק:{game.name}</h2>
-                <h4>המשחק יתחיל בתאריך:  {game.dateStart}</h4>
-                <h4>בשעה: {game.timeStart}</h4>
-                <h4>בעוד: {getClockForGame()}</h4>
-                <h4>ויסתיים בתאריך:  {game.dateEnd}</h4>
-                <h4>בשעה: {game.timeEnd}</h4>
-                {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
-                <button onClick={() => setCurrGameStepIdx(prev => prev + 1)}>התחל לשחק</button>
+
+                {game.activityProgressType === 'onTime' && <section>
+                    {game.gameStartTimestamp && game.gameEndTimestamp && <>
+
+                        {!isGameStart() > 0 && <> <h4>המשחק יתחיל בתאריך:  {game.dateStart}</h4>
+                            <h4>בשעה: {game.timeStart}</h4>
+                            <h4>בעוד: {getClockForGame() + 'ms'}</h4>
+                            <h4>ויסתיים בתאריך:  {game.dateEnd}</h4>
+                            <h4>בשעה: {game.timeEnd}</h4>
+                        </>}
+                        {
+                            isGameStart() && !isGameEnd() && <h2>המשחק התחיל</h2>
+                        }
+                        {
+                            isGameEnd() && <h2>המשחק הסתיים</h2>
+                        }
+                    </>}
+                </section>}
+                {!isGameEnd() && <>  {game.activityProgressType === 'onProgress' && <section>
+                    המשחק לפי התקדמות, כל שלב יפתח אחרי שתסיימו את השלב הקודם
+                </section>}
+                    {game.activityProgressType === 'open' && <section>
+                        המשחק פתוח ואפשר לעבור בין השלבים והשאלות איך שרוצים
+                    </section>}
+                    {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
+                    <button onClick={onSetCurrGameStepIdx}>התחל לשחק</button>
+                </>}
             </>}
 
             {/* gameline  */}

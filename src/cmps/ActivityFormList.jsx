@@ -1,12 +1,12 @@
 
-export function ActivityFormList({ activities, onHandleActivityChange, activityProgressType, i }) {
+export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType }) {
     return (
         <ul className="activity-list">
             {activities?.map((activity, j) => <li key={j}>
                 <span className="activity">שאלה {j + 1}</span>
 
                 <label htmlFor="name">הטקסט</label>
-                <input type="text" name="name" id="name" value={activity.name} onChange={() => onHandleActivityChange(event, i, j)} />
+                <input type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
 
                 {activityProgressType === 'onTime' && <>
                     <label htmlFor="dateStart">תאריך התחלה</label>
@@ -31,8 +31,8 @@ export function ActivityFormList({ activities, onHandleActivityChange, activityP
                 </select>
 
                 {activity.activityType === "multiple" && <>
-                    <label htmlFor="activityAswers">האופציות לתשובה (א,ב,ג)</label>
-                    <input type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
+                    <label htmlFor="activityAnswers">האופציות לתשובה (א,ב,ג)</label>
+                    <input type="text" name="activityAnswers" id="activityAnswers" value={activity.activityAnswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
                 </>}
 
                 <label htmlFor="correctAnswer">התשובה</label>
