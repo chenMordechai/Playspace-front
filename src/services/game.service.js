@@ -168,8 +168,6 @@ function getEmptyGame() {
         isDeleted: false,
         activities: null, // || []
         stages: null, // || []
-        createDate: '',
-        updatedDate: '',
         dateStart: '', // for form v
         timeStart: '', // for form v
         dateEnd: '', // for form v
@@ -177,11 +175,11 @@ function getEmptyGame() {
         gameStartTimestamp: 0, // after form
         gameEndTimestamp: 0, // after form
         themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v
-        icon: '', // ? iconId?
+        icon: null, // ? iconId?
         groups: null, // v
         gameType: '', // stages or activities v
         activityProgressType: 'open', // open/ time/ progress v
-        admins: [], // v
+        admins: null, // v
         textBefore: '', // v
         textAfter: '', // v
     }

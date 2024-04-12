@@ -5,7 +5,7 @@ import Axios from 'axios'
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
     // : ''
-    : 'https://62.171.155.24/api/'
+    : 'https://playspace.co.il/api/'
 
 
 const axios = Axios.create({
@@ -52,7 +52,7 @@ async function ajax(endpoint, method = 'GET', data = null) {
 
 async function getGames() {
     try {
-        const response = await axios.get('https://62.171.155.24/api/Admin/Games');
+        const response = await axios.get('https://playspace.co.il/api/Admin/Games');
         return response.data; // Assuming the response contains the game data
     } catch (error) {
         console.error('Error fetching games:', error);
