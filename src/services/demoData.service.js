@@ -95,6 +95,8 @@ const game1 = {
                     "activityAswers": null,
                     "correctAnswerId": 0,
                     "timeToRespond": 0,
+                    "activityStartTimestamp": 1712694300000,
+                    "activityEndTimestamp": 1712694300000,
                     "dateStart": "2024-02-11",
                     "timeStart": "08:00",
                     "dateEnd": "2024-02-11",
@@ -108,8 +110,7 @@ const game1 = {
                     "lifeSaver": [
                         "moreTime"
                     ],
-                    "gameStartTimestamp": 1712694300000,
-                    "gameEndTimestamp": 1712694300000
+
                 }
             ],
             "textBefore": "זוהי הודעה לפני השלב השני",
@@ -202,8 +203,8 @@ const game2 = {
             "timeStart": "",
             "dateEnd": "",
             "timeEnd": "",
-            "activityStartTimestamp": 1620000000,
-            "activityEndTimestamp": 1620003600,
+            "activityStartTimestamp": 0,
+            "activityEndTimestamp": 0,
             "pointsValue": 4,
             "maxError": 2,
             "mediaBefore": {
@@ -230,8 +231,8 @@ const game2 = {
             "timeStart": "",
             "dateEnd": "",
             "timeEnd": "",
-            "activityStartTimestamp": 1620000000,
-            "activityEndTimestamp": 1620003600,
+            "activityStartTimestamp": 0,
+            "activityEndTimestamp": 0,
             "pointsValue": 4,
             "maxError": 0,
             "mediaBefore": null,
@@ -254,8 +255,8 @@ const game2 = {
             "timeStart": "",
             "dateEnd": "",
             "timeEnd": "",
-            "activityStartTimestamp": 1620000000,
-            "activityEndTimestamp": 1620003600,
+            "activityStartTimestamp": 0,
+            "activityEndTimestamp": 0,
             "pointsValue": 5,
             "maxError": 0,
             "mediaBefore": null,
@@ -274,8 +275,8 @@ const game2 = {
     "timeStart": "",
     "dateEnd": "",
     "timeEnd": "",
-    "gameStartTimestamp": 1712614800000,
-    "gameEndTimestampstamp": 1712956740000,
+    "gameStartTimestamp": 1707631200000,
+    "gameEndTimestamp": 1718082000000,
     "themeColors": [
         "#c86400",
         "#c80064",
@@ -429,6 +430,171 @@ const game3 = {
         }],
     "textBefore": "Welcome to My Game!",
     "textAfter": "Congratulations! You have completed My Game successfully.",
+}
+
+// game with stages - onProgress:
+const game4 = {
+    "id": null, // back
+    "name": "המשחק הראשון שלי", // v
+    "isDeleted": false, // back
+    "activities": null,
+    "stages": [
+        {
+            "id": null,
+            "name": "שלב ראשון",
+            "activities": [
+                {
+                    "id": null,
+                    "name": "מה קורה הכל בסדר?",
+                    "isDeleted": false,
+                    "activityType": "multiple",
+                    "currectAnswer": "כן",
+                    "activityAnswers": [
+                        "כן",
+                        "לא",
+                        "ככה ככה"
+                    ],
+                    "correctAnswerId": 0,
+                    "timeToRespond": 0,
+                    "activityStartTimestamp": 0,
+                    "activityEndTimestamp": 0,
+                    "dateStart": "",
+                    "timeStart": "",
+                    "dateEnd": "",
+                    "timeEnd": "",
+                    "pointsValue": 1,
+                    "maxError": 1,
+                    "mediaBefore": null,
+                    "mediaAfter": null,
+                    "textBefore": "בוקר טוב! השאלה הראשונה ממש פה, מוכן להתחיל?",
+                    "textAfter": "תודה רבה שענית, מקווים שיהיה לך יום מדהים",
+                    "lifeSaver": [
+                        "fifty"
+                    ],
+
+                },
+                {
+                    "id": null,
+                    "name": "עכשיו באמת איך אתה מרגיש?",
+                    "isDeleted": false,
+                    "activityType": "open",
+                    "currectAnswer": "סבבה וכו",
+                    "activityAswers": null,
+                    "correctAnswerId": 0,
+                    "timeToRespond": 0,
+                    "activityStartTimestamp": 0,
+                    "activityEndTimestamp": 0,
+                    "dateStart": "",
+                    "timeStart": "",
+                    "dateEnd": "",
+                    "timeEnd": "",
+                    "pointsValue": 4,
+                    "maxError": 2,
+                    "mediaBefore": {
+                        "type": "image/png",
+                        "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521622/ops4it8mbxfdwqwxr7an.png"
+                    },
+                    "mediaAfter": {
+                        "type": "image/jpeg",
+                        "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521628/lgs8vl4uqnafeupbuvps.jpg"
+                    },
+                    "textBefore": "הנה תמונה מרגשת להשראה לקראת השאלה הבאה",
+                    "textAfter": "עוד תמונה מרגשת לסוף השאלה",
+                    "lifeSaver": null
+                },
+            ],
+            "textBefore": "זו הודעה לפני השלב הראשון",
+            "textAfter": "זו הודעה אחרי השלב הראשון",
+            "stageStartTimestamp": 0,
+            "stageEndTimestamp": 0,
+            "dateStart": "",
+            "0",
+            "dateEnd": "",
+            "timeEnd": "",
+            "maxError": 1,
+            "isRequired": true,
+        },
+        {
+            "id": null,
+            "name": "שלב שני",
+            "activities": [
+                {
+                    "name": "מה המצב בשטחים?",
+                    "activityType": "open",
+                    "correctAnswer": "ברוך ה' הכל בסדר",
+                    "activityAswers": null,
+                    "correctAnswerId": 0,
+                    "timeToRespond": 0,
+                    "activityStartTimestamp": 0,
+                    "activityEndTimestamp": 0,
+                    "dateStart": "2024-02-11",
+                    "timeStart": "08:00",
+                    "dateEnd": "2024-02-11",
+                    "timeEnd": "23:25",
+                    "pointsValue": 4,
+                    "maxError": 0,
+                    "mediaBefore": null,
+                    "mediaAfter": null,
+                    "textBefore": "הודעה לפני השאלה",
+                    "textAfter": "הודעה אחרי השאלה",
+                    "lifeSaver": [
+                        "moreTime"
+                    ],
+
+                }
+            ],
+            "textBefore": "זוהי הודעה לפני השלב השני",
+            "textAfter": "זוהי הודעה אחרי השלב השני",
+            "stageStartTimestamp": 1715403600000,// future
+            "stageEndTimestamp": 1718082000000,// future
+            "dateStart": "2024-05-11", // future
+            "timeStart": "08:00", // future
+            "dateEnd": "2024-06-11", // future
+            "timeEnd": "08:00", // future
+            "maxError": 0,
+            "isRequired": false,
+
+        }
+    ],
+    "createdDate": "2024-04-08T18:57:43.474Z", // back
+    "updatedDate": "2024-04-08T18:57:43.474Z", // back
+
+    "dateStart": "2024-02-01", // past
+    "timeStart": "08:00", // past
+    "gameStartTimestamp": 1706767200000, // past
+    "dateEnd": "2024-07-01", // v // future
+    "timeEnd": "08:00", // v // future
+    "gameEndTimestamp": 1717218000000, // v // future
+
+    "themeColors": [
+        "#c86400",
+        "#c80064",
+        "#c8c8c8"
+    ],
+    "icon": {
+        "type": "image/png",
+        "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521101/lytvxwhqgnywbcaqnoy9.png"
+    },
+    "groups": [
+        {
+            "id": "group1",
+            "name": "Group 1",
+            "adminAdditionalScore": 0
+        },
+        {
+            "id": "group2",
+            "name": "Group 2",
+            "adminAdditionalScore": 0
+        }
+    ],
+    "gameType": "stages",
+    "activityProgressType": "onTime",
+    "admins": [
+        {
+            "adminId": "c25ca045-9b0b-4c67-d356-08dc57bf9c72"
+        }],
+    "textBefore": "ממש עוד רגע התחיל את המשחק המרגש! מוכנים?",
+    "textAfter": "המשחק המרגש הסתיים",
 }
 
 // avishai activities
@@ -590,9 +756,13 @@ function getGame2() {
 function getGame3() {
     return Promise.resolve(game3)
 }
+function getGame4() {
+    return Promise.resolve(game4)
+}
 
 export const demoDataService = {
     getGame1,
     getGame2,
-    getGame3
+    getGame3,
+    getGame4
 }

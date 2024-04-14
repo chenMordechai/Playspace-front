@@ -17,7 +17,7 @@ export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMov
 
     useEffect(() => {
         // setActivityIdx(0)
-        onResetActivityIdx()
+        // onResetActivityIdx()
     }, [stage])
 
 

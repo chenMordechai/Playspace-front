@@ -46,8 +46,6 @@ export function ActivityPreview({ activity, moveToNextActivity, currActivityStep
     }
 
     function isActivityStart() {
-        console.log('activity.activityStartTimestamp < Date.now():', activity.activityStartTimestamp < Date.now())
-        console.log('!activity.activityStartTimestamp:', !activity.activityStartTimestamp)
         if (!activity.activityStartTimestamp) return true
         return activity.activityStartTimestamp < Date.now()
     }
