@@ -45,6 +45,18 @@ export function ActivityPreview({ activity, moveToNextActivity, currActivityStep
         else if (name === 'typing') setInputTypingValue(value)
     }
 
+    function isActivityStart() {
+        console.log('activity.activityStartTimestamp < Date.now():', activity.activityStartTimestamp < Date.now())
+        console.log('!activity.activityStartTimestamp:', !activity.activityStartTimestamp)
+        if (!activity.activityStartTimestamp) return true
+        return activity.activityStartTimestamp < Date.now()
+    }
+
+    function isActivityEnd() {
+        if (!activity.activityEndTimestamp) return false
+        return activity.activityEndTimestamp < Date.now()
+    }
+
 
     if (!activity) return ''
     return (
@@ -52,9 +64,22 @@ export function ActivityPreview({ activity, moveToNextActivity, currActivityStep
 
             {/* start activity */}
             {currActivityStepIdx === 0 && <>
-                {activity.textBefore && <h3>ההודעה לפני:{activity.textBefore}</h3>}
-                <Media media={activity.mediaBefore} />
-                <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>
+                {!isActivityStart() > 0 && <> <h4>השאלה תתחיל בתאריך:  {activity.dateStart}</h4>
+                    <h4>בשעה: {activity.timeStart}</h4>
+                    <h4>ותסתיים בתאריך:  {activity.dateEnd}</h4>
+                    <h4>בשעה: {activity.timeEnd}</h4>
+                </>}
+
+                {isActivityEnd() && <h2>
+                    השאלה הסתיימה
+                </h2>}
+
+                {isActivityStart() && !isActivityEnd() && <> <h2>השאלה התחילה</h2>
+                    {activity.textBefore && <h3>ההודעה לפני:{activity.textBefore}</h3>}
+                    <Media media={activity.mediaBefore} />
+                    <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>
+                </>}
+
             </>}
 
             {/* activity */}

@@ -110,8 +110,7 @@ export function Game() {
 
     function onSetCurrGameStepIdx() {
         if (game.activityProgressType === 'onTime') {
-            console.log(game.gameStartTimestamp > Date.now() || game.gameEndTimestamp < Date.now())
-            if (game.gameStartTimestamp > Date.now() || game.gameEndTimestamp < Date.now()) return
+            if (!isGameStart || isGameEnd()) return
         }
         setCurrGameStepIdx(prev => prev + 1)
     }
@@ -147,22 +146,23 @@ export function Game() {
                             <h4>בשעה: {game.timeEnd}</h4>
                         </>}
                         {
-                            isGameStart() && !isGameEnd() && <h2>המשחק התחיל</h2>
-                        }
-                        {
                             isGameEnd() && <h2>המשחק הסתיים</h2>
                         }
+                        {
+                            isGameStart() && !isGameEnd() && <> <h2>המשחק התחיל</h2>
+                                {game.activityProgressType === 'onProgress' && <section>
+                                    המשחק לפי התקדמות, כל שלב יפתח אחרי שתסיימו את השלב הקודם
+                                </section>}
+                                {game.activityProgressType === 'open' && <section>
+                                    המשחק פתוח ואפשר לעבור בין השלבים והשאלות איך שרוצים
+                                </section>}
+                                {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
+                                <button onClick={onSetCurrGameStepIdx}>התחל לשחק</button>
+                            </>
+                        }
+
                     </>}
                 </section>}
-                {!isGameEnd() && <>  {game.activityProgressType === 'onProgress' && <section>
-                    המשחק לפי התקדמות, כל שלב יפתח אחרי שתסיימו את השלב הקודם
-                </section>}
-                    {game.activityProgressType === 'open' && <section>
-                        המשחק פתוח ואפשר לעבור בין השלבים והשאלות איך שרוצים
-                    </section>}
-                    {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
-                    <button onClick={onSetCurrGameStepIdx}>התחל לשחק</button>
-                </>}
             </>}
 
             {/* gameline  */}

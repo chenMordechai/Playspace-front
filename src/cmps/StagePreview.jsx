@@ -30,14 +30,39 @@ export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMov
         setCurrStageStepIdx(0)
     }
 
+    function isStageStart() {
+        if (!stage.stageStartTimestamp) return true
+        return stage.stageStartTimestamp < Date.now()
+    }
+
+    function isStageEnd() {
+        if (!stage.stageEndTimestamp) return false
+        return stage.stageEndTimestamp < Date.now()
+    }
+
     if (!stage) return ''
     return (
         <section className="stage-preview">
             {/* start stage */}
             {currStageStepIdx === 0 && <>
                 <h3>שם השלב:{stage.name}</h3>
-                {stage.textBefore && <p>ההודעה לפני:{stage.textBefore}</p>}
-                <button onClick={() => setCurrStageStepIdx(prev => prev + 1)}>התחל שלב</button>
+
+                {!isStageStart() > 0 && <> <h4>השלב יתחיל בתאריך:  {stage.dateStart}</h4>
+                    <h4>בשעה: {stage.timeStart}</h4>
+                    <h4>ויסתיים בתאריך:  {stage.dateEnd}</h4>
+                    <h4>בשעה: {stage.timeEnd}</h4>
+                </>}
+
+                {isStageEnd() && <h2>
+                    השלב הסתיים
+                </h2>}
+
+                {isStageStart() && !isStageEnd() && <> <h2>השלב התחיל</h2>
+                    {stage.textBefore && <p>ההודעה לפני:{stage.textBefore}</p>}
+                    <button onClick={() => setCurrStageStepIdx(prev => prev + 1)}>התחל שלב</button>
+                </>}
+
+
             </>}
 
             {/* stage activities */}
