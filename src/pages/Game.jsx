@@ -33,27 +33,30 @@ export function Game() {
     }, [game])
 
     useEffect(() => {
-        console.log('currStageIdx:', currStageIdx)
         utilService.saveToStorage('currStageIdx', currStageIdx)
         if (currStageIdx === game?.stages?.length) setCurrGameStepIdx(prev => prev + 1)
     }, [currStageIdx])
 
     useEffect(() => {
-        console.log('currActivityIdx:', currActivityIdx)
         utilService.saveToStorage('currActivityIdx', currActivityIdx)
-        if (currActivityIdx === game?.activities?.length) setCurrGameStepIdx(prev => prev + 1)
+        if (game?.gameType === 'stages') {
+            if (currActivityIdx === game?.stages[currStageIdx]?.activities?.length) {
+                setCurrStageStepIdx(prev => prev + 1)
+            }
+        } else {
+            if (currActivityIdx === game?.activities?.length) {
+                setCurrGameStepIdx(prev => prev + 1)
+            }
+        }
     }, [currActivityIdx])
 
     useEffect(() => {
-        console.log('currGameStepIdx:', currGameStepIdx)
         utilService.saveToStorage('currGameStepIdx', currGameStepIdx)
     }, [currGameStepIdx])
     useEffect(() => {
-        console.log('currStageStepIdx:', currStageStepIdx)
         utilService.saveToStorage('currStageStepIdx', currStageStepIdx)
     }, [currStageStepIdx])
     useEffect(() => {
-        console.log('currActivityStepIdx:', currActivityStepIdx)
         utilService.saveToStorage('currActivityStepIdx', currActivityStepIdx)
     }, [currActivityStepIdx])
 
@@ -63,12 +66,12 @@ export function Game() {
             // game with stages - onTime:
             // const game = await demoDataService.getGame1()
             // game with activities - onProgress:
-            // const game = await demoDataService.getGame2()
+            const game = await demoDataService.getGame2()
             // game with activities - open:
             // const game = await demoDataService.getGame3()
             // game with stages - onProgress:
-            const game = await demoDataService.getGame4()
-            console.log('game:', game)
+            // const game = await demoDataService.getGame4()
+            // console.log('game:', game)
             // const shallowGame = 
             setGame(game)
         } catch (err) {
@@ -92,7 +95,7 @@ export function Game() {
     }
 
     function getClockForGame() {
-        console.log('game:', game)
+        // console.log('game:', game)
         const now = Date.now()
         let diff = game.gameStartTimestamp - now
         return diff
@@ -101,14 +104,16 @@ export function Game() {
 
     function moveToNextStage() {
         setCurrStageIdx(prev => prev + 1)
+        onResetActivityIdx()
+        setCurrStageStepIdx(0)
     }
 
     function onMoveToNextActivity() {
         setCurrActivityIdx(prev => prev + 1)
+        setCurrActivityStepIdx(0)
     }
 
     function onResetActivityIdx() {
-        console.log('onResetActivityIdx')
         setCurrActivityIdx(0)
     }
 
@@ -116,12 +121,11 @@ export function Game() {
     function onChangeStageIdx(idx) {
         if (game.activityProgressType !== 'open') return
         setCurrStageIdx(idx)
-        // setCurrStageStepIdx(0)
+        setCurrStageStepIdx(0)
     }
 
     // click on the gameLine
     function onChangeActivityIdx(activityIdx, stageIdx) {
-        console.log('onChangeActivityIdx', activityIdx, stageIdx)
         if (game.activityProgressType !== 'open') return
         setCurrActivityIdx(activityIdx)
         setCurrActivityStepIdx(0)

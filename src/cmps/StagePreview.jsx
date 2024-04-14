@@ -4,31 +4,6 @@ import { ActivityPreview } from './ActivityPreview'
 
 export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity, currActivityIdx, currActivityStepIdx, setCurrActivityStepIdx, currStageStepIdx, setCurrStageStepIdx }) {
     console.log('stage:', stage)
-    // const [currStageStepIdx, setCurrStageStepIdx] = useState(0)
-    // const [currActivityIdx, setActivityIdx] = useState(0)
-
-    useEffect(() => {
-        console.log('currActivityIdx:', currActivityIdx)
-        if (currActivityIdx === stage?.activities?.length) {
-            moveToNextStage()
-            setCurrStageStepIdx(prev => prev + 1)
-        }
-    }, [currActivityIdx])
-
-    useEffect(() => {
-        // setActivityIdx(0)
-        // onResetActivityIdx()
-    }, [stage])
-
-
-    // function onMoveToNextActivity() {
-    //     setActivityIdx(prev => prev + 1)
-    // }
-
-    function onMoveToNextStage() {
-        moveToNextStage()
-        setCurrStageStepIdx(0)
-    }
 
     function isStageStart() {
         if (!stage.stageStartTimestamp) return true
@@ -76,7 +51,7 @@ export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMov
             {/* end stage*/}
             {currStageStepIdx === 2 && <>
                 {stage.textAfter && <p>ההודעה אחרי:{stage.textAfter}</p>}
-                <button onClick={onMoveToNextStage}>מעבר לשלב הבא</button>
+                <button onClick={moveToNextStage}>מעבר לשלב הבא</button>
             </>}
         </section>
     )

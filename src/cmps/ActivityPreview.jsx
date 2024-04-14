@@ -4,7 +4,6 @@ import { Media } from './Media'
 import { ActivityType } from './ActivityType'
 
 export function ActivityPreview({ activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
-    console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -36,7 +35,6 @@ export function ActivityPreview({ activity, moveToNextActivity, currActivityStep
     function onMoveToNextActivity() {
         moveToNextActivity()
         setIsAnswerCorrect(false)
-        setCurrActivityStepIdx(0)
     }
 
     function handlaChange(ev) {
