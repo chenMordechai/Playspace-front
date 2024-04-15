@@ -24,13 +24,13 @@ export function NavLinks() {
             {!loggedinUser && <NavLink to="/" title="Login" >
                 <span>Login</span>
             </NavLink>}
-            <NavLink to="/signup/779CF2C1-3529-4DB2-366B-08DC51029963/0" title="Signup" >
+            <NavLink to="/signup/779CF2C1-3529-4DB2-366B-08DC51029963" title="Signup" >
                 <span>Signup</span>
             </NavLink>
             <NavLink to="/home" title="Home" >
                 <span>Home</span>
             </NavLink>
-        
+
             {loggedinUser?.checkAdmin && <NavLink to="/game/add" title="Admin" >
                 <span>Create New Game</span>
             </NavLink>}

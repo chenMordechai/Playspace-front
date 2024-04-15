@@ -71,7 +71,7 @@ export function Game() {
             // const game = await demoDataService.getGame3()
             // game with stages - onProgress:
             // const game = await demoDataService.getGame4()
-            // console.log('game:', game)
+            console.log('game:', game)
             // const shallowGame = 
             setGame(game)
         } catch (err) {

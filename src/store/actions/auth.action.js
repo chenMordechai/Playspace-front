@@ -1,5 +1,5 @@
 import { authService } from "../../services/auth.service.js";
-import { SET_LOGGEDIN_USER ,SET_LOGGEDIN_PLAYER} from "../reducers/auth.reducer.js";
+import { SET_LOGGEDIN_USER, SET_LOGGEDIN_PLAYER, SET_LOGGEDIN_PLAYER_GROUP } from "../reducers/auth.reducer.js";
 
 import { store } from '../store.js'
 
@@ -18,7 +18,7 @@ export async function adminLogin(credentials) {
     try {
         const { password } = credentials
         const adminCred = { password }
-        const userAdmin  = await authService.adminLogin(adminCred)
+        const userAdmin = await authService.adminLogin(adminCred)
         store.dispatch({ type: SET_LOGGEDIN_USER, user: userAdmin })
         return userAdmin
     } catch (err) {
@@ -56,6 +56,16 @@ export async function getAdmins() {
         return admins
     } catch (err) {
         console.log('user actions -> Cannot get admins', err)
+        throw err
+    }
+}
+
+export async function registerPlayerToGroup(playerId, groupId) {
+    try {
+        await authService.registerPlayerToGroup(playerId, groupId)
+        store.dispatch({ type: SET_LOGGEDIN_PLAYER_GROUP, groupId })
+    } catch (err) {
+        console.log('user actions -> Cannot register Player To Group', err)
         throw err
     }
 }

@@ -23,7 +23,8 @@ function App() {
             <div className="main-container">
               <Routes>
                 <Route path="/" element={<Login />} />
-                <Route path="/signup/:gameId/:groupId" element={<Signup />} />
+                {/* <Route path="/signup/:gameId/:groupId" element={<Signup />} /> */}
+                <Route path="/signup/:gameId/" element={<Signup />} />
                 <Route path="/game/add/" element={<GameAdd />} />
                 <Route path="/game/edit/:gameId?" element={<GameEdit />} />
                 <Route path="/game/:gameId" element={<Game />} />

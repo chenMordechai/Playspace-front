@@ -10,6 +10,7 @@
 // })
 
 import { httpService } from './http.service.js'
+import { utilService } from './util.service.js'
 
 const BASE_URL_AUTH = 'auth/'
 const STORAGE_KEY_USER = 'loggedinUser'
@@ -24,7 +25,8 @@ export const authService = {
     getLoggedinUser,
     getLoggedinPlayer,
     getEmptyCredentials,
-    getEmptySignupCred
+    getEmptySignupCred,
+    registerPlayerToGroup
 }
 
 // work
@@ -60,8 +62,17 @@ async function logout() {
 // work
 async function signup({ email, gameId, groupId, name, password }) {
     const playerToSave = { email, gameId, groupId, name, password }
+    // const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
 
-    const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
+    // demoData:
+    const player = {
+        id: utilService.makeId(),
+        email: 'BBBB@GMAIL.COM',
+        name: 'BBBB',
+        password: 'string$%',
+        gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
+        // groupId: 0
+    }
 
     _setLoggedinPlayer(player)
     return player
@@ -84,6 +95,22 @@ async function getAdmins() {
             isAdmin: true
         }])
 
+}
+
+function registerPlayerToGroup(playerId, groupId) {
+
+    const player = {
+        id: utilService.makeId(),
+        email: 'BBBB@GMAIL.COM',
+        name: 'BBBB',
+        password: 'string$%',
+        gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
+        groupId
+    }
+
+    _setLoggedinPlayer(player)
+
+    return Promise.resolve(true)
 }
 
 
