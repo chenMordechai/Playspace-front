@@ -8,7 +8,7 @@ import { httpService } from "../services/http.service.js"
 
 
 
-export function Home() {
+export function Admin() {
 
     const [games, setGames] = useState(null)
 
@@ -17,7 +17,7 @@ export function Home() {
 
 
     useEffect(() => {
-        // if (!loggedinUser) navigate('/')
+        // if (!loggedinUser.admin) navigate('/')
 
         init()
     }, [])
@@ -46,8 +46,8 @@ export function Home() {
     }
 
     return (
-        <section className="home">
-            <h1>Home Page</h1>
+        <section className="admin">
+            <h1>Admin Page</h1>
             <button onClick={fetchDataAndPrint}>GetGames</button>
             <h2>Games:</h2>
             {games && <section className="games-container">
@@ -62,6 +62,9 @@ export function Home() {
                         </Link>
                         <button>Details</button>
                         <button>Delete</button>
+                        <Link to={`/game/group/${game.id}`} title="groups" >
+                            <span>Groups</span>
+                        </Link>
                     </li>)}
                 </ul>
             </section>}

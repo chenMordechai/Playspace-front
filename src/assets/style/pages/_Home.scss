@@ -1,0 +1,14 @@
+.admin {
+    .games-container {
+        ul {
+            @include flex(row, center, center, 10px);
+            flex-wrap: wrap;
+
+            li {
+                width: 110px;
+                height: 110px;
+                border: 1px solid black;
+            }
+        }
+    }
+}
