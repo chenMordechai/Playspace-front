@@ -5,7 +5,7 @@ import Axios from 'axios'
 const BASE_URL = process.env.NODE_ENV === 'production'
     ? '/api/'
     // : ''
-    : 'https://62.171.155.24/api/'
+    : 'https://playspace.co.il/api/'
 
 
 const axios = Axios.create({

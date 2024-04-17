@@ -3,10 +3,9 @@
   }
 
   main {
+    min-height: 100vh;
     .main-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex(column, center, center, 10px);
     }
     @include for-narrow-layout {
     }

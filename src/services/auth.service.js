@@ -150,9 +150,10 @@ function getEmptyCredentials() {
 
 function getEmptySignupCred() {
     return {
-        email: 'BBBB@GMAIL.COM',
-        name: 'BBBB',
-        password: 'string$%',
+        email: '',
+        name: '',
+        // email: 'BBBB@GMAIL.COM',
+        // name: 'BBBB',
         // gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
         // groupId: 0
     }

@@ -74,4 +74,11 @@
 // Buttons
 
 @mixin btn($type: regular) {
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid rgb(60, 60, 60);
+    padding: 5px 10px;
+    background-color: purple;
+    color: white;
+    font-weight: 700;
 }

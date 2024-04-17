@@ -1,0 +1,9 @@
+.game-groups {
+    ul.groups-container {
+        background-color: lightgray;
+        @include flex(row, center, center, 20px);
+        ul {
+            background-color: lightblue;
+        }
+    }
+}
