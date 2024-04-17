@@ -1,3 +1,4 @@
+import { DateForm } from "./DateForm"
 
 export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType,onRemoveActivity }) {
     return (
@@ -12,17 +13,9 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 <input required type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
 
                 {activityProgressType === 'onTime' && <>
-                    <label htmlFor="dateStart">תאריך התחלה</label>
-                    <input type="date" name="dateStart" id="dateStart" value={activity.dateStart} onChange={() => onHandleActivityChange(event, i, j)} />
+                 
+                                   <DateForm obj={activity} onHandleChange={() => onHandleActivityChange(event, i, j)}/>
 
-                    <label htmlFor="timeStart">שעת התחלה</label>
-                    <input type="time" name="timeStart" id="timeStart" value={activity.timeStart} onChange={() => onHandleActivityChange(event, i, j)} />
-
-                    <label htmlFor="dateEnd">תאריך סיום</label>
-                    <input type="date" name="dateEnd" id="dateEnd" value={activity.dateEnd} onChange={() => onHandleActivityChange(event, i, j)} />
-
-                    <label htmlFor="timeEnd">שעת סיום</label>
-                    <input type="time" name="timeEnd" id="timeEnd" value={activity.timeEnd} onChange={() => onHandleActivityChange(event, i, j)} />
                 </>}
 
                 <label htmlFor="activityType">סוג השאלה</label>
@@ -34,7 +27,7 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 </select>
 
                 {activity.activityType === "multiple" && <>
-                    <label htmlFor="activityAswers">האופציות לתשובה (א,ב,ג)</label>
+                    <label htmlFor="activityAswers">האופציות לתשובה (א,ב,ג,ד)</label>
                     <input required type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
                 </>}
 

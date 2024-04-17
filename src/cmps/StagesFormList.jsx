@@ -1,4 +1,5 @@
 import { ActivityFormList } from "./ActivityFormList"
+import { DateForm } from "./DateForm"
 
 
 export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange,onRemoveStage,onRemoveActivity,onAddActivityToStage }) {
@@ -16,17 +17,8 @@ export function StagesFormList({ stages, activityProgressType, onHandleStageChan
                     <input required type="text" name="name" id="name" value={stage.name} onChange={() => onHandleStageChange(event, i)} />
 
                     {activityProgressType === 'onTime' && <>
-                        <label htmlFor="dateStart">תאריך התחלה</label>
-                        <input type="date" name="dateStart" id="dateStart" value={stage.dateStart} onChange={() => onHandleStageChange(event, i)} />
-
-                        <label htmlFor="timeStart">שעת התחלה</label>
-                        <input type="time" name="timeStart" id="timeStart" value={stage.timeStart} onChange={() => onHandleStageChange(event, i)} />
-
-                        <label htmlFor="dateEnd">תאריך סיום</label>
-                        <input type="date" name="dateEnd" id="dateEnd" value={stage.dateEnd} onChange={() => onHandleStageChange(event, i)} />
-
-                        <label htmlFor="timeEnd">שעת סיום</label>
-                        <input type="time" name="timeEnd" id="timeEnd" value={stage.timeEnd} onChange={() => onHandleStageChange(event, i)} />
+                       
+                    <DateForm obj={stage} onHandleChange={() => onHandleStageChange(event, i)}/>
                     </>}
 
                     {/* <label htmlFor="activities">כמה שאלות יש בשלב</label>

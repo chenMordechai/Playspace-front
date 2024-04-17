@@ -9,6 +9,7 @@ import { getAdmins } from '../store/actions/auth.action.js'
 import { addGame } from '../store/actions/game.action.js'
 
 import { Colors } from '../cmps/Colors'
+import { DateForm } from '../cmps/DateForm'
 import { ActivityFormList } from '../cmps/ActivityFormList'
 import { StagesFormList } from '../cmps/StagesFormList.jsx'
 import loader from '../assets/img/loader.gif'
@@ -164,7 +165,10 @@ export function GameAdd() {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
         else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
-        else if (name === 'activityAswers') value = value.split(',')
+        else if (name === 'activityAswers'){
+            value = value.split(',')
+            if(value.length > 4) return
+        }
         else if (name === 'lifeSaver') value = Array.from(ev.target.selectedOptions, option => option.value)
 
         if (i === undefined) { // game.activities
@@ -307,8 +311,6 @@ export function GameAdd() {
 
     }
 
-
-
     return (
         <section className="game-add rtl">
             <h2>יצירת משחק</h2>
@@ -328,18 +330,7 @@ export function GameAdd() {
                     </option>)}
                 </select>
 
-                <label htmlFor="dateStart">תאריך התחלה</label>
-                <input type="date" name="dateStart" id="dateStart" value={game.dateStart} onChange={onHandleChange} />
-
-                <label htmlFor="timeStart">שעת התחלה</label>
-                <input type="time" name="timeStart" id="timeStart" value={game.timeStart} onChange={onHandleChange} />
-
-                <label htmlFor="dateEnd">תאריך סיום</label>
-                <input type="date" name="dateEnd" id="dateEnd" value={game.dateEnd} onChange={onHandleChange} />
-
-                <label htmlFor="timeEnd">שעת סיום</label>
-                <input type="time" name="timeEnd" id="timeEnd" value={game.timeEnd} onChange={onHandleChange} />
-
+              <DateForm obj={game} onHandleChange={onHandleChange}/>
                 <Colors onChangeImg={onChangeImg} gameLogo={game.icon} gameColors={game.themeColors} iconColors={iconColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isImgLoading={isImgLoading} />
 
                 <label htmlFor="groups">מספר הקבוצות</label>
