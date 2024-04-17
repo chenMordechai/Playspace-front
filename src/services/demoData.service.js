@@ -25,10 +25,6 @@ const game1 = {
                     "timeToRespond": 0,
                     "activityStartTimestamp": 1706767200000,
                     "activityEndTimestamp": 1713157200000,
-                    "dateStart": "2024-02-01", // past
-                    "timeStart": "08:00", // past
-                    "dateEnd": "2024-04-15", // future
-                    "timeEnd": "08:00", // future
                     "pointsValue": 1,
                     "maxError": 1,
                     "mediaBefore": null,
@@ -51,10 +47,6 @@ const game1 = {
                     "timeToRespond": 0,
                     "activityStartTimestamp": 1713157200000,  // future
                     "activityEndTimestamp": 1714280400000,  // future
-                    "dateStart": "2024-04-15", // future
-                    "timeStart": "08:00", // future
-                    "dateEnd": "2024-04-28",  // future
-                    "timeEnd": "08:00",  // future
                     "pointsValue": 4,
                     "maxError": 2,
                     "mediaBefore": {
@@ -75,10 +67,6 @@ const game1 = {
             "stageStartTimestamp": 1706767200000, //past
             // "stageEndTimestamp": 1707631200000, //past
             "stageEndTimestamp": 1715403600000, //future
-            "dateStart": "2024-02-01", // past
-            "timeStart": "08:00", // past
-            "dateEnd": "2024-05-11", //future
-            "timeEnd": "08:00", // future
             // "dateEnd": "2024-02-11", //past
             // "timeEnd": "08:00", // past
             "maxError": 1, //past
@@ -97,10 +85,6 @@ const game1 = {
                     "timeToRespond": 0,
                     "activityStartTimestamp": 0,
                     "activityEndTimestamp": 0,
-                    "dateStart": "2024-02-11",
-                    "timeStart": "08:00",
-                    "dateEnd": "2024-02-11",
-                    "timeEnd": "23:25",
                     "pointsValue": 4,
                     "maxError": 0,
                     "mediaBefore": null,
@@ -117,10 +101,6 @@ const game1 = {
             "textAfter": "זוהי הודעה אחרי השלב השני",
             "stageStartTimestamp": 1715403600000,// future
             "stageEndTimestamp": 1718082000000,// future
-            "dateStart": "2024-05-11", // future
-            "timeStart": "08:00", // future
-            "dateEnd": "2024-06-11", // future
-            "timeEnd": "08:00", // future
             "maxError": 0,
             "isRequired": false,
 
@@ -130,27 +110,16 @@ const game1 = {
     "updatedDate": "2024-04-08T18:57:43.474Z", // back
 
     // option 1 - !start & !end future
-    // "dateStart": "2024-06-01", // v // future
-    // "timeStart": "08:00", // v // future
-    // "dateEnd": "2024-07-01", // v // future
-    // "timeEnd": "08:00", // v // future
     // "gameStartTimestamp": 1717218000000, // v // future
     // "gameEndTimestamp": 1717218000000, // v // future
 
     // option 2 - start & end past
-    // "dateStart": "2024-02-01", // past
-    // "timeStart": "08:00", // past
-    // "dateEnd": "2024-03-01", // past
-    // "timeEnd": "08:00", // past
     // "gameStartTimestamp": 1706767200000, // past
     // "gameEndTimestamp": 1709272800000, // past
 
     // option 3 - start & !end present
-    "dateStart": "2024-02-01", // past
-    "timeStart": "08:00", // past
+
     "gameStartTimestamp": 1706767200000, // past
-    "dateEnd": "2024-07-01", // v // future
-    "timeEnd": "08:00", // v // future
     "gameEndTimestamp": 1717218000000, // v // future
 
     "themeColors": [
@@ -199,10 +168,6 @@ const game2 = {
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
-            "dateStart": "",
-            "timeStart": "",
-            "dateEnd": "",
-            "timeEnd": "",
             "activityStartTimestamp": 0,
             "activityEndTimestamp": 0,
             "pointsValue": 4,
@@ -227,10 +192,6 @@ const game2 = {
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
-            "dateStart": "",
-            "timeStart": "",
-            "dateEnd": "",
-            "timeEnd": "",
             "activityStartTimestamp": 0,
             "activityEndTimestamp": 0,
             "pointsValue": 4,
@@ -251,10 +212,6 @@ const game2 = {
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
-            "dateStart": "",
-            "timeStart": "",
-            "dateEnd": "",
-            "timeEnd": "",
             "activityStartTimestamp": 0,
             "activityEndTimestamp": 0,
             "pointsValue": 5,
@@ -271,10 +228,6 @@ const game2 = {
     "stages": null,
     "createdDate": "2024-04-08T18:57:43.474Z", //back
     "updatedDate": "2024-04-08T18:57:43.474Z", //back
-    "dateStart": "",
-    "timeStart": "",
-    "dateEnd": "",
-    "timeEnd": "",
     "gameStartTimestamp": 1707631200000,
     "gameEndTimestamp": 1718082000000,
     "themeColors": [
@@ -323,10 +276,6 @@ const game3 = {
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
-            "dateStart": "",
-            "timeStart": "",
-            "dateEnd": "",
-            "timeEnd": "",
             "activityStartTimestamp": 1620000000,
             "activityEndTimestamp": 1620003600,
             "pointsValue": 4,
@@ -351,10 +300,6 @@ const game3 = {
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
-            "dateStart": "",
-            "timeStart": "",
-            "dateEnd": "",
-            "timeEnd": "",
             "activityStartTimestamp": 1620000000,
             "activityEndTimestamp": 1620003600,
             "pointsValue": 4,
@@ -375,10 +320,6 @@ const game3 = {
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
-            "dateStart": "",
-            "timeStart": "",
-            "dateEnd": "",
-            "timeEnd": "",
             "activityStartTimestamp": 1620000000,
             "activityEndTimestamp": 1620003600,
             "pointsValue": 5,
@@ -458,10 +399,6 @@ const game4 = {
                     "timeToRespond": 0,
                     "activityStartTimestamp": 0,
                     "activityEndTimestamp": 0,
-                    "dateStart": "",
-                    "timeStart": "",
-                    "dateEnd": "",
-                    "timeEnd": "",
                     "pointsValue": 1,
                     "maxError": 1,
                     "mediaBefore": null,
@@ -484,10 +421,6 @@ const game4 = {
                     "timeToRespond": 0,
                     "activityStartTimestamp": 0,
                     "activityEndTimestamp": 0,
-                    "dateStart": "",
-                    "timeStart": "",
-                    "dateEnd": "",
-                    "timeEnd": "",
                     "pointsValue": 4,
                     "maxError": 2,
                     "mediaBefore": {
@@ -507,10 +440,6 @@ const game4 = {
             "textAfter": "זו הודעה אחרי השלב הראשון",
             "stageStartTimestamp": 0,
             "stageEndTimestamp": 0,
-            "dateStart": "",
-            "timeStart": "",
-            "dateEnd": "",
-            "timeEnd": "",
             "maxError": 1,
             "isRequired": true,
         },
@@ -527,10 +456,6 @@ const game4 = {
                     "timeToRespond": 0,
                     "activityStartTimestamp": 0,
                     "activityEndTimestamp": 0,
-                    "dateStart": "2024-02-11",
-                    "timeStart": "08:00",
-                    "dateEnd": "2024-02-11",
-                    "timeEnd": "23:25",
                     "pointsValue": 4,
                     "maxError": 0,
                     "mediaBefore": null,
@@ -547,23 +472,14 @@ const game4 = {
             "textAfter": "זוהי הודעה אחרי השלב השני",
             "stageStartTimestamp": 1715403600000,// future
             "stageEndTimestamp": 1718082000000,// future
-            "dateStart": "2024-05-11", // future
-            "timeStart": "08:00", // future
-            "dateEnd": "2024-06-11", // future
-            "timeEnd": "08:00", // future
             "maxError": 0,
             "isRequired": false,
 
         }
     ],
     "createdDate": "2024-04-08T18:57:43.474Z", // back
-    "updatedDate": "2024-04-08T18:57:43.474Z", // back
-
-    "dateStart": "2024-02-01", // past
-    "timeStart": "08:00", // past
+    "updatedDate": "2024-04-08T18:57:43.474Z", // back 
     "gameStartTimestamp": 1706767200000, // past
-    "dateEnd": "2024-07-01", // v // future
-    "timeEnd": "08:00", // v // future
     "gameEndTimestamp": 1717218000000, // v // future
 
     "themeColors": [

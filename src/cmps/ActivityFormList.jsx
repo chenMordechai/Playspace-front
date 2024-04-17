@@ -1,20 +1,20 @@
 import { DateForm } from "./DateForm"
 
-export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType,onRemoveActivity }) {
+export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType, onRemoveActivity }) {
     return (
         <ul className="activity-list">
             {activities?.map((activity, j) => <li key={j}>
                 <span className="activity">שאלה {j + 1}</span>
 
-               { activities.length > 1 && <button type="button" onClick={()=>onRemoveActivity(j,i)}>הסר שאלה</button>}
-               { !(activities.length > 1) &&  <span></span>}
+                {activities.length > 1 && <button type="button" onClick={() => onRemoveActivity(j, i)}>הסר שאלה</button>}
+                {!(activities.length > 1) && <span></span>}
 
                 <label htmlFor="text">הטקסט</label>
                 <input required type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
 
                 {activityProgressType === 'onTime' && <>
-                 
-                                   <DateForm obj={activity} onHandleChange={() => onHandleActivityChange(event, i, j)}/>
+
+                    <DateForm obj={activity} onHandleChange={() => onHandleActivityChange(event, i, j)} />
 
                 </>}
 
@@ -69,7 +69,7 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                     <option value="skip">דלג</option>
                 </select>
 
-               
+
 
             </li>)}
         </ul>

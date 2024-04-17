@@ -132,10 +132,11 @@ async function getGames(loggedinUser) {
 }
 
 async function getGameById(gameId) {
-    // doesn't work
+    // ! Avishai doesn't work
     // return httpService.get(BASE_URL + gameId)
-    return demoDataService.getGame2()
-    // return demoDataService.getGame1()
+
+    // return demoDataService.getGame2()
+    return demoDataService.getGame1()
 }
 
 async function remove(gameId) {
@@ -143,8 +144,8 @@ async function remove(gameId) {
 }
 
 async function save(game) {
-    console.log('game service',game)
-    
+    console.log('game service', game)
+
     if (game.id) {
         return httpService.put(BASE_URL + game.id, game)
     } else {
@@ -182,7 +183,7 @@ function getEmptyGame() {
     }
 }
 
-function getEmptyDate(){
+function getEmptyDate() {
 
 }
 

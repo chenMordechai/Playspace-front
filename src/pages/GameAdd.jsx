@@ -18,7 +18,7 @@ import loader from '../assets/img/loader.gif'
 export function GameAdd() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
-    
+
     const [openActivities, setOpenActivities] = useState(false)
     const [colorIdx, setColorIdx] = useState(0)
     const [iconColors, setLogoColors] = useState(null)
@@ -36,7 +36,7 @@ export function GameAdd() {
     useEffect(() => {
         if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         // after admin login push the admin id to game.admins (default in the form)
-        game.admins.push(loggedinUser.userId) 
+        game.admins.push(loggedinUser.userId)
         loadAdmins()
     }, [])
 
@@ -67,8 +67,8 @@ export function GameAdd() {
         if (name === 'gameType') {
             value = (value) ? 'stages' : 'activities'
             setGame(prevGame => ({ ...prevGame, [name]: value }))
-        } else if (name === 'groups' ) {
-            const object = gameService.getEmptyGroup() 
+        } else if (name === 'groups') {
+            const object = gameService.getEmptyGroup()
             setGame(prevGame => {
                 const diff = value - (prevGame[name]?.length || 0)
                 if (diff > 0) return { ...prevGame, [name]: (prevGame[name]?.length) ? [...prevGame[name], object] : [object] }
@@ -165,9 +165,9 @@ export function GameAdd() {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
         else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
-        else if (name === 'activityAswers'){
+        else if (name === 'activityAswers') {
             value = value.split(',')
-            if(value.length > 4) return
+            if (value.length > 4) return
         }
         else if (name === 'lifeSaver') value = Array.from(ev.target.selectedOptions, option => option.value)
 
@@ -193,23 +193,23 @@ export function GameAdd() {
         // })
 
         // time changes
-       setTimesChanges(game)
+        setTimesChanges(game)
 
         // work
-        game.admins = game.admins.map(adminId => ({adminId}))
+        game.admins = game.admins.map(adminId => ({ adminId }))
 
         console.log('game:', game)
 
-        try{
+        try {
             setIsLoading(true)
             const newGame = await addGame(game)
             console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק הוסף בהצלחה')
             setGame(gameService.getEmptyGame())
-        }catch(err){
+        } catch (err) {
             setMsgAfterGameAdd('שגיאה')
             console.log('err:', err)
-        }finally{
+        } finally {
             setIsLoading(false)
 
         }
@@ -219,7 +219,7 @@ export function GameAdd() {
         setOpenActivities(prev => !prev)
     }
 
-    function setTimesChanges(game){
+    function setTimesChanges(game) {
         const gameStartTimestamp = new Date(game.dateStart + ' ' + game.timeStart).getTime()
         const gameEndTimestamp = new Date(game.dateEnd + ' ' + game.timeEnd).getTime()
         game.gameStartTimestamp = gameStartTimestamp || 0
@@ -231,7 +231,7 @@ export function GameAdd() {
 
         if (game.activityProgressType === 'onTime') {
             if (game.gameType === 'activities') {
-                game.activities.forEach((activity , i) => {
+                game.activities.forEach((activity, i) => {
                     const activityStartTimestamp = new Date(activity.dateStart + ' ' + activity.timeStart).getTime()
                     const activityEndTimestamp = new Date(activity.dateEnd + ' ' + activity.timeEnd).getTime()
                     activity.activityStartTimestamp = activityStartTimestamp || 0
@@ -266,48 +266,52 @@ export function GameAdd() {
         }
     }
 
-    function setGameTypeToStage(){
-        setGame(prev => ({ ...prev, gameType: 'stages', activities: null , stages:[gameService.getEmptyStage()] }))
+    function setGameTypeToStage() {
+        setGame(prev => ({ ...prev, gameType: 'stages', activities: null, stages: [gameService.getEmptyStage()] }))
     }
 
-    function setGameTypeToActivity(){
-        setGame(prev => ({ ...prev, gameType: 'activities', stages: null ,activities:[gameService.getEmptyActivity()]}))
+    function setGameTypeToActivity() {
+        setGame(prev => ({ ...prev, gameType: 'activities', stages: null, activities: [gameService.getEmptyActivity()] }))
     }
-    
-    function onAddActivity(){
-        setGame(prev => ({ ...prev, activities:[...prev.activities,gameService.getEmptyActivity()]}))
+
+    function onAddActivity() {
+        setGame(prev => ({ ...prev, activities: [...prev.activities, gameService.getEmptyActivity()] }))
     }
-    
-    function onAddStage(){
-        setGame(prev => ({ ...prev, stages:[...prev.stages,gameService.getEmptyStage()]}))
+
+    function onAddStage() {
+        setGame(prev => ({ ...prev, stages: [...prev.stages, gameService.getEmptyStage()] }))
     }
-    
-    function onRemoveActivity(activityIdx,stageIdx){
-        if(stageIdx !== undefined){
-            setGame(prev => ({ ...prev, stages:[...prev.stages.map((s,idx)=>{
-                if(idx === stageIdx) {
-                    s.activities = s.activities.filter((a,idx)=> idx !== activityIdx )
-                }
-                return s
-            })]}))
-        }else {
-            if(game.activities.length === 1) return
-            setGame(prev => ({ ...prev, activities:[...prev.activities.filter((a,idx)=>idx !== activityIdx)]}))
+
+    function onRemoveActivity(activityIdx, stageIdx) {
+        if (stageIdx !== undefined) {
+            setGame(prev => ({
+                ...prev, stages: [...prev.stages.map((s, idx) => {
+                    if (idx === stageIdx) {
+                        s.activities = s.activities.filter((a, idx) => idx !== activityIdx)
+                    }
+                    return s
+                })]
+            }))
+        } else {
+            if (game.activities.length === 1) return
+            setGame(prev => ({ ...prev, activities: [...prev.activities.filter((a, idx) => idx !== activityIdx)] }))
         }
     }
-    
-    function onRemoveStage(i){
-        if(game.stages.length === 1) return
-        setGame(prev => ({ ...prev, stages:[...prev.stages.filter((s,idx)=>idx !== i)]}))
+
+    function onRemoveStage(i) {
+        if (game.stages.length === 1) return
+        setGame(prev => ({ ...prev, stages: [...prev.stages.filter((s, idx) => idx !== i)] }))
     }
-    
-    function onAddActivityToStage(i){
-        setGame(prev => ({ ...prev, stages:[...prev.stages.map((s,idx)=>{
-            if(idx === i) {
-                s.activities.push(gameService.getEmptyActivity())
-            }
-            return s
-        })]}))
+
+    function onAddActivityToStage(i) {
+        setGame(prev => ({
+            ...prev, stages: [...prev.stages.map((s, idx) => {
+                if (idx === i) {
+                    s.activities.push(gameService.getEmptyActivity())
+                }
+                return s
+            })]
+        }))
 
     }
 
@@ -330,7 +334,7 @@ export function GameAdd() {
                     </option>)}
                 </select>
 
-              <DateForm obj={game} onHandleChange={onHandleChange}/>
+                <DateForm obj={game} onHandleChange={onHandleChange} />
                 <Colors onChangeImg={onChangeImg} gameLogo={game.icon} gameColors={game.themeColors} iconColors={iconColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isImgLoading={isImgLoading} />
 
                 <label htmlFor="groups">מספר הקבוצות</label>
@@ -363,21 +367,21 @@ export function GameAdd() {
                 <button type="button" onClick={setGameTypeToActivity}>משחק בלי שלבים</button>
 
 
-                {game.gameType === "stages" && 
-                <section className="stages-container">
-                    <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} onRemoveStage={onRemoveStage} onRemoveActivity={onRemoveActivity} onAddActivityToStage={onAddActivityToStage} />
-                <button type="button" className="add-stage" onClick={onAddStage}>הוסף שלב</button>
-                </section>}
+                {game.gameType === "stages" &&
+                    <section className="stages-container">
+                        <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} onRemoveStage={onRemoveStage} onRemoveActivity={onRemoveActivity} onAddActivityToStage={onAddActivityToStage} />
+                        <button type="button" className="add-stage" onClick={onAddStage}>הוסף שלב</button>
+                    </section>}
 
-                {game.gameType === "activities" && 
-                <section className="activities-container">
-                    {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} onRemoveActivity={onRemoveActivity}/>}
-                    <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
-                </section>}
+                {game.gameType === "activities" &&
+                    <section className="activities-container">
+                        {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} onRemoveActivity={onRemoveActivity} />}
+                        <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
+                    </section>}
 
-              { !isLoading && <button type="submit" className="btn-sumbit">Create Game</button>}
-              { isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader}/>}
-              { !isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
+                {!isLoading && <button type="submit" className="btn-sumbit">Create Game</button>}
+                {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
+                {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
 
             </form>
         </section >
