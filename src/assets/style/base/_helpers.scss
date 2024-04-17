@@ -11,3 +11,12 @@
 .clr3 {
     background-color: var(--clr-2);
 }
+
+.next-btn {
+    @include btn;
+}
+
+.purple-btn {
+    background-color: purple;
+    color: white;
+}

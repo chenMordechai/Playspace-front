@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
 import { signup, registerPlayerToGroup } from "../store/actions/auth.action"
+import {Carousel} from '../cmps/Carousel'
+import avatar1 from '../assets/img/avatar.jpg'
+import avatar2 from '../assets/img/avatar2.png'
 
 export function Signup() {
     const [credentials, setCredentials] = useState(authService.getEmptySignupCred())
@@ -16,6 +19,9 @@ export function Signup() {
     const [step, setStep] = useState(0)
 
     const [groupIdToEdit, setGroupIdToEdit] = useState('')
+    const [avatarToEdit, setAvatarToEdit] = useState('')
+
+    const imgs = [avatar1,avatar2,avatar1,avatar2,avatar1,avatar2,avatar1,avatar2]
     // const { gameId, groupId } = useParams()
     const { gameId } = useParams()
     // let query = useQuery();
@@ -92,15 +98,13 @@ export function Signup() {
         registerPlayerToGroup(loggedinPlayer.id, groupIdToEdit)
 
         setStep(prev=>prev+1)
-
-
     }
 
 
     return (
         <section className="signup">
 
-            {step ===0 && !loggedinPlayer && <section className="step-1">
+            {step ===0 && !loggedinPlayer && <section className="step-0">
             
             <h2 className="header">Welcome to spacegame</h2>
 
@@ -118,11 +122,12 @@ export function Signup() {
             </section>}
 
             {step === 1 && loggedinPlayer && shallowGame && groups && 
-            <section className="step-2">
+            <section className="step-1">
                 {/* <h2>Welcome {loggedinPlayer.name}</h2> */}
                 <h2>שם המשחק: {shallowGame.name}</h2>
-                <h3>Choose a group</h3>
-
+                <div className="header">
+                    <span>Choose a group</span>
+                 </div>
                 <ul className="groups-container">
                     {groups.map((group,i) => <li key={group.id}
                     className={`color-${i+1}`}
@@ -139,27 +144,29 @@ export function Signup() {
                     <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}
             </section>}
 
-            {step === 2 && groupIdToEdit && <section className="step-3">
+            {step === 2 && groupIdToEdit && <section className="step-2">
                 <div className="header">
                     <span>Choose an avater</span>
-                    <button>+</button>
+                    <label htmlFor="avatar">+</label>
+                    <input type="file" id="avatar" hidden/>
                  </div>
 
-                 <div className="img-container">
+                 <div className="avatar-container">
 
                     <span> Classic</span>
                     <div className="carousel">
-
+                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit}/>
                     </div>
                     <span>Toon</span>
                     <div className="carousel">
-
+                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit}/>
                     </div>
                     <span>Animal</span>
                     <div className="carousel">
-                        
+                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit}/>
                     </div>
 
+                    <button className={`next-btn ${avatarToEdit? 'purple-btn' : ''}`} onClick={onSetPlayerGroup}>Next</button>
                  </div>
                 </section>}
         </section>
