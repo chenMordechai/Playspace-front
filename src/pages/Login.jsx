@@ -40,7 +40,7 @@ export function Login() {
         try {
             const userAdmin = await adminLogin(credentials)
             console.log('success AdminLogin', userAdmin)
-            navigate('/home')
+            navigate('/admin')
         } catch (error) {
             console.error('Error:', error);
         }

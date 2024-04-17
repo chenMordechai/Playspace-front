@@ -5,8 +5,8 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
             {activities?.map((activity, j) => <li key={j}>
                 <span className="activity">שאלה {j + 1}</span>
 
-                <label htmlFor="name">הטקסט</label>
-                <input type="text" name="name" id="name" value={activity.name} onChange={() => onHandleActivityChange(event, i, j)} />
+                <label htmlFor="text">הטקסט</label>
+                <input type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
 
                 {activityProgressType === 'onTime' && <>
                     <label htmlFor="dateStart">תאריך התחלה</label>

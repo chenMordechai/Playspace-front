@@ -86,7 +86,7 @@ async function getAdmins() {
 
     return Promise.resolve([
         {
-            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            userId: "c25ca045-9b0b-4c67-d356-08dc57bf9c72",
             name: 'Anat Shapira',
             isAdmin: true
         }, {
@@ -143,7 +143,7 @@ function getEmptyCredentials() {
         // name: 'AAAA',
         email: 'AnatShapira@gmail.com',
         name: 'Anat Shapira',
-        // password: ''
+        password: ''
         // password: 'Aa1234$%'
     }
 }

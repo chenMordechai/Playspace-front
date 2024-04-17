@@ -52,7 +52,9 @@
         span.activity,
         ul.activity-list,
         section.game-type-activities,
-        button.btn-sumbit {
+        button.btn-sumbit,
+        .game-add-loader,
+        .msg-after-game-add {
             grid-column: span 2;
             // justify-self: center;
         }
@@ -95,6 +97,12 @@
                 width: 30px;
                 height: 30px;
             }
+        }
+
+        img.game-add-loader,
+        span.msg-after-game-add {
+            height: 30px;
+            justify-self: center;
         }
     }
 }

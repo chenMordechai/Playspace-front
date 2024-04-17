@@ -1,12 +1,12 @@
 import { ImageColorPicker } from 'react-image-color-picker';
 
-export function Colors({ onChangeImg, gameLogo, gameColors, logoColors, onHandleChangeColor, onHandleColorPick, openColorPicker, setOpenColorPicker, isLoading }) {
+export function Colors({ onChangeImg, gameLogo, gameColors, logoColors, onHandleChangeColor, onHandleColorPick, openColorPicker, setOpenColorPicker, isImgLoading }) {
 
     return (
         <>
             <label htmlFor="logo">לוגו</label>
             <input type="file" name="logo" id="logo" onChange={onChangeImg} />
-            {isLoading && <span className="loameding">Loading...</span>}
+            {isImgLoading && <span className="loameding">Loading...</span>}
             {gameLogo && gameColors && <img className="logo-img" src={gameLogo.url} />}
 
             {gameLogo && logoColors && <ul className="colors">
