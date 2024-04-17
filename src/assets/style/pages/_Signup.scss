@@ -22,7 +22,6 @@
             }
 
             button {
-                @include btn;
             }
         }
     }
@@ -56,7 +55,6 @@
             }
         }
         button {
-            @include btn;
             margin-top: 20px;
         }
     }
@@ -85,7 +83,6 @@
         }
 
         button.next {
-            @include btn;
         }
     }
 }

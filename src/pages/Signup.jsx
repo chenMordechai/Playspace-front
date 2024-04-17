@@ -116,7 +116,7 @@ export function Signup() {
                 {/* <label htmlFor="email">Email:</label> */}
                 <input placeholder="Tape your email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
                 
-                <button type="submit">Next</button>
+                <button className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} type="submit">Next</button>
 
             </form>
             </section>}
@@ -138,7 +138,7 @@ export function Signup() {
                     </li>)}
                 </ul>
 {/* onclick=> save the group and move to next step */}
-                <button onClick={onSetPlayerGroup}>Next</button>
+                <button className={`next-btn ${groupIdToEdit? 'purple-btn' : ''}`} onClick={onSetPlayerGroup}>Next</button>
 
                 {/* {loggedinPlayer.groupId &&
                     <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}
@@ -155,15 +155,15 @@ export function Signup() {
 
                     <span> Classic</span>
                     <div className="carousel">
-                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit}/>
+                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit} avatarToEdit={avatarToEdit}/>
                     </div>
                     <span>Toon</span>
                     <div className="carousel">
-                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit}/>
+                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit} avatarToEdit={avatarToEdit}/>
                     </div>
                     <span>Animal</span>
                     <div className="carousel">
-                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit}/>
+                        <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit} avatarToEdit={avatarToEdit}/>
                     </div>
 
                     <button className={`next-btn ${avatarToEdit? 'purple-btn' : ''}`} onClick={onSetPlayerGroup}>Next</button>

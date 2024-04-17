@@ -81,3 +81,7 @@
     color: rgb(99, 98, 98);
     font-weight: 700;
 }
+@mixin purple-btn($type: regular) {
+    background-color: purple;
+    color: white;
+}
