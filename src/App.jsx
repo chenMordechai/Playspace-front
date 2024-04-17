@@ -13,12 +13,29 @@ import { Game } from './pages/Game'
 import { GameGroups } from './pages/GameGroups'
 import { NavLinks } from './cmps/NavLinks'
 
+import { scrollService } from './services/scroll.service'
+import { ScreenOpenContext } from './contexts/ScreenOpenConext'
+import { useToggle } from './customHooks/useToggle'
+
 
 function App() {
+  const [isScreenOpen, setIsScreenOpen] = useToggle(false)
+
+  function onOpenScreen() {
+    setIsScreenOpen(true)
+    scrollService.disableScroll()
+  }
+
+  function onCloseScreen() {
+    setIsScreenOpen(false)
+    scrollService.enableScroll()
+  }
   return (
     <Provider store={store}>
       <Router>
-        <section className="main-layout">
+      <ScreenOpenContext.Provider value={{ isScreenOpen, onOpenScreen, onCloseScreen }}>
+        <section className={'main-layout ' + (isScreenOpen ? 'screen-open' : '')}>
+          <section className="screen" onClick={onCloseScreen}></section>
           <NavLinks />
           <main>
             <div className="main-container">
@@ -35,7 +52,7 @@ function App() {
             </div>
           </main>
         </section>
-
+        </ScreenOpenContext.Provider>
       </Router>
     </Provider >
 

@@ -13,4 +13,22 @@
     @include for-mobile-layout {
     }
   }
+
+  .screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(85, 84, 84, 0.441);
+
+    display: none;
+  }
+
+  &.screen-open .screen {
+    display: block;
+  }
 }

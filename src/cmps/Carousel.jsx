@@ -75,10 +75,7 @@ export function Carousel({ items, setAvatarToEdit,avatarToEdit, Comp1, Comp2, ..
                 {items.map((item, i) => <li className="card" key={item._id || i}>
                     {/* {item} */}
                     <img  style={{ border: (avatarToEdit === item) ? '1px solid black' : 'none' }}
-                     onClick={()=>{
-                        console.log('hi')
-                        setAvatarToEdit(item)
-                    }} src={item}  />
+                     onClick={()=>setAvatarToEdit({type:'image',url:item})} src={item}  />
                     {/* <Comp1 item={item} isDragging={isDragging} {...restOfProps} /> */}
                 </li>
                 )}
