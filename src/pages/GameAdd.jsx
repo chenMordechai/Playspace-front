@@ -262,11 +262,11 @@ export function GameAdd() {
         }
     }
 
-    function addStageToGame(){
+    function setGameTypeToStage(){
         setGame(prev => ({ ...prev, gameType: 'stages', activities: null , stages:[gameService.getEmptyStage()] }))
     }
 
-    function addActivityToGame(){
+    function setGameTypeToActivity(){
         setGame(prev => ({ ...prev, gameType: 'activities', stages: null ,activities:[gameService.getEmptyActivity()]}))
     }
     
@@ -278,15 +278,36 @@ export function GameAdd() {
         setGame(prev => ({ ...prev, stages:[...prev.stages,gameService.getEmptyStage()]}))
     }
     
-    function onRemoveActivity(i){
-        if(game.activities.length === 1) return
-        setGame(prev => ({ ...prev, activities:[...prev.activities.filter((a,idx)=>idx !== i)]}))
+    function onRemoveActivity(activityIdx,stageIdx){
+        if(stageIdx !== undefined){
+            setGame(prev => ({ ...prev, stages:[...prev.stages.map((s,idx)=>{
+                if(idx === stageIdx) {
+                    s.activities = s.activities.filter((a,idx)=> idx !== activityIdx )
+                }
+                return s
+            })]}))
+        }else {
+            if(game.activities.length === 1) return
+            setGame(prev => ({ ...prev, activities:[...prev.activities.filter((a,idx)=>idx !== activityIdx)]}))
+        }
     }
     
     function onRemoveStage(i){
         if(game.stages.length === 1) return
         setGame(prev => ({ ...prev, stages:[...prev.stages.filter((s,idx)=>idx !== i)]}))
     }
+    
+    function onAddActivityToStage(i){
+        setGame(prev => ({ ...prev, stages:[...prev.stages.map((s,idx)=>{
+            if(idx === i) {
+                s.activities.push(gameService.getEmptyActivity())
+            }
+            return s
+        })]}))
+
+    }
+
+
 
     return (
         <section className="game-add rtl">
@@ -347,13 +368,13 @@ export function GameAdd() {
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
-                <button type="button" onClick={addStageToGame}>משחק עם שלבים</button>
-                <button type="button" onClick={addActivityToGame}>משחק בלי שלבים</button>
+                <button type="button" onClick={setGameTypeToStage}>משחק עם שלבים</button>
+                <button type="button" onClick={setGameTypeToActivity}>משחק בלי שלבים</button>
 
 
                 {game.gameType === "stages" && 
                 <section className="stages-container">
-                    <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} onRemoveStage={onRemoveStage} />
+                    <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} onRemoveStage={onRemoveStage} onRemoveActivity={onRemoveActivity} onAddActivityToStage={onAddActivityToStage} />
                 <button type="button" className="add-stage" onClick={onAddStage}>הוסף שלב</button>
                 </section>}
 
@@ -372,76 +393,3 @@ export function GameAdd() {
     )
 }
 
-
-// {
-//     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
-//     "name": "string", // front v
-//     "createdDate": 0, // back
-//     "updatedDate": 0, // back
-//     "isDeleted": true, // back
-//     "activities": [ // game without stages
-//       {
-//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
-//         "name": "string", // front
-//         "isDeleted": true, // back
-//         "activityType": 0, // front
-//         "timeToRespond": 0, // front
-//         "activityStartTimestamp": 0, // front
-//         "activityEndTimestamp": 0, // front
-//         "pointsValue": 2147483647, // front
-//         "maxError": 0, // front
-//         "correctAnswerId": 0, // front
-//         "activityAswers": "string",  // front
-//         "mediaBefore": "string", // front
-//         "mediaIdAfter": "string", // front
-//         "testBefore": "string", // front
-//         "testAfter": "string" // front
-//       }
-//     ],
-//     "stages": null,
-//     "gameStartTimestamp": 0, // front
-//     "gameEndTimestamp": 0, // front
-//     "groups": [ // front
-//         {
-//           "id": 0, // front
-//           "name": "string", // front
-//           "additionalScore": 0 // front
-//         }
-//       ],
-//     "themeColors": ['#','#','#'] // front
-//     "iconId": "string", // ? iconUrl?
-//     "description": "string", // front
-//     "gameType": 0, // front
-//     "activityProgressType": 0, // front
-//     "admins": [ // front + back
-//       {
-//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//         "adminId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//         "gameId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//         "isDeleted": true
-//       }
-//     ],
-//     "textBefore": "string", // front
-//     "textAfter": "string", // front
-//   }
-
-
-
-// {
-//
-//     "activities":null,
-//     "stages": [ // game with stages
-//       {
-//         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6", // back
-//         "name": "string", // front
-//         "activities": [
-//           "string" // front + back - object!
-//         ],
-//         "textBefore": "string", // front
-//         "textAfter": "string", // front
-//         "stageStartDate": 0, // front
-//         "stageEndDate": 0, // front
-//         "maxError": 0 // front
-//       }
-//     ],
-// }

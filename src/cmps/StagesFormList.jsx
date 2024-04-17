@@ -1,7 +1,7 @@
 import { ActivityFormList } from "./ActivityFormList"
 
 
-export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange,onRemoveStage }) {
+export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange,onRemoveStage,onRemoveActivity,onAddActivityToStage }) {
     return (
         <>
             {/* <span className="stages" >שלבי המשחק</span> */}
@@ -47,7 +47,10 @@ export function StagesFormList({ stages, activityProgressType, onHandleStageChan
                     <span>הזנת השאלות</span>
                     <button type="button" onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
 
-                    {openActivities && <ActivityFormList activities={stage.activities} i={i} activityProgressType={activityProgressType} onHandleActivityChange={onHandleActivityChange} />}
+                    {openActivities && <>
+                    <ActivityFormList activities={stage.activities} i={i} activityProgressType={activityProgressType} onHandleActivityChange={onHandleActivityChange} onRemoveActivity={onRemoveActivity} />
+                    <button type="button" className="add-activity" onClick={()=>onAddActivityToStage(i)}>הוסף שאלה</button>
+                    </>}
                 </li>)}
             </ul>
         </>

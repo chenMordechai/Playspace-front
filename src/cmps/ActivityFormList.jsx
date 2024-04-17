@@ -5,9 +5,9 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
             {activities?.map((activity, j) => <li key={j}>
                 <span className="activity">שאלה {j + 1}</span>
 
-               { activities.length > 1 && <button type="button" onClick={()=>onRemoveActivity(j)}>הסר שאלה</button>}
+               { activities.length > 1 && <button type="button" onClick={()=>onRemoveActivity(j,i)}>הסר שאלה</button>}
                { !(activities.length > 1) &&  <span></span>}
-               
+
                 <label htmlFor="text">הטקסט</label>
                 <input required type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
 
@@ -26,7 +26,7 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 </>}
 
                 <label htmlFor="activityType">סוג השאלה</label>
-                <select name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
+                <select required name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
                     <option value="open">פתוחה</option>
                     <option value="multiple">רב ברירה</option>
                     <option value="yesno">נכון/לא נכון</option>
