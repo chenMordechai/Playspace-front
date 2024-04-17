@@ -1,12 +1,15 @@
 
-export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType }) {
+export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType,onRemoveActivity }) {
     return (
         <ul className="activity-list">
             {activities?.map((activity, j) => <li key={j}>
                 <span className="activity">שאלה {j + 1}</span>
 
+               { activities.length > 1 && <button type="button" onClick={()=>onRemoveActivity(j)}>הסר שאלה</button>}
+               { !(activities.length > 1) &&  <span></span>}
+               
                 <label htmlFor="text">הטקסט</label>
-                <input type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
+                <input required type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
 
                 {activityProgressType === 'onTime' && <>
                     <label htmlFor="dateStart">תאריך התחלה</label>
@@ -32,11 +35,11 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
 
                 {activity.activityType === "multiple" && <>
                     <label htmlFor="activityAswers">האופציות לתשובה (א,ב,ג)</label>
-                    <input type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
+                    <input required type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
                 </>}
 
                 <label htmlFor="correctAnswer">התשובה</label>
-                <input type="text" name="correctAnswer" id="correctAnswer" value={activity.correctAnswer} onChange={() => onHandleActivityChange(event, i, j)} />
+                <input required type="text" name="correctAnswer" id="correctAnswer" value={activity.correctAnswer} onChange={() => onHandleActivityChange(event, i, j)} />
 
                 <label htmlFor="pointsValue">ניקוד</label>
                 <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />
@@ -72,6 +75,8 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                     <option value="moreTime">תוספת זמן</option>
                     <option value="skip">דלג</option>
                 </select>
+
+               
 
             </li>)}
         </ul>

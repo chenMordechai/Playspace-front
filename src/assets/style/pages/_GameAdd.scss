@@ -33,25 +33,15 @@
             margin-bottom: 10px;
         }
 
-        section.stages-container {
-            background-color: lightblue;
-            width: 100%;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            span.stages {
-                // text-align: center;
-            }
-        }
         .loading,
         section.stages-container,
-        span.stages,
-        ul.stages,
-        span.activity,
+        // span.stages,
+        ul.stage-list,
+        // span.activity,
+        button.add-activity,
+        button.add-stage,
         ul.activity-list,
-        section.game-type-activities,
+        section.activities-container,
         button.btn-sumbit,
         .game-add-loader,
         .msg-after-game-add {
@@ -63,9 +53,12 @@
             width: 100%;
         }
 
+        ul.activity li,
+        section.stages-container,
+        section.stages-container li,
         ul.stages li,
-        section.game-type-activities,
-        section.game-type-activities li {
+        section.activities-container,
+        section.activities-container li {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
@@ -73,14 +66,24 @@
             // margin-bottom: 20px;
         }
 
-        ul.activity-list {
+        ul.activity-list,
+        ul.stage-list {
             background-color: lightpink;
             padding: 20px;
-            // width: 80%;
 
             img.media {
                 height: 100px;
             }
+        }
+        ul.stage-list {
+            background-color: lightblue;
+        }
+
+        ul.activity-list li,
+        ul.stage-list li {
+            margin-bottom: 10px;
+            border-bottom: 1px solid black;
+            padding-bottom: 10px;
         }
 
         .img-color-picker-container {

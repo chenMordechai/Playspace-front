@@ -1,16 +1,19 @@
 import { ActivityFormList } from "./ActivityFormList"
 
 
-export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange }) {
+export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange,onRemoveStage }) {
     return (
         <>
-            <span className="stages" >שלבי המשחק</span>
-            <ul className="stages">
+            {/* <span className="stages" >שלבי המשחק</span> */}
+            <ul className="stage-list">
                 {stages.map((stage, i) => <li key={i}>
                     <span className="stages">שלב  {i + 1}</span>
 
+                 { stages.length > 1 &&  <button type="button" onClick={()=>onRemoveStage(i)}>הסר שלב</button>}
+                 { !(stages.length > 1) &&  <span></span>}
+
                     <label htmlFor="name">שם השלב</label>
-                    <input type="text" name="name" id="name" value={stage.name} onChange={() => onHandleStageChange(event, i)} />
+                    <input required type="text" name="name" id="name" value={stage.name} onChange={() => onHandleStageChange(event, i)} />
 
                     {activityProgressType === 'onTime' && <>
                         <label htmlFor="dateStart">תאריך התחלה</label>
@@ -26,8 +29,8 @@ export function StagesFormList({ stages, activityProgressType, onHandleStageChan
                         <input type="time" name="timeEnd" id="timeEnd" value={stage.timeEnd} onChange={() => onHandleStageChange(event, i)} />
                     </>}
 
-                    <label htmlFor="activities">כמה שאלות יש בשלב</label>
-                    <input type="number" min="0" name="activities" id="activities" value={stage.activities?.length || 0} onChange={() => onHandleStageChange(event, i)} />
+                    {/* <label htmlFor="activities">כמה שאלות יש בשלב</label>
+                    <input type="number" min="0" name="activities" id="activities" value={stage.activities?.length || 0} onChange={() => onHandleStageChange(event, i)} /> */}
 
                     <label htmlFor="maxError">כמה טעויות מותר</label>
                     <input type="number" min="0" max={stage.activities?.length} name="maxError" id="maxError" value={stage.maxError} onChange={() => onHandleStageChange(event, i)} />

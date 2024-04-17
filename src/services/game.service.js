@@ -197,7 +197,7 @@ function getEmptyStage() {
     return {
         id: null,
         name: '', // v // e
-        activities: null, // v
+        activities: [getEmptyActivity()], // v
         dateStart: '', // for form v
         timeStart: '', // for form v
         dateEnd: '', // for form v

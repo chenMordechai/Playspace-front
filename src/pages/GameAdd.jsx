@@ -66,8 +66,8 @@ export function GameAdd() {
         if (name === 'gameType') {
             value = (value) ? 'stages' : 'activities'
             setGame(prevGame => ({ ...prevGame, [name]: value }))
-        } else if (name === 'groups' || name === 'stages' || name === 'activities') {
-            const object = name === 'groups' ? gameService.getEmptyGroup() : name === 'stages' ? gameService.getEmptyStage() : gameService.getEmptyActivity()
+        } else if (name === 'groups' ) {
+            const object = gameService.getEmptyGroup() 
             setGame(prevGame => {
                 const diff = value - (prevGame[name]?.length || 0)
                 if (diff > 0) return { ...prevGame, [name]: (prevGame[name]?.length) ? [...prevGame[name], object] : [object] }
@@ -262,6 +262,32 @@ export function GameAdd() {
         }
     }
 
+    function addStageToGame(){
+        setGame(prev => ({ ...prev, gameType: 'stages', activities: null , stages:[gameService.getEmptyStage()] }))
+    }
+
+    function addActivityToGame(){
+        setGame(prev => ({ ...prev, gameType: 'activities', stages: null ,activities:[gameService.getEmptyActivity()]}))
+    }
+    
+    function onAddActivity(){
+        setGame(prev => ({ ...prev, activities:[...prev.activities,gameService.getEmptyActivity()]}))
+    }
+    
+    function onAddStage(){
+        setGame(prev => ({ ...prev, stages:[...prev.stages,gameService.getEmptyStage()]}))
+    }
+    
+    function onRemoveActivity(i){
+        if(game.activities.length === 1) return
+        setGame(prev => ({ ...prev, activities:[...prev.activities.filter((a,idx)=>idx !== i)]}))
+    }
+    
+    function onRemoveStage(i){
+        if(game.stages.length === 1) return
+        setGame(prev => ({ ...prev, stages:[...prev.stages.filter((s,idx)=>idx !== i)]}))
+    }
+
     return (
         <section className="game-add rtl">
             <h2>יצירת משחק</h2>
@@ -275,7 +301,7 @@ export function GameAdd() {
                 <input required type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
                 <label htmlFor="admins">אדמינים</label>
-                <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
                     {admins?.map(admin => <option key={admin.userId} value={admin.userId}>
                         {admin.name}
                     </option>)}
@@ -321,25 +347,20 @@ export function GameAdd() {
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
-                <button type="button" onClick={() => setGame(prev => ({ ...prev, gameType: 'stages', activities: null }))}>משחק עם שלבים</button>
-                <button type="button" onClick={() => setGame(prev => ({ ...prev, gameType: 'activities', stages: null }))}>משחק בלי שלבים</button>
+                <button type="button" onClick={addStageToGame}>משחק עם שלבים</button>
+                <button type="button" onClick={addActivityToGame}>משחק בלי שלבים</button>
 
-                {game.gameType === "stages" && <>
-                    <label htmlFor="stages">מספר שלבי המשחק</label>
-                    <input type="number" min="0" name="stages" id="stages" value={game.stages?.length || 0} onChange={onHandleChange} />
-                </>}
 
-                {game.gameType === "stages" && game.stages?.length && <section className="stages-container">
-                    <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} />
+                {game.gameType === "stages" && 
+                <section className="stages-container">
+                    <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} onRemoveStage={onRemoveStage} />
+                <button type="button" className="add-stage" onClick={onAddStage}>הוסף שלב</button>
                 </section>}
 
-                {game.gameType === "activities" && <section className="game-type-activities">
-
-                    <label htmlFor="activities">מספר השאלות</label>
-                    <input type="number" min="0" name="activities" id="activities" value={game.activities?.length || 0} onChange={onHandleChange} />
-
-                    {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} />}
-
+                {game.gameType === "activities" && 
+                <section className="activities-container">
+                    {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} onRemoveActivity={onRemoveActivity}/>}
+                    <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
                 </section>}
 
               { !isLoading && <button type="submit" className="btn-sumbit">Create Game</button>}
