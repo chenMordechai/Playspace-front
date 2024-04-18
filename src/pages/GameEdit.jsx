@@ -19,31 +19,24 @@ import loader from '../assets/img/loader.gif'
 export function GameEdit() {
 
     const [game, setGame] = useState(null)
-
     const [openActivities, setOpenActivities] = useState(false)
     const [colorIdx, setColorIdx] = useState(0)
     const [iconColors, setLogoColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
-
     const [isLoading, setIsLoading] = useState(false)
     const [isImgLoading, setIsImgLoading] = useState(false)
     const [msgAfterGameAdd, setMsgAfterGameAdd] = useState('')
-
     const [admins, setAdmins] = useState(null)
-
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
+
     const navigate = useNavigate()
-
     const { gameId } = useParams()
-
     const firstLoad = useRef(true)
-    console.log('firstLoad:', firstLoad)
+
     useEffect(() => {
         if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         init()
-        console.log('gameId:', gameId)
         loadAdmins()
-
     }, [])
 
     useEffect(() => {
@@ -54,13 +47,14 @@ export function GameEdit() {
         })
     }, [game?.themeColors])
 
+    useEffect(() => {
+        console.log('game:', game)
+    }, [game])
     // adit
     async function init() {
         try {
             const game = await getGameById(gameId)
-            console.log('game:', game)
             setGameFormChanges(game)
-            setGame(game)
 
         } catch (err) {
             console.log('err:', err)
@@ -76,9 +70,8 @@ export function GameEdit() {
     // adit
     function setGameFormChanges(game) {
         if (!firstLoad.current) return
-
         // admins
-        game.admins = game.admins?.map(admin => admin.adminId)
+        game.admins = game.admins.map(admin => admin.adminId)
 
         // times
         setTimesFormChanges(game)
@@ -90,6 +83,7 @@ export function GameEdit() {
         setActivityAnswersForForm(game)
 
         firstLoad.current = false
+        setGame(game)
 
     }
 
@@ -187,7 +181,6 @@ export function GameEdit() {
     // colors from image for the divs 
     async function getColorsFromImg(imgUrl) {
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
-        console.log(colors)
         setLogoColors([...colors])
     }
 
@@ -233,7 +226,6 @@ export function GameEdit() {
         if (type === 'number') value = +value
 
         if (name === 'activities') {
-            console.log('activities')
             const object = gameService.getEmptyActivity()
             setGame(prevGame => {
                 const diff = value - (prevGame.stages[i][name]?.length || 0)
@@ -279,15 +271,10 @@ export function GameEdit() {
     async function onSubmitForm(ev) {
         ev.preventDefault()
 
-        // groups id changes
-        // game.groups?.forEach(group => {
-        //     group.id += game.name.substring(0, 3)
-        // })
-
-        // time changes
+        // times to timestamp:
         setTimesChanges(game)
 
-        // work
+        // adminsId to objects
         game.admins = game.admins.map(adminId => ({ adminId }))
 
         console.log('game:', game)
@@ -296,8 +283,7 @@ export function GameEdit() {
             setIsLoading(true)
             const newGame = await addGame(game)
             console.log('newGame:', newGame)
-            setMsgAfterGameAdd('המשחק הוסף בהצלחה')
-            setGame(gameService.getEmptyGame())
+            setMsgAfterGameAdd('המשחק נערך בהצלחה')
         } catch (err) {
             setMsgAfterGameAdd('שגיאה')
             console.log('err:', err)
@@ -358,9 +344,9 @@ export function GameEdit() {
         }
     }
 
-    function setGameTypeToStage() {
-        setGame(prev => ({ ...prev, gameType: 'stages', activities: null, stages: [gameService.getEmptyStage()] }))
-    }
+    // function setGameTypeToStage() {
+    //     setGame(prev => ({ ...prev, gameType: 'stages', activities: null, stages: [gameService.getEmptyStage()] }))
+    // }
 
     function setGameTypeToActivity() {
         setGame(prev => ({ ...prev, gameType: 'activities', stages: null, activities: [gameService.getEmptyActivity()] }))
@@ -416,8 +402,8 @@ export function GameEdit() {
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
-                <button type="button" onClick={setGameTypeToStage}>משחק עם שלבים</button>
-                <button type="button" onClick={setGameTypeToActivity}>משחק בלי שלבים</button>
+                {game.gameType === 'stages' && <h3>משחק עם שלבים</h3>}
+                {game.gameType === 'activities' && <h3>משחק בלי שלבים</h3>}
 
 
                 {game.gameType === "stages" &&
@@ -427,7 +413,7 @@ export function GameEdit() {
 
                 {game.gameType === "activities" &&
                     <section className="activities-container">
-                        {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} onRemoveActivity={onRemoveActivity} isEdit={true} />}
+                        {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} isEdit={true} />}
                     </section>}
 
                 {!isLoading && <button type="submit" className="btn-sumbit">Edit Game</button>}

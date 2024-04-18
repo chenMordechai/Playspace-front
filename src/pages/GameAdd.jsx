@@ -18,19 +18,16 @@ import loader from '../assets/img/loader.gif'
 export function GameAdd() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
-
     const [openActivities, setOpenActivities] = useState(false)
     const [colorIdx, setColorIdx] = useState(0)
     const [iconColors, setLogoColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
-
     const [isLoading, setIsLoading] = useState(false)
     const [isImgLoading, setIsImgLoading] = useState(false)
     const [msgAfterGameAdd, setMsgAfterGameAdd] = useState('')
-
     const [admins, setAdmins] = useState(null)
-
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -363,8 +360,8 @@ export function GameAdd() {
                     <option value="onProgress">לפי התקדמות</option>
                 </select>
 
-                <button type="button" onClick={setGameTypeToStage}>משחק עם שלבים</button>
-                <button type="button" onClick={setGameTypeToActivity}>משחק בלי שלבים</button>
+                <button type="button" className={game.gameType === 'stages' ? 'purple-btn' : ''} onClick={setGameTypeToStage}>משחק עם שלבים</button>
+                <button type="button" className={game.gameType === 'activities' ? 'purple-btn' : ''} onClick={setGameTypeToActivity}>משחק בלי שלבים</button>
 
 
                 {game.gameType === "stages" &&

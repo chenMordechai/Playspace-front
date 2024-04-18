@@ -146,7 +146,7 @@ async function save(game) {
     console.log('game service', game)
 
     if (game.id) {
-        return httpService.put(BASE_URL + game.id, game)
+        return httpService.put('Admin/Game', game)
     } else {
         // work
         return httpService.post('Game', game)

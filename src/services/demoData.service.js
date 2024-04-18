@@ -1,7 +1,7 @@
 
 // game with stages - onTime:
 const game1 = {
-    "id": null, // back
+    "id": '123445', // back
     "name": "המשחק הראשון שלי", // v
     "isDeleted": false, // back
     "activities": null,
@@ -155,7 +155,7 @@ const game1 = {
 
 // game with activities - onProgress
 const game2 = {
-    "id": null, //back
+    "id": '3fa85f64-5717-4562-b3fc-2c963f66afa6', //back
     "name": "My Game",
     "isDeleted": false, // back
     "activities": [
@@ -229,7 +229,7 @@ const game2 = {
             "text": "מה קורה הכל בסדר?",
             "isDeleted": false,
             "activityType": "multiple",
-            "currectAnswer": "כן",
+            "correctAnswer": "כן",
             "activityAnswers": [
                 "כן",
                 "לא",
