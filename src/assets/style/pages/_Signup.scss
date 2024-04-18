@@ -9,8 +9,24 @@
 
         .header {
             font-size: 2rem;
-            margin-bottom: 20px;
+            // margin-bottom: 20px;
         }
+        .spacegame {
+            transition: 0.5s;
+            position: relative;
+            top: 50px;
+            transition: 1s;
+            transition-timing-function: linear(0 0%, 0.67 71.08%, 1 100%);
+            color: white;
+            z-index: 20;
+        }
+
+        // &.fade {
+        //     .playspace {
+        //         opacity: 1;
+        //         transition: 1s;
+        //     }
+        // }
         .name-form {
             @include flex(column, stretch, center, 10px);
 
@@ -84,6 +100,50 @@
         }
 
         button.next {
+        }
+    }
+
+    .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        color: white;
+        background-color: rgb(137, 32, 164);
+        // background-color: rgba(146, 56, 168, 0.7);
+        transition: background-color 1s;
+
+        .content {
+            position: absolute;
+            top: 340px;
+            text-align: center;
+            width: 100%;
+            @include flex(column, center, center, 15px);
+
+            h2,
+            h3 {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    &.fade {
+        .loading-screen {
+            background-color: #ffffff00;
+
+            .content {
+                opacity: 0;
+                transition: 0.5s;
+            }
+        }
+        .step-0 {
+            h2.spacegame {
+                top: 0px;
+                color: black;
+            }
         }
     }
 }

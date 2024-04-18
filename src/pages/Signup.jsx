@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext, useRef } from "react"
 import { useParams, Link } from "react-router-dom"
 import { useSelector } from 'react-redux'
 
@@ -45,9 +45,12 @@ export function Signup() {
     // const { gameId, groupId } = useParams()
     const { gameId } = useParams()
     // let query = useQuery();
+    const sectionRef = useRef(null);
 
     useEffect(() => {
-        // console.log('gameId:', gameId)
+        setTimeout(() => {
+            sectionRef.current.classList.add('fade')
+        }, 2000)
         setCredentials(prev => ({ ...prev, gameId }))
         // setCredentials(prev => ({ ...prev, gameId, groupId }))
 
@@ -144,13 +147,24 @@ export function Signup() {
     }
 
 
+    // if (isLoading) return
+
     return (
-        <section className="signup">
+        <section ref={sectionRef} className="signup">
+
+            <section className="loading-screen">
+                <div className="content">
+                    <span>X</span>
+                    <h3>ELAL</h3>
+                </div>
+            </section>
+            {/* <h2 className="spacegame">spacegame</h2> */}
 
             {stepIdx === 0 && !loggedinPlayer &&
                 <section className="step-0">
 
-                    <h2 className="header">Welcome to spacegame</h2>
+                    <h2 className="header">Welcome to</h2>
+                    <h2 className="header spacegame">spacegame</h2>
 
                     <form onSubmit={onSubmitSignupForm} className="name-form">
 
@@ -193,7 +207,7 @@ export function Signup() {
                     <div className="header">
                         <span>Choose an avater</span>
                         <button className="plus" onClick={onToggleOpenUserImgAddModal}>+</button>
-                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={avatarToEdit}  onChangeFileInput={onChangeFileInput} onSetAvatarImg={onSetAvatarImg} onToggleOpenUserImgAddModal={onToggleOpenUserImgAddModal} />}
+                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={avatarToEdit} onChangeFileInput={onChangeFileInput} onSetAvatarImg={onSetAvatarImg} onToggleOpenUserImgAddModal={onToggleOpenUserImgAddModal} />}
                     </div>
 
                     <div className="avatar-container">

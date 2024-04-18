@@ -27,11 +27,11 @@ export function NavLinks() {
             <NavLink to="/signup/779CF2C1-3529-4DB2-366B-08DC51029963" title="Signup" >
                 <span>Signup</span>
             </NavLink>
-            <NavLink to="/admin" title="Admin" >
-                <span>Admin</span>
-            </NavLink>
 
             {loggedinUser?.checkAdmin && <NavLink to="/game/add" title="Admin" >
+                <NavLink to="/admin" title="Admin" >
+                    <span>Admin</span>
+                </NavLink>
                 <span>Create New Game</span>
             </NavLink>}
         </section>
