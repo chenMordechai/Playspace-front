@@ -81,14 +81,14 @@ export function GameAdd() {
 
     async function onChangeImg(ev) {
         try {
-            setIsLoading(true)
+            setIsImgLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev)
             setGame(prevGame => ({ ...prevGame, icon: media }))
             getColorsFromImg(media.url)
         } catch (err) {
             console.log('err:', err)
         } finally {
-            setIsLoading(false)
+            setIsImgLoading(false)
         }
     }
 
@@ -165,7 +165,7 @@ export function GameAdd() {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
         else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
-        else if (name === 'activityAswers') {
+        else if (name === 'activityAnswers') {
             value = value.split(',')
             if (value.length > 4) return
         }

@@ -1,6 +1,6 @@
 import { ImageColorPicker } from 'react-image-color-picker';
 
-export function Colors({ onChangeImg, gameLogo, gameColors, logoColors, onHandleChangeColor, onHandleColorPick, openColorPicker, setOpenColorPicker, isImgLoading }) {
+export function Colors({ onChangeImg, gameLogo, gameColors, iconColors, onHandleChangeColor, onHandleColorPick, openColorPicker, setOpenColorPicker, isImgLoading }) {
 
     return (
         <>
@@ -9,8 +9,8 @@ export function Colors({ onChangeImg, gameLogo, gameColors, logoColors, onHandle
             {isImgLoading && <span className="loameding">Loading...</span>}
             {gameLogo && gameColors && <img className="logo-img" src={gameLogo.url} />}
 
-            {gameLogo && logoColors && <ul className="colors">
-                {logoColors.map((color, i) => <li key={color}>
+            {gameLogo && iconColors && <ul className="colors">
+                {iconColors.map((color, i) => <li key={color}>
                     {/* <input type="color" na="color1" id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} /> */}
                     <div className="color-container" style={{ backgroundColor: color }} onClick={() => onHandleColorPick(color)}>
                     </div>

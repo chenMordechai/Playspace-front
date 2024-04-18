@@ -1,13 +1,13 @@
 import { DateForm } from "./DateForm"
 
-export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType, onRemoveActivity }) {
+export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType, onRemoveActivity, isEdit }) {
     return (
         <ul className="activity-list">
             {activities?.map((activity, j) => <li key={j}>
                 <span className="activity">שאלה {j + 1}</span>
 
-                {activities.length > 1 && <button type="button" onClick={() => onRemoveActivity(j, i)}>הסר שאלה</button>}
-                {!(activities.length > 1) && <span></span>}
+                {activities.length > 1 && !isEdit && <button type="button" onClick={() => onRemoveActivity(j, i)}>הסר שאלה</button>}
+                {(!(activities.length > 1) || isEdit) && <span></span>}
 
                 <label htmlFor="text">הטקסט</label>
                 <input required type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
@@ -27,8 +27,8 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 </select>
 
                 {activity.activityType === "multiple" && <>
-                    <label htmlFor="activityAswers">האופציות לתשובה (א,ב,ג,ד)</label>
-                    <input required type="text" name="activityAswers" id="activityAswers" value={activity.activityAswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
+                    <label htmlFor="activityAnswers">האופציות לתשובה (א,ב,ג,ד)</label>
+                    <input required type="text" name="activityAnswers" id="activityAswers" value={activity.activityAnswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />
                 </>}
 
                 <label htmlFor="correctAnswer">התשובה</label>

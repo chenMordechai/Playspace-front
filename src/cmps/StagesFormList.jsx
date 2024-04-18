@@ -2,15 +2,15 @@ import { ActivityFormList } from "./ActivityFormList"
 import { DateForm } from "./DateForm"
 
 
-export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange, onRemoveStage, onRemoveActivity, onAddActivityToStage }) {
+export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange, onRemoveStage, onRemoveActivity, onAddActivityToStage, isEdit }) {
     return (
         <>
             <ul className="stage-list">
                 {stages.map((stage, i) => <li key={i}>
                     <span className="stages">שלב  {i + 1}</span>
 
-                    {stages.length > 1 && <button type="button" onClick={() => onRemoveStage(i)}>הסר שלב</button>}
-                    {!(stages.length > 1) && <span></span>}
+                    {stages.length > 1 && !isEdit && <button type="button" onClick={() => onRemoveStage(i)}>הסר שלב</button>}
+                    {(!(stages.length > 1) || isEdit) && <span></span>}
 
                     <label htmlFor="name">שם השלב</label>
                     <input required type="text" name="name" id="name" value={stage.name} onChange={() => onHandleStageChange(event, i)} />
@@ -36,7 +36,7 @@ export function StagesFormList({ stages, activityProgressType, onHandleStageChan
                     <button type="button" onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
 
                     {openActivities && <>
-                        <ActivityFormList activities={stage.activities} i={i} activityProgressType={activityProgressType} onHandleActivityChange={onHandleActivityChange} onRemoveActivity={onRemoveActivity} />
+                        <ActivityFormList activities={stage.activities} i={i} activityProgressType={activityProgressType} onHandleActivityChange={onHandleActivityChange} onRemoveActivity={onRemoveActivity} isEdit={isEdit} />
                         <button type="button" className="add-activity" onClick={() => onAddActivityToStage(i)}>הוסף שאלה</button>
                     </>}
                 </li>)}

@@ -12,7 +12,7 @@ const game1 = {
             "activities": [
                 {
                     "id": null,
-                    "name": "מה קורה הכל בסדר?",
+                    "text": "מה קורה הכל בסדר?",
                     "isDeleted": false,
                     "activityType": "multiple",
                     "currectAnswer": "כן",
@@ -38,7 +38,7 @@ const game1 = {
                 },
                 {
                     "id": null,
-                    "name": "עכשיו באמת איך אתה מרגיש?",
+                    "text": "עכשיו באמת איך אתה מרגיש?",
                     "isDeleted": false,
                     "activityType": "open",
                     "currectAnswer": "סבבה וכו",
@@ -77,7 +77,7 @@ const game1 = {
             "name": "שלב שני",
             "activities": [
                 {
-                    "name": "מה המצב בשטחים?",
+                    "text": "מה המצב בשטחים?",
                     "activityType": "open",
                     "correctAnswer": "ברוך ה' הכל בסדר",
                     "activityAswers": null,
@@ -161,7 +161,7 @@ const game2 = {
     "activities": [
         {
             "id": null, //back
-            "name": "Updated Test Activity 1",
+            "text": "Updated Test Activity 1",
             "isDeleted": false,
             "activityType": "open",
             "correctAnswer": "Hello",
@@ -185,7 +185,7 @@ const game2 = {
             "lifeSaver": null
         },
         {
-            "name": "Updated Test Activity 2",
+            "text": "Updated Test Activity 2",
             "activityType": "yesno",
             "isDeleted": false,
             "correctAnswer": "yes",
@@ -205,7 +205,7 @@ const game2 = {
             ]
         },
         {
-            "name": "Updated Test Activity 3",
+            "text": "Updated Test Activity 3",
             "activityType": "typing",
             "isDeleted": false,
             "correctAnswer": "Hello3",
@@ -223,6 +223,32 @@ const game2 = {
             "lifeSaver": [
                 "skip"
             ]
+        },
+        {
+            "id": null,
+            "text": "מה קורה הכל בסדר?",
+            "isDeleted": false,
+            "activityType": "multiple",
+            "currectAnswer": "כן",
+            "activityAnswers": [
+                "כן",
+                "לא",
+                "ככה ככה"
+            ],
+            "correctAnswerId": 0,
+            "timeToRespond": 0,
+            "activityStartTimestamp": 1706767200000,
+            "activityEndTimestamp": 1713157200000,
+            "pointsValue": 1,
+            "maxError": 1,
+            "mediaBefore": null,
+            "mediaAfter": null,
+            "textBefore": "בוקר טוב! השאלה הראשונה ממש פה, מוכן להתחיל?",
+            "textAfter": "תודה רבה שענית, מקווים שיהיה לך יום מדהים",
+            "lifeSaver": [
+                "fifty"
+            ],
+
         }
     ],
     "stages": null,
@@ -269,7 +295,7 @@ const game3 = {
     "activities": [
         {
             "id": null, //back
-            "name": "Updated Test Activity 1",
+            "text": "Updated Test Activity 1",
             "isDeleted": false,
             "activityType": "open",
             "correctAnswer": "Hello",
@@ -293,7 +319,7 @@ const game3 = {
             "lifeSaver": null
         },
         {
-            "name": "Updated Test Activity 2",
+            "text": "Updated Test Activity 2",
             "activityType": "yesno",
             "isDeleted": false,
             "correctAnswer": "yes",
@@ -313,7 +339,7 @@ const game3 = {
             ]
         },
         {
-            "name": "Updated Test Activity 3",
+            "text": "Updated Test Activity 3",
             "activityType": "typing",
             "isDeleted": false,
             "correctAnswer": "Hello3",
@@ -386,7 +412,7 @@ const game4 = {
             "activities": [
                 {
                     "id": null,
-                    "name": "מה קורה הכל בסדר?",
+                    "text": "מה קורה הכל בסדר?",
                     "isDeleted": false,
                     "activityType": "multiple",
                     "currectAnswer": "כן",
@@ -412,7 +438,7 @@ const game4 = {
                 },
                 {
                     "id": null,
-                    "name": "עכשיו באמת איך אתה מרגיש?",
+                    "text": "עכשיו באמת איך אתה מרגיש?",
                     "isDeleted": false,
                     "activityType": "open",
                     "currectAnswer": "סבבה וכו",
@@ -448,7 +474,7 @@ const game4 = {
             "name": "שלב שני",
             "activities": [
                 {
-                    "name": "מה המצב בשטחים?",
+                    "text": "מה המצב בשטחים?",
                     "activityType": "open",
                     "correctAnswer": "ברוך ה' הכל בסדר",
                     "activityAswers": null,

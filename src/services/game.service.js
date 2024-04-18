@@ -14,7 +14,6 @@ export const gameService = {
     getEmptyGroup,
     getEmptyStage,
     getEmptyActivity,
-    getEmptyDate,
     // getGames2
 }
 
@@ -181,10 +180,6 @@ function getEmptyGame() {
         textBefore: '', // v //e
         textAfter: '', // v //e
     }
-}
-
-function getEmptyDate() {
-
 }
 
 function getEmptyGroup() {
