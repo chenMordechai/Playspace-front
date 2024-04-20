@@ -334,7 +334,7 @@ export function GameEdit() {
 
                 <label htmlFor="admins">אדמינים</label>
                 <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
-                    {admins?.map((admin, i) => <option key={i} value={admin.userId}>
+                    {admins?.map((admin, i) => <option key={i} value={admin.id}>
                         {admin.name}
                     </option>)}
                 </select>

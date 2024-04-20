@@ -38,8 +38,7 @@ export function GameAdd() {
     }, [])
 
     async function loadAdmins() {
-        //! Avishai get admins
-        const admins = await getAdmins()
+        let admins = await getAdmins()
         setAdmins(admins)
     }
 
@@ -326,7 +325,7 @@ export function GameAdd() {
 
                 <label htmlFor="admins">אדמינים</label>
                 <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
-                    {admins?.map(admin => <option key={admin.userId} value={admin.userId}>
+                    {admins?.map((admin, i) => <option key={i} value={admin.id}>
                         {admin.name}
                     </option>)}
                 </select>
