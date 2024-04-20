@@ -7,6 +7,7 @@ const BASE_URL = 'Game/'
 export const gameService = {
     getGames,
     getGameById,
+    getShallowGameById,
     save,
     remove,
     getActivitiesOfGame,
@@ -131,12 +132,15 @@ async function getGames(loggedinUser) {
 }
 
 async function getGameById(gameId) {
-    // ! Avishai doesn't work
-    // return httpService.get(BASE_URL + '3fa85f64-5717-4562-b3fc-2c963f66afa6')
     return httpService.get(BASE_URL + gameId)
 
     // return Promise.resolve(demoDataService.getGame2())
     // return demoDataService.getGame1()
+}
+
+async function getShallowGameById(gameId) {
+    return httpService.get(BASE_URL +`${gameId}/Preview`)
+
 }
 
 async function remove(gameId) {

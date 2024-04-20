@@ -23,6 +23,19 @@ export async function getGameById(gameId) {
     }
 }
 
+export async function getShallowGameById(gameId) {
+    try {
+        const shallowGame = await gameService.getShallowGameById(gameId)
+        // store.dispatch({ type: SET_GAME, game })
+        return shallowGame
+    } catch (err) {
+        console.log('user action -> Cannot get game', err)
+        throw err
+    }
+}
+
+
+
 export async function addGame(game) {
     try {
         const newGame = await gameService.save(game)

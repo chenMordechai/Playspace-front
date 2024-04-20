@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { authService } from '../services/auth.service'
 import { utilService } from '../services/util.service'
 import { signup, registerPlayerToGroup } from "../store/actions/auth.action"
+import { getShallowGameById } from "../store/actions/game.action"
 import { Carousel } from '../cmps/Carousel'
 import avatar1 from '../assets/img/avatar.jpg'
 import avatar2 from '../assets/img/avatar2.png'
@@ -26,9 +27,9 @@ export function Signup() {
 
     const [stepIdx, setStepIdx] = useState(utilService.loadFromStorage('signupStepIdx') || 0)
 
-    const [groupIdToEdit, setGroupIdToEdit] = useState('')
+    // const [groupIdToEdit, setGroupIdToEdit] = useState('')
 
-    const [avatarToEdit, setAvatarToEdit] = useState(null)
+    // const [avatarToEdit, setAvatarToEdit] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -70,14 +71,11 @@ export function Signup() {
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
-    function getShallowGame() {
-
-        const game = {
-            name: 'אלעל'
-        }
-
-        setShallowGame(game)
-
+ async function getShallowGame() {
+        // const shallowGame = await getShallowGameById(gameId)
+        const shallowGame = await getShallowGameById('5cfdce36-e83f-4281-a80e-08dc617c0ee7')
+        console.log('shallowGame:', shallowGame)
+        setShallowGame(shallowGame)
     }
 
     function getGameGroups() {
@@ -118,11 +116,12 @@ export function Signup() {
     async function onSubmitSignupForm(ev) {
         ev.preventDefault()
         try {
+            console.log('credential:', credential)
             // Avishai signup
-            const player = await signup(credentials)
+            // const player = await signup(credentials)
 
-            console.log('success signup', player)
-            if (player) setStepIdx(prev => prev + 1)
+            // console.log('success signup', player)
+            // if (player) setStepIdx(prev => prev + 1)
             // if (!user.isAdmin) navigate('/home')
         } catch (error) {
             console.error('Error:', error);
