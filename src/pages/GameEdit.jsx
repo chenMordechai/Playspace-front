@@ -54,6 +54,7 @@ export function GameEdit() {
     async function init() {
         try {
             const game = await getGameById(gameId)
+            console.log('game:', game)
             setGameFormChanges(game)
 
         } catch (err) {
@@ -72,13 +73,13 @@ export function GameEdit() {
     function setGameFormChanges(game) {
         if (!firstLoad.current) return
         // admins
-        game.admins = game.admins.map(admin => admin.adminId)
+        game.adminData = game.adminData.map(admin => admin.adminId)
 
         // times
         utilService.setTimesFormChanges(game)
 
         // icon colors
-        getColorsFromImg(game.icon.url)
+        getColorsFromImg(game.icon?.url)
 
         // activity answers
         setActivityAnswersForForm(game)
@@ -238,16 +239,17 @@ export function GameEdit() {
         ev.preventDefault()
 
         // times to timestamp:
-        setTimesChanges(game)
+        const gameToSend = { ...game }
+        setTimesChanges(gameToSend)
 
         // adminsId to objects
-        game.admins = game.admins.map(adminId => ({ adminId }))
+        gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
 
-        console.log('game:', game)
+        console.log('game:', gameToSend)
 
         try {
             setIsLoading(true)
-            const newGame = await addGame(game)
+            const newGame = await addGame(gameToSend)
             console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק נערך בהצלחה')
         } catch (err) {

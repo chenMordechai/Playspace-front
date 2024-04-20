@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 // if i want the svg like svg
 // import {ReactComponent as ReactLogo} from './logo.svg';
 
-export function Carousel({ items, setAvatarToEdit,avatarToEdit, Comp1, Comp2, ...restOfProps }) {
+export function Carousel({ items, setCredentials,userImg, Comp1, Comp2, ...restOfProps }) {
     const [isDragging, setIsDragging] = useState()
     const [startX, setStartX] = useState()
     const [startScrollLeft, setStartScrollLeft] = useState()
@@ -74,8 +74,8 @@ export function Carousel({ items, setAvatarToEdit,avatarToEdit, Comp1, Comp2, ..
                 onTouchStart={dragStart} onTouchMove={dragging}>
                 {items.map((item, i) => <li className="card" key={item._id || i}>
                     {/* {item} */}
-                    <img  style={{ border: (avatarToEdit === item) ? '1px solid black' : 'none' }}
-                     onClick={()=>setAvatarToEdit({type:'image',url:item})} src={item}  />
+                    <img  style={{ border: (userImg === item) ? '1px solid black' : 'none' }}
+                     onClick={()=>setCredentials(prev=>({...prev,imgUrl:item}))} src={item}  />
                     {/* <Comp1 item={item} isDragging={isDragging} {...restOfProps} /> */}
                 </li>
                 )}

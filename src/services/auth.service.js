@@ -62,17 +62,18 @@ async function logout() {
 // work
 async function signup({ email, gameId, groupId, name, password }) {
     const playerToSave = { email, gameId, groupId, name, password }
-    // const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
-
+    
+    const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
+   
     // demoData:
-    const player = {
-        id: utilService.makeId(),
-        email: 'BBBB@GMAIL.COM',
-        name: 'BBBB',
-        password: 'string$%',
-        gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
-        // groupId: 0
-    }
+    // const player = {
+    //     id: utilService.makeId(),
+    //     email: 'BBBB@GMAIL.COM',
+    //     name: 'BBBB',
+    //     password: 'string$%',
+    //     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
+    //     // groupId: 0
+    // }
 
     _setLoggedinPlayer(player)
     return player
@@ -152,6 +153,8 @@ function getEmptySignupCred() {
     return {
         email: '',
         name: '',
+        gameId:'',
+        imgUrl:''
         // email: 'BBBB@GMAIL.COM',
         // name: 'BBBB',
         // gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",

@@ -70,22 +70,6 @@ export function Signup() {
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
-    async function onSubmitSignupForm(ev) {
-        ev.preventDefault()
-        try {
-            // Avishai signup
-            const player = await signup(credentials)
-
-            console.log('success signup', player)
-            if (player) setStepIdx(prev => prev + 1)
-            // if (!user.isAdmin) navigate('/home')
-        } catch (error) {
-            console.error('Error:', error);
-        }
-
-        // httpService.post('auth/Signup', credentials)
-    }
-
     function getShallowGame() {
 
         const game = {
@@ -118,27 +102,12 @@ export function Signup() {
         setGroups(groups)
     }
 
-    function onSetPlayerGroup() {
-        // console.log('groupId:', groupId)
-        if (loggedinPlayer.groupId) return
-        // Avishai register a player for the group
-        registerPlayerToGroup(loggedinPlayer.id, groupIdToEdit)
-
-        setStepIdx(prev => prev + 1)
-    }
-
-    function onSetAvatarImg() {
-
-        // Avishai save image to player
-        // saveImgToPlayer(loggedinPlayer.id, avatarToEdit)
-        setStepIdx(prev => prev + 1)
-    }
 
     async function onChangeFileInput(ev) {
         try {
             setIsLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev)
-            setAvatarToEdit(media)
+            setCredentials(prev=>({...prev,imgUrl:media.url}))
         } catch (err) {
             console.log('err:', err)
         } finally {
@@ -146,18 +115,33 @@ export function Signup() {
         }
     }
 
+    async function onSubmitSignupForm(ev) {
+        ev.preventDefault()
+        try {
+            // Avishai signup
+            const player = await signup(credentials)
+
+            console.log('success signup', player)
+            if (player) setStepIdx(prev => prev + 1)
+            // if (!user.isAdmin) navigate('/home')
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+        // httpService.post('auth/Signup', credentials)
+    }
 
     // if (isLoading) return
 
     return (
         <section ref={sectionRef} className="signup">
 
-            <section className="loading-screen">
+            {/* <section className="loading-screen">
                 <div className="content">
                     <span>X</span>
                     <h3>ELAL</h3>
                 </div>
-            </section>
+            </section> */}
 
             {stepIdx === 0 && !loggedinPlayer &&
                 <section className="step-0">
@@ -165,13 +149,13 @@ export function Signup() {
                     <h2>Welcome to</h2>
                     <h2 className="spacegame">spacegame</h2>
 
-                    <form onSubmit={onSubmitSignupForm} className="name-form">
+                    <form className="name-form">
 
                         <input placeholder="Tape your name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
 
                         <input placeholder="Tape your email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
-                        <button className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} type="submit">Next</button>
+                        <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={()=> setStepIdx(prev => prev + 1)}>Next</button>
 
                     </form>
                 </section>}
@@ -187,13 +171,13 @@ export function Signup() {
                         {groups.map((group, i) => <li key={group.id}
                             className={`color-${i + 1}`}
                             style={{ backgroundColor: (groupIdToEdit === group.id) ? 'red' : '' }}
-                            onClick={() => setGroupIdToEdit(group.id)}>
+                            onClick={() => setCredentials(prev => ({...prev,groupId:group.id}))}>
                             {/* onclick=>update state */}
                             {group.name}
                         </li>)}
                     </ul>
                     {/* onclick=> save the group and move to next step */}
-                    <button className={`next-btn ${groupIdToEdit ? 'purple-btn' : ''}`} onClick={onSetPlayerGroup}>Next</button>
+                    <button className={`next-btn ${groupIdToEdit ? 'purple-btn' : ''}`} onClick={()=> setStepIdx(prev => prev + 1)}>Next</button>
 
                     {/* {loggedinPlayer.groupId &&
                     <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}
@@ -211,18 +195,18 @@ export function Signup() {
 
                         <span> Classic</span>
                         <div className="carousel">
-                            <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit} avatarToEdit={avatarToEdit} />
+                            <Carousel items={imgs} setCredentials={setCredentials} userImg={credentials.imgUrl} />
                         </div>
                         <span>Toon</span>
                         <div className="carousel">
-                            <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit} avatarToEdit={avatarToEdit} />
+                            <Carousel items={imgs} setCredentials={setCredentials} userImg={credentials.imgUrl} />
                         </div>
                         <span>Animal</span>
                         <div className="carousel">
-                            <Carousel items={imgs} setAvatarToEdit={setAvatarToEdit} avatarToEdit={avatarToEdit} />
+                            <Carousel items={imgs} setCredentials={setCredentials} userImg={credentials.imgUrl} />
                         </div>
 
-                        <button className={`next-btn ${avatarToEdit ? 'purple-btn' : ''}`} onClick={onSetAvatarImg}>Next</button>
+                        <button className={`next-btn ${avatarToEdit ? 'purple-btn' : ''}`} onClick={onSubmitSignupForm}>סיום</button>
                     </div>
                 </section>}
         </section>
