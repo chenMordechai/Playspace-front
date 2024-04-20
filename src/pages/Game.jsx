@@ -9,7 +9,6 @@ import { demoDataService } from "../services/demoData.service.js"
 import { utilService } from "../services/util.service.js"
 
 
-
 // game/:gameId
 
 export function Game() {
@@ -63,10 +62,13 @@ export function Game() {
 
     async function init() {
         try {
+            // ! Avishai doesn't work
+            // const game = await getGameById(gameId)
             // game with stages - onTime:
-            // const game = await demoDataService.getGame1()
+            const game = await demoDataService.getGame1()
+            utilService.setTimesFormChanges(game)
             // game with activities - onProgress:
-            const game = await demoDataService.getGame2()
+            // const game = await demoDataService.getGame2()
             // game with activities - open:
             // const game = await demoDataService.getGame3()
             // game with stages - onProgress:
@@ -79,13 +81,6 @@ export function Game() {
         }
     }
 
-    function saveIdxsToStorage() {
-        utilService.saveToStorage('currGameStepIdx', 0)
-        utilService.saveToStorage('currStageStepIdx', 0)
-        utilService.saveToStorage('currActivityStepIdx', 0)
-        utilService.saveToStorage('currStageIdx', 0)
-        utilService.saveToStorage('currActivityIdx', 0)
-    }
 
     function changeColorsVars() {
         const elRoot = document.querySelector(':root')

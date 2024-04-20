@@ -81,19 +81,19 @@ async function signup({ email, gameId, groupId, name, password }) {
 
 async function getAdmins() {
 
-    // const admins = await httpService.get('Admins')
-    // return admins
+    const admins = await httpService.get('Game/Admins')
+    return admins
 
-    return Promise.resolve([
-        {
-            userId: "c25ca045-9b0b-4c67-d356-08dc57bf9c72",
-            name: 'Anat Shapira',
-            isAdmin: true
-        }, {
-            userId: "3fa85f64-5717-4562-b3fc-2c963frrrrr",
-            name: 'Adam',
-            isAdmin: true
-        }])
+    // return Promise.resolve([
+    //     {
+    //         userId: "c25ca045-9b0b-4c67-d356-08dc57bf9c72",
+    //         name: 'Anat Shapira',
+    //         isAdmin: true
+    //     }, {
+    //         userId: "3fa85f64-5717-4562-b3fc-2c963frrrrr",
+    //         name: 'Adam',
+    //         isAdmin: true
+    //     }])
 
 }
 

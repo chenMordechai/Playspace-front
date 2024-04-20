@@ -28,12 +28,14 @@ export function NavLinks() {
                 <span>Signup</span>
             </NavLink>
 
-            {loggedinUser?.checkAdmin && <NavLink to="/game/add" title="Admin" >
+            {loggedinUser?.checkAdmin && <>
+                <NavLink to="/game/add" title="Admin" >
+                    Create New Game
+                </NavLink>
                 <NavLink to="/admin" title="Admin" >
                     <span>Admin</span>
                 </NavLink>
-                <span>Create New Game</span>
-            </NavLink>}
+            </>}
         </section>
     )
 }

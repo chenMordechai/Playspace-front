@@ -64,6 +64,7 @@ export function GameEdit() {
     async function loadAdmins() {
         //! Avishai get admins
         const admins = await getAdmins()
+        console.log('admins:', admins)
         setAdmins(admins)
     }
 
@@ -74,7 +75,7 @@ export function GameEdit() {
         game.admins = game.admins.map(admin => admin.adminId)
 
         // times
-        setTimesFormChanges(game)
+        utilService.setTimesFormChanges(game)
 
         // icon colors
         getColorsFromImg(game.icon.url)
@@ -107,42 +108,7 @@ export function GameEdit() {
     }
 
     // adit
-    function setTimesFormChanges(game) {
 
-        changeTimestampToTime(game, game.gameStartTimestamp, game.gameEndTimestamp)
-
-        if (game.activityProgressType === 'onTime') {
-            if (game.gameType === 'activities') {
-                game.activities.forEach((activity, i) => {
-                    changeTimestampToTime(activity, activity.activityStartTimestamp, activity.activityEndTimestamp)
-                })
-            } else {
-                game.stages.forEach(stage => {
-                    changeTimestampToTime(stage, stage.stageStartTimestamp, stage.stageEndTimestamp)
-
-                    stage.activities.forEach(activity => {
-                        changeTimestampToTime(activity, activity.activityStartTimestamp, activity.activityEndTimestamp)
-                    })
-                })
-            }
-        }
-    }
-
-    // adit
-    function changeTimestampToTime(object, startTimestamp, endTimestamp) {
-        const dStart = new Date(startTimestamp)
-        const dEnd = new Date(endTimestamp)
-        object.dateStart = dStart.getFullYear() + '-' + pad(dStart.getMonth() + 1) + '-' + pad(dStart.getDate())
-        object.timeStart = pad(dStart.getHours()) + ':' + pad(dStart.getMinutes())
-        object.dateEnd = dEnd.getFullYear() + '-' + pad(dEnd.getMonth() + 1) + '-' + pad(dEnd.getDate())
-        object.timeEnd = pad(dEnd.getHours()) + ':' + pad(dEnd.getMinutes())
-
-    }
-
-    // adit
-    function pad(num) {
-        return num < 10 ? '0' + num : num
-    }
 
     function onHandleChange(ev) {
         let { name, value, type } = ev.target
@@ -353,7 +319,7 @@ export function GameEdit() {
     }
 
 
-    if (!game) return
+    if (!game) return ''
     return (
         <section className="game-add rtl">
             <h2>עריכת משחק</h2>
@@ -368,7 +334,7 @@ export function GameEdit() {
 
                 <label htmlFor="admins">אדמינים</label>
                 <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
-                    {admins?.map(admin => <option key={admin.userId} value={admin.userId}>
+                    {admins?.map((admin, i) => <option key={i} value={admin.userId}>
                         {admin.name}
                     </option>)}
                 </select>
@@ -382,7 +348,7 @@ export function GameEdit() {
                 {game.groups && <>
                     <label >שמות הקבוצות</label>
                     <ul className="groups">
-                        {game.groups.map((group, i) => <li key={group.id}>
+                        {game.groups.map((group, i) => <li key={i}>
                             <label htmlFor="groupName">קבוצה  {i + 1}</label>
                             <input type="text" name="teamName" id="groupName" value={group.name} onChange={() => onHandleGroupNameChange(event, i)} />
                         </li>)}

@@ -15,7 +15,8 @@ export const utilService = {
     timeDifferenceLong,
     isHebrew,
     isMobile,
-    rgbToHex
+    rgbToHex,
+    setTimesFormChanges
 }
 
 function makeId(length = 6) {
@@ -182,6 +183,43 @@ function isMobile() {
 }
 
 
-  function rgbToHex(r, g, b) {
-    return  "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
-  }
+function rgbToHex(r, g, b) {
+    return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
+}
+
+function setTimesFormChanges(game) {
+
+    changeTimestampToTime(game, game.gameStartTimestamp, game.gameEndTimestamp)
+
+    if (game.activityProgressType === 'onTime') {
+        if (game.gameType === 'activities') {
+            game.activities.forEach((activity, i) => {
+                changeTimestampToTime(activity, activity.activityStartTimestamp, activity.activityEndTimestamp)
+            })
+        } else {
+            game.stages.forEach(stage => {
+                changeTimestampToTime(stage, stage.stageStartTimestamp, stage.stageEndTimestamp)
+
+                stage.activities.forEach(activity => {
+                    changeTimestampToTime(activity, activity.activityStartTimestamp, activity.activityEndTimestamp)
+                })
+            })
+        }
+    }
+}
+
+// adit
+function changeTimestampToTime(object, startTimestamp, endTimestamp) {
+    const dStart = new Date(startTimestamp)
+    const dEnd = new Date(endTimestamp)
+    object.dateStart = dStart.getFullYear() + '-' + pad(dStart.getMonth() + 1) + '-' + pad(dStart.getDate())
+    object.timeStart = pad(dStart.getHours()) + ':' + pad(dStart.getMinutes())
+    object.dateEnd = dEnd.getFullYear() + '-' + pad(dEnd.getMonth() + 1) + '-' + pad(dEnd.getDate())
+    object.timeEnd = pad(dEnd.getHours()) + ':' + pad(dEnd.getMinutes())
+
+}
+
+// adit
+function pad(num) {
+    return num < 10 ? '0' + num : num
+}

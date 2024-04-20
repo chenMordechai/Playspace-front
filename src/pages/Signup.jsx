@@ -158,20 +158,17 @@ export function Signup() {
                     <h3>ELAL</h3>
                 </div>
             </section>
-            {/* <h2 className="spacegame">spacegame</h2> */}
 
             {stepIdx === 0 && !loggedinPlayer &&
                 <section className="step-0">
 
-                    <h2 className="header">Welcome to</h2>
-                    <h2 className="header spacegame">spacegame</h2>
+                    <h2>Welcome to</h2>
+                    <h2 className="spacegame">spacegame</h2>
 
                     <form onSubmit={onSubmitSignupForm} className="name-form">
 
-                        {/* <label htmlFor="name">Name:</label> */}
                         <input placeholder="Tape your name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
 
-                        {/* <label htmlFor="email">Email:</label> */}
                         <input placeholder="Tape your email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
                         <button className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} type="submit">Next</button>
