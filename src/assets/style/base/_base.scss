@@ -17,10 +17,15 @@
 
   // --new-black:
   --white: #fff;
+  --dark-grey: darkgrey;
+  --primary-35: #16469d;
+  --primary: #1f64e0;
+
+  --border-primary: 1.5px solid var(--primary);
 }
 
 html {
-  font-family: Bahnschrift, sans-serif;
+  font-family: Poppins;
   @include for-mobile-layout {
   }
 }

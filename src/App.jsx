@@ -33,25 +33,25 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-      <ScreenOpenContext.Provider value={{ isScreenOpen, onOpenScreen, onCloseScreen }}>
-        <section className={'main-layout ' + (isScreenOpen ? 'screen-open' : '')}>
-          <section className="screen" onClick={onCloseScreen}></section>
-          <NavLinks />
-          <main>
-            <div className="main-container">
-              <Routes>
-                <Route path="/" element={<Login />} />
-                {/* <Route path="/signup/:gameId/:groupId" element={<Signup />} /> */}
-                <Route path="/signup/:gameId/" element={<Signup />} />
-                <Route path="/game/add/" element={<GameAdd />} />
-                <Route path="/game/edit/:gameId?" element={<GameEdit />} />
-                <Route path="/game/:gameId" element={<Game />} />
-                <Route path="/game/group/:gameId" element={<GameGroups />} />
-                <Route path="/admin" element={<Admin />} />
-              </Routes>
-            </div>
-          </main>
-        </section>
+        <ScreenOpenContext.Provider value={{ isScreenOpen, onOpenScreen, onCloseScreen }}>
+          <section className={'main-layout ' + (isScreenOpen ? 'screen-open' : '')}>
+            <section className="screen" onClick={onCloseScreen}></section>
+            {/* <NavLinks /> */}
+            <main>
+              <div className="main-container">
+                <Routes>
+                  <Route path="/" element={<Login />} />
+                  {/* <Route path="/signup/:gameId/:groupId" element={<Signup />} /> */}
+                  <Route path="/signup/:gameId/" element={<Signup />} />
+                  <Route path="/game/add/" element={<GameAdd />} />
+                  <Route path="/game/edit/:gameId?" element={<GameEdit />} />
+                  <Route path="/game/:gameId" element={<Game />} />
+                  <Route path="/game/group/:gameId" element={<GameGroups />} />
+                  <Route path="/admin" element={<Admin />} />
+                </Routes>
+              </div>
+            </main>
+          </section>
         </ScreenOpenContext.Provider>
       </Router>
     </Provider >

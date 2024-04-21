@@ -85,3 +85,11 @@
     background-color: purple;
     color: white;
 }
+
+@mixin input($type: regular) {
+    // width: 340px;
+    height: 45px;
+    border: var(--border-primary);
+    border-radius: 10px;
+    color: var(--dark-grey);
+}

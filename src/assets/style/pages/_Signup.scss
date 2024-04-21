@@ -1,44 +1,66 @@
 .signup {
     // width: 250px;
     width: 100%;
-    padding: 20px;
-    max-height: 100vh;
+    max-width: 400px;
+    // padding: 20px;
+    // max-height: 100vh;
+
+    //////////////////////! step-0 ///////////////////////
     .step-0 {
-        text-align: center;
-        margin-top: 130px;
-        @include flex(column, stretch, center, 10px);
-
-        h2 {
-            font-size: 2rem;
-            // margin-bottom: 20px;
+        .spacegame-logo-blue {
+            position: absolute;
+            width: 220px;
+            height: 28px;
+            left: calc(50% - 220px / 2);
+            top: 64px;
         }
-        .spacegame {
-            transition: 0.5s;
+
+        .signup-form {
             position: relative;
-            top: 50px;
-            transition: 1s;
-            transition-timing-function: linear(0 0%, 0.67 71.08%, 1 100%);
-            color: white;
-            z-index: 20;
-        }
+            margin-top: 142px;
+            padding: 0px 10px;
+            @include flex(column, stretch, start, 21px);
 
-        // &.fade {
-        //     .playspace {
-        //         opacity: 1;
-        //         transition: 1s;
-        //     }
-        // }
-        .name-form {
-            @include flex(column, stretch, center, 10px);
+            span {
+                font-family: Poppins;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 24px;
+                display: flex;
+                align-items: center;
 
-            input {
-                height: 30px;
-                border-radius: 7px;
-                border: 1px solid rgb(60, 60, 60);
-                padding: 5px 10px;
+                /* Primary - 35 */
+                color: var(--primary-35);
+            }
+            .end-span {
+                align-self: end;
             }
 
-            button {
+            input {
+                @include input;
+                padding: 0px 38px;
+            }
+
+            .input-img {
+                position: absolute;
+                width: 22px;
+                height: 22px;
+
+                &.user {
+                    left: 18px;
+                    top: 56px;
+                }
+
+                &.password {
+                    left: 18px;
+                    top: 123px;
+                }
+
+                &.eye {
+                    top: 123px;
+                    right: 20px;
+                }
             }
         }
     }
@@ -136,17 +158,23 @@
             top: 266px;
         }
 
-        .spacegame-logo {
+        .content > * {
             position: absolute;
-            width: 220px;
-            height: 28px;
             left: calc(50% - 220px / 2);
-            top: 252px;
             z-index: 10;
         }
 
+        .spacegame-logo {
+            width: 220px;
+            height: 28px;
+            top: 252px;
+            animation-name: smart;
+            animation-delay: 800ms;
+            animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
+            animation-duration: 3500ms;
+        }
+
         .x {
-            position: absolute;
             width: 22px;
             height: 22px;
             left: calc(50% - 22px / 2);
@@ -155,26 +183,10 @@
         }
 
         .company-logo {
-            position: absolute;
             width: 220px;
             height: 26.6px;
-            left: calc(50% - 220px / 2);
             top: 362px;
-            z-index: 10;
         }
-
-        // .content {
-        //     position: absolute;
-        //     top: 340px;
-        //     text-align: center;
-        //     width: 100%;
-        //     @include flex(column, center, center, 15px);
-
-        //     h2,
-        //     h3 {
-        //         font-size: 2rem;
-        //     }
-        // }
     }
 
     &.fade {
@@ -202,5 +214,20 @@
                 color: black;
             }
         }
+    }
+}
+
+@keyframes smart {
+    0% {
+        top: 252px;
+    }
+    25% {
+        top: 262px;
+    }
+    50% {
+        top: 252px;
+    }
+    100% {
+        top: 242px;
     }
 }

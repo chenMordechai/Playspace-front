@@ -16,6 +16,10 @@ import vectorRight from '../assets/img/vector-right.png'
 import spacegameLogo from '../assets/img/spacegame-logo.png'
 import x from '../assets/img/x.png'
 import companyLogo from '../assets/img/company-logo.png'
+import spacegameLogoBlue from '../assets/img/spacegame-logo-blue.png'
+import user from '../assets/img/user.png'
+import password from '../assets/img/password.png'
+import eye from '../assets/img/eye.png'
 
 
 import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
@@ -26,7 +30,7 @@ import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 
 export function Signup() {
     const [credentials, setCredentials] = useState(authService.getEmptySignupCred())
-console.log('credentials:', credentials)
+    console.log('credentials:', credentials)
     const [shallowGame, setShallowGame] = useState(null)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
@@ -76,7 +80,7 @@ console.log('credentials:', credentials)
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
- async function getShallowGame() {
+    async function getShallowGame() {
         // const shallowGame = await getShallowGameById(gameId)
         const shallowGame = await getShallowGameById('d01d24a2-6497-46d3-a80f-08dc617c0ee7')
         console.log('shallowGame:', shallowGame)
@@ -87,7 +91,7 @@ console.log('credentials:', credentials)
         try {
             setIsLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev)
-            setCredentials(prev=>({...prev,imgUrl:media.url}))
+            setCredentials(prev => ({ ...prev, imgUrl: media.url }))
         } catch (err) {
             console.log('err:', err)
         } finally {
@@ -117,30 +121,31 @@ console.log('credentials:', credentials)
     return (
         <section ref={sectionRef} className="signup">
 
-            <section className="loading-screen">
-                <img className="vector vector1" src={vectorLeft}/>
+            {/* <section className="loading-screen">
+                <img className="vector vector1" src={vectorLeft} />
                 <div className="content">
                     <img className="spacegame-logo" src={spacegameLogo} />
                     <img className="x" src={x} />
                     <img className="company-logo" src={companyLogo} />
-                    <h3>ELAL</h3>
                 </div>
-                <img className="vector vector2" src={vectorRight}/>
-            </section>
+                <img className="vector vector2" src={vectorRight} />
+            </section> */}
 
             {stepIdx === 0 && !loggedinPlayer &&
                 <section className="step-0">
+                    <img className="spacegame-logo-blue" src={spacegameLogoBlue} />
 
-                    <h2>Welcome to</h2>
-                    {/* <h2 className="spacegame">spacegame</h2> */}
+                    <form className="signup-form">
+                        <span>Sign in</span>
+                        <img className="input-img user" src={user} />
+                        <input placeholder="Name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
 
-                    <form className="name-form">
+                        <img className="input-img password" src={password} />
+                        <img className="input-img eye" src={eye} />
+                        <input placeholder="Email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
-                        <input placeholder="Tape your name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
-
-                        <input placeholder="Tape your email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
-
-                        <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={()=> setStepIdx(prev => prev + 1)}>Next</button>
+                        <span className="end-span">Forget Password?</span>
+                        <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button>
 
                     </form>
                 </section>}
@@ -156,13 +161,13 @@ console.log('credentials:', credentials)
                         {shallowGame.groups?.map((group, i) => <li key={group.Id}
                             className={`color-${i + 1}`}
                             style={{ backgroundColor: (credentials.groupId === group.Id) ? 'red' : '' }}
-                            onClick={() => setCredentials(prev => ({...prev,groupId:group.Id}))}>
+                            onClick={() => setCredentials(prev => ({ ...prev, groupId: group.Id }))}>
                             {/* onclick=>update state */}
                             {group.name}
                         </li>)}
                     </ul>
                     {/* onclick=> save the group and move to next step */}
-                    <button className={`next-btn ${credentials.groupId ? 'purple-btn' : ''}`} onClick={()=> setStepIdx(prev => prev + 1)}>Next</button>
+                    <button className={`next-btn ${credentials.groupId ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Next</button>
 
                     {/* {loggedinPlayer.groupId &&
                     <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}
@@ -173,7 +178,7 @@ console.log('credentials:', credentials)
                     <div className="header">
                         <span>Choose an avater</span>
                         <button className="plus" onClick={onToggleOpenUserImgAddModal}>+</button>
-                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={{url:credentials.imgUrl,type:"image"}} onChangeFileInput={onChangeFileInput} onToggleOpenUserImgAddModal={onToggleOpenUserImgAddModal} />}
+                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={{ url: credentials.imgUrl, type: "image" }} onChangeFileInput={onChangeFileInput} onToggleOpenUserImgAddModal={onToggleOpenUserImgAddModal} />}
                     </div>
 
                     <div className="avatar-container">
