@@ -145,38 +145,17 @@ export function Signup() {
                         <input placeholder="Email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
                         <span className="end-span">Forget Password?</span>
-                        <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button>
+                        <button type="button" disabled={!(credentials.name && credentials.email)} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button>
+                        <p>Don’t have account? <span>Sign up</span></p>
+                        {/* <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button> */}
 
                     </form>
                 </section>}
 
             {stepIdx === 1 && shallowGame &&
                 <section className="step-1">
-                    {/* <h2>Welcome {loggedinPlayer.name}</h2> */}
-                    <h2>שם המשחק: {shallowGame.name}</h2>
                     <div className="header">
-                        <span>Choose a group</span>
-                    </div>
-                    <ul className="groups-container">
-                        {shallowGame.groups?.map((group, i) => <li key={group.Id}
-                            className={`color-${i + 1}`}
-                            style={{ backgroundColor: (credentials.groupId === group.Id) ? 'red' : '' }}
-                            onClick={() => setCredentials(prev => ({ ...prev, groupId: group.Id }))}>
-                            {/* onclick=>update state */}
-                            {group.name}
-                        </li>)}
-                    </ul>
-                    {/* onclick=> save the group and move to next step */}
-                    <button className={`next-btn ${credentials.groupId ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Next</button>
-
-                    {/* {loggedinPlayer.groupId &&
-                    <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}
-                </section>}
-
-            {stepIdx === 2 &&
-                <section className="step-2">
-                    <div className="header">
-                        <span>Choose an avater</span>
+                        <span>Select your avatar</span>
                         <button className="plus" onClick={onToggleOpenUserImgAddModal}>+</button>
                         {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={{ url: credentials.imgUrl, type: "image" }} onChangeFileInput={onChangeFileInput} onToggleOpenUserImgAddModal={onToggleOpenUserImgAddModal} />}
                     </div>
@@ -196,8 +175,32 @@ export function Signup() {
                             <Carousel items={imgs} setCredentials={setCredentials} userImg={credentials.imgUrl} />
                         </div>
 
-                        <button className={`next-btn ${credentials.imgUrl ? 'purple-btn' : ''}`} onClick={onSubmitSignupForm}>סיום</button>
+                        <button className={`next-btn ${credentials.imgUrl ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Next</button>
                     </div>
+                </section>}
+
+            {stepIdx === 2 &&
+                <section className="step-2">
+                    {/* <h2>Welcome {loggedinPlayer.name}</h2> */}
+                    <h2>שם המשחק: {shallowGame.name}</h2>
+                    <div className="header">
+                        <span>Choose a group</span>
+                    </div>
+                    <ul className="groups-container">
+                        {shallowGame.groups?.map((group, i) => <li key={group.id}
+                            className={`color-${i + 1}`}
+                            style={{ backgroundColor: (credentials.groupId === group.id) ? 'red' : '' }}
+                            onClick={() => setCredentials(prev => ({ ...prev, groupId: group.id }))}>
+                            {/* onclick=>update state */}
+                            {group.name}
+                        </li>)}
+                    </ul>
+                    {/* onclick=> save the group and move to next step */}
+                    <button className={`next-btn ${credentials.groupId ? 'purple-btn' : ''}`} onClick={onSubmitSignupForm}>סיום</button>
+
+                    {/* {loggedinPlayer.groupId &&
+                    <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}
+
                 </section>}
         </section>
     )
