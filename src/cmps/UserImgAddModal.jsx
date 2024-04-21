@@ -1,12 +1,7 @@
 import loader from '../assets/img/loader.gif'
 import { Media } from "../cmps/Media.jsx";
 
-export function UserImgAddModal({isLoading,media, onChangeFileInput,onSetAvatarImg,onToggleOpenUserImgAddModal }) {
-    
-    function onNext(){
-        onSetAvatarImg()
-        onToggleOpenUserImgAddModal()
-    }
+export function UserImgAddModal({isLoading,media, onChangeFileInput,onToggleOpenUserImgAddModal }) {
     
     return (
         <section className="user-img-add">
@@ -21,7 +16,7 @@ export function UserImgAddModal({isLoading,media, onChangeFileInput,onSetAvatarI
             </label>
             <input type="file" id="user-img" onChange={onChangeFileInput} hidden />
 
-            <button className={`next-btn ${media ? 'purple-btn' : ''}`} onClick={onNext}>Next</button>
+            <button className={`next-btn ${media ? 'purple-btn' : ''}`} onClick={onToggleOpenUserImgAddModal}>Next</button>
         </section>
     )
 }

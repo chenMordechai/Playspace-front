@@ -2,6 +2,7 @@
     // width: 250px;
     width: 100%;
     padding: 20px;
+    max-height: 100vh;
     .step-0 {
         text-align: center;
         margin-top: 130px;
@@ -103,6 +104,8 @@
         }
     }
 
+    ////////////////////! loading screen /////////////////////////
+
     .loading-screen {
         position: fixed;
         top: 0;
@@ -112,28 +115,82 @@
         width: 100%;
         height: 100%;
         color: white;
-        background-color: rgb(137, 32, 164);
-        // background-color: rgba(146, 56, 168, 0.7);
-        transition: background-color 1s;
+        background: #2769e1;
+        // transition: background-color 1s;
 
-        .content {
+        .vector {
             position: absolute;
-            top: 340px;
-            text-align: center;
-            width: 100%;
-            @include flex(column, center, center, 15px);
-
-            h2,
-            h3 {
-                font-size: 2rem;
-            }
+            background: #0c2655;
+            filter: blur(128px);
         }
+        .vector1 {
+            width: 534px;
+            height: 500px;
+            left: -267px;
+            top: -278px;
+        }
+        .vector2 {
+            width: 558px;
+            height: 486px;
+            right: -267px;
+            top: 266px;
+        }
+
+        .spacegame-logo {
+            position: absolute;
+            width: 220px;
+            height: 28px;
+            left: calc(50% - 220px / 2);
+            top: 252px;
+            z-index: 10;
+        }
+
+        .x {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            left: calc(50% - 22px / 2);
+            top: 310px;
+            z-index: 10;
+        }
+
+        .company-logo {
+            position: absolute;
+            width: 220px;
+            height: 26.6px;
+            left: calc(50% - 220px / 2);
+            top: 362px;
+            z-index: 10;
+        }
+
+        // .content {
+        //     position: absolute;
+        //     top: 340px;
+        //     text-align: center;
+        //     width: 100%;
+        //     @include flex(column, center, center, 15px);
+
+        //     h2,
+        //     h3 {
+        //         font-size: 2rem;
+        //     }
+        // }
     }
 
     &.fade {
         .loading-screen {
-            background-color: #ffffff00;
+            // After delay
+            // animation-delay: 800ms;
+            // // Navigate to: "Screen 2";
+            // // Animate: Smart animate;
+            // animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
+            // animation-duration: 3500ms;
 
+            // background-color: #ffffff00;
+            // background: #2769e1;
+            // background: linear-gradient(106.96deg, #4c83e6 7.65%, #11367a 94.96%);
+            // background: linear-gradient(140deg, #0c2655, #2769e1, #0c2655);
+            // linear-gradient(139deg, rgba(2,0,36,1) 0%, rgba(30,30,198,1) 49%, rgba(12,12,76,1) 96%);
             .content {
                 opacity: 0;
                 transition: 0.5s;

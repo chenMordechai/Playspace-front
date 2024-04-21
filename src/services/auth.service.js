@@ -60,8 +60,8 @@ async function logout() {
 
 // for players
 // work
-async function signup({ email, gameId, groupId, name, password }) {
-    const playerToSave = { email, gameId, groupId, name, password }
+async function signup({ email, gameId, groupId, name, imgUrl }) {
+    const playerToSave = { email, gameId, groupId, name, imgUrl }
     
     const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
    
@@ -144,8 +144,8 @@ function getEmptyCredentials() {
         // name: 'AAAA',
         email: 'AnatShapira@gmail.com',
         name: 'Anat Shapira',
-        password: ''
-        // password: 'Aa1234$%'
+        // password: ''
+        password: 'Aa1234$%'
     }
 }
 
@@ -154,7 +154,8 @@ function getEmptySignupCred() {
         email: '',
         name: '',
         gameId:'',
-        imgUrl:''
+        imgUrl:'',
+        groupId:''
         // email: 'BBBB@GMAIL.COM',
         // name: 'BBBB',
         // gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",

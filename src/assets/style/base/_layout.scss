@@ -3,7 +3,7 @@
   }
 
   main {
-    min-height: 100vh;
+    // min-height: 100vh;
     .main-container {
       @include flex(column, center, center, 10px);
     }
