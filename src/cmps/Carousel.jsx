@@ -1,6 +1,7 @@
 // import { User } from "./User";
 import { useEffect, useRef, useState } from "react";
 
+import { SelectedImg } from './SelectedImg'
 // import { faL } from "@fortawesome/free-solid-svg-icons";
 // import arrowRight from '../assets/icons/caret-right-solid.svg'
 // import arrowLeft from '../assets/icons/caret-left-solid.svg'
@@ -74,8 +75,10 @@ export function Carousel({ items, setCredentials, userImg, Comp1, Comp2, ...rest
                 onTouchStart={dragStart} onTouchMove={dragging}>
                 {items.map((item, i) => <li className="card" key={item._id || i}>
                     {/* {item} */}
-                    <img style={{ border: (userImg === item) ? '2px solid black' : 'none' }}
-                        onClick={() => setCredentials(prev => ({ ...prev, imgUrl: item }))} src={item} />
+                    {userImg !== item && <img onClick={() => setCredentials(prev => ({ ...prev, imgUrl: item }))} src={item} />}
+                    {userImg === item && <SelectedImg imgUrl={item} />}
+
+
                     {/* <Comp1 item={item} isDragging={isDragging} {...restOfProps} /> */}
                 </li>
                 )}

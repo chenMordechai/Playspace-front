@@ -32,13 +32,14 @@
     }
 
     .carousel {
-        // @include flex(row, center, start, $pad3);
         // display: grid;
         padding: 0px 5px;
         display: flex;
         grid-auto-flow: column;
         grid-auto-columns: calc((100% / 7) - 13px);
         justify-items: center;
+        align-items: center;
+
         gap: 14px;
         // overflow: hidden;
         scroll-behavior: smooth;
@@ -57,14 +58,22 @@
             grid-auto-columns: calc((100% / 4) - 10px);
         }
 
-        .card {
+        li.card {
             // scroll-snap-align: start;
+            @include flex(row, center, center);
             img {
                 // height: 50px;
                 width: 82.81px;
                 height: 82.81px;
                 border-radius: 50%;
                 cursor: pointer;
+
+                &.green-v {
+                    position: absolute;
+                    width: 30px;
+                    height: 30px;
+                    left: 60px;
+                }
             }
         }
 
