@@ -9,8 +9,14 @@ import { getShallowGameById } from "../store/actions/game.action"
 import { Carousel } from '../cmps/Carousel'
 import { UserImgAddModal } from "../cmps/UserImgAddModal"
 
-import avatar1 from '../assets/img/avatar.jpg'
+import avatar1 from '../assets/img/avatar1.png'
 import avatar2 from '../assets/img/avatar2.png'
+import avatar3 from '../assets/img/avatar3.png'
+import avatar4 from '../assets/img/avatar4.png'
+import avatar5 from '../assets/img/avatar5.png'
+import avatar6 from '../assets/img/avatar6.png'
+import avatar7 from '../assets/img/avatar7.png'
+import avatar8 from '../assets/img/avatar8.png'
 import vectorLeft from '../assets/img/vector-left.png'
 import vectorRight from '../assets/img/vector-right.png'
 import spacegameLogo from '../assets/img/spacegame-logo.png'
@@ -20,6 +26,7 @@ import spacegameLogoBlue from '../assets/img/spacegame-logo-blue.png'
 import user from '../assets/img/user.png'
 import password from '../assets/img/password.png'
 import eye from '../assets/img/eye.png'
+import plus from '../assets/img/plus.png'
 
 
 import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
@@ -47,7 +54,9 @@ export function Signup() {
 
     const [openUserImgAddModal, onToggleOpenUserImgAddModal] = useToggle(false)
 
-    const imgs = [avatar1, avatar2, avatar1, avatar2, avatar1, avatar2, avatar1, avatar2]
+    const avatars1 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
+    const avatars2 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
+    const avatars3 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
 
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
 
@@ -82,9 +91,9 @@ export function Signup() {
 
     async function getShallowGame() {
         // const shallowGame = await getShallowGameById(gameId)
-        const shallowGame = await getShallowGameById('d01d24a2-6497-46d3-a80f-08dc617c0ee7')
-        console.log('shallowGame:', shallowGame)
-        setShallowGame(shallowGame)
+        // const shallowGame = await getShallowGameById('d01d24a2-6497-46d3-a80f-08dc617c0ee7')
+        // console.log('shallowGame:', shallowGame)
+        // setShallowGame(shallowGame)
     }
 
     async function onChangeFileInput(ev) {
@@ -152,30 +161,29 @@ export function Signup() {
                     </form>
                 </section>}
 
-            {stepIdx === 1 && shallowGame &&
+            {stepIdx === 1 &&
                 <section className="step-1">
                     <div className="header">
-                        <span>Select your avatar</span>
-                        <button className="plus" onClick={onToggleOpenUserImgAddModal}>+</button>
+                        <span className="select">Select your avatar</span>
+                        <img className="plus" onClick={onToggleOpenUserImgAddModal} src={plus} />
                         {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={{ url: credentials.imgUrl, type: "image" }} onChangeFileInput={onChangeFileInput} onToggleOpenUserImgAddModal={onToggleOpenUserImgAddModal} />}
                     </div>
 
                     <div className="avatar-container">
+                        <div className="carousel-container">
+                            <span> Classic</span>
+                            <Carousel items={avatars1} setCredentials={setCredentials} userImg={credentials.imgUrl} />
+                        </div>
+                        <div className="carousel-container">
+                            <span>Toon</span>
+                            <Carousel items={avatars2} setCredentials={setCredentials} userImg={credentials.imgUrl} />
+                        </div>
+                        <div className="carousel-container">
+                            <span>Animal</span>
+                            <Carousel items={avatars3} setCredentials={setCredentials} userImg={credentials.imgUrl} />
+                        </div>
 
-                        <span> Classic</span>
-                        <div className="carousel">
-                            <Carousel items={imgs} setCredentials={setCredentials} userImg={credentials.imgUrl} />
-                        </div>
-                        <span>Toon</span>
-                        <div className="carousel">
-                            <Carousel items={imgs} setCredentials={setCredentials} userImg={credentials.imgUrl} />
-                        </div>
-                        <span>Animal</span>
-                        <div className="carousel">
-                            <Carousel items={imgs} setCredentials={setCredentials} userImg={credentials.imgUrl} />
-                        </div>
-
-                        <button className={`next-btn ${credentials.imgUrl ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Next</button>
+                        <button disabled={!(credentials.imgUrl)} onClick={() => setStepIdx(prev => prev + 1)}>Next</button>
                     </div>
                 </section>}
 

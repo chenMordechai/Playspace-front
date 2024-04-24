@@ -47,6 +47,8 @@
         scroll-snap-type: x mandatory;
         scrollbar-width: 0;
 
+        margin-top: 10px;
+
         &::-webkit-scrollbar {
             display: none;
         }
@@ -58,7 +60,10 @@
         .card {
             // scroll-snap-align: start;
             img {
-                height: 50px;
+                // height: 50px;
+                width: 82.81px;
+                height: 82.81px;
+                border-radius: 50%;
                 cursor: pointer;
             }
         }
