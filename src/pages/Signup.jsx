@@ -37,6 +37,7 @@ import vectorLeft from '../assets/img/vector-left.png'
 import vectorRight from '../assets/img/vector-right.png'
 import spacegameLogo from '../assets/img/spacegame-logo.png'
 import x from '../assets/img/x.png'
+import v from '../assets/img/green-v.png'
 import companyLogo from '../assets/img/company-logo.png'
 import spacegameLogoBlue from '../assets/img/spacegame-logo-blue.png'
 import user from '../assets/img/user.png'
@@ -52,9 +53,10 @@ import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 
 
 export function Signup() {
-    const [credentials, setCredentials] = useState(authService.getEmptySignupCred())
+    const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
     console.log('credentials:', credentials)
     const [shallowGame, setShallowGame] = useState(null)
+    console.log('shallowGame:', shallowGame)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
 
@@ -84,6 +86,7 @@ export function Signup() {
     const { gameId } = useParams()
     // let query = useQuery();
     const sectionRef = useRef(null);
+    const colors = useRef(null);
 
     useEffect(() => {
         setTimeout(() => {
@@ -98,7 +101,12 @@ export function Signup() {
 
     useEffect(() => {
         utilService.saveToStorage('signupStepIdx', stepIdx)
+        // console.log('shallowGame:', shallowGame)
     }, [stepIdx])
+
+    useEffect(() => {
+        utilService.saveToStorage('credentials', credentials)
+    }, [credentials])
 
     function handleChange(ev) {
         let { name, value } = ev.target
@@ -106,10 +114,46 @@ export function Signup() {
     }
 
     async function getShallowGame() {
+        console.log('getShallowGame')
         // const shallowGame = await getShallowGameById(gameId)
-        const shallowGame = await getShallowGameById('d01d24a2-6497-46d3-a80f-08dc617c0ee7')
+        const shallowGame = await getShallowGameById("d752efce-17e0-4d2a-8627-08dc644c8fa4")
         console.log('shallowGame:', shallowGame)
+        shallowGame.groups = [
+            {
+                "id": "tHZmMy",
+                "name": "קבוצה א",
+                "adminAdditionalScore": 0
+            },
+            {
+                "id": "dbrl3A",
+                "name": "קבוצה ב",
+                "adminAdditionalScore": 0
+            },
+            {
+                "id": "iRIckp",
+                "name": "קבוצה ג",
+                "adminAdditionalScore": 0
+            },
+            {
+                "id": "tHZmM1",
+                "name": "קבוצה ד",
+                "adminAdditionalScore": 0
+            },
+            // {
+            //     "id": "dbrl32",
+            //     "name": "קבוצה ה",
+            //     "adminAdditionalScore": 0
+            // },
+            // {
+            //     "id": "iRIck3",
+            //     "name": "קבוצה ו",
+            //     "adminAdditionalScore": 0
+            // }
+        ]
         setShallowGame(shallowGame)
+
+        colors.current = shallowGame.groups.map(g => utilService.getRandomColor())
+        console.log('colors:', colors)
     }
 
     async function onChangeFileInput(ev) {
@@ -141,13 +185,13 @@ export function Signup() {
         // httpService.post('auth/Signup', credentials)
     }
 
-    // if (isLoading) return
-
     function onCloseModal() {
         onToggleOpenUserImgAddModal()
         setStepIdx(prev => prev + 1)
 
     }
+
+    // if (isLoading) return
     return (
         <section ref={sectionRef} className="signup">
 
@@ -171,12 +215,12 @@ export function Signup() {
                         <input placeholder="Name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
 
                         <img className="input-img password" src={password} />
-                        <img className="input-img eye" src={eye} />
+                        {/* <img className="input-img eye" src={eye} /> */}
                         <input placeholder="Email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
-                        <span className="end-span">Forget Password?</span>
+                        {/* <span className="end-span">Forget Password?</span> */}
                         <button type="button" disabled={!(credentials.name && credentials.email)} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button>
-                        <p>Don’t have account? <span>Sign up</span></p>
+                        {/* <p>Don’t have account? <span>Sign up</span></p> */}
                         {/* <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button> */}
 
                     </form>
@@ -208,24 +252,24 @@ export function Signup() {
                     </div>
                 </section>}
 
-            {stepIdx === 2 &&
+            {stepIdx === 2 && shallowGame &&
                 <section className="step-2">
-                    {/* <h2>Welcome {loggedinPlayer.name}</h2> */}
-                    <h2>שם המשחק: {shallowGame.name}</h2>
                     <div className="header">
                         <span>Choose a group</span>
                     </div>
                     <ul className="groups-container">
-                        {shallowGame.groups?.map((group, i) => <li key={group.id}
-                            className={`color-${i + 1}`}
-                            style={{ backgroundColor: (credentials.groupId === group.id) ? 'red' : '' }}
-                            onClick={() => setCredentials(prev => ({ ...prev, groupId: group.id }))}>
-                            {/* onclick=>update state */}
-                            {group.name}
-                        </li>)}
+                        {shallowGame.groups?.map((group, i) =>
+                            <li key={group.id}
+                                style={{ backgroundColor: colors.current[i] }}
+                                className={credentials.groupId === group.id ? 'selected' : ''}
+                                onClick={() => setCredentials(prev => ({ ...prev, groupId: group.id }))}>
+
+                                {credentials.groupId === group.id && <img className="green-v" src={v} />}
+                                {group.name}
+                            </li>)}
                     </ul>
-                    {/* onclick=> save the group and move to next step */}
-                    <button className={`next-btn ${credentials.groupId ? 'purple-btn' : ''}`} onClick={onSubmitSignupForm}>סיום</button>
+                    {/* onclick=> save the group and start game */}
+                    <button className={`next-btn ${credentials.groupId ? 'purple-btn' : ''}`} onClick={onSubmitSignupForm}>Start</button>
 
                     {/* {loggedinPlayer.groupId &&
                     <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}
