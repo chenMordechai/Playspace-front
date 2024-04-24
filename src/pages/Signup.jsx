@@ -17,6 +17,22 @@ import avatar5 from '../assets/img/avatar5.png'
 import avatar6 from '../assets/img/avatar6.png'
 import avatar7 from '../assets/img/avatar7.png'
 import avatar8 from '../assets/img/avatar8.png'
+import avatar9 from '../assets/img/avatar9.png'
+import avatar10 from '../assets/img/avatar10.png'
+import avatar11 from '../assets/img/avatar11.png'
+import avatar12 from '../assets/img/avatar12.png'
+import avatar13 from '../assets/img/avatar13.png'
+import avatar14 from '../assets/img/avatar14.png'
+import avatar15 from '../assets/img/avatar15.png'
+import avatar16 from '../assets/img/avatar16.png'
+import avatar17 from '../assets/img/avatar17.jpg'
+import avatar18 from '../assets/img/avatar18.jpg'
+import avatar19 from '../assets/img/avatar19.jpg'
+import avatar20 from '../assets/img/avatar20.jpg'
+import avatar21 from '../assets/img/avatar21.jpg'
+import avatar22 from '../assets/img/avatar22.jpg'
+import avatar23 from '../assets/img/avatar23.jpg'
+import avatar24 from '../assets/img/avatar24.jpg'
 import vectorLeft from '../assets/img/vector-left.png'
 import vectorRight from '../assets/img/vector-right.png'
 import spacegameLogo from '../assets/img/spacegame-logo.png'
@@ -55,8 +71,8 @@ export function Signup() {
     const [openUserImgAddModal, onToggleOpenUserImgAddModal] = useToggle(false)
 
     const avatars1 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
-    const avatars2 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
-    const avatars3 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
+    const avatars2 = [avatar9, avatar10, avatar11, avatar12, avatar13, avatar14, avatar15, avatar16]
+    const avatars3 = [avatar17, avatar18, avatar19, avatar20, avatar21, avatar22, avatar23, avatar24]
 
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
 
@@ -91,9 +107,9 @@ export function Signup() {
 
     async function getShallowGame() {
         // const shallowGame = await getShallowGameById(gameId)
-        // const shallowGame = await getShallowGameById('d01d24a2-6497-46d3-a80f-08dc617c0ee7')
-        // console.log('shallowGame:', shallowGame)
-        // setShallowGame(shallowGame)
+        const shallowGame = await getShallowGameById('d01d24a2-6497-46d3-a80f-08dc617c0ee7')
+        console.log('shallowGame:', shallowGame)
+        setShallowGame(shallowGame)
     }
 
     async function onChangeFileInput(ev) {
@@ -127,6 +143,11 @@ export function Signup() {
 
     // if (isLoading) return
 
+    function onCloseModal() {
+        onToggleOpenUserImgAddModal()
+        setStepIdx(prev => prev + 1)
+
+    }
     return (
         <section ref={sectionRef} className="signup">
 
@@ -166,7 +187,7 @@ export function Signup() {
                     <div className="header">
                         <span className="select">Select your avatar</span>
                         <img className="plus" onClick={onToggleOpenUserImgAddModal} src={plus} />
-                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={{ url: credentials.imgUrl, type: "image" }} onChangeFileInput={onChangeFileInput} onToggleOpenUserImgAddModal={onToggleOpenUserImgAddModal} />}
+                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={{ url: credentials.imgUrl, type: "image" }} onChangeFileInput={onChangeFileInput} onCloseModal={onCloseModal} />}
                     </div>
 
                     <div className="avatar-container">

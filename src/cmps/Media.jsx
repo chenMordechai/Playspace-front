@@ -8,7 +8,7 @@ export function Media({ media }) {
 
     if (!media) return ''
     return (
-        <section>
+        <section className="media">
             {getMediaType() === 'img' && <img src={media.url} />}
             {getMediaType() === 'video' && <video width="320" height="240" controls>
                 <source src={media.url} type={media.type} />
