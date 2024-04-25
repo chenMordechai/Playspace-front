@@ -47,7 +47,7 @@ export function Admin() {
                         <Link to={`/game/${game.id}`} title="Play" >
                             <span>Play</span>
                         </Link>
-                        <button>Details</button>
+                        {/* <button>Details</button> */}
                         <button>Delete</button>
                         <Link to={`/game/group/${game.id}`} title="groups" >
                             <span>Groups</span>

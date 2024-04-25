@@ -39,9 +39,6 @@ import spacegameLogo from '../assets/img/spacegame-logo.png'
 import x from '../assets/img/x.png'
 import v from '../assets/img/green-v.png'
 import companyLogo from '../assets/img/company-logo.png'
-import spacegameLogoBlue from '../assets/img/spacegame-logo-blue.png'
-import user from '../assets/img/user.png'
-import password from '../assets/img/password.png'
 import eye from '../assets/img/eye.png'
 import plus from '../assets/img/plus.png'
 
@@ -50,6 +47,7 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
+import { LoginSignup } from "../cmps/LoginSignup.jsx"
 
 
 export function Signup() {
@@ -206,25 +204,8 @@ export function Signup() {
             </section> */}
 
             {stepIdx === 0 && !loggedinPlayer &&
-                <section className="step-0">
-                    <img className="spacegame-logo-blue" src={spacegameLogoBlue} />
-
-                    <form className="signup-form">
-                        <span>Sign in</span>
-                        <img className="input-img user" src={user} />
-                        <input placeholder="Name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
-
-                        <img className="input-img password" src={password} />
-                        {/* <img className="input-img eye" src={eye} /> */}
-                        <input placeholder="Email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
-
-                        {/* <span className="end-span">Forget Password?</span> */}
-                        <button type="button" disabled={!(credentials.name && credentials.email)} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button>
-                        {/* <p>Don’t have account? <span>Sign up</span></p> */}
-                        {/* <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button> */}
-
-                    </form>
-                </section>}
+                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign in" />
+            }
 
             {stepIdx === 1 &&
                 <section className="step-1">

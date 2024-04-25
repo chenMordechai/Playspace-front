@@ -73,7 +73,7 @@ export function GameEdit() {
     function setGameFormChanges(game) {
         if (!firstLoad.current) return
         // admins
-        game.adminData = game.adminData.map(admin => admin.adminId)
+        game.admins = game.admins.map(admin => admin.adminId)
 
         // times
         utilService.setTimesFormChanges(game)

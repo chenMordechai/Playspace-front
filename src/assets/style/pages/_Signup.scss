@@ -12,78 +12,78 @@
     // }
 
     //////////////////////! step-0 ///////////////////////
-    .step-0 {
-        .spacegame-logo-blue {
-            position: absolute;
-            width: 220px;
-            height: 28px;
-            left: calc(50% - 220px / 2);
-            top: 64px;
-        }
+    // .step-0 {
+    //     .spacegame-logo-blue {
+    //         position: absolute;
+    //         width: 220px;
+    //         height: 28px;
+    //         left: calc(50% - 220px / 2);
+    //         top: 64px;
+    //     }
 
-        .signup-form {
-            position: relative;
-            margin-top: 142px;
-            padding: 0px 10px;
-            @include flex(column, stretch, start, 21px);
+    //     .signup-form {
+    //         position: relative;
+    //         margin-top: 142px;
+    //         padding: 0px 10px;
+    //         @include flex(column, stretch, start, 21px);
 
-            span {
-                font-family: Poppins;
-                font-weight: 600;
-                font-size: 16px;
-                line-height: 24px;
-                color: var(--primary-35);
-            }
-            .end-span {
-                align-self: end;
-                font-size: 14px;
-            }
+    //         span {
+    //             font-family: Poppins;
+    //             font-weight: 600;
+    //             font-size: 16px;
+    //             line-height: 24px;
+    //             color: var(--primary-35);
+    //         }
+    //         .end-span {
+    //             align-self: end;
+    //             font-size: 14px;
+    //         }
 
-            input {
-                @include input;
-                padding: 0px 38px;
-            }
+    //         input {
+    //             @include input;
+    //             padding: 0px 38px;
+    //         }
 
-            .input-img {
-                position: absolute;
-                width: 22px;
-                height: 22px;
+    //         .input-img {
+    //             position: absolute;
+    //             width: 22px;
+    //             height: 22px;
 
-                &.user {
-                    left: 18px;
-                    top: 56px;
-                }
+    //             &.user {
+    //                 left: 18px;
+    //                 top: 56px;
+    //             }
 
-                &.password {
-                    left: 18px;
-                    top: 123px;
-                }
+    //             &.password {
+    //                 left: 18px;
+    //                 top: 123px;
+    //             }
 
-                &.eye {
-                    top: 123px;
-                    right: 20px;
-                }
-            }
+    //             &.eye {
+    //                 top: 123px;
+    //                 right: 20px;
+    //             }
+    //         }
 
-            button {
-                @include btn;
-                // margin-top: 29px;
-                margin-top: 10px;
-            }
+    //         button {
+    //             @include btn;
+    //             // margin-top: 29px;
+    //             margin-top: 10px;
+    //         }
 
-            p {
-                align-self: center;
-                font-weight: 500;
-                color: var(--primary);
-                font-size: 14px;
-                margin-top: 106px;
+    //         p {
+    //             align-self: center;
+    //             font-weight: 500;
+    //             color: var(--primary);
+    //             font-size: 14px;
+    //             margin-top: 106px;
 
-                span {
-                    font-size: 14px;
-                }
-            }
-        }
-    }
+    //             span {
+    //                 font-size: 14px;
+    //             }
+    //         }
+    //     }
+    // }
     //////////////////////! step-1 ///////////////////////
 
     .step-1 {

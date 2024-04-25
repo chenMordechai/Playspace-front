@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 
 import { login, adminLogin } from "../store/actions/auth.action"
 import { authService } from '../services/auth.service'
+import { LoginSignup } from '../cmps/LoginSignup'
 
 export function Login() {
     const [credentials, setCredentials] = useState(authService.getEmptyCredentials())
@@ -46,30 +47,22 @@ export function Login() {
         }
     }
 
-    return (
-        <section className="login">
-            
-            <h1>Login Page</h1>
-            {!loggedinUser && <form onSubmit={handleSubmitLoginForm}>
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
+    return (<section className="login">
 
-                <label htmlFor="name">Name:</label>
-                <input type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
+        {!loggedinUser &&
+            <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={handleSubmitLoginForm} btnType="submit" text="Log in" />
+        }
+        {loggedinUser?.isAdmin && <section>
+            <h2>Hello {loggedinUser.name}</h2>
+
+            <form onSubmit={handleSubmitAdminForm}>
+                <label htmlFor="password">Password:</label>
+                <input type="password" id="password" name="password" value={credentials.password} onChange={handleChange} required />
 
                 <button type="submit">Login</button>
-            </form>}
+            </form>
+        </section>}
+    </section>
 
-            {loggedinUser && <section>
-                <h2>Hello {loggedinUser.name}</h2>
-
-                <form onSubmit={handleSubmitAdminForm}>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" value={credentials.password} onChange={handleChange} required />
-
-                    <button type="submit">Login</button>
-                </form>
-            </section>}
-        </section>
     )
 }
