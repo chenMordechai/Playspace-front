@@ -5,7 +5,6 @@ import password from '../assets/img/password.png'
 export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, text }) {
     return (
         <section className="login-signup">
-            {/* <section className="step-0"> */}
             <img className="spacegame-logo-blue" src={spacegameLogoBlue} />
 
             <form className="signup-form">
@@ -23,7 +22,6 @@ export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, te
                 {/* <button type="button" className={`next-btn ${credentials.name && credentials.email ? 'purple-btn' : ''}`} onClick={() => setStepIdx(prev => prev + 1)}>Sign in</button> */}
 
             </form>
-            {/* </section> */}
         </section>
     )
 }

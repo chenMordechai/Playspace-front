@@ -26,17 +26,20 @@ export function Login() {
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
+    // user login
     async function handleSubmitLoginForm(ev) {
         ev.preventDefault();
         try {
-            const user = await login(credentials)
+            const user = await login({ name: credentials.name, email: credentials.email })
             console.log('success login', user)
-            if (!user.isAdmin) navigate('/home')
+            if (!user.isAdmin) navigate('/user')
+
         } catch (error) {
             console.error('Error:', error);
         }
     }
 
+    // admin login
     async function handleSubmitAdminForm(ev) {
         ev.preventDefault();
         try {

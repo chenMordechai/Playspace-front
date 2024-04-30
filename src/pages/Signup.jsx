@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
 import { utilService } from '../services/util.service'
-import { signup, registerPlayerToGroup } from "../store/actions/auth.action"
+import { signup } from "../store/actions/auth.action"
 import { getShallowGameById } from "../store/actions/game.action"
 import { Carousel } from '../cmps/Carousel'
 import { UserImgAddModal } from "../cmps/UserImgAddModal"
@@ -49,6 +49,7 @@ import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 import { LoginSignup } from "../cmps/LoginSignup.jsx"
 
+// work : http://localhost:5173/signup/d752efce-17e0-4d2a-8627-08dc644c8fa4
 
 export function Signup() {
     const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
@@ -57,17 +58,8 @@ export function Signup() {
     console.log('shallowGame:', shallowGame)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
-
-    // const [groups, setGroups] = useState(null)
-
     const [stepIdx, setStepIdx] = useState(utilService.loadFromStorage('signupStepIdx') || 0)
-
-    // const [groupIdToEdit, setGroupIdToEdit] = useState('')
-
-    // const [avatarToEdit, setAvatarToEdit] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-
-
     const [openUserImgAddModal, onToggleOpenUserImgAddModal] = useToggle(false)
 
     const avatars1 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
@@ -75,19 +67,16 @@ export function Signup() {
     const avatars3 = [avatar17, avatar18, avatar19, avatar20, avatar21, avatar22, avatar23, avatar24]
 
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
-
     useEffectToggleModal(onOpenScreen, onCloseScreen, [openUserImgAddModal])
-
     useEffectCloseModal(isScreenOpen, [onToggleOpenUserImgAddModal])
 
-    // const { gameId, groupId } = useParams()
     const { gameId } = useParams()
     const navigate = useNavigate()
-    // let query = useQuery();
     const sectionRef = useRef(null);
     const colors = useRef(null);
 
     useEffect(() => {
+        // todo
         setTimeout(() => {
             // sectionRef.current.classList.add('fade')
         }, 2000)
@@ -250,7 +239,7 @@ export function Signup() {
                             </li>)}
                     </ul>
                     {/* onclick=> save the group and start game */}
-                    <button className={`next-btn ${credentials.groupId ? 'purple-btn' : ''}`} onClick={onSubmitSignupForm}>Start</button>
+                    <button disabled={!(credentials.groupId)} onClick={onSubmitSignupForm}>Start</button>
 
                     {/* {loggedinPlayer.groupId &&
                     <Link to={`/game/${credentials.gameId}`}>כניסה למשחק</Link>} */}

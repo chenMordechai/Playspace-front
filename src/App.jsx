@@ -11,6 +11,7 @@ import { GameAdd } from './pages/GameAdd'
 import { GameEdit } from './pages/GameEdit'
 import { Game } from './pages/Game'
 import { GameGroups } from './pages/GameGroups'
+import { User } from './pages/User'
 import { NavLinks } from './cmps/NavLinks'
 
 import { scrollService } from './services/scroll.service'
@@ -48,6 +49,7 @@ function App() {
                   <Route path="/game/:gameId" element={<Game />} />
                   <Route path="/game/group/:gameId" element={<GameGroups />} />
                   <Route path="/admin" element={<Admin />} />
+                  <Route path="/user" element={<User />} />
                 </Routes>
               </div>
             </main>

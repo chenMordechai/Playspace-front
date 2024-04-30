@@ -59,13 +59,3 @@ export async function getAdmins() {
         throw err
     }
 }
-
-export async function registerPlayerToGroup(playerId, groupId) {
-    try {
-        await authService.registerPlayerToGroup(playerId, groupId)
-        store.dispatch({ type: SET_LOGGEDIN_PLAYER_GROUP, groupId })
-    } catch (err) {
-        console.log('user actions -> Cannot register Player To Group', err)
-        throw err
-    }
-}

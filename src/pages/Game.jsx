@@ -62,8 +62,10 @@ export function Game() {
 
     async function init() {
         try {
-            // ! Avishai doesn't work
+            // work : http://localhost:5173/game/d752efce-17e0-4d2a-8627-08dc644c8fa4
             const game = await getGameById(gameId)
+
+            // demo data
             // game with stages - onTime:
             // const game = await demoDataService.getGame1()
             // utilService.setTimesFormChanges(game)
@@ -73,8 +75,8 @@ export function Game() {
             // const game = await demoDataService.getGame3()
             // game with stages - onProgress:
             // const game = await demoDataService.getGame4()
+
             console.log('game:', game)
-            // const shallowGame = 
             setGame(game)
         } catch (err) {
             console.log('err:', err)

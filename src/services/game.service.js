@@ -22,6 +22,7 @@ export const gameService = {
 // work
 async function getGames(loggedinUser) {
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
+    console.log('str:', str)
     return httpService.get(`${str}/Games`)
 
     // for dev
@@ -139,7 +140,7 @@ async function getGameById(gameId) {
 }
 
 async function getShallowGameById(gameId) {
-    return httpService.get(BASE_URL +`${gameId}/Preview`)
+    return httpService.get(BASE_URL + `${gameId}/Preview`)
 
 }
 
