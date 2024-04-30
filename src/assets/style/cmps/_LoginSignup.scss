@@ -1,4 +1,5 @@
-.login-signup {
+.login-signup,
+.admin-login {
     .spacegame-logo-blue {
         position: absolute;
         width: 220px;
@@ -7,7 +8,8 @@
         top: 64px;
     }
 
-    .signup-form {
+    .signup-form,
+    .admin-login-form {
         position: relative;
         margin-top: 142px;
         padding: 0px 10px;
@@ -40,13 +42,17 @@
                 top: 56px;
             }
 
-            &.password {
+            &.email {
                 left: 18px;
                 top: 123px;
             }
+            &.password {
+                left: 18px;
+                top: 56px;
+            }
 
             &.eye {
-                top: 123px;
+                top: 56px;
                 right: 20px;
             }
         }

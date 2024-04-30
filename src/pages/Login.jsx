@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { login, adminLogin } from "../store/actions/auth.action"
 import { authService } from '../services/auth.service'
 import { LoginSignup } from '../cmps/LoginSignup'
+import { AdminLogin } from '../cmps/AdminLogin'
 
 export function Login() {
     const [credentials, setCredentials] = useState(authService.getEmptyCredentials())
@@ -52,16 +53,9 @@ export function Login() {
         {!loggedinUser &&
             <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={handleSubmitLoginForm} btnType="submit" text="Log in" />
         }
-        {loggedinUser?.isAdmin && <section>
-            <h2>Hello {loggedinUser.name}</h2>
+        {loggedinUser?.isAdmin &&
+            <AdminLogin loggedinUser={loggedinUser} handleSubmitAdminForm={handleSubmitAdminForm} credentials={credentials} handleChange={handleChange} />}
 
-            <form onSubmit={handleSubmitAdminForm}>
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" value={credentials.password} onChange={handleChange} required />
-
-                <button type="submit">Login</button>
-            </form>
-        </section>}
     </section>
 
     )

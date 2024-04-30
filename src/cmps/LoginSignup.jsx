@@ -13,7 +13,7 @@ export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, te
                 <img className="input-img user" src={user} />
                 <input placeholder="Name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
 
-                <img className="input-img password" src={password} />
+                <img className="input-img email" src={password} />
                 {/* <img className="input-img eye" src={eye} /> */}
                 <input placeholder="Email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
