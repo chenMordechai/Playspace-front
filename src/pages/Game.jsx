@@ -63,10 +63,10 @@ export function Game() {
     async function init() {
         try {
             // ! Avishai doesn't work
-            // const game = await getGameById(gameId)
+            const game = await getGameById(gameId)
             // game with stages - onTime:
-            const game = await demoDataService.getGame1()
-            utilService.setTimesFormChanges(game)
+            // const game = await demoDataService.getGame1()
+            // utilService.setTimesFormChanges(game)
             // game with activities - onProgress:
             // const game = await demoDataService.getGame2()
             // game with activities - open:

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useRef } from "react"
-import { useParams, Link } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
@@ -82,6 +82,7 @@ export function Signup() {
 
     // const { gameId, groupId } = useParams()
     const { gameId } = useParams()
+    const navigate = useNavigate()
     // let query = useQuery();
     const sectionRef = useRef(null);
     const colors = useRef(null);
@@ -170,17 +171,15 @@ export function Signup() {
         ev.preventDefault()
         try {
             console.log('credentials:', credentials)
-            // Avishai signup
+            // work
             const player = await signup(credentials)
 
             console.log('success signup', player)
-            // if (player) setStepIdx(prev => prev + 1)
-            // if (!user.isAdmin) navigate('/home')
+            if (player) navigate(`/game/${shallowGame.id}`)
         } catch (error) {
             console.error('Error:', error);
         }
 
-        // httpService.post('auth/Signup', credentials)
     }
 
     function onCloseModal() {
@@ -193,6 +192,7 @@ export function Signup() {
     return (
         <section ref={sectionRef} className="signup">
 
+            {/* todo */}
             {/* <section className="loading-screen">
                 <img className="vector vector1" src={vectorLeft} />
                 <div className="content">
@@ -204,7 +204,7 @@ export function Signup() {
             </section> */}
 
             {stepIdx === 0 && !loggedinPlayer &&
-                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign in" />
+                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />
             }
 
             {stepIdx === 1 &&
