@@ -22,7 +22,6 @@ export const gameService = {
 // work
 async function getGames(loggedinUser) {
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
-    console.log('str:', str)
     return httpService.get(`${str}/Games`)
 
     // for dev
