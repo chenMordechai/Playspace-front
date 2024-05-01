@@ -1,4 +1,4 @@
-.user {
+.user-page {
     width: 100%;
     max-width: 400px;
     padding: 10px;
@@ -74,6 +74,19 @@
                 line-height: 24px;
                 color: var(--primary);
             }
+        }
+    }
+
+    .user-games-container {
+        border-top: 1.5px solid #f2f2f2;
+        margin-top: 12px;
+        padding-top: 17px;
+        @include flex(column, stretch, center, 10px);
+
+        & > span {
+            font-weight: 600;
+            line-height: 24px;
+            color: var(--primary-35);
         }
     }
 }

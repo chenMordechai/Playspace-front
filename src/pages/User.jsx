@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom"
 
 import avatar9 from '../assets/img/avatar9.png'
 import plusBlue from '../assets/img/plus-blue.png'
+import avatar17 from '../assets/img/avatar17.jpg'
 
+import { MiniGamePreview } from "../cmps/MiniGamePreview"
 
 // after user login
 export function User() {
@@ -37,7 +39,7 @@ export function User() {
 
     if (!loggedinUser) return ''
     return (
-        <section className="user">
+        <section className="user-page">
             <section className="user-info-container">
                 <div className="user-info">
                     <div className="img-container">
@@ -54,6 +56,16 @@ export function User() {
                     <span>Join a group</span>
                 </button>
 
+            </section>
+
+            <section className="user-games-container">
+                <span>Recommended games</span>
+
+                {/* {userGames?.map(game => */}
+                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} />
+                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} />
+                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} />
+                {/* )} */}
             </section>
         </section>
     )

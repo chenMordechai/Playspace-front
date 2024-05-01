@@ -1,0 +1,33 @@
+.mini-game-container {
+    padding: 8px;
+    background: linear-gradient(119.9deg, #f2f2f2 4.09%, #e9f0fc 97.2%);
+    border-radius: 10px;
+    @include flex(row, center, space-between, 12px);
+
+    & > img {
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+    }
+
+    & > span {
+        font-weight: 600;
+        line-height: 24px;
+        margin-right: auto;
+    }
+    & > button {
+        width: 67px;
+        height: 29.07px;
+        padding: 5.54px 20px;
+        // gap: 11.07px;
+        border-radius: 70.86px;
+        border: none;
+        background: linear-gradient(106.96deg, #4c83e6 7.65%, #11367a 94.96%);
+        box-shadow: 0px 0px 20px 0px #174aa6b2;
+
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 18px;
+        color: #ffffff;
+    }
+}
