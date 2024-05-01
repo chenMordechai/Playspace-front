@@ -1,4 +1,59 @@
 .user {
     width: 100%;
     max-width: 400px;
+    padding: 10px;
+
+    .user-info-container {
+        margin-top: 10px;
+        background-color: #fef1bd;
+        @include flex(column, center, center);
+
+        .user-info {
+            text-align: center;
+            margin-top: 8px;
+            position: relative;
+            .img-container {
+                width: 109.3px;
+                height: 109.3px;
+                border-radius: 50%;
+                @include flex(column, center, center);
+                background-color: white;
+
+                img {
+                    width: 82.76px;
+                    height: 82.76px;
+                    position: relative;
+                    z-index: 10;
+                }
+            }
+            .name-container {
+                position: absolute;
+                top: 92px;
+                right: -32.3px;
+                padding: 4px;
+
+                @include flex(column, center, start);
+                width: 174px;
+                height: 47.74px;
+                border-radius: 21.22px;
+                background-color: white;
+                .name {
+                    font-size: 14.85px;
+                    font-weight: 600;
+                    line-height: 22.28px;
+                    color: var(--primary-35);
+                }
+                .email {
+                    font-size: 11.67px;
+                    font-weight: 400;
+                    line-height: 17.51px;
+                    color: #808080;
+                }
+            }
+        }
+
+        button {
+            margin-top: 48.07px;
+        }
+    }
 }

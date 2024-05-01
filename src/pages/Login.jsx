@@ -17,7 +17,8 @@ export function Login() {
 
     useEffect(() => {
         if (loggedinUser) {
-            if (!loggedinUser.isAdmin) navigate('/home')
+            if (!loggedinUser.isAdmin) navigate('/user')
+            else navigate('/admin')
         }
     }, [])
 
