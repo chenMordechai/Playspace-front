@@ -11,7 +11,6 @@ export function Login() {
     const [credentials, setCredentials] = useState(authService.getEmptyCredentials())
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
-    console.log('loggedinUser:', loggedinUser)
 
     const navigate = useNavigate()
 

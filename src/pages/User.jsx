@@ -3,7 +3,8 @@ import { useSelector } from "react-redux"
 import { getGames } from "../store/actions/game.action"
 import { useNavigate } from "react-router-dom"
 
-import avatar1 from '../assets/img/avatar1.png'
+import avatar9 from '../assets/img/avatar9.png'
+import plusBlue from '../assets/img/plus-blue.png'
 
 
 // after user login
@@ -40,7 +41,7 @@ export function User() {
             <section className="user-info-container">
                 <div className="user-info">
                     <div className="img-container">
-                        <img src={avatar1} />
+                        <img src={avatar9} />
                     </div>
                     <div className="name-container">
                         {/* <span className="name">{loggedinUser.name}</span> */}
@@ -49,7 +50,7 @@ export function User() {
                     </div>
                 </div>
                 <button>
-                    <img src="" alt="" />
+                    <img src={plusBlue} />
                     <span>Join a group</span>
                 </button>
 

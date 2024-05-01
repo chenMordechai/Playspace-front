@@ -7,6 +7,7 @@
         margin-top: 10px;
         background-color: #fef1bd;
         @include flex(column, center, center);
+        border-radius: 20px;
 
         .user-info {
             text-align: center;
@@ -24,6 +25,7 @@
                     height: 82.76px;
                     position: relative;
                     z-index: 10;
+                    border-radius: 50%;
                 }
             }
             .name-container {
@@ -54,6 +56,24 @@
 
         button {
             margin-top: 48.07px;
+            margin-bottom: 17px;
+            width: 149px;
+            height: 34px;
+            border-radius: 78px;
+            border: 2px dotted var(--primary);
+            background-color: rgba(255, 255, 255, 0);
+            @include flex(row, center, center, 5px);
+
+            img {
+                width: 22px;
+                height: 22px;
+            }
+            span {
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 24px;
+                color: var(--primary);
+            }
         }
     }
 }
