@@ -21,6 +21,7 @@ export function NavLinks() {
         }
     }
 
+    if (!loggedinUser) return ''
     return (
         <section className="nav-links">
             <NavLink to={loggedinUser.isAdmin ? '/admin' : 'user'} title="Home" >
