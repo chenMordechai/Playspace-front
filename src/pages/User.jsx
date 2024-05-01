@@ -51,17 +51,20 @@ export function User() {
                         <span className="email">@shanouna95</span>
                     </div>
                 </div>
-                <button>
+                {/* <button>
                     <img src={plusBlue} />
                     <span>Join a group</span>
-                </button>
+                </button> */}
 
             </section>
 
             <section className="user-games-container">
-                <span>Recommended games</span>
+                <span>My games</span>
 
                 {/* {userGames?.map(game => */}
+                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} />
+                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} />
+                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} />
                 <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} />
                 <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} />
                 <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} />

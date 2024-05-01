@@ -6,8 +6,9 @@
     .user-info-container {
         margin-top: 10px;
         background-color: #fef1bd;
-        @include flex(column, center, center);
+        @include flex(column, center, start);
         border-radius: 20px;
+        height: 158px;
 
         .user-info {
             text-align: center;
@@ -81,7 +82,8 @@
         border-top: 1.5px solid #f2f2f2;
         margin-top: 12px;
         padding-top: 17px;
-        @include flex(column, stretch, center, 10px);
+        padding-bottom: 17px;
+        @include flex(column, stretch, center, 21px);
 
         & > span {
             font-weight: 600;

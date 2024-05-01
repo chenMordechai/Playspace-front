@@ -13,6 +13,8 @@ import { Game } from './pages/Game'
 import { GameGroups } from './pages/GameGroups'
 import { User } from './pages/User'
 import { NavLinks } from './cmps/NavLinks'
+import { Statistics } from './pages/Statistics'
+import { Settings } from './pages/Settings'
 
 import { scrollService } from './services/scroll.service'
 import { ScreenOpenContext } from './contexts/ScreenOpenConext'
@@ -50,9 +52,12 @@ function App() {
                   <Route path="/game/group/:gameId" element={<GameGroups />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/user" element={<User />} />
+                  <Route path="/statistics" element={<Statistics />} />
+                  <Route path="/settings" element={<Settings />} />
                 </Routes>
               </div>
             </main>
+            <NavLinks />
           </section>
         </ScreenOpenContext.Provider>
       </Router>
