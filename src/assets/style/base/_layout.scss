@@ -1,4 +1,5 @@
 .main-layout {
+  @include flex(column, stretch, start);
   @include for-mobile-layout {
   }
 

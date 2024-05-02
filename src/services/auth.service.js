@@ -61,8 +61,8 @@ async function logout() {
 
 // for players
 // work
-async function signup({ email, gameId, groupId, name, imgUrl }) {
-    const playerToSave = { email, gameId, groupId, name, imgUrl }
+async function signup({ email, gameId, groupId, name, media }) {
+    const playerToSave = { email, gameId, groupId, name, media }
 
     const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
 
@@ -161,7 +161,7 @@ function getEmptySignupCred() {
         email: '',
         name: '',
         gameId: '',
-        imgUrl: '',
+        media: null,
         groupId: ''
         // email: 'BBBB@GMAIL.COM',
         // name: 'BBBB',

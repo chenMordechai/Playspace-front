@@ -148,7 +148,7 @@ export function Signup() {
         try {
             setIsLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev)
-            setCredentials(prev => ({ ...prev, imgUrl: media.url }))
+            setCredentials(prev => ({ ...prev, media }))
         } catch (err) {
             console.log('err:', err)
         } finally {
@@ -201,24 +201,24 @@ export function Signup() {
                     <div className="header">
                         <span className="select">Select your avatar</span>
                         <img className="plus" onClick={onToggleOpenUserImgAddModal} src={plus} />
-                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={{ url: credentials.imgUrl, type: "image" }} onChangeFileInput={onChangeFileInput} onCloseModal={onCloseModal} />}
+                        {openUserImgAddModal && <UserImgAddModal isLoading={isLoading} media={credentials.media} onChangeFileInput={onChangeFileInput} onCloseModal={onCloseModal} />}
                     </div>
 
                     <div className="avatar-container">
                         <div className="carousel-container">
                             <span> Classic</span>
-                            <Carousel items={avatars1} setCredentials={setCredentials} userImg={credentials.imgUrl} />
+                            <Carousel items={avatars1} setCredentials={setCredentials} userImg={credentials.media?.url} />
                         </div>
                         <div className="carousel-container">
                             <span>Toon</span>
-                            <Carousel items={avatars2} setCredentials={setCredentials} userImg={credentials.imgUrl} />
+                            <Carousel items={avatars2} setCredentials={setCredentials} userImg={credentials.media?.url} />
                         </div>
                         <div className="carousel-container">
                             <span>Animal</span>
-                            <Carousel items={avatars3} setCredentials={setCredentials} userImg={credentials.imgUrl} />
+                            <Carousel items={avatars3} setCredentials={setCredentials} userImg={credentials.media?.url} />
                         </div>
 
-                        <button disabled={!(credentials.imgUrl)} onClick={() => setStepIdx(prev => prev + 1)}>Next</button>
+                        <button disabled={!(credentials.media?.url)} onClick={() => setStepIdx(prev => prev + 1)}>Next</button>
                     </div>
                 </section>}
 
