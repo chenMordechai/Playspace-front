@@ -33,7 +33,7 @@ export function GameAdd() {
     useEffect(() => {
         if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         // after admin login push the admin id to game.admins (default in the form)
-        game.admins.push(loggedinUser.userId)
+        game.admins.push(loggedinUser.id)
         loadAdmins()
     }, [])
 
