@@ -144,7 +144,7 @@ async function getShallowGameById(gameId) {
 }
 
 async function remove(gameId) {
-    return httpService.delete(BASE_URL + gameId)
+    return httpService.delete(`Admin/Game/${gameId}`)
 }
 
 async function save(game) {

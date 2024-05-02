@@ -7,9 +7,10 @@
 
             li {
                 width: 200px;
-                height: 200px;
+                // height: 200px;
                 border: 1px solid #e1dbdb;
                 border-radius: 17px;
+                padding-bottom: 20px;
 
                 .game-img-container {
                     border-radius: 17px 17px 0 0;
@@ -48,6 +49,7 @@
                         background-color: lightgray;
                         border-radius: 50%;
                         width: 25px;
+                        text-decoration: none;
                     }
                 }
             }

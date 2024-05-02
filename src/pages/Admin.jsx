@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate, Link } from "react-router-dom"
 
 
-import { getGames } from "../store/actions/game.action.js"
+import { getGames, deleteGame } from "../store/actions/game.action.js"
 import { httpService } from "../services/http.service.js"
 
 import gameImgDefault from '../assets/img/game-default.jpg'
@@ -34,6 +34,17 @@ export function Admin() {
         }
     }
 
+    async function onDeleteGame(gameId) {
+        console.log('gameId:', gameId)
+        if (!confirm('אתה בטוח שאתה רוצה למחוק את המשחק ?')) return
+        try {
+            await deleteGame(gameId)
+            console.log('deleted game')
+        } catch (err) {
+            console.log('err:', err)
+        }
+    }
+
     return (
         <section className="admin">
             <h1>Admin Page</h1>
@@ -57,7 +68,7 @@ export function Admin() {
                                 <span>P</span>
                             </Link>
                             {/* <button>Details</button> */}
-                            <a> <span>D</span></a>
+                            <a onClick={() => onDeleteGame(game.id)} title="Delete"> <span>D</span></a>
 
                             <Link to={`/game/group/${game.id}`} title="groups" >
                                 <span>G</span>

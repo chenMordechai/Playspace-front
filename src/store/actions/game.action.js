@@ -34,14 +34,21 @@ export async function getShallowGameById(gameId) {
     }
 }
 
-
-
 export async function addGame(game) {
     try {
         const newGame = await gameService.save(game)
         return newGame
     } catch (err) {
         console.log('user action -> Cannot add game', err)
+        throw err
+    }
+}
+
+export async function deleteGame(gameId) {
+    try {
+        await gameService.remove(gameId)
+    } catch (err) {
+        console.log('user action -> Cannot remove game', err)
         throw err
     }
 }
