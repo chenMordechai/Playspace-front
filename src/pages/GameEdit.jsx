@@ -63,7 +63,6 @@ export function GameEdit() {
     }
 
     async function loadAdmins() {
-        //! Avishai get admins
         const admins = await getAdmins()
         console.log('admins:', admins)
         setAdmins(admins)
@@ -79,7 +78,7 @@ export function GameEdit() {
         utilService.setTimesFormChanges(game)
 
         // icon colors
-        getColorsFromImg(game.icon?.url)
+        getColorsFromImg(game?.icon?.url)
 
         // activity answers
         setActivityAnswersForForm(game)
@@ -109,8 +108,6 @@ export function GameEdit() {
     }
 
     // adit
-
-
     function onHandleChange(ev) {
         let { name, value, type } = ev.target
         if (type === 'number') value = +value
@@ -134,19 +131,20 @@ export function GameEdit() {
 
     async function onChangeImg(ev) {
         try {
-            setIsLoading(true)
+            setIsImgLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev)
             setGame(prevGame => ({ ...prevGame, icon: media }))
             getColorsFromImg(media.url)
         } catch (err) {
             console.log('err:', err)
         } finally {
-            setIsLoading(false)
+            setIsImgLoading(false)
         }
     }
 
     // colors from image for the divs 
     async function getColorsFromImg(imgUrl) {
+        if (!imgUrl) return
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
         setLogoColors([...colors])
     }

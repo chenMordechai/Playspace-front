@@ -10,7 +10,11 @@
         gap: 10px;
         align-items: center;
         padding: 10px;
-
+        .img-loader {
+            img {
+                height: 60px;
+            }
+        }
         img.logo-img {
             height: 80px;
         }
@@ -34,6 +38,7 @@
         }
 
         .loading,
+        .img-loader,
         section.stages-container,
         // span.stages,
         ul.stage-list,

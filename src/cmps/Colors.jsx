@@ -1,4 +1,5 @@
 import { ImageColorPicker } from 'react-image-color-picker';
+import loader from '../assets/img/loader.gif'
 
 export function Colors({ onChangeImg, gameLogo, gameColors, iconColors, onHandleChangeColor, onHandleColorPick, openColorPicker, setOpenColorPicker, isImgLoading }) {
 
@@ -6,8 +7,10 @@ export function Colors({ onChangeImg, gameLogo, gameColors, iconColors, onHandle
         <>
             <label htmlFor="logo">לוגו</label>
             <input type="file" name="logo" id="logo" onChange={onChangeImg} />
-            {isImgLoading && <span className="loameding">Loading...</span>}
-            {gameLogo && gameColors && <img className="logo-img" src={gameLogo.url} />}
+            {isImgLoading && <span className="img-loader">
+                <img src={loader} />
+            </span>}
+            {gameLogo && gameColors && <img className="logo-img" src={gameLogo?.url} />}
 
             {gameLogo && iconColors && <ul className="colors">
                 {iconColors.map((color, i) => <li key={color}>
@@ -31,7 +34,7 @@ export function Colors({ onChangeImg, gameLogo, gameColors, iconColors, onHandle
                 <button className="close-btn" onClick={() => setOpenColorPicker(prev => !prev)}>X</button>
                 <ImageColorPicker
                     onColorPick={onHandleColorPick}
-                    imgSrc={gameLogo.url}
+                    imgSrc={gameLogo?.url}
                     zoom={1}
                 />
             </div>}
