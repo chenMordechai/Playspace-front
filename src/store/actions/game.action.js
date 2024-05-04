@@ -1,8 +1,8 @@
 import { gameService } from "../../services/game.service.js";
 
-export async function getGames(loggedinUser) {
+export async function getGames(loggedinUser, filterBy, sortBy) {
     try {
-        const games = await gameService.getGames(loggedinUser)
+        const games = await gameService.getGames(loggedinUser, filterBy, sortBy)
         console.log('games:', games)
         // store.dispatch({ type: SET_GAMES, games })
         return games

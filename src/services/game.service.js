@@ -10,19 +10,22 @@ export const gameService = {
     getShallowGameById,
     save,
     remove,
-    getActivitiesOfGame,
     getEmptyGame,
     getEmptyGroup,
     getEmptyStage,
     getEmptyActivity,
+    getDefaultFilter,
+    getDefaultSort
     // getGames2
 }
 
 // get demo data
 // work
-async function getGames(loggedinUser) {
+async function getGames(loggedinUser, filterBy = {}, sortBy = {}) {
+    filterBy = { ...filterBy, ...sortBy }
+    console.log('filterBy:', filterBy)
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
-    return httpService.get(`${str}/Games`)
+    return httpService.get(`${str}/Games`, filterBy)
 
     // for dev
     // return Promise.resolve([
@@ -158,9 +161,6 @@ async function save(game) {
     }
 }
 
-async function getActivitiesOfGame() {
-
-}
 
 function getEmptyGame() {
     return {
@@ -194,6 +194,7 @@ function getEmptyGroup() {
         adminAdditionalScore: 0, // after game // e
     }
 }
+
 function getEmptyStage() {
     return {
         id: null,
@@ -211,6 +212,7 @@ function getEmptyStage() {
         isRequired: false, // v
     }
 }
+
 function getEmptyActivity() {
     return {
         id: null,
@@ -236,4 +238,13 @@ function getEmptyActivity() {
         lifeSaver: null // v [] //e
     }
 }
+
+function getDefaultFilter() {
+    return { name: '' }
+}
+
+function getDefaultSort() {
+    return { sortBy: 'date', desc: 1 }
+}
+
 

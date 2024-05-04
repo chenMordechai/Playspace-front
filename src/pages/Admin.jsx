@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux'
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link, NavLink } from "react-router-dom"
 
 
 import { getGames, deleteGame } from "../store/actions/game.action.js"
 import { httpService } from "../services/http.service.js"
 
 import gameImgDefault from '../assets/img/game-default.jpg'
-
+import { GameFilter } from "../cmps/GameFilter.jsx"
+import { gameService } from "../services/game.service.js"
 
 export function Admin() {
 
     const [games, setGames] = useState(null)
+    const [filterBy, setFilterBy] = useState(gameService.getDefaultFilter())
+    const [sortBy, setSortBy] = useState(gameService.getDefaultSort())
+
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
     const navigate = useNavigate()
@@ -19,14 +23,18 @@ export function Admin() {
 
     useEffect(() => {
         if (!loggedinUser || !loggedinUser.isAdmin) navigate('/')
-
-        init()
+        // init()
     }, [])
+
+    useEffect(() => {
+        console.log('filterBy, sortBy:', filterBy, sortBy)
+        init()
+    }, [filterBy, sortBy])
 
     // get demo data
     async function init() {
         try {
-            const games = await getGames(loggedinUser)
+            const games = await getGames(loggedinUser, filterBy, sortBy)
             console.log('games:', games)
             setGames(games)
         } catch (err) {
@@ -40,15 +48,33 @@ export function Admin() {
         try {
             await deleteGame(gameId)
             console.log('deleted game')
+            setGames(prev => prev.filter(g => g.id !== gameId))
         } catch (err) {
             console.log('err:', err)
         }
     }
 
+    function onSetFilterBy(ev) {
+        let { name, value } = ev.target
+        setFilterBy(prev => ({ ...prev, [name]: value }))
+    }
+
+    function onSetSortBy(ev) {
+        let { name, value, type, checked } = ev.target
+        if (type === 'checkbox') value = (checked) ? -1 : 1
+        setSortBy(prev => ({ ...prev, [name]: value }))
+    }
+
     return (
         <section className="admin">
-            <h1>Admin Page</h1>
+            <h1>Hello {loggedinUser.name}</h1>
+            <Link to="/game/add" title="Admin" >
+                Create New Game
+            </Link>
+
             <h2>Games:</h2>
+            <GameFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} sortBy={sortBy} onSetSortBy={onSetSortBy} />
+
             {games && <section className="games-container">
                 <ul>
                     {games.map(game => <li key={game.id}>
@@ -74,7 +100,7 @@ export function Admin() {
                                 <span>G</span>
                             </Link>
                         </div>
-                    </li>)}
+                    </li>).reverse()}
                 </ul>
             </section>}
         </section>
