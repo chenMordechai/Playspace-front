@@ -4,6 +4,8 @@
         ul {
             @include flex(row, center, center, 10px);
             flex-wrap: wrap;
+            overflow-y: scroll;
+            height: 452px;
 
             li {
                 width: 180px;

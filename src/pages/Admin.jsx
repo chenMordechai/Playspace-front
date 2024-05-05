@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useSelector } from 'react-redux'
 import { useNavigate, Link, NavLink } from "react-router-dom"
-
 
 import { getGames, deleteGame } from "../store/actions/game.action.js"
 import { httpService } from "../services/http.service.js"
@@ -12,14 +11,21 @@ import { gameService } from "../services/game.service.js"
 
 export function Admin() {
 
-    const [games, setGames] = useState(null)
+    const [games, setGames] = useState([])
     const [filterBy, setFilterBy] = useState(gameService.getDefaultFilter())
     const [sortBy, setSortBy] = useState(gameService.getDefaultSort())
+
+    // pagination
+    const [currPage, setCurrPage] = useState(0); // storing current page number
+    // const [prevPage, setPrevPage] = useState(0); // storing prev page number
+    const [wasLastList, setWasLastList] = useState(false); // setting a flag to know the last list
+
 
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
     const navigate = useNavigate()
 
+    const listInnerRef = useRef();
 
     useEffect(() => {
         if (!loggedinUser || !loggedinUser.isAdmin) navigate('/')
@@ -27,16 +33,20 @@ export function Admin() {
     }, [])
 
     useEffect(() => {
-        console.log('filterBy, sortBy:', filterBy, sortBy)
-        init()
+        // console.log('filterBy, sortBy:', filterBy, sortBy)
+        // init()
     }, [filterBy, sortBy])
+
+    useEffect(() => {
+        init()
+    }, [currPage, wasLastList])
 
     // get demo data
     async function init() {
         try {
-            const games = await getGames(loggedinUser, filterBy, sortBy)
-            console.log('games:', games)
-            setGames(games)
+            const games = await getGames(loggedinUser, filterBy, sortBy, currPage)
+            if (!games.length) return;
+            setGames(prev => [...prev, ...games]);
         } catch (err) {
             console.log('err:', err)
         }
@@ -65,9 +75,25 @@ export function Admin() {
         setSortBy(prev => ({ ...prev, [name]: value }))
     }
 
+    function onScroll() {
+        console.log('onScroll')
+        if (listInnerRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
+            console.log('scrollTop + clientHeight:', scrollTop + clientHeight)
+            console.log('scrollHeight:', scrollHeight)
+            if (Math.floor(scrollTop + clientHeight) === scrollHeight || Math.ceil(scrollTop + clientHeight) === scrollHeight) {
+                // This will be triggered after hitting the last element.
+                // API call should be made here while implementing pagination.
+                console.log('if')
+                setCurrPage(prev => prev + 1)
+            }
+        }
+    }
+
+
     return (
-        <section className="admin">
-            <h1>Hello {loggedinUser.name}</h1>
+        <section className="admin" >
+            <h1>Hello {loggedinUser?.name}</h1>
             <Link to="/game/add" title="Admin" >
                 Create New Game
             </Link>
@@ -76,8 +102,9 @@ export function Admin() {
             <GameFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} sortBy={sortBy} onSetSortBy={onSetSortBy} />
 
             {games && <section className="games-container">
-                <ul>
-                    {games.map(game => <li key={game.id}>
+                <ul onScroll={onScroll}
+                    ref={listInnerRef}>
+                    {games.map((game, i) => <li key={i}>
                         <div className="game-img-container">
                             <div className="img-border-container">
                                 <img src={gameImgDefault} />
@@ -100,7 +127,7 @@ export function Admin() {
                                 <span>G</span>
                             </Link>
                         </div>
-                    </li>).reverse()}
+                    </li>)}
                 </ul>
             </section>}
         </section>
