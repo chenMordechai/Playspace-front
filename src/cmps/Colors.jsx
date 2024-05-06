@@ -13,7 +13,7 @@ export function Colors({ onChangeImg, gameLogo, gameColors, iconColors, onHandle
             {gameLogo && gameColors && <img className="logo-img" src={gameLogo?.url} />}
 
             {gameLogo && iconColors && <ul className="colors">
-                {iconColors.map((color, i) => <li key={color}>
+                {iconColors.map((color, i) => <li key={i}>
                     {/* <input type="color" na="color1" id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} /> */}
                     <div className="color-container" style={{ backgroundColor: color }} onClick={() => onHandleColorPick(color)}>
                     </div>
@@ -23,7 +23,7 @@ export function Colors({ onChangeImg, gameLogo, gameColors, iconColors, onHandle
 
             <span>צבעים</span>
             <ul className="colors">
-                {gameColors.map((color, i) => <li key={color}>
+                {gameColors.map((color, i) => <li key={i}>
                     <input type="color" name={i} id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} />
                 </li>)}
 

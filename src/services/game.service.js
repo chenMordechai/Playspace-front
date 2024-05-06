@@ -244,9 +244,9 @@ async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
 }
 
 async function getGameById(gameId) {
-    return httpService.get(BASE_URL + gameId)
+    // return httpService.get(BASE_URL + gameId)
 
-    // return Promise.resolve(demoDataService.getGame2())
+    return Promise.resolve(demoDataService.getGame2())
     // return demoDataService.getGame1()
 }
 
