@@ -46,9 +46,10 @@ export function User() {
                         <img src={avatar9} />
                     </div>
                     <div className="name-container">
-                        {/* <span className="name">{loggedinUser.name}</span> */}
-                        <span className="name">Shanna Levy</span>
-                        <span className="email">@shanouna95</span>
+                        <span className="name">{loggedinUser.name}</span>
+                        {/* <span className="name">Shanna Levy</span> */}
+                        {/* <span className="email">@shanouna95</span> */}
+                        <span className="email">{`@${loggedinUser.email}`}</span>
                     </div>
                 </div>
                 {/* <button>
@@ -62,12 +63,13 @@ export function User() {
                 <span>My games</span>
 
                 {/* {userGames?.map(game => */}
-                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} />
-                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} />
-                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} />
-                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} />
-                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} />
-                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} />
+                {/* <MiniGamePreview gameName={game.name} imgUrl={game.icon.url} gameId={game.id}/> */}
+                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
+                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
+                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
+                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
+                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
+                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
                 {/* )} */}
             </section>
         </section>

@@ -1,7 +1,7 @@
 
 export function GameFilter({ filterBy, onSetFilterBy, sortBy, onSetSortBy }) {
     return (
-        <section>
+        <section className="game-filter">
             <form>
                 <label htmlFor="name">Filter</label>
                 <input type="text" id="name" placeholder="game name" name="name" value={filterBy.name} onChange={onSetFilterBy} />

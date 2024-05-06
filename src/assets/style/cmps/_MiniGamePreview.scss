@@ -15,7 +15,7 @@
         line-height: 24px;
         margin-right: auto;
     }
-    & > button {
+    & > a {
         width: 67px;
         height: 29.07px;
         padding: 5.54px 20px;
@@ -29,5 +29,6 @@
         font-weight: 600;
         line-height: 18px;
         color: #ffffff;
+        text-decoration: none;
     }
 }
