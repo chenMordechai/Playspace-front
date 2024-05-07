@@ -53,3 +53,14 @@ export async function deleteGame(gameId) {
     }
 }
 
+export async function getPlayer(gameId) {
+    try {
+        const player = await gameService.getPlayer(gameId)
+        return player
+    } catch (err) {
+        console.log('user action -> Cannot get player', err)
+        throw err
+    }
+}
+
+

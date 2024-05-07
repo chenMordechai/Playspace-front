@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { authService } from '../services/auth.service'
 import { utilService } from '../services/util.service'
 import { signup } from "../store/actions/auth.action"
+import { getPlayer } from "../store/actions/game.action"
 import { getShallowGameById } from "../store/actions/game.action"
 import { Carousel } from '../cmps/Carousel'
 import { UserImgAddModal } from "../cmps/UserImgAddModal"
@@ -161,8 +162,9 @@ export function Signup() {
         try {
             console.log('credentials:', credentials)
             // work
-            const player = await signup(credentials)
-
+            const user = await signup(credentials)
+            const player = await getPlayer(gameId)
+            // save to store = player
             console.log('success signup', player)
             if (player) navigate(`/game/${shallowGame.id}`)
         } catch (error) {

@@ -15,7 +15,8 @@ export const gameService = {
     getEmptyStage,
     getEmptyActivity,
     getDefaultFilter,
-    getDefaultSort
+    getDefaultSort,
+    getPlayer,
     // getGames2
 }
 
@@ -23,6 +24,7 @@ export const gameService = {
 // work
 async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
     // console.log('getGamess:', currPage)
+    // ! avishay post get games with filter
     filterBy = { ...filterBy, ...sortBy, currPage }
     // console.log('filterBy:', filterBy)
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
@@ -250,6 +252,11 @@ async function getGameById(gameId) {
     // return demoDataService.getGame1()
 }
 
+async function getPlayer(gameId) {
+    return httpService.get(`Game/${gameId}/player`)
+
+}
+
 async function getShallowGameById(gameId) {
     return httpService.get(BASE_URL + `${gameId}/Preview`)
 
@@ -270,6 +277,7 @@ async function save(game) {
     }
 }
 
+///////////////////////////////////////
 
 function getEmptyGame() {
     return {

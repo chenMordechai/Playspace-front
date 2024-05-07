@@ -108,13 +108,11 @@ export function GameAdd() {
 
     // color from click on image or click on div
     function onHandleColorPick(color) {
-        console.log('onHandleColorPick')
         if (color.startsWith('rgb')) {
             const parts = color.substring(4, color.length - 1).split(', ')
             color = utilService.rgbToHex(...parts)
         }
         setColorIdx(prev => {
-            console.log('prev:', prev)
             if (prev === 2) return 0
             else return prev + 1
         })

@@ -10,13 +10,13 @@ export function UserImgAddModal({ isLoading, media, onChangeFileInput, onCloseMo
             <span>Upload your photo</span>
 
             <label htmlFor="user-img">
-                {!media.url && !isLoading && <img className="placeholder" src={image} />}
+                {!media?.url && !isLoading && <img className="placeholder" src={image} />}
                 {isLoading && <img className="loader" src={loader} />}
-                {!isLoading && media.url && <SelectedImg imgUrl={media.url} />}
+                {!isLoading && media?.url && <SelectedImg imgUrl={media.url} />}
             </label>
             <input type="file" id="user-img" onChange={onChangeFileInput} hidden />
 
-            <button disabled={!(media.url)} onClick={onCloseModal}>Next</button>
+            <button disabled={!(media?.url)} onClick={onCloseModal}>Next</button>
         </section>
     )
 }

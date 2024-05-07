@@ -23,6 +23,8 @@ export function Game() {
     const { gameId } = useParams()
 
     useEffect(() => {
+        // get player from store
+        // if !loggdin player return
         init()
         // saveIdxsToStorage()
     }, [])

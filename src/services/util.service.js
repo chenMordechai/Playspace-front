@@ -1,4 +1,6 @@
-import { CLOUD_NAME, UPLOAD_PRESET } from "../../dist/pass.js"
+// import { CLOUD_NAME, UPLOAD_PRESET } from "../../dist/pass.js"
+
+import { httpService } from './http.service.js'
 
 export const utilService = {
     makeId,
@@ -90,7 +92,54 @@ function getRandomColor() {
     return color;
 }
 
-async function uploadImgToCloudinary(ev) {
+async function uploadImgToCloudinary(ev, gameId, isAdminUpload = false, fileName = 'image') {
+    const mediaType = ev.target.files[0].type
+
+    let type
+    if (mediaType.includes('image')) {
+        type = 'image'
+    } else if (mediaType.includes('video')) {
+        type = 'video'
+    }
+
+    var url = isAdminUpload ? "Media/upload" : "Media/UploadAnonymous"
+
+    try {
+        const base64Str = await getFileAsBase64(ev);
+        var media = await httpService.post(url, {
+            "base64Data": base64Str,
+            "name": fileName,
+            "gameId": gameId || "d752efce-17e0-4d2a-8627-08dc644c8fa4"
+        })
+        return media
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+async function getFileAsBase64(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    var data = await getBase64(file);
+    var cleanedData = getTextAfterBase64(data);
+    return cleanedData;
+}
+
+async function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = (e) => reject(e)
+    })
+}
+
+function getTextAfterBase64(text) {
+    const startIndex = text.indexOf("base64,") + 7; // Add 7 to skip "base64,"
+    return text.substring(startIndex);
+}
+
+async function uploadImgToCloudinaryFront(ev) {
     const mediaType = ev.target.files[0].type
 
     let type
@@ -119,6 +168,7 @@ async function uploadImgToCloudinary(ev) {
             type: mediaType,
             url
         }
+
         return media
     } catch (err) {
         console.error(err)
