@@ -291,8 +291,8 @@ function getEmptyGame() {
         timeStart: '', // for form v // e
         dateEnd: '', // for form v // e
         timeEnd: '', // for form v // e
-        gameStartTimestamp: 0, // after form // e
-        gameEndTimestamp: 0, // after form // e
+        gameStartTimestamp: null, // after form // e
+        gameEndTimestamp: null, // after form // e
         themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v // e
         icon: null, // e
         groups: null, // v
@@ -321,8 +321,8 @@ function getEmptyStage() {
         timeStart: '', // for form v
         dateEnd: '', // for form v
         timeEnd: '', // for form v
-        stageStartTimestamp: 0, // after form - if the game.activityProgressType === onTime
-        stageEndTimestamp: 0, // after form - if the game.activityProgressType === onTime
+        stageStartTimestamp: null, // after form - if the game.activityProgressType === onTime
+        stageEndTimestamp: null, // after form - if the game.activityProgressType === onTime
         textBefore: '', // v
         textAfter: '', // v
         maxError: '', // v
@@ -344,8 +344,8 @@ function getEmptyActivity() {
         timeStart: '', // for form v // e
         dateEnd: '', // for form v // e
         timeEnd: '', // for form v // e
-        activityStartTimestamp: 0, // after form - if the game.activityProgressType === onTime // e
-        activityEndTimestamp: 0, // after form - if the game.activityProgressType === onTime // e
+        activityStartTimestamp: null, // after form - if the game.activityProgressType === onTime // e
+        activityEndTimestamp: null, // after form - if the game.activityProgressType === onTime // e
         pointsValue: 0, // v //e
         maxError: 0, // v //e
         mediaBefore: null, // {type : image/video , txt:'' , url:''} v //e

@@ -218,10 +218,10 @@ export function GameAdd() {
     function setTimesChanges(game) {
         const gameStartTimestamp = new Date(game.dateStart + ' ' + game.timeStart).getTime()
         const gameEndTimestamp = new Date(game.dateEnd + ' ' + game.timeEnd).getTime()
-        game.gameStartTimestamp = gameStartTimestamp || 0
-        game.gameEndTimestamp = gameEndTimestamp || 0
+        game.gameStartTimestamp = gameStartTimestamp || null
+        game.gameEndTimestamp = gameEndTimestamp || null
         delete game.dateStart
-        delete game.timeStart
+        delete game.timeStarnull
         delete game.dateEnd
         delete game.timeEnd
 
@@ -230,8 +230,8 @@ export function GameAdd() {
                 game.activities.forEach((activity, i) => {
                     const activityStartTimestamp = new Date(activity.dateStart + ' ' + activity.timeStart).getTime()
                     const activityEndTimestamp = new Date(activity.dateEnd + ' ' + activity.timeEnd).getTime()
-                    activity.activityStartTimestamp = activityStartTimestamp || 0
-                    activity.activityEndTimestamp = activityEndTimestamp || 0
+                    activity.activityStartTimestamp = activityStartTimestamp || null
+                    activity.activityEndTimestamp = activityEndTimestamp || null
                     delete activity.dateStart
                     delete activity.timeStart
                     delete activity.dateEnd
@@ -241,8 +241,8 @@ export function GameAdd() {
                 game.stages.forEach(stage => {
                     const stageStartTimestamp = new Date(stage.dateStart + ' ' + stage.timeStart).getTime()
                     const stageEndTimestamp = new Date(stage.dateEnd + ' ' + stage.timeEnd).getTime()
-                    stage.stageStartTimestamp = stageStartTimestamp || 0
-                    stage.stageEndTimestamp = stageEndTimestamp || 0
+                    stage.stageStartTimestamp = stageStartTimestamp || null
+                    stage.stageEndTimestamp = stageEndTimestamp || null
                     delete stage.dateStart
                     delete stage.timeStart
                     delete stage.dateEnd
@@ -250,8 +250,8 @@ export function GameAdd() {
                     stage.activities.forEach(activity => {
                         const activityStartTimestamp = new Date(activity.dateStart + ' ' + activity.timeStart).getTime()
                         const activityEndTimestamp = new Date(activity.dateEnd + ' ' + activity.timeEnd).getTime()
-                        activity.activityStartTimestamp = activityStartTimestamp || 0
-                        activity.activityEndTimestamp = activityEndTimestamp || 0
+                        activity.activityStartTimestamp = activityStartTimestamp || null
+                        activity.activityEndTimestamp = activityEndTimestamp || null
                         delete activity.dateStart
                         delete activity.timeStart
                         delete activity.dateEnd
