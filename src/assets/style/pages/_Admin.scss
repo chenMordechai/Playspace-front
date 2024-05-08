@@ -1,5 +1,6 @@
 .admin {
     text-align: center;
+    width: 100%;
     .game-filter {
         padding: 10px;
     }
@@ -7,8 +8,10 @@
         ul {
             @include flex(row, center, center, 10px);
             flex-wrap: wrap;
+            align-content: start;
             overflow-y: scroll;
-            height: 452px;
+            max-height: 452px;
+            padding-bottom: 100px;
 
             li {
                 width: 180px;

@@ -8,6 +8,7 @@ import { httpService } from "../services/http.service.js"
 import gameImgDefault from '../assets/img/game-default.jpg'
 import { GameFilter } from "../cmps/GameFilter.jsx"
 import { gameService } from "../services/game.service.js"
+import { AdminGamePreview } from '../cmps/AdminGamePreview.jsx'
 
 export function Admin() {
 
@@ -76,15 +77,11 @@ export function Admin() {
     }
 
     function onScroll() {
-        console.log('onScroll')
         if (listInnerRef.current) {
             const { scrollTop, scrollHeight, clientHeight } = listInnerRef.current;
-            console.log('scrollTop + clientHeight:', scrollTop + clientHeight)
-            console.log('scrollHeight:', scrollHeight)
             if (Math.floor(scrollTop + clientHeight) === scrollHeight || Math.ceil(scrollTop + clientHeight) === scrollHeight) {
                 // This will be triggered after hitting the last element.
                 // API call should be made here while implementing pagination.
-                console.log('if')
                 setCurrPage(prev => prev + 1)
             }
         }
@@ -104,30 +101,8 @@ export function Admin() {
             {games && <section className="games-container">
                 <ul onScroll={onScroll}
                     ref={listInnerRef}>
-                    {games.map((game, i) => <li key={i}>
-                        <div className="game-img-container">
-                            <div className="img-border-container">
-                                <img src={gameImgDefault} />
-                            </div>
-                        </div>
-                        <div className="content-container">
-                            <h4> {game.name}</h4>
-                        </div>
-                        <div className="actions-container">
-                            <Link to={`/game/edit/${game.id}`} title="Edit" >
-                                <span>E</span>
-                            </Link>
-                            <Link to={`/game/${game.id}`} title="Play" >
-                                <span>P</span>
-                            </Link>
-                            {/* <button>Details</button> */}
-                            <a onClick={() => onDeleteGame(game.id)} title="Delete"> <span>D</span></a>
-
-                            <Link to={`/game/group/${game.id}`} title="groups" >
-                                <span>G</span>
-                            </Link>
-                        </div>
-                    </li>)}
+                    {games.map((game, i) =>
+                        <AdminGamePreview key={i} img={gameImgDefault} name={game.name} id={game.id} onDeleteGame={onDeleteGame} />)}
                 </ul>
             </section>}
         </section>
