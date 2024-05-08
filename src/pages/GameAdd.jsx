@@ -43,7 +43,7 @@ export function GameAdd() {
     }
 
     useEffect(() => {
-        // console.log('game:', game)
+        console.log('game:', game)
     }, [game])
 
     useEffect(() => {

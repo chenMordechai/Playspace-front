@@ -232,6 +232,7 @@ function rgbToHex(r, g, b) {
 }
 
 function setTimesFormChanges(game) {
+    console.log('setTimesFormChanges')
 
     changeTimestampToTime(game, game.gameStartTimestamp, game.gameEndTimestamp)
 
@@ -254,13 +255,19 @@ function setTimesFormChanges(game) {
 
 // adit
 function changeTimestampToTime(object, startTimestamp, endTimestamp) {
-    const dStart = new Date(startTimestamp)
-    const dEnd = new Date(endTimestamp)
-    object.dateStart = dStart.getFullYear() + '-' + pad(dStart.getMonth() + 1) + '-' + pad(dStart.getDate())
-    object.timeStart = pad(dStart.getHours()) + ':' + pad(dStart.getMinutes())
-    object.dateEnd = dEnd.getFullYear() + '-' + pad(dEnd.getMonth() + 1) + '-' + pad(dEnd.getDate())
-    object.timeEnd = pad(dEnd.getHours()) + ':' + pad(dEnd.getMinutes())
+    getFormattedDate(startTimestamp, object, 'dateStart', 'timeStart')
+    getFormattedDate(endTimestamp, object, 'dateEnd', 'timeEnd')
+}
 
+function getFormattedDate(ts, object, key1, key2) {
+    if (ts) {
+        const d = new Date(ts)
+        object[key1] = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
+        object[key2] = pad(d.getHours()) + ':' + pad(d.getMinutes())
+    } else {
+        object[key1] = ''
+        object[key2] = ''
+    }
 }
 
 // adit
