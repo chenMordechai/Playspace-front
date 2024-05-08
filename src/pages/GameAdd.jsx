@@ -121,7 +121,7 @@ export function GameAdd() {
             prev.themeColors = [...prev.themeColors]
             return { ...prev }
         })
-    };
+    }
 
     function onHandleGroupNameChange(ev, i) {
         const { value } = ev.target

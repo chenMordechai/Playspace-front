@@ -50,6 +50,7 @@ export function GameEdit() {
     useEffect(() => {
         console.log('game:', game)
     }, [game])
+
     // adit
     async function init() {
         try {
@@ -266,15 +267,6 @@ export function GameEdit() {
 
     function onOpenActivities() {
         setOpenActivities(prev => !prev)
-    }
-
-
-    // function setGameTypeToStage() {
-    //     setGame(prev => ({ ...prev, gameType: 'stages', activities: null, stages: [gameService.getEmptyStage()] }))
-    // }
-
-    function setGameTypeToActivity() {
-        setGame(prev => ({ ...prev, gameType: 'activities', stages: null, activities: [gameService.getEmptyActivity()] }))
     }
 
 

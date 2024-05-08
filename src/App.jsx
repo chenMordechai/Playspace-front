@@ -10,7 +10,7 @@ import { Admin } from './pages/Admin'
 import { GameAdd } from './pages/GameAdd'
 import { GameEdit } from './pages/GameEdit'
 import { Game } from './pages/Game'
-import { GameGroups } from './pages/GameGroups'
+import { AdminPlayersScores } from './pages/AdminPlayersScores'
 import { User } from './pages/User'
 import { NavLinks } from './cmps/NavLinks'
 import { Statistics } from './pages/Statistics'
@@ -19,6 +19,8 @@ import { Settings } from './pages/Settings'
 import { scrollService } from './services/scroll.service'
 import { ScreenOpenContext } from './contexts/ScreenOpenConext'
 import { useToggle } from './customHooks/useToggle'
+import { AdminGroups } from './cmps/AdminGroups'
+import { AdminPlayers } from './cmps/AdminPlayers'
 
 
 function App() {
@@ -49,8 +51,13 @@ function App() {
                   <Route path="/game/add/" element={<GameAdd />} />
                   <Route path="/game/edit/:gameId?" element={<GameEdit />} />
                   <Route path="/game/:gameId" element={<Game />} />
-                  <Route path="/game/group/:gameId" element={<GameGroups />} />
                   <Route path="/admin" element={<Admin />} />
+
+                  <Route path="/game/scores" element={<AdminPlayersScores />}   >
+                    <Route path="/game/scores/groups" element={<AdminGroups />} />
+                    <Route path="/game/scores/players" element={<AdminPlayers />} />
+                  </Route>
+
                   <Route path="/user" element={<User />} />
                   <Route path="/statistics" element={<Statistics />} />
                   <Route path="/settings" element={<Settings />} />

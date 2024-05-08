@@ -1,16 +1,16 @@
-import {useState,useEffect} from 'react'
-import { useParams } from "react-router-dom"
+import { useState, useEffect } from 'react'
+import { useParams, NavLink, Outlet } from "react-router-dom"
 
-import {PlayerEdit} from '../cmps/PlayerEdit'
+import { PlayerEdit } from '../cmps/PlayerEdit'
 
-export function GameGroups (){
+export function AdminPlayersScores() {
     const [groups, setGroups] = useState(null)
-   
 
-    const { gameId } = useParams()
+
+    // const { gameId } = useParams()
 
     useEffect(() => {
-        console.log('gameId:', gameId)
+        // console.log('gameId:', gameId)
 
         // Avishai get groups with players
         getGroupsWithPlayers()
@@ -18,70 +18,72 @@ export function GameGroups (){
     }, [])
 
 
-    function getGroupsWithPlayers(){
+    function getGroupsWithPlayers() {
         const groups = [
             {
                 id: "iw5k9",
                 name: "קבוצה א",
                 adminAdditionalScore: 0,
-                players:[{
+                players: [{
                     id: "GR1rkr",
                     name: "שחקן א",
                     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
                     groupId: "iw5k9",
-                    score:100
-                },{
+                    score: 100
+                }, {
                     id: "GR1rke",
                     name: "שחקן ב",
                     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
                     groupId: "iw5k9",
-                    score:100
-                },{
+                    score: 100
+                }, {
                     id: "GR1rky",
                     name: "שחקן ג",
                     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
                     groupId: "iw5k9",
-                    score:100
+                    score: 100
                 }]
             },
             {
                 id: "iw5k8",
                 name: "קבוצה ב",
                 adminAdditionalScore: 0,
-                players:[{
+                players: [{
                     id: "GR1rkw",
                     name: "שחקן ד",
                     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
                     groupId: "iw5k8",
-                    score:100
-                },{
+                    score: 100
+                }, {
                     id: "GR1rka",
                     name: "שחקן ה",
                     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
                     groupId: "iw5k8",
-                    score:100
-                },{
+                    score: 100
+                }, {
                     id: "GR1rkv",
                     name: "שחקן ו",
                     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
                     groupId: "iw5k8",
-                    score:100
+                    score: 100
                 }]
             },
         ]
 
         setGroups(groups)
     }
-    function handleChange(ev){
-      const  {value} = ev.target
-      setScoreToEdit(value)
+    function handleChange(ev) {
+        const { value } = ev.target
+        setScoreToEdit(value)
 
     }
 
-    if(!groups) return
+    if (!groups) return
     return (
         <section className="game-groups rtl">
-            <h1>Game Groups</h1>
+
+
+            {/* <h1>Game Groups</h1>
 
             <ul className="groups-container">
                     {groups.map(group => <li key={group.id}>
@@ -92,7 +94,19 @@ export function GameGroups (){
                         <PlayerEdit key={player.id} player={player} handleChange={handleChange}/>)}
                         </ul>
                     </li>)}
-                </ul>
+                </ul> */}
+
+            <nav>
+                <NavLink to={`/game/scores/groups`} >
+                    <span>Groups</span>
+                </NavLink>
+
+                <NavLink to={`/game/scores/players`}>
+                    <span>Players</span>
+                </NavLink>
+            </nav>
+            <Outlet />
+
         </section>
     )
 }

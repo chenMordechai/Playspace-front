@@ -22,8 +22,8 @@ export function AdminGamePreview({ img, name, id, onDeleteGame }) {
                 {/* <button>Details</button> */}
                 <a onClick={() => onDeleteGame(id)} title="Delete"> <span>D</span></a>
 
-                <Link to={`/game/group/${id}`} title="groups" >
-                    <span>G</span>
+                <Link to={`/game/scores`} title="Scores" >
+                    <span>S</span>
                 </Link>
             </div>
         </li>
