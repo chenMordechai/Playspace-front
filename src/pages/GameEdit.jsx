@@ -214,7 +214,7 @@ export function GameEdit() {
     async function onHandleActivityChange(ev, i, j) {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
-        else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
+        else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev, game.id, true)
         else if (name === 'activityAnswers') {
             value = value.split(',')
             if (value.length > 4) return
@@ -241,13 +241,13 @@ export function GameEdit() {
         const gameToSend = { ...game }
 
         // time changes
-        utilService.setTimesChangeToTimestamp(game)
-
+        utilService.setTimesChangeToTimestamp(gameToSend)
+        console.log('gameeee:', gameToSend)
 
         // adminsId to objects
         gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
 
-        console.log('game:', gameToSend)
+        console.log('gameToSend:', gameToSend)
 
         try {
             setIsLoading(true)
@@ -321,11 +321,12 @@ export function GameEdit() {
                 <textarea name="textAfter" id="textAfter" value={game.textAfter} onChange={onHandleChange} cols="30" rows="3"></textarea>
 
                 <label htmlFor="activityProgressType">אופי המשחק</label>
-                <select name="activityProgressType" id="activityProgressType" value={game.activityProgressType} onChange={onHandleChange} >
+                <span>{game.activityProgressType}</span>
+                {/* <select name="activityProgressType" id="activityProgressType" value={game.activityProgressType} onChange={onHandleChange} >
                     <option value="open">פתוח</option>
                     <option value="onTime">לפי זמנים</option>
                     <option value="onProgress">לפי התקדמות</option>
-                </select>
+                </select> */}
 
                 {game.gameType === 'stages' && <h3>משחק עם שלבים</h3>}
                 {game.gameType === 'activities' && <h3>משחק בלי שלבים</h3>}
@@ -341,7 +342,7 @@ export function GameEdit() {
                         {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} isEdit={true} />}
                     </section>}
 
-                {!isLoading && !msgAfterGameAdd && <button type="submit" className="btn-sumbit">Edit Game</button>}
+                {!isLoading && <button type="submit" className="btn-sumbit">Edit Game</button>}
                 {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
                 {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
 

@@ -1,7 +1,6 @@
 
 
 export function DateForm({ obj, onHandleChange }) {
-    console.log('obj:', obj)
     return (
         <>
             <label htmlFor="dateStart">תאריך התחלה</label>

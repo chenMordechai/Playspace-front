@@ -280,8 +280,11 @@ function pad(num) {
 // add
 
 function changeFormattedTimeToTs(obj, key1, key2) {
+    console.log('obj:', obj)
     var startTimestamp = new Date(obj.dateStart + ' ' + obj.timeStart).getTime()
     var endTimestamp = new Date(obj.dateEnd + ' ' + obj.timeEnd).getTime()
+    console.log('startTimestamp:', startTimestamp)
+    console.log('endTimestamp:', endTimestamp)
     obj[key1] = startTimestamp || null
     obj[key2] = endTimestamp || null
 
@@ -292,6 +295,7 @@ function changeFormattedTimeToTs(obj, key1, key2) {
 }
 
 function setTimesChangeToTimestamp(game) {
+    console.log('setTimesChangeToTimestamp')
     changeFormattedTimeToTs(game, 'gameStartTimestamp', 'gameEndTimestamp')
 
     if (game.activityProgressType === 'onTime') {

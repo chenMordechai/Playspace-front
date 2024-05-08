@@ -160,7 +160,7 @@ export function GameAdd() {
     async function onHandleActivityChange(ev, i, j) {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
-        else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev)
+        else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev, game.id, true)
         else if (name === 'activityAnswers') {
             value = value.split(',')
             if (value.length > 4) return
@@ -331,7 +331,7 @@ export function GameAdd() {
                         <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
                     </section>}
 
-                {!isLoading && !msgAfterGameAdd && <button type="submit" className="btn-sumbit">Create Game</button>}
+                {!isLoading && <button type="submit" className="btn-sumbit">Create Game</button>}
                 {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
                 {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
 
