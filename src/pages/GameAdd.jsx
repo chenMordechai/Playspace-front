@@ -78,7 +78,7 @@ export function GameAdd() {
     async function onChangeImg(ev) {
         try {
             setIsImgLoading(true)
-            const media = await utilService.uploadImgToCloudinary(ev)
+            const media = await utilService.uploadImgToCloudinary(ev, game.id, true)
             setGame(prevGame => ({ ...prevGame, icon: media }))
             getColorsFromImg(media.url)
         } catch (err) {
@@ -201,7 +201,8 @@ export function GameAdd() {
             const newGame = await addGame(game)
             console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק הוסף בהצלחה')
-            setGame(gameService.getEmptyGame())
+            navigate('/admin')
+            // setGame(gameService.getEmptyGame())
         } catch (err) {
             setMsgAfterGameAdd('שגיאה')
             console.log('err:', err)
@@ -330,7 +331,7 @@ export function GameAdd() {
                         <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
                     </section>}
 
-                {!isLoading && <button type="submit" className="btn-sumbit">Create Game</button>}
+                {!isLoading && !msgAfterGameAdd && <button type="submit" className="btn-sumbit">Create Game</button>}
                 {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
                 {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
 

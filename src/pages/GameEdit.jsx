@@ -130,9 +130,10 @@ export function GameEdit() {
     }
 
     async function onChangeImg(ev) {
+        console.log('onChangeImg')
         try {
             setIsImgLoading(true)
-            const media = await utilService.uploadImgToCloudinary(ev)
+            const media = await utilService.uploadImgToCloudinary(ev, game.id, true)
             setGame(prevGame => ({ ...prevGame, icon: media }))
             getColorsFromImg(media.url)
         } catch (err) {
@@ -253,6 +254,7 @@ export function GameEdit() {
             const newGame = await addGame(gameToSend)
             console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק נערך בהצלחה')
+            navigate('/admin')
         } catch (err) {
             setMsgAfterGameAdd('שגיאה')
             console.log('err:', err)
@@ -339,7 +341,7 @@ export function GameEdit() {
                         {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} isEdit={true} />}
                     </section>}
 
-                {!isLoading && <button type="submit" className="btn-sumbit">Edit Game</button>}
+                {!isLoading && !msgAfterGameAdd && <button type="submit" className="btn-sumbit">Edit Game</button>}
                 {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
                 {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
 
