@@ -18,7 +18,8 @@ export const utilService = {
     isHebrew,
     isMobile,
     rgbToHex,
-    setTimesFormChanges
+    setTimesFormChanges,
+    setTimesChangeToTimestamp
 }
 
 function makeId(length = 6) {
@@ -255,11 +256,12 @@ function setTimesFormChanges(game) {
 
 // adit
 function changeTimestampToTime(object, startTimestamp, endTimestamp) {
-    getFormattedDate(startTimestamp, object, 'dateStart', 'timeStart')
-    getFormattedDate(endTimestamp, object, 'dateEnd', 'timeEnd')
+    changeTsToFormattedDate(startTimestamp, object, 'dateStart', 'timeStart')
+    changeTsToFormattedDate(endTimestamp, object, 'dateEnd', 'timeEnd')
 }
 
-function getFormattedDate(ts, object, key1, key2) {
+// adit
+function changeTsToFormattedDate(ts, object, key1, key2) {
     if (ts) {
         const d = new Date(ts)
         object[key1] = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate())
@@ -273,4 +275,37 @@ function getFormattedDate(ts, object, key1, key2) {
 // adit
 function pad(num) {
     return num < 10 ? '0' + num : num
+}
+
+// add
+
+function changeFormattedTimeToTs(obj, key1, key2) {
+    var startTimestamp = new Date(obj.dateStart + ' ' + obj.timeStart).getTime()
+    var endTimestamp = new Date(obj.dateEnd + ' ' + obj.timeEnd).getTime()
+    obj[key1] = startTimestamp || null
+    obj[key2] = endTimestamp || null
+
+    //// delete obj[dateStart]
+    //// delete obj[timeStart]
+    //// delete obj[dateEnd]
+    //// delete obj[timeEnd]
+}
+
+function setTimesChangeToTimestamp(game) {
+    changeFormattedTimeToTs(game, 'gameStartTimestamp', 'gameEndTimestamp')
+
+    if (game.activityProgressType === 'onTime') {
+        if (game.gameType === 'activities') {
+            game.activities.forEach(activity => {
+                changeFormattedTimeToTs(activity, 'activityStartTimestamp', 'activityEndTimestamp')
+            })
+        } else {
+            game.stages.forEach(stage => {
+                changeFormattedTimeToTs(stage, 'stageStartTimestamp', 'stageEndTimestamp')
+                stage.activities.forEach(activity => {
+                    changeFormattedTimeToTs(activity, 'activityStartTimestamp', 'activityEndTimestamp')
+                })
+            })
+        }
+    }
 }

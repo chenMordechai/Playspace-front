@@ -238,7 +238,10 @@ export function GameEdit() {
 
         // times to timestamp:
         const gameToSend = { ...game }
-        setTimesChanges(gameToSend)
+
+        // time changes
+        utilService.setTimesChangeToTimestamp(game)
+
 
         // adminsId to objects
         gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
@@ -263,52 +266,6 @@ export function GameEdit() {
         setOpenActivities(prev => !prev)
     }
 
-    function setTimesChanges(game) {
-        const gameStartTimestamp = new Date(game.dateStart + ' ' + game.timeStart).getTime()
-        const gameEndTimestamp = new Date(game.dateEnd + ' ' + game.timeEnd).getTime()
-        game.gameStartTimestamp = gameStartTimestamp || null
-        game.gameEndTimestamp = gameEndTimestamp || null
-        delete game.dateStart
-        delete game.timeStart
-        delete game.dateEnd
-        delete game.timeEnd
-
-        if (game.activityProgressType === 'onTime') {
-            if (game.gameType === 'activities') {
-                game.activities.forEach((activity, i) => {
-                    const activityStartTimestamp = new Date(activity.dateStart + ' ' + activity.timeStart).getTime()
-                    const activityEndTimestamp = new Date(activity.dateEnd + ' ' + activity.timeEnd).getTime()
-                    activity.activityStartTimestamp = activityStartTimestamp || null
-                    activity.activityEndTimestamp = activityEndTimestamp || null
-                    delete activity.dateStart
-                    delete activity.timeStart
-                    delete activity.dateEnd
-                    delete activity.timeEnd
-                })
-            } else {
-                game.stages.forEach(stage => {
-                    const stageStartTimestamp = new Date(stage.dateStart + ' ' + stage.timeStart).getTime()
-                    const stageEndTimestamp = new Date(stage.dateEnd + ' ' + stage.timeEnd).getTime()
-                    stage.stageStartTimestamp = stageStartTimestamp || null
-                    stage.stageEndTimestamp = stageEndTimestamp || null
-                    delete stage.dateStart
-                    delete stage.timeStart
-                    delete stage.dateEnd
-                    delete stage.timeEnd
-                    stage.activities.forEach(activity => {
-                        const activityStartTimestamp = new Date(activity.dateStart + ' ' + activity.timeStart).getTime()
-                        const activityEndTimestamp = new Date(activity.dateEnd + ' ' + activity.timeEnd).getTime()
-                        activity.activityStartTimestamp = activityStartTimestamp || null
-                        activity.activityEndTimestamp = activityEndTimestamp || null
-                        delete activity.dateStart
-                        delete activity.timeStart
-                        delete activity.dateEnd
-                        delete activity.timeEnd
-                    })
-                })
-            }
-        }
-    }
 
     // function setGameTypeToStage() {
     //     setGame(prev => ({ ...prev, gameType: 'stages', activities: null, stages: [gameService.getEmptyStage()] }))
