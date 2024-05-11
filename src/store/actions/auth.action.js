@@ -40,15 +40,27 @@ export async function logout() {
 
 export async function signup(credentials) {
     try {
-        const player = await authService.signup(credentials)
-        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
-        console.log('player:', player)
-        return player
+        const user = await authService.signup(credentials)
+        store.dispatch({ type: SET_LOGGEDIN_USER, player: user })
+        console.log('user:', user)
+        return user
     } catch (err) {
         console.log('user actions -> Cannot signup', err)
         throw err
     }
 }
+
+export async function getPlayer(gameId) {
+    try {
+        const player = await gameService.getPlayer(gameId)
+        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+        return player
+    } catch (err) {
+        console.log('user action -> Cannot get player', err)
+        throw err
+    }
+}
+
 
 export async function getAdmins() {
     try {
@@ -59,3 +71,5 @@ export async function getAdmins() {
         throw err
     }
 }
+
+

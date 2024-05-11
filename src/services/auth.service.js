@@ -26,8 +26,8 @@ export const authService = {
     getLoggedinPlayer,
     getEmptyCredentials,
     getEmptySignupCred,
-    registerPlayerToGroup,
-    getUserData
+    getUserData,
+    getPlayer
 }
 
 // work
@@ -64,7 +64,7 @@ async function logout() {
 async function signup({ email, gameId, groupId, name, media }) {
     const playerToSave = { email, gameId, groupId, name, media }
 
-    const player = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
+    const user = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
 
     // demoData:
     // const player = {
@@ -75,11 +75,22 @@ async function signup({ email, gameId, groupId, name, media }) {
     //     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
     //     // groupId: 0
     // }
-
-    _setLoggedinPlayer(player)
-    return player
+    if (user) {
+        _setLoggedinUser(user)
+        return user
+    }
 
 }
+
+async function getPlayer(gameId) {
+    const player = httpService.get(`Game/${gameId}/player`)
+    if (player) {
+        _setLoggedinPlayer(player)
+        return player
+    }
+
+}
+
 
 async function getAdmins() {
 
@@ -105,21 +116,6 @@ async function getUserData(userId) {
 
 }
 
-function registerPlayerToGroup(playerId, groupId) {
-
-    const player = {
-        id: utilService.makeId(),
-        email: 'BBBB@GMAIL.COM',
-        name: 'BBBB',
-        password: 'string$%',
-        gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
-        groupId
-    }
-
-    _setLoggedinPlayer(player)
-
-    return Promise.resolve(true)
-}
 
 
 

@@ -16,7 +16,6 @@ export const gameService = {
     getEmptyActivity,
     getDefaultFilter,
     getDefaultSort,
-    getPlayer,
     // getGames2
 }
 
@@ -252,10 +251,6 @@ async function getGameById(gameId) {
     // return demoDataService.getGame1()
 }
 
-async function getPlayer(gameId) {
-    return httpService.get(`Game/${gameId}/player`)
-
-}
 
 async function getShallowGameById(gameId) {
     return httpService.get(BASE_URL + `${gameId}/Preview`)
