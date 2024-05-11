@@ -1,0 +1,23 @@
+.admin-scores {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+
+    .admin-groups,
+    .admin-players {
+        padding: 10px;
+        background-color: lightcyan;
+
+        ul {
+            @include flex(row, start, center, 10px);
+            flex-wrap: wrap;
+            padding: 10px;
+
+            li {
+                width: 100px;
+                height: 50px;
+                border: 1px solid black;
+            }
+        }
+    }
+}

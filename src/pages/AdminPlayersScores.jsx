@@ -4,7 +4,7 @@ import { useParams, NavLink, Outlet } from "react-router-dom"
 export function AdminPlayersScores() {
 
     return (
-        <section className="admin-players-scores rtl">
+        <section className="admin-scores">
             <nav>
                 <NavLink to={`/game/scores/groups`} >
                     <span>Groups</span>
