@@ -14,9 +14,15 @@
             padding: 10px;
 
             li {
+                padding: 10px;
                 width: 100px;
-                height: 50px;
                 border: 1px solid black;
+
+                .input-container {
+                    input {
+                        width: 60px;
+                    }
+                }
             }
         }
     }

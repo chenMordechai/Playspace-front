@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react"
 
+import { FilterByName } from "./FilterByName"
+import { ScoreEdit } from "./ScoreEdit"
 
 export function AdminPlayers() {
     const [players, setPlayers] = useState(null)
+    const [filterBy, setFilterBy] = useState({ name: '' })
 
     useEffect(() => {
 
-        //! Avishai get players
-        getPlayers()
-    }, [])
+        //! Avishai get players by filter
+        getPlayers(filterBy)
+
+    }, [filterBy])
 
     function getPlayers() {
 
@@ -59,19 +63,38 @@ export function AdminPlayers() {
         setPlayers(players)
     }
 
+    function onFilterPlayers(ev) {
+        console.log('onFilterGroups')
+        ev.preventDefault()
+        // getPlayers(filterBy)
+    }
+
+    function handlaChange(ev) {
+        const { value, name } = ev.target
+        setFilterBy({ [name]: value })
+    }
+
+    function onUpdateScore(playerId, diff) {
+        console.log('onUpdateScore')
+        //! Avishay update player score
+    }
+
     if (!players) return
 
     return (
         <section className="admin-players">
             <h1>Players</h1>
 
+            <FilterByName onSubmitFilter={onFilterPlayers} filterBy={filterBy} handlaChange={handlaChange} />
+
             <ul className="players-container">
                 {players.map((player, i) => <li key={i}>
                     {player.name}
-                    <br />
-                    <button>+</button>
-                    <span>{player.score}</span>
-                    <button>-</button>
+                    <div>
+                        <span>{player.score}</span>
+                    </div>
+
+                    <ScoreEdit id={player.id} onUpdateScore={onUpdateScore} />
                 </li>)}
             </ul>
         </section>
