@@ -3,7 +3,7 @@ import { Media } from './Media'
 
 import { ActivityType } from './ActivityType'
 
-export function ActivityPreview({ activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
+export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -60,17 +60,26 @@ export function ActivityPreview({ activity, moveToNextActivity, currActivityStep
 
             {/* start activity */}
             {currActivityStepIdx === 0 && <>
-                {!isActivityStart() > 0 && <> <h4>השאלה תתחיל בתאריך:  {activity.dateStart}</h4>
-                    <h4>בשעה: {activity.timeStart}</h4>
-                    <h4>ותסתיים בתאריך:  {activity.dateEnd}</h4>
-                    <h4>בשעה: {activity.timeEnd}</h4>
+
+                {activityProgressType === 'onTime' && <>
+                    {!isActivityStart() > 0 && <> <h4>השאלה תתחיל בתאריך:  {activity.dateStart}</h4>
+                        <h4>בשעה: {activity.timeStart}</h4>
+                        <h4>ותסתיים בתאריך:  {activity.dateEnd}</h4>
+                        <h4>בשעה: {activity.timeEnd}</h4>
+                    </>}
+
+                    {isActivityEnd() && <h2>
+                        השאלה הסתיימה
+                    </h2>}
+
+                    {isActivityStart() && !isActivityEnd() && <> <h2>השאלה התחילה</h2>
+                        {activity.textBefore && <h3>ההודעה לפני:{activity.textBefore}</h3>}
+                        <Media media={activity.mediaBefore} />
+                        <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>
+                    </>}
                 </>}
 
-                {isActivityEnd() && <h2>
-                    השאלה הסתיימה
-                </h2>}
-
-                {isActivityStart() && !isActivityEnd() && <> <h2>השאלה התחילה</h2>
+                {activityProgressType !== 'onTine' && <>
                     {activity.textBefore && <h3>ההודעה לפני:{activity.textBefore}</h3>}
                     <Media media={activity.mediaBefore} />
                     <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>

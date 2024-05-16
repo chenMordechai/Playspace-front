@@ -67,7 +67,8 @@ export function Game() {
     async function init() {
         try {
             // work : http://localhost:5173/game/96ebb7e2-abf2-46df-1727-08dc75a038e2
-            const game = await getGameById(gameId)
+            //! didnt work
+            // const game = await getGameById(gameId)
 
             // demo data
             // game with stages - onTime:
@@ -76,7 +77,7 @@ export function Game() {
             // game with activities - onProgress:
             // const game = await demoDataService.getGame2()
             // game with activities - open:
-            // const game = await demoDataService.getGame3()
+            const game = await demoDataService.getGame3()
             // game with stages - onProgress:
             // const game = await demoDataService.getGame4()
 
@@ -205,11 +206,11 @@ export function Game() {
                 </>}
 
                 {/* gameline  */}
-                {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />}
+                {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
                 {/* game stages / activities */}
                 {currGameStepIdx === 1 && <>
                     {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
-                    {game.gameType === 'activities' && <ActivityPreview activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
+                    {game.gameType === 'activities' && <ActivityPreview activityProgressType={game.activityProgressType} activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
                 </>}
 
                 {/* end game */}
