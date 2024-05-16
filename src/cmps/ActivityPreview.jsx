@@ -20,7 +20,10 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     function checkOpenAnswer() {
         if (!inputOpenValue) setIsAnswerCorrect(false)
-        else setIsAnswerCorrect(true)
+        else {
+            setIsAnswerCorrect(true)
+            setCurrActivityStepIdx(prev => prev + 1)
+        }
     }
 
     function checkTypingAnswer() {
@@ -91,6 +94,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             {/* activity */}
             {currActivityStepIdx === 1 && <section className='activity-step-1'>
                 <div className="text-container">
+                    <p>Question </p>
                     <p> {activity.text}</p>
 
                 </div>
@@ -98,11 +102,12 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                     <ActivityType activity={activity} checkMultipleAnswer={checkMultipleAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} checkOpenAnswer={checkOpenAnswer} checkYesNoAnswer={checkYesNoAnswer} inputTypingValue={inputTypingValue} checkTypingAnswer={checkTypingAnswer} />
                 </section>
 
-                {isAnswerCorrect && <section>
+                {/*{isAnswerCorrect && <section>
                     {/* תגובה נכונה לכל זוג של שאלה */}
-                    <h3>יופי !!  תשובה נכונה</h3>
+                {/* <h3>יופי !!  תשובה נכונה</h3>
                     <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>סיימתי</button>
-                </section>}
+                </section>} */}
+
             </section>}
 
             {/* end activity */}

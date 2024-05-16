@@ -295,7 +295,7 @@ const game3 = {
     "activities": [
         {
             "id": null, //back
-            "text": "how are you today?",
+            "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar?",
             "isDeleted": false,
             "activityType": "open",
             "correctAnswer": "Good",

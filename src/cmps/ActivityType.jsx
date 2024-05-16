@@ -1,8 +1,10 @@
+import pen from '../assets/img/pen.png'
+
 
 export function ActivityType({ activity, checkMultipleAnswer, textAreaValue, handlaChange, checkOpenAnswer, checkYesNoAnswer, inputTypingValue, checkTypingAnswer }) {
     return (
         <section className="activity-type">
-            {activity.activityType === 'multiple' &&
+            {activity.activityType === "multiple" &&
                 <div className="multiple-answer">
                     {activity.activityAnswers.map((a, i) =>
                         <button key={a}
@@ -11,12 +13,14 @@ export function ActivityType({ activity, checkMultipleAnswer, textAreaValue, han
                         </button>)}
                 </div>}
 
-            {activity.activityType === 'open' &&
-                <div className="open-answer">
-                    <textarea name="open" value={textAreaValue} onChange={handlaChange} />
+            {activity.activityType === 'open' && <>
 
-                    <button onClick={checkOpenAnswer}> שלח תשובה </button>
-                </div>}
+                <div className="open-answer">
+                    <img className="pen" src={pen} />
+                    <input name="open" value={textAreaValue} onChange={handlaChange} />
+                </div>
+                <button onClick={checkOpenAnswer}>continue</button>
+            </>}
 
             {activity.activityType === 'yesno' &&
                 <div className="yesno-answer">
