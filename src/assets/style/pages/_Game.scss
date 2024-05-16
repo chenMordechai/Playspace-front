@@ -1,7 +1,55 @@
 .game-container {
-    width: 80%;
-    height: 80vh;
-    padding: 20px;
-    background-color: lightgoldenrodyellow;
     text-align: center;
+    background-color: var(--primary-95);
+    width: 100%;
+    height: 100%;
+    padding: 0px 10px;
+    // background-image: url(../../img/logo-big.png);
+
+    .game-bgi {
+        position: absolute;
+        left: 0;
+        img {
+            width: 258.92px;
+            height: 328.42px;
+            gap: 0px;
+            opacity: 0.1px;
+        }
+    }
+
+    .layer-1 {
+        position: relative;
+        z-index: 10;
+
+        .game-header {
+            margin-top: 30px;
+            @include flex(row, center, space-between);
+            button {
+                background-color: white;
+                border: none;
+                border-radius: 59px;
+                @include flex(row, center, center);
+                &.game-name {
+                    width: 110px;
+                    height: 41px;
+                    padding: 10px 20px 10px 20px;
+                }
+
+                &.points {
+                    width: 41px;
+                    height: 41px;
+
+                    img {
+                        width: 4px;
+                        height: 22px;
+                    }
+                }
+            }
+
+            span {
+                width: 41px;
+                height: 41px;
+            }
+        }
+    }
 }

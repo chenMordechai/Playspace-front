@@ -64,7 +64,7 @@ function App() {
                 </Routes>
               </div>
             </main>
-            <NavLinks />
+            {/* <NavLinks /> */}
           </section>
         </ScreenOpenContext.Provider>
       </Router>
