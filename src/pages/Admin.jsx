@@ -44,8 +44,10 @@ export function Admin() {
 
     // get demo data
     async function init() {
+        console.log('init')
         try {
             const games = await getGames(loggedinUser, filterBy, sortBy, currPage)
+            console.log('games:', games)
             if (!games.length) return;
             setGames(prev => [...prev, ...games]);
         } catch (err) {
@@ -98,8 +100,9 @@ export function Admin() {
             <h2>Games:</h2>
             <GameFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} sortBy={sortBy} onSetSortBy={onSetSortBy} />
 
-            {games && <section className="games-container">
-                <ul onScroll={onScroll}
+            {games.length && <section className="games-container">
+                <ul
+                    // onScroll={onScroll}
                     ref={listInnerRef}>
                     {games.map((game, i) =>
                         <AdminGamePreview key={i} img={gameImgDefault} name={game.name} id={game.id} onDeleteGame={onDeleteGame} />)}

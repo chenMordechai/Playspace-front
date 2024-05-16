@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom"
 import avatar9 from '../assets/img/avatar9.png'
 import plusBlue from '../assets/img/plus-blue.png'
 import avatar17 from '../assets/img/avatar17.jpg'
+import { getPlayer } from "../store/actions/auth.action"
+
 
 import { MiniGamePreview } from "../cmps/MiniGamePreview"
 
@@ -37,6 +39,13 @@ export function User() {
         }
     }
 
+    async function moveToGame(gameId) {
+        console.log('gameId:', gameId)
+        const player = await getPlayer(gameId) // player
+        console.log('success get player', player)
+        if (player) navigate(`/game/${gameId}`)
+    }
+
     if (!loggedinUser) return ''
     return (
         <section className="user-page">
@@ -64,12 +73,12 @@ export function User() {
 
                 {/* {userGames?.map(game => */}
                 {/* <MiniGamePreview gameName={game.name} imgUrl={game.icon.url} gameId={game.id}/> */}
-                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
-                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
-                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
-                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
-                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
-                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} gameId={"d752efce-17e0-4d2a-8627-08dc644c8fa4"} />
+                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
+                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
+                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
+                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
+                <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
+                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
                 {/* )} */}
             </section>
         </section>

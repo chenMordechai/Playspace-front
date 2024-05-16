@@ -64,6 +64,7 @@ export function Game() {
 
     async function init() {
         try {
+            // "96ebb7e2-abf2-46df-1727-08dc75a038e2"
             // work : http://localhost:5173/game/d752efce-17e0-4d2a-8627-08dc644c8fa4
             const game = await getGameById(gameId)
 

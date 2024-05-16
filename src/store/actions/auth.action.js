@@ -52,7 +52,7 @@ export async function signup(credentials) {
 
 export async function getPlayer(gameId) {
     try {
-        const player = await gameService.getPlayer(gameId)
+        const player = await authService.getPlayer(gameId)
         store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
         return player
     } catch (err) {

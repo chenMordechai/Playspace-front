@@ -19,14 +19,14 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 </>}
 
                 <label htmlFor="activityType">סוג השאלה</label>
-                <span>{activity.activityType}</span>
-                {/* <select required name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
+                {isEdit && <span>{activity.activityType}</span>}
+                {!isEdit && <select required name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
                     <option value="open">פתוחה</option>
                     <option value="multiple">רב ברירה</option>
                     <option value="yesno">נכון/לא נכון</option>
                     <option value="typing">הקלדה</option>
-                </select> */}
-
+                </select>
+                }
                 {activity.activityType === "multiple" && <>
                     <label htmlFor="activityAnswers">האופציות לתשובה (א,ב,ג,ד)</label>
                     <input required type="text" name="activityAnswers" id="activityAswers" value={activity.activityAnswers || ''} onChange={() => onHandleActivityChange(event, i, j)} />

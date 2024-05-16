@@ -53,9 +53,7 @@ import { LoginSignup } from "../cmps/LoginSignup.jsx"
 
 export function Signup() {
     const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
-    console.log('credentials:', credentials)
     const [shallowGame, setShallowGame] = useState(null)
-    console.log('shallowGame:', shallowGame)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
     const [stepIdx, setStepIdx] = useState(utilService.loadFromStorage('signupStepIdx') || 0)
