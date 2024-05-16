@@ -7,7 +7,7 @@ export function GameFilter({ filterBy, onSetFilterBy, sortBy, onSetSortBy }) {
                 <input type="text" id="name" placeholder="game name" name="name" value={filterBy.name} onChange={onSetFilterBy} />
                 <br />
                 <label htmlFor="sortBy">Sort</label>
-                <select name="sortBy" onChange={onSetSortBy} value={sortBy.sortBy}>
+                <select name="value" onChange={onSetSortBy} value={sortBy.value}>
                     <option value="name">Name</option>
                     <option value="date">Date</option>
                 </select>

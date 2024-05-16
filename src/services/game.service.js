@@ -25,7 +25,11 @@ async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
     console.log('service')
     // console.log('getGamess:', currPage)
     // ! avishay post get games with filter
-    filterBy = { ...filterBy, ...sortBy, currPage }
+    filterBy = {
+        filterBy,
+        sortBy,
+        currPage
+    }
     // console.log('filterBy:', filterBy)
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
     console.log('str:', str)
@@ -361,7 +365,7 @@ function getDefaultFilter() {
 }
 
 function getDefaultSort() {
-    return { sortBy: 'date', desc: 1 }
+    return { value: 'date', desc: 1 }
 }
 
 
