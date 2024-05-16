@@ -1,16 +1,15 @@
-.signup {
+.signup,
+.login {
     // width: 250px;
-    width: 100%;
-    max-width: 400px;
+    // width: 100%;
+    // max-width: 400px;
     // padding: 20px;
+    @include flex(column, center, center);
     // max-height: 100vh;
-
     // border: 1px solid grey;
-
     // @include for-mobile-layout {
     //     border: none;
     // }
-
     //////////////////////! step-0 ///////////////////////
     // .step-0 {
     //     .spacegame-logo-blue {
@@ -20,13 +19,11 @@
     //         left: calc(50% - 220px / 2);
     //         top: 64px;
     //     }
-
     //     .signup-form {
     //         position: relative;
     //         margin-top: 142px;
     //         padding: 0px 10px;
     //         @include flex(column, stretch, start, 21px);
-
     //         span {
     //             font-family: Poppins;
     //             font-weight: 600;
@@ -38,46 +35,38 @@
     //             align-self: end;
     //             font-size: 14px;
     //         }
-
     //         input {
     //             @include input;
     //             padding: 0px 38px;
     //         }
-
     //         .input-img {
     //             position: absolute;
     //             width: 22px;
     //             height: 22px;
-
     //             &.user {
     //                 left: 18px;
     //                 top: 56px;
     //             }
-
     //             &.password {
     //                 left: 18px;
     //                 top: 123px;
     //             }
-
     //             &.eye {
     //                 top: 123px;
     //                 right: 20px;
     //             }
     //         }
-
     //         button {
     //             @include btn;
     //             // margin-top: 29px;
     //             margin-top: 10px;
     //         }
-
     //         p {
     //             align-self: center;
     //             font-weight: 500;
     //             color: var(--primary);
     //             font-size: 14px;
     //             margin-top: 106px;
-
     //             span {
     //                 font-size: 14px;
     //             }
@@ -85,7 +74,6 @@
     //     }
     // }
     //////////////////////! step-1 ///////////////////////
-
     .step-1 {
         padding: 10px;
         // @include flex(column, stretch, center, 10px);

@@ -10,7 +10,7 @@
     height: 100vh;
     // overflow-y: scroll;
     .main-container {
-      @include flex(column, center, center, 10px);
+      // @include flex(column, center, center, 10px);
       height: 100%;
     }
     @include for-narrow-layout {

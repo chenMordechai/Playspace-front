@@ -1,5 +1,10 @@
 .login-signup,
 .admin-login {
+    margin-top: 142px;
+    width: 100%;
+    max-width: 400px;
+    min-width: 250px;
+
     .spacegame-logo-blue {
         position: absolute;
         width: 220px;
@@ -11,7 +16,7 @@
     .signup-form,
     .admin-login-form {
         position: relative;
-        margin-top: 142px;
+        // margin-top: 142px;
         padding: 0px 10px;
         @include flex(column, stretch, start, 21px);
 
