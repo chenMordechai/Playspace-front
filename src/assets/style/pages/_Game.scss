@@ -31,7 +31,11 @@
                 border: none;
                 border-radius: 59px;
                 @include flex(row, center, center);
+
                 &.game-name {
+                    font-size: 14px;
+                    font-weight: 600;
+                    line-height: 21px;
                     width: 110px;
                     height: 41px;
                     padding: 10px 20px 10px 20px;
@@ -51,6 +55,14 @@
             span {
                 width: 41px;
                 height: 41px;
+            }
+        }
+
+        .game-step-1 {
+            margin-top: 58px;
+            button {
+                @include btn;
+                margin-top: 20px;
             }
         }
     }

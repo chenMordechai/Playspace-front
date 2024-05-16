@@ -295,10 +295,10 @@ const game3 = {
     "activities": [
         {
             "id": null, //back
-            "text": "Updated Test Activity 1",
+            "text": "how are you today?",
             "isDeleted": false,
             "activityType": "open",
-            "correctAnswer": "Hello",
+            "correctAnswer": "Good",
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
@@ -314,8 +314,8 @@ const game3 = {
                 "type": "image/jpeg",
                 "url": "http://res.cloudinary.com/dnluclrao/image/upload/v1712521628/lgs8vl4uqnafeupbuvps.jpg"
             },
-            "textBefore": "sqe",
-            "textAfter": "r3r3",
+            "textBefore": "textBefore",
+            "textAfter": "textAfter",
             "lifeSaver": null
         },
         {

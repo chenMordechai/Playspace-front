@@ -1,0 +1,21 @@
+.activity-preview {
+    margin-top: 30px;
+
+    .activity-step-1 {
+        .text-container {
+            border-radius: 10px;
+            background-color: white;
+            padding: 10px 25px;
+
+            p {
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 24px;
+            }
+        }
+    }
+
+    button {
+        @include btn;
+    }
+}

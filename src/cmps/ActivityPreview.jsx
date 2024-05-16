@@ -4,6 +4,7 @@ import { Media } from './Media'
 import { ActivityType } from './ActivityType'
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
+    console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -80,18 +81,20 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                 </>}
 
                 {activityProgressType !== 'onTine' && <>
-                    {activity.textBefore && <h3>ההודעה לפני:{activity.textBefore}</h3>}
                     <Media media={activity.mediaBefore} />
+                    {activity.textBefore && <h3> {activity.textBefore}</h3>}
                     <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>
                 </>}
 
             </>}
 
             {/* activity */}
-            {currActivityStepIdx === 1 && <section>
-                <h3>השאלה: {activity.name}</h3>
+            {currActivityStepIdx === 1 && <section className='activity-step-1'>
+                <div className="text-container">
+                    <p> {activity.text}</p>
+
+                </div>
                 <section className="answer-container">
-                    <h2>Answer:</h2>
                     <ActivityType activity={activity} checkMultipleAnswer={checkMultipleAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} checkOpenAnswer={checkOpenAnswer} checkYesNoAnswer={checkYesNoAnswer} inputTypingValue={inputTypingValue} checkTypingAnswer={checkTypingAnswer} />
                 </section>
 

@@ -173,7 +173,8 @@ export function Game() {
                    <div className="clr3">Third</div> */}
 
                 {/* start game */}
-                {currGameStepIdx === 0 && <> <h1>ברוך הבא למשחק</h1>
+                {currGameStepIdx === 0 && <div className="game-step-1">
+                    <h1>ברוך הבא למשחק</h1>
                     <h2>שם המשחק:{game.name}</h2>
 
                     <section>
@@ -197,13 +198,13 @@ export function Game() {
                                 המשחק פתוח ואפשר לעבור בין השלבים והשאלות איך שרוצים
                             </section>}
                             {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
-                            <button onClick={onSetCurrGameStepIdx}>התחל לשחק</button>
+                            <button onClick={onSetCurrGameStepIdx}>Continue</button>
                         </>
                     </section>
                     {/* } */}
 
 
-                </>}
+                </div>}
 
                 {/* gameline  */}
                 {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
