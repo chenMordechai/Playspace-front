@@ -217,7 +217,7 @@ export function Game() {
                 {/* end game */}
                 {currGameStepIdx === 2 && <>
                     <h2> המשחק הסתיים</h2>
-                    {game.textAfter && <h4>הודעה אחרי המשחק:{game.textAfter}</h4>}
+                    {game.textAfter && <h4>{game.textAfter}</h4>}
                 </>}
             </div>
         </section>
