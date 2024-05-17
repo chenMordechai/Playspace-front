@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Media } from './Media'
 
 import { ActivityType } from './ActivityType'
+import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
     console.log('activity:', activity)
@@ -76,17 +77,14 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                         השאלה הסתיימה
                     </h2>}
 
-                    {isActivityStart() && !isActivityEnd() && <> <h2>השאלה התחילה</h2>
-                        {activity.textBefore && <h3>ההודעה לפני:{activity.textBefore}</h3>}
-                        <Media media={activity.mediaBefore} />
-                        <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>
+                    {isActivityStart() && !isActivityEnd() && <>
+                        {/* <h2>השאלה התחילה</h2> */}
+                        <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} />
                     </>}
                 </>}
 
                 {activityProgressType !== 'onTine' && <>
-                    <Media media={activity.mediaBefore} />
-                    {activity.textBefore && <h3> {activity.textBefore}</h3>}
-                    <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>התקדם לשאלה</button>
+                    <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} />
                 </>}
 
             </>}
@@ -112,9 +110,10 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
             {/* end activity */}
             {currActivityStepIdx === 2 && <>
-                {activity.textAfter && <h3>ההודעה אחרי:{activity.textAfter}</h3>}
+                <TextBeforeAfterActivity activity={activity} buttonFunc={onMoveToNextActivity} />
+                {/* {activity.textAfter && <h3>ההודעה אחרי:{activity.textAfter}</h3>}
                 <Media media={activity.mediaAfter} />
-                <button onClick={onMoveToNextActivity}>התקדם לשאלה הבאה</button>
+                <button onClick={onMoveToNextActivity}>התקדם לשאלה הבאה</button> */}
             </>}
 
         </section>
