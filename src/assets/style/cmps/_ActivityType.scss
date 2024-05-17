@@ -25,4 +25,40 @@
             line-height: 24px;
         }
     }
+
+    .yesno-answer {
+        margin-top: 48px;
+        @include flex(row, center, space-between, 10px);
+        button {
+            width: 160px;
+            height: 91px;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 24px;
+            background-color: white;
+            border: none;
+        }
+    }
+
+    .typing-answer {
+        background-color: white;
+        margin-top: 48px;
+        margin-bottom: 20px;
+        // height: 85px;
+        border-radius: 20px;
+        padding: 10px 40px 30px;
+
+        @include flex(row, center, center, 10px);
+        input {
+            width: 25px;
+            border: none;
+            border-bottom: 2px solid var(--primary-35);
+        }
+    }
+
+    button.open,
+    button.typing {
+        @include btn;
+    }
 }

@@ -1,0 +1,9 @@
+.text-before-after-activity {
+    p {
+        padding: 10px;
+    }
+
+    button {
+        @include btn;
+    }
+}

@@ -19,21 +19,24 @@ export function ActivityType({ activity, checkMultipleAnswer, textAreaValue, han
                     <img className="pen" src={pen} />
                     <input name="open" value={textAreaValue} onChange={handlaChange} />
                 </div>
-                <button onClick={checkOpenAnswer}>continue</button>
+                <button className="open" onClick={checkOpenAnswer}>continue</button>
             </>}
 
-            {activity.activityType === 'yesno' &&
+            {activity.activityType === 'yesno' && <>
                 <div className="yesno-answer">
-
                     <button onClick={() => checkYesNoAnswer('yes')}> כן</button>
                     <button onClick={() => checkYesNoAnswer('no')}> לא</button>
-                </div>}
+                </div>
+                {/* <button onClick={()=>setCurrActivityStepIdx(prev => prev + 1)}>continue</button> */}
+            </>}
 
             {activity.activityType === 'typing' &&
                 <div className="typing-answer">
-                    <input type="text" name="typing" value={inputTypingValue} onChange={handlaChange} />
-                    <button onClick={checkTypingAnswer}> שלח תשובה</button>
+                    {activity.correctAnswer?.split('').map((letter, i) => <>
+                        <input key={i} type="text" name="typing" value={inputTypingValue} onChange={handlaChange} />
+                    </>)}
                 </div>}
+            <button className="typing" onClick={checkTypingAnswer}>continue</button>
         </section>
     )
 }

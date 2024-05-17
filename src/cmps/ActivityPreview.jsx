@@ -20,6 +20,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     function checkOpenAnswer() {
+        console.log('checkOpenAnswer')
         if (!inputOpenValue) setIsAnswerCorrect(false)
         else {
             setIsAnswerCorrect(true)
@@ -35,6 +36,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     function checkYesNoAnswer(answer) {
         if (answer === activity.correctAnswer) setIsAnswerCorrect(true)
+        setCurrActivityStepIdx(prev => prev + 1)
     }
 
     function onMoveToNextActivity() {
@@ -79,12 +81,12 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
                     {isActivityStart() && !isActivityEnd() && <>
                         {/* <h2>השאלה התחילה</h2> */}
-                        <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} />
+                        <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} before={true} />
                     </>}
                 </>}
 
                 {activityProgressType !== 'onTine' && <>
-                    <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} />
+                    <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} before={true} />
                 </>}
 
             </>}
@@ -110,7 +112,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
             {/* end activity */}
             {currActivityStepIdx === 2 && <>
-                <TextBeforeAfterActivity activity={activity} buttonFunc={onMoveToNextActivity} />
+                <TextBeforeAfterActivity activity={activity} buttonFunc={onMoveToNextActivity} before={false} />
                 {/* {activity.textAfter && <h3>ההודעה אחרי:{activity.textAfter}</h3>}
                 <Media media={activity.mediaAfter} />
                 <button onClick={onMoveToNextActivity}>התקדם לשאלה הבאה</button> */}

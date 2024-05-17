@@ -319,7 +319,7 @@ const game3 = {
             "lifeSaver": null
         },
         {
-            "text": "Updated Test Activity 2",
+            "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar2?",
             "activityType": "yesno",
             "isDeleted": false,
             "correctAnswer": "yes",
@@ -332,17 +332,17 @@ const game3 = {
             "maxError": 0,
             "mediaBefore": null,
             "mediaAfter": null,
-            "textBefore": "csewf",
-            "textAfter": "ve",
+            "textBefore": "textBefore2",
+            "textAfter": "textAfter2",
             "lifeSaver": [
                 "skip"
             ]
         },
         {
-            "text": "Updated Test Activity 3",
+            "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar3?",
             "activityType": "typing",
             "isDeleted": false,
-            "correctAnswer": "Hello3",
+            "correctAnswer": "Hello",
             "activityAswers": null,
             "correctAnswerId": 0,
             "timeToRespond": 0,
@@ -352,8 +352,8 @@ const game3 = {
             "maxError": 0,
             "mediaBefore": null,
             "mediaAfter": null,
-            "textBefore": "fdwfd",
-            "textAfter": "fdwfdw",
+            "textBefore": "textBefore3",
+            "textAfter": "textAfter3",
             "lifeSaver": [
                 "skip"
             ]
