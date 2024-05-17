@@ -30,13 +30,14 @@ export function ActivityType({ activity, checkMultipleAnswer, textAreaValue, han
                 {/* <button onClick={()=>setCurrActivityStepIdx(prev => prev + 1)}>continue</button> */}
             </>}
 
-            {activity.activityType === 'typing' &&
+            {activity.activityType === 'typing' && <>
                 <div className="typing-answer">
-                    {activity.correctAnswer?.split('').map((letter, i) => <>
+                    {activity.correctAnswer?.split('').map((letter, i) =>
                         <input key={i} type="text" name="typing" value={inputTypingValue} onChange={handlaChange} />
-                    </>)}
-                </div>}
-            <button className="typing" onClick={checkTypingAnswer}>continue</button>
+                    )}
+                </div>
+                <button className="typing" onClick={checkTypingAnswer}>continue</button>
+            </>}
         </section>
     )
 }

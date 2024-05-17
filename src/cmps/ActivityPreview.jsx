@@ -17,6 +17,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         else {
             // check max error
         }
+        setCurrActivityStepIdx(prev => prev + 1)
     }
 
     function checkOpenAnswer() {
@@ -31,7 +32,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     function checkTypingAnswer() {
         if (!inputTypingValue) setIsAnswerCorrect(false)
         else if (inputTypingValue === activity.correctAnswer) setIsAnswerCorrect(true)
-
+        setCurrActivityStepIdx(prev => prev + 1)
     }
 
     function checkYesNoAnswer(answer) {

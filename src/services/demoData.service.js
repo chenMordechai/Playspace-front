@@ -357,7 +357,32 @@ const game3 = {
             "lifeSaver": [
                 "skip"
             ]
-        }
+        }, {
+            "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar4?",
+            "isDeleted": false,
+            "activityType": "multiple",
+            "currectAnswer": "כן",
+            "activityAnswers": [
+                "Answer1",
+                "Answer2",
+                "Answer3",
+                "Answer4"
+            ],
+            "correctAnswerId": 0,
+            "timeToRespond": 0,
+            "activityStartTimestamp": null,
+            "activityEndTimestamp": null,
+            "pointsValue": 1,
+            "maxError": 1,
+            "mediaBefore": null,
+            "mediaAfter": null,
+            "textBefore": "textBefore4",
+            "textAfter": "textAfter4",
+            "lifeSaver": [
+                "fifty"
+            ],
+
+        },
     ],
     "stages": null,
     "createdDate": "2024-04-08T18:57:43.474Z", //back
