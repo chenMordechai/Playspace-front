@@ -58,7 +58,7 @@ export function GameAdd() {
         let { name, value, type } = ev.target
         if (type === 'number') value = +value
         if (type === 'checkbox') value = ev.target.checked
-        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => option.value)
+        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => ({ adminId: option.value }))
 
         if (name === 'gameType') {
             value = (value) ? 'stages' : 'activities'

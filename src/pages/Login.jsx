@@ -7,7 +7,15 @@ import { authService } from '../services/auth.service'
 import { LoginSignup } from '../cmps/LoginSignup'
 import { AdminLogin } from '../cmps/AdminLogin'
 
+import Axios from 'axios'
+
 export function Login() {
+
+    const fetchData = async () => {
+        const response = await Axios.get('https://localhost:5173/api/Test/GetHelloWorld');
+        console.log(response.data);
+    };
+    fetchData()
     const [credentials, setCredentials] = useState(authService.getEmptyCredentials())
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
