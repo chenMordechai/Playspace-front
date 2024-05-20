@@ -35,7 +35,7 @@ export function Admin() {
 
     useEffect(() => {
         // console.log('filterBy, sortBy:', filterBy, sortBy)
-        // init()
+        init()
     }, [filterBy, sortBy])
 
     useEffect(() => {
@@ -44,12 +44,12 @@ export function Admin() {
 
     // get demo data
     async function init() {
-        console.log('init')
         try {
             const games = await getGames(loggedinUser, filterBy, sortBy, currPage)
             console.log('games:', games)
             if (!games.length) return;
-            setGames(prev => [...prev, ...games]);
+            setGames(games)
+            // setGames(prev => [...prev, ...games]);
         } catch (err) {
             console.log('err:', err)
         }

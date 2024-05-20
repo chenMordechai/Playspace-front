@@ -1,7 +1,6 @@
 import { gameService } from "../../services/game.service.js";
 
 export async function getGames(loggedinUser, filterBy, sortBy, currPage) {
-    console.log('getGames')
     try {
         const games = await gameService.getGames(loggedinUser, filterBy, sortBy, currPage)
         console.log('games:', games)
