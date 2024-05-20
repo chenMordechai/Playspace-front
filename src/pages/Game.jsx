@@ -67,7 +67,6 @@ export function Game() {
     async function init() {
         try {
             // work : http://localhost:5173/game/96ebb7e2-abf2-46df-1727-08dc75a038e2
-            //! didnt work
             // const game = await getGameById(gameId)
 
             // demo data
@@ -180,7 +179,8 @@ export function Game() {
                     <section>
                         {/* {game.gameStartTimestamp && game.gameEndTimestamp && <> */}
                         {game.activityProgressType === 'onTime' && <>
-                            {!isGameStart() > 0 && <> <h4>המשחק יתחיל בתאריך:  {game.dateStart}</h4>
+                            {!isGameStart() > 0 && <>
+                                <h4>המשחק יתחיל בתאריך:  {game.dateStart}</h4>
                                 <h4>בשעה: {game.timeStart}</h4>
                                 <h4>בעוד: {getClockForGame() + 'ms'}</h4>
                                 <h4>ויסתיים בתאריך:  {game.dateEnd}</h4>
