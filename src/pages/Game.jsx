@@ -9,6 +9,7 @@ import { demoDataService } from "../services/demoData.service.js"
 import { utilService } from "../services/util.service.js"
 import logoBig from '../assets/img/logo-big.png'
 import points from '../assets/img/3points.png'
+import { GameScore } from "../cmps/GameScore.jsx"
 
 
 // game/:gameId
@@ -22,6 +23,9 @@ export function Game() {
     const [currStageIdx, setCurrStageIdx] = useState(utilService.loadFromStorage('currStageIdx') || 0)
     const [currActivityIdx, setCurrActivityIdx] = useState(utilService.loadFromStorage('currActivityIdx') || 0)
 
+    const [isGameScoreOpen, setIsGameScoreOpen] = useState(true)
+    const [players, setPlayers] = useState(null)
+
     const { gameId } = useParams()
 
     useEffect(() => {
@@ -29,6 +33,8 @@ export function Game() {
         // if !loggdin player return
         init()
         // saveIdxsToStorage()
+
+        getPlayers()
     }, [])
 
     useEffect(() => {
@@ -87,6 +93,62 @@ export function Game() {
         }
     }
 
+    async function getPlayers() {
+        // todo: get players from my group
+
+        const players = [
+            {
+                id: '01',
+                name: 'you',
+                score: 1067,
+                media: { url: "/src/assets/img/avatar4.png", type: "image" }
+            },
+            {
+                id: '02',
+                name: '1189',
+                score: 1389,
+                media: { url: "/src/assets/img/avatar3.png", type: "image" }
+            },
+            {
+                id: '03',
+                name: 'shirel',
+                score: 645,
+                media: { url: "/src/assets/img/avatar1.png", type: "image" }
+            },
+            {
+                id: '04',
+                name: 'yaniv',
+                score: 800,
+                media: { url: "/src/assets/img/avatar2.png", type: "image" }
+            },
+            {
+                id: '05',
+                name: 'moshe',
+                score: 765,
+                media: { url: "/src/assets/img/avatar6.png", type: "image" }
+            },
+            // {
+            //     id: '06',
+            //     name: 'moshe',
+            //     score: 765,
+            //     media: { url: "/src/assets/img/avatar6.png", type: "image" }
+            // },
+            // {
+            //     id: '07',
+            //     name: 'moshe',
+            //     score: 765,
+            //     media: { url: "/src/assets/img/avatar6.png", type: "image" }
+            // },
+            // {
+            //     id: '08',
+            //     name: 'moshe',
+            //     score: 765,
+            //     media: { url: "/src/assets/img/avatar6.png", type: "image" }
+            // },
+        ]
+        players.sort((a, b) => a.score - b.score)
+        setPlayers(players)
+    }
 
     function changeColorsVars() {
         const elRoot = document.querySelector(':root')
@@ -166,59 +228,68 @@ export function Game() {
                     <button className="game-name">{game.name}</button>
                     <button className="points"><img src={points} /></button>
                 </div>
-                {/* game color theme */}
-                {/* <div className="clr1">First</div>
+                {!isGameScoreOpen && <div>
+                    {/* game color theme */}
+                    {/* <div className="clr1">First</div>
                     <div className="clr2">Second</div>
                    <div className="clr3">Third</div> */}
 
-                {/* start game */}
-                {currGameStepIdx === 0 && <div className="game-step-1">
-                    <h1>ברוך הבא למשחק</h1>
-                    <h2>שם המשחק:{game.name}</h2>
+                    {/* start game */}
+                    {currGameStepIdx === 0 && <div className="game-step-1">
+                        <h1>ברוך הבא למשחק</h1>
+                        <h2>שם המשחק:{game.name}</h2>
 
-                    <section>
-                        {/* {game.gameStartTimestamp && game.gameEndTimestamp && <> */}
-                        {game.activityProgressType === 'onTime' && <>
-                            {!isGameStart() > 0 && <>
-                                <h4>המשחק יתחיל בתאריך:  {game.dateStart}</h4>
-                                <h4>בשעה: {game.timeStart}</h4>
-                                <h4>בעוד: {getClockForGame() + 'ms'}</h4>
-                                <h4>ויסתיים בתאריך:  {game.dateEnd}</h4>
-                                <h4>בשעה: {game.timeEnd}</h4>
+                        <section>
+                            {/* {game.gameStartTimestamp && game.gameEndTimestamp && <> */}
+                            {game.activityProgressType === 'onTime' && <>
+                                {!isGameStart() > 0 && <>
+                                    <h4>המשחק יתחיל בתאריך:  {game.dateStart}</h4>
+                                    <h4>בשעה: {game.timeStart}</h4>
+                                    <h4>בעוד: {getClockForGame() + 'ms'}</h4>
+                                    <h4>ויסתיים בתאריך:  {game.dateEnd}</h4>
+                                    <h4>בשעה: {game.timeEnd}</h4>
+                                </>}
+                                {isGameEnd() && <h2>המשחק הסתיים</h2>}
+                                {isGameStart() && !isGameEnd() && <h2>המשחק התחיל</h2>}
                             </>}
-                            {isGameEnd() && <h2>המשחק הסתיים</h2>}
-                            {isGameStart() && !isGameEnd() && <h2>המשחק התחיל</h2>}
-                        </>}
 
-                        <>
-                            {game.activityProgressType === 'onProgress' && <section>
-                                המשחק לפי התקדמות, כל שלב יפתח אחרי שתסיימו את השלב הקודם
-                            </section>}
-                            {game.activityProgressType === 'open' && <section>
-                                המשחק פתוח ואפשר לעבור בין השלבים והשאלות איך שרוצים
-                            </section>}
-                            {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
-                            <button onClick={onSetCurrGameStepIdx}>Continue</button>
-                        </>
-                    </section>
-                    {/* } */}
+                            <>
+                                {game.activityProgressType === 'onProgress' && <section>
+                                    המשחק לפי התקדמות, כל שלב יפתח אחרי שתסיימו את השלב הקודם
+                                </section>}
+                                {game.activityProgressType === 'open' && <section>
+                                    המשחק פתוח ואפשר לעבור בין השלבים והשאלות איך שרוצים
+                                </section>}
+                                {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
+                                <button onClick={onSetCurrGameStepIdx}>Continue</button>
+                            </>
+                        </section>
+                        {/* } */}
 
+
+                    </div>}
+
+                    {/* gameline  */}
+                    {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
+                    {/* game stages / activities */}
+                    {currGameStepIdx === 1 && <>
+                        {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
+                        {game.gameType === 'activities' && <ActivityPreview activityProgressType={game.activityProgressType} activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
+                    </>}
+
+                    {/* end game */}
+                    {currGameStepIdx === 2 && <>
+                        <h2> המשחק הסתיים</h2>
+                        {game.textAfter && <h4>{game.textAfter}</h4>}
+                    </>}
 
                 </div>}
 
-                {/* gameline  */}
-                {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
-                {/* game stages / activities */}
-                {currGameStepIdx === 1 && <>
-                    {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
-                    {game.gameType === 'activities' && <ActivityPreview activityProgressType={game.activityProgressType} activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
+                {isGameScoreOpen && <>
+                    <GameScore players={players} loggedinPlayerId="01" />
+                    <button className="score-btn">continue</button>
                 </>}
 
-                {/* end game */}
-                {currGameStepIdx === 2 && <>
-                    <h2> המשחק הסתיים</h2>
-                    {game.textAfter && <h4>{game.textAfter}</h4>}
-                </>}
             </div>
         </section>
     )

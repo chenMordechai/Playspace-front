@@ -21,7 +21,6 @@ import { ScreenOpenContext } from './contexts/ScreenOpenConext'
 import { useToggle } from './customHooks/useToggle'
 import { AdminGroups } from './cmps/AdminGroups'
 import { AdminPlayers } from './cmps/AdminPlayers'
-import { GameScore } from './pages/GameScore'
 
 
 function App() {
@@ -54,7 +53,6 @@ function App() {
                   <Route path="/game/:gameId" element={<Game />} />
                   <Route path="/admin" element={<Admin />} />
 
-                  <Route path="/game/score" element={<GameScore />} />
                   <Route path="/game/scores/edit" element={<AdminPlayersScores />}   >
                     <Route path="/game/scores/edit/groups" element={<AdminGroups />} />
                     <Route path="/game/scores/edit/players" element={<AdminPlayers />} />

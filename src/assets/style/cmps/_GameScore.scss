@@ -1,0 +1,48 @@
+.game-score {
+    background-color: var(--primary-35);
+    padding: 40px 40px 30px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: white;
+    border-radius: 10px;
+    .players-container {
+        ul {
+            li {
+                padding: 10px 0px;
+                border-top: 1px solid white;
+                &:last-child {
+                    border-bottom: 1px solid white;
+                }
+                section {
+                    @include flex(row, center, space-evenly);
+
+                    &.you {
+                        background-color: #fff;
+                        color: var(--primary);
+                        border-radius: 10px;
+                        padding: 7px;
+                        // margin: 15px 0px;
+                    }
+
+                    span.img-container {
+                        @include flex(row, center, center, 13px);
+
+                        img {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                        }
+                    }
+
+                    span.name {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
