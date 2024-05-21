@@ -9,6 +9,23 @@
     line-height: 24px;
     color: white;
     border-radius: 10px;
+
+    position: relative;
+
+    & > img {
+        position: absolute;
+        width: 45.64px;
+        height: 35px;
+
+        &:first-child {
+            top: -10px;
+            left: 50px;
+        }
+        &:nth-child(2) {
+            top: -10px;
+            right: 50px;
+        }
+    }
     .players-container {
         ul {
             li {

@@ -1,11 +1,15 @@
+import dimond from '../assets/img/dimond.png'
+import goblet from '../assets/img/goblet.png'
+
+
 
 export function GameScore({ players, loggedinPlayerId }) {
     console.log('loggedinPlayerId:', loggedinPlayerId)
     console.log('players:', players)
     return (
         <section className="game-score">
-            {/* <img src="" alt="" />
-            <img src="" alt="" /> */}
+            <img src={goblet} />
+            <img src={dimond} />
 
             <div className="players-container">
                 <ul>{players.map((player, idx) => <li >
