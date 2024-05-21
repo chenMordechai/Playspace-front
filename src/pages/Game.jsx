@@ -2,14 +2,17 @@ import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 
 import { getGameById } from "../store/actions/game.action.js"
-import { ActivityPreview } from "../cmps/ActivityPreview"
-import { StagePreview } from "../cmps/StagePreview"
+
 import { GameLine } from "../cmps/GameLine"
 import { demoDataService } from "../services/demoData.service.js"
 import { utilService } from "../services/util.service.js"
 import logoBig from '../assets/img/logo-big.png'
 import points from '../assets/img/3points.png'
 import { GameScore } from "../cmps/GameScore.jsx"
+import { useSelector } from "react-redux"
+import { GameStep0 } from "../cmps/GameStep0.jsx"
+import { GameStep1 } from "../cmps/GameStep1.jsx"
+import { GameStep2 } from "../cmps/GameStep2.jsx"
 
 
 // game/:gameId
@@ -26,11 +29,13 @@ export function Game() {
     const [isGameScoreOpen, setIsGameScoreOpen] = useState(true)
     const [players, setPlayers] = useState(null)
 
+    const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
+    // console.log('loggedinPlayer:', loggedinPlayer)
+
     const { gameId } = useParams()
 
     useEffect(() => {
-        // get player from store
-        // if !loggdin player return
+        // todo: // if !loggdinPlayer return
         init()
         // saveIdxsToStorage()
 
@@ -43,7 +48,7 @@ export function Game() {
 
     useEffect(() => {
         utilService.saveToStorage('currStageIdx', currStageIdx)
-        if (currStageIdx === game?.stages?.length) setCurrGameStepIdx(prev => prev + 1)
+        if (currStageIdx === game?.stages?.length) onSetCurrGameStepIdx()
     }, [currStageIdx])
 
     useEffect(() => {
@@ -54,7 +59,8 @@ export function Game() {
             }
         } else {
             if (currActivityIdx === game?.activities?.length) {
-                setCurrGameStepIdx(prev => prev + 1)
+                // setCurrGameStepIdx(prev => prev + 1)
+                onSetCurrGameStepIdx()
             }
         }
     }, [currActivityIdx])
@@ -146,6 +152,7 @@ export function Game() {
             //     media: { url: "/src/assets/img/avatar6.png", type: "image" }
             // },
         ]
+        // todo: move to service
         players.sort((a, b) => a.score - b.score)
         setPlayers(players)
     }
@@ -202,9 +209,11 @@ export function Game() {
 
     function onSetCurrGameStepIdx() {
         console.log('onSetCurrGameStepIdx')
+        console.log('currGameStepIdx:', currGameStepIdx)
         if (game.activityProgressType === 'onTime') {
             if (!isGameStart || isGameEnd()) return
         }
+        if (currGameStepIdx === 2) return
         setCurrGameStepIdx(prev => prev + 1)
     }
 
@@ -235,58 +244,20 @@ export function Game() {
                    <div className="clr3">Third</div> */}
 
                     {/* start game */}
-                    {currGameStepIdx === 0 && <div className="game-step-1">
-                        <h1>ברוך הבא למשחק</h1>
-                        <h2>שם המשחק:{game.name}</h2>
-
-                        <section>
-                            {/* {game.gameStartTimestamp && game.gameEndTimestamp && <> */}
-                            {game.activityProgressType === 'onTime' && <>
-                                {!isGameStart() > 0 && <>
-                                    <h4>המשחק יתחיל בתאריך:  {game.dateStart}</h4>
-                                    <h4>בשעה: {game.timeStart}</h4>
-                                    <h4>בעוד: {getClockForGame() + 'ms'}</h4>
-                                    <h4>ויסתיים בתאריך:  {game.dateEnd}</h4>
-                                    <h4>בשעה: {game.timeEnd}</h4>
-                                </>}
-                                {isGameEnd() && <h2>המשחק הסתיים</h2>}
-                                {isGameStart() && !isGameEnd() && <h2>המשחק התחיל</h2>}
-                            </>}
-
-                            <>
-                                {game.activityProgressType === 'onProgress' && <section>
-                                    המשחק לפי התקדמות, כל שלב יפתח אחרי שתסיימו את השלב הקודם
-                                </section>}
-                                {game.activityProgressType === 'open' && <section>
-                                    המשחק פתוח ואפשר לעבור בין השלבים והשאלות איך שרוצים
-                                </section>}
-                                {game.textBefore && <h4>הודעה לפני המשחק: {game.textBefore}</h4>}
-                                <button onClick={onSetCurrGameStepIdx}>Continue</button>
-                            </>
-                        </section>
-                        {/* } */}
-
-
-                    </div>}
+                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} />}
 
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
                     {/* game stages / activities */}
-                    {currGameStepIdx === 1 && <>
-                        {game.gameType === 'stages' && <StagePreview stage={game.stages[currStageIdx]} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
-                        {game.gameType === 'activities' && <ActivityPreview activityProgressType={game.activityProgressType} activity={game.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
-                    </>}
+                    {currGameStepIdx === 1 && <GameStep1 game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
 
                     {/* end game */}
-                    {currGameStepIdx === 2 && <>
-                        <h2> המשחק הסתיים</h2>
-                        {game.textAfter && <h4>{game.textAfter}</h4>}
-                    </>}
+                    {currGameStepIdx === 2 && <GameStep2 textAfterGame={game.textAfter} />}
 
                 </div>}
 
                 {isGameScoreOpen && <>
-                    <GameScore players={players} loggedinPlayerId="01" />
+                    <GameScore players={players} loggedinPlayerId={loggedinPlayer?.id || '01'} />
                     <button className="score-btn">continue</button>
                 </>}
 
