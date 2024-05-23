@@ -30,7 +30,9 @@ async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
         currPage
     }
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
-    const games = await httpService.post(`${str}/Games`, filterBy)
+    // work
+    const games = await httpService.get(`${str}/Games`)
+    // const games = await httpService.post(`${str}/Games`, filterBy)
     return games
 }
 

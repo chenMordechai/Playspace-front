@@ -102,7 +102,7 @@ export function Signup() {
     async function getShallowGame() {
         console.log('getShallowGame')
         // const shallowGame = await getShallowGameById(gameId)
-        const shallowGame = await getShallowGameById("d752efce-17e0-4d2a-8627-08dc644c8fa4")
+        const shallowGame = await getShallowGameById("83a19a02-8fe0-4442-dd7e-08dc7b5a30d0")
         console.log('shallowGame:', shallowGame)
         shallowGame.groups = [
             {
