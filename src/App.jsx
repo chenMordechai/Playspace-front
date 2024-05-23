@@ -53,9 +53,9 @@ function App() {
                   <Route path="/game/:gameId" element={<Game />} />
                   <Route path="/admin" element={<Admin />} />
 
-                  <Route path="/game/scores/edit" element={<AdminPlayersScores />}   >
-                    <Route path="/game/scores/edit/groups" element={<AdminGroups />} />
-                    <Route path="/game/scores/edit/players" element={<AdminPlayers />} />
+                  <Route path="/game/:gameId/scores/edit" element={<AdminPlayersScores />}   >
+                    <Route path="/game/:gameId/scores/edit/groups" element={<AdminGroups />} />
+                    <Route path="/game/:gameId/scores/edit/players" element={<AdminPlayers />} />
                   </Route>
 
                   <Route path="/user" element={<User />} />

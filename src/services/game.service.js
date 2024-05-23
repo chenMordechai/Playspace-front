@@ -6,6 +6,8 @@ const BASE_URL = 'Game/'
 
 export const gameService = {
     getGames,
+    getPlayers,
+    getGroups,
     getGameById,
     getShallowGameById,
     save,
@@ -22,21 +24,36 @@ export const gameService = {
 // get demo data
 // work
 async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
-    // ! avishay post get games with filter
     filterBy = {
         filterBy,
         sortBy,
         currPage
     }
-    console.log('filterBy:', filterBy)
     const str = loggedinUser?.checkAdmin ? 'Admin' : 'User'
-    console.log('str:', str)
     const games = await httpService.post(`${str}/Games`, filterBy)
-    // const games = await httpService.post(`Admin/Games`, filterBy)
-    console.log('games:', games)
     return games
+}
 
+async function getPlayers(gameId, filterBy = {}, sortBy = {}, currPage) {
+    filterBy = {
+        filterBy,
+        sortBy,
+        currPage
+    }
+    const players = await httpService.post(`Admin/Game/${gameId}/Player`, filterBy)
+    console.log('players:', players)
+    return players
+}
 
+async function getGroups(gameId) {
+    // filterBy = {
+    //     filterBy,
+    //     sortBy,
+    //     currPage
+    // }
+    const groups = await httpService.post(`Admin/Game/${gameId}/Groups`)
+    console.log('groups:', groups)
+    return groups
 }
 
 async function getGameById(gameId) {

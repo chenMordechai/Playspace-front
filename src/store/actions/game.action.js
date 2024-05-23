@@ -12,6 +12,28 @@ export async function getGames(loggedinUser, filterBy, sortBy, currPage) {
     }
 }
 
+export async function getPlayers(gameId, filterBy) {
+    try {
+        const players = await gameService.getPlayers(gameId, filterBy)
+        console.log('players:', players)
+        return players
+    } catch (err) {
+        console.log('game action -> Cannot load players', err)
+        throw err
+    }
+}
+
+export async function getGroups(gameId, filterBy) {
+    try {
+        const groups = await gameService.getGroups(gameId, filterBy)
+        console.log('groups:', groups)
+        return groups
+    } catch (err) {
+        console.log('game action -> Cannot load groups', err)
+        throw err
+    }
+}
+
 export async function getGameById(gameId) {
     try {
         const game = await gameService.getGameById(gameId)
