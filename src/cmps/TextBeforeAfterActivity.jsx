@@ -8,8 +8,8 @@ export function TextBeforeAfterActivity({ activity, buttonFunc, before }) {
 
     return (
         <section className="text-before-after-activity">
-            <Media media={activity[madia]} />
             {activity[text] && <p>{activity[text]}</p>}
+            <Media media={activity[madia]} />
             <button onClick={buttonFunc}>continue</button>
         </section>
     )

@@ -21,7 +21,7 @@ export function User() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loggedinUser) navigate('/')
+        // if (!loggedinUser) navigate('/')
 
         init()
     }, [])
