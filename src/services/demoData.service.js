@@ -125,9 +125,9 @@ const game1 = {
     "gameEndTimestamp": 1717218000000, // v // future
 
     "themeColors": [
-        "#c86400",
-        "#c80064",
-        "#c8c8c8"
+        "#CC8B8C",
+        "#C69DD2",
+        "#A390E4",
     ],
     "icon": {
         "type": "image/png",
@@ -263,9 +263,9 @@ const game2 = {
     "gameStartTimestamp": 1707631200000,
     "gameEndTimestamp": 1718082000000,
     "themeColors": [
-        "#c86400",
-        "#c80064",
-        "#c8c8c8"
+        "#8E3E63",
+        "#D2649A",
+        "#F6FAB9"
     ],
     "icon": {
         "type": "image/png",
@@ -404,9 +404,9 @@ const game3 = {
     "gameStartTimestamp": null,
     "gameEndTimestampstamp": null,
     "themeColors": [
-        "#c86400",
-        "#c80064",
-        "#c8c8c8"
+        "#74512D",
+        "#AF8F6F",
+        "#F8F4E1"
     ],
     "icon": {
         "type": "image/png",
@@ -545,9 +545,9 @@ const game4 = {
     "gameEndTimestamp": 1717218000000, // v // future
 
     "themeColors": [
-        "#c86400",
-        "#c80064",
-        "#c8c8c8"
+        "#006769",
+        "#40A578",
+        "#9DDE8B"
     ],
     "icon": {
         "type": "image/png",

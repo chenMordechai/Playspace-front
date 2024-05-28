@@ -94,6 +94,11 @@ export function Signup() {
         utilService.saveToStorage('credentials', credentials)
     }, [credentials])
 
+    useEffect(() => {
+        changeColorsVars()
+    }, [shallowGame])
+
+
     function handleChange(ev) {
         let { name, value } = ev.target
         setCredentials(prev => ({ ...prev, [name]: value }))
@@ -104,6 +109,7 @@ export function Signup() {
         // const shallowGame = await getShallowGameById(gameId)
         const shallowGame = await getShallowGameById("83a19a02-8fe0-4442-dd7e-08dc7b5a30d0")
         console.log('shallowGame:', shallowGame)
+
         shallowGame.groups = [
             {
                 "id": "tHZmMy",
@@ -138,8 +144,24 @@ export function Signup() {
         ]
         setShallowGame(shallowGame)
 
-        colors.current = shallowGame.groups.map(g => utilService.getRandomColor())
-        console.log('colors:', colors)
+
+        // colors.current = shallowGame.groups.map(g => utilService.getRandomColor())
+        // console.log('colors:', colors)
+    }
+
+    function changeColorsVars() {
+        console.log('shallowGame:', shallowGame)
+        if (!shallowGame || !shallowGame.themeColors) return
+        const elRoot = document.querySelector(':root')
+        // shallowGame?.themeColors.forEach((color, i) => {
+        //     elRoot.style.setProperty(`--clr-${i}`, color);
+        // })
+        // console.log('shallowGame?.themeColors:', shallowGame?.themeColors)
+
+        elRoot.style.setProperty(`--primary`, shallowGame?.themeColors[0]);
+        elRoot.style.setProperty(`--primary-35`, shallowGame?.themeColors[1]);
+        elRoot.style.setProperty(`--gradient-clr-1`, shallowGame?.themeColors[2]);
+        elRoot.style.setProperty(`--gradient-clr-2`, shallowGame?.themeColors[0]);
     }
 
     async function onChangeFileInput(ev) {
@@ -229,7 +251,7 @@ export function Signup() {
                     <ul className="groups-container">
                         {shallowGame.groups?.map((group, i) =>
                             <li key={group.id}
-                                style={{ backgroundColor: colors.current[i] }}
+                                style={{ backgroundColor: "grey" }}
                                 className={credentials.groupId === group.id ? 'selected' : ''}
                                 onClick={() => setCredentials(prev => ({ ...prev, groupId: group.id }))}>
 
