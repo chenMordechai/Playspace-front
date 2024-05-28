@@ -41,13 +41,13 @@ import v from '../assets/img/green-v.png'
 import companyLogo from '../assets/img/company-logo.png'
 import eye from '../assets/img/eye.png'
 import plus from '../assets/img/plus.png'
+import { LoginSignup } from "../cmps/LoginSignup.jsx"
 
 
 import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
-import { LoginSignup } from "../cmps/LoginSignup.jsx"
 
 // work : http://localhost:5173/signup/d752efce-17e0-4d2a-8627-08dc644c8fa4
 
@@ -58,12 +58,12 @@ export function Signup() {
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
     const [stepIdx, setStepIdx] = useState(utilService.loadFromStorage('signupStepIdx') || 0)
     const [isLoading, setIsLoading] = useState(false)
-    const [openUserImgAddModal, onToggleOpenUserImgAddModal] = useToggle(false)
 
     const avatars1 = [avatar1, avatar2, avatar3, avatar4, avatar5, avatar6, avatar7, avatar8]
     const avatars2 = [avatar9, avatar10, avatar11, avatar12, avatar13, avatar14, avatar15, avatar16]
     const avatars3 = [avatar17, avatar18, avatar19, avatar20, avatar21, avatar22, avatar23, avatar24]
 
+    const [openUserImgAddModal, onToggleOpenUserImgAddModal] = useToggle(false)
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
     useEffectToggleModal(onOpenScreen, onCloseScreen, [openUserImgAddModal])
     useEffectCloseModal(isScreenOpen, [onToggleOpenUserImgAddModal])

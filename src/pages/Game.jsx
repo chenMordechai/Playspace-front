@@ -1,5 +1,5 @@
+import { useState, useEffect, useContext } from "react"
 import { useParams } from "react-router-dom"
-import { useState, useEffect } from "react"
 
 import { getGameById } from "../store/actions/game.action.js"
 
@@ -13,6 +13,12 @@ import { useSelector } from "react-redux"
 import { GameStep0 } from "../cmps/GameStep0.jsx"
 import { GameStep1 } from "../cmps/GameStep1.jsx"
 import { GameStep2 } from "../cmps/GameStep2.jsx"
+import { GameOptionModal } from "../cmps/GameOptionModal.jsx"
+
+import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
+import { useToggle } from '../customHooks/useToggle'
+import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
+import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 
 
 // game/:gameId
@@ -26,11 +32,16 @@ export function Game() {
     const [currStageIdx, setCurrStageIdx] = useState(utilService.loadFromStorage('currStageIdx') || 0)
     const [currActivityIdx, setCurrActivityIdx] = useState(utilService.loadFromStorage('currActivityIdx') || 0)
 
-    const [isGameScoreOpen, setIsGameScoreOpen] = useState(true)
+    const [isGameScoreOpen, setIsGameScoreOpen] = useState(false)
     const [players, setPlayers] = useState(null)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
     // console.log('loggedinPlayer:', loggedinPlayer)
+
+    const [openGameOptionModal, onToggleOpenGameOptionModal] = useToggle(false)
+    const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
+    useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal])
+    useEffectCloseModal(isScreenOpen, [onToggleOpenGameOptionModal])
 
     const { gameId } = useParams()
 
@@ -235,8 +246,11 @@ export function Game() {
                 <div className="game-header">
                     <span></span>
                     <button className="game-name">{game.name}</button>
-                    <button className="points"><img src={points} /></button>
+                    <button onClick={onToggleOpenGameOptionModal} className="points"><img src={points} /></button>
+                    {openGameOptionModal && <GameOptionModal />}
+
                 </div>
+
                 {!isGameScoreOpen && <div>
                     {/* game color theme */}
                     {/* <div className="clr1">First</div>
