@@ -161,7 +161,8 @@ function getEmptyActivity() {
         mediaAfter: null, // {type : image/video , txt:'' , url:''} v //e
         textBefore: '', // v //e
         textAfter: '', // v //e
-        lifeSaver: null // v [] //e
+        lifeSaver: null, // v [] //e
+        isRequired: false, // v
     }
 }
 

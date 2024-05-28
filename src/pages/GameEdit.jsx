@@ -190,7 +190,7 @@ export function GameEdit() {
     function onHandleStageChange(ev, i) {
         let { value, name, type } = ev.target
         if (type === 'checkbox') value = ev.target.checked
-        if (type === 'number') value = +value
+        else if (type === 'number') value = +value
 
         if (name === 'activities') {
             const object = gameService.getEmptyActivity()
@@ -215,6 +215,7 @@ export function GameEdit() {
     async function onHandleActivityChange(ev, i, j) {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
+        else if (type === 'checkbox') value = ev.target.checked
         else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev, game.id, true)
         else if (name === 'activityAnswers') {
             value = value.split(',')

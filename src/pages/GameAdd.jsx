@@ -31,9 +31,9 @@ export function GameAdd() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        // if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         // after admin login push the admin id to game.admins (default in the form)
-        game.admins.push(loggedinUser.id)
+        // game.admins.push(loggedinUser.id)
         loadAdmins()
     }, [])
 
@@ -134,7 +134,7 @@ export function GameAdd() {
     function onHandleStageChange(ev, i) {
         let { value, name, type } = ev.target
         if (type === 'checkbox') value = ev.target.checked
-        if (type === 'number') value = +value
+        else if (type === 'number') value = +value
 
         if (name === 'activities') {
             console.log('activities')
@@ -160,6 +160,7 @@ export function GameAdd() {
     async function onHandleActivityChange(ev, i, j) {
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
+        else if (type === 'checkbox') value = ev.target.checked
         else if (type === 'file') value = await utilService.uploadImgToCloudinary(ev, game.id, true)
         else if (name === 'activityAnswers') {
             value = value.split(',')

@@ -38,6 +38,9 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 <label htmlFor="pointsValue">ניקוד</label>
                 <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />
 
+                <label htmlFor="isRequired">האם השאלה חובה?</label>
+                <input type="checkbox" name="isRequired" id="isRequired" value={activity.isRequired} onChange={() => onHandleActivityChange(event, i, j)} />
+
                 <label htmlFor="maxError">כמה טעויות מותר</label>
                 <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() => onHandleActivityChange(event, i, j)} />
 
@@ -66,8 +69,8 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 <label htmlFor="lifeSaver">גלגלי הצלה</label>
                 <select multiple name="lifeSaver" id="lifeSaver" value={activities.lifeSaver} onChange={() => onHandleActivityChange(event, i, j)} >
                     {activity.activityType === 'multiple' && <option value="fifty">50/50</option>}
-                    <option value="moreTime">תוספת זמן</option>
-                    <option value="skip">דלג</option>
+                    {/* <option value="moreTime">תוספת זמן</option> */}
+                    {activity.isRequired && <option value="skip">דלג</option>}
                 </select>
 
 
