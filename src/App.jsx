@@ -21,10 +21,12 @@ import { ScreenOpenContext } from './contexts/ScreenOpenConext'
 import { useToggle } from './customHooks/useToggle'
 import { AdminGroups } from './cmps/AdminGroups'
 import { AdminPlayers } from './cmps/AdminPlayers'
+import { UserMsg } from './cmps/UserMsg'
 
 
 function App() {
   const [isScreenOpen, setIsScreenOpen] = useToggle(false)
+  const [isUserMsgOpen, setIsUserMsgOpen] = useToggle(false)
 
   function onOpenScreen() {
     setIsScreenOpen(true)
@@ -43,6 +45,7 @@ function App() {
             <section className="screen" onClick={onCloseScreen}></section>
             {/* <NavLinks /> */}
             <main>
+              {isUserMsgOpen && <UserMsg />}
               <div className="main-container">
                 <Routes>
                   <Route path="/" element={<Login />} />
@@ -50,7 +53,7 @@ function App() {
                   <Route path="/signup/:gameId/" element={<Signup />} />
                   <Route path="/game/add/" element={<GameAdd />} />
                   <Route path="/game/edit/:gameId?" element={<GameEdit />} />
-                  <Route path="/game/:gameId" element={<Game />} />
+                  <Route path="/game/:gameId" element={<Game setIsUserMsgOpen={setIsUserMsgOpen} />} />
                   <Route path="/admin" element={<Admin />} />
 
                   <Route path="/game/:gameId/scores/edit" element={<AdminPlayersScores />}   >

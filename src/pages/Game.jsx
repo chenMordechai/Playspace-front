@@ -23,7 +23,7 @@ import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 
 // game/:gameId
 
-export function Game() {
+export function Game({ setIsUserMsgOpen }) {
     const [game, setGame] = useState(null)
     const [currGameStepIdx, setCurrGameStepIdx] = useState(utilService.loadFromStorage('currGameStepIdx') || 0) // 0:before ,1:stages/activities , 2:end
     const [currStageStepIdx, setCurrStageStepIdx] = useState(utilService.loadFromStorage('currStageStepIdx') || 0)
@@ -49,7 +49,6 @@ export function Game() {
         // todo: // if !loggdinPlayer return
         init()
         // saveIdxsToStorage()
-
         getPlayers()
     }, [])
 
