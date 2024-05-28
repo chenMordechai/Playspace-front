@@ -244,7 +244,7 @@ export function Game() {
             </div>
             <div className="layer-1">
                 <div className="game-header">
-                    <span></span>
+                    <span className="space"></span>
                     <button className="game-name">{game.name}</button>
                     <button onClick={onToggleOpenGameOptionModal} className="points"><img src={points} /></button>
                     {openGameOptionModal && <GameOptionModal />}
