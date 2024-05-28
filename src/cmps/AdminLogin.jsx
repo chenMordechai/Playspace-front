@@ -1,4 +1,4 @@
-import spacegameLogoBlue from '../assets/img/spacegame-logo-blue.png'
+import playspaceLogoBlue from '../assets/img/playspace-logo-blue.png'
 import password from '../assets/img/password.png'
 import eye from '../assets/img/eye.png'
 import { useRef } from 'react'
@@ -15,7 +15,7 @@ export function AdminLogin({ loggedinUser, handleSubmitAdminForm, credentials, h
 
     return (
         <section className="admin-login">
-            <img className="spacegame-logo-blue" src={spacegameLogoBlue} />
+            <img className="playspace-logo-blue" src={playspaceLogoBlue} />
 
             <form className="admin-login-form" onSubmit={handleSubmitAdminForm}>
                 <span>Hello {loggedinUser.name}</span>

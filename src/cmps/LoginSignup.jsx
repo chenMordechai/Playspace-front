@@ -1,11 +1,11 @@
-import spacegameLogoBlue from '../assets/img/spacegame-logo-blue.png'
+import playspaceLogoBlue from '../assets/img/playspace-logo-blue.png'
 import user from '../assets/img/user.png'
 import password from '../assets/img/password.png'
 
 export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, text }) {
     return (
         <section className="login-signup">
-            <img className="spacegame-logo-blue" src={spacegameLogoBlue} />
+            <img className="playspace-logo-blue" src={playspaceLogoBlue} />
 
             <form className="signup-form">
                 <span>{text}</span>

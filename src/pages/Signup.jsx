@@ -35,7 +35,7 @@ import avatar23 from '../assets/img/avatar23.jpg'
 import avatar24 from '../assets/img/avatar24.jpg'
 import vectorLeft from '../assets/img/vector-left.png'
 import vectorRight from '../assets/img/vector-right.png'
-import spacegameLogo from '../assets/img/spacegame-logo.png'
+import playspaceLogo from '../assets/img/playspace-logo.png'
 import x from '../assets/img/x.png'
 import v from '../assets/img/green-v.png'
 import companyLogo from '../assets/img/company-logo.png'
@@ -184,7 +184,7 @@ export function Signup() {
             {/* <section className="loading-screen">
                 <img className="vector vector1" src={vectorLeft} />
                 <div className="content">
-                    <img className="spacegame-logo" src={spacegameLogo} />
+                    <img className="playspace-logo" src={playspaceLogo} />
                     <img className="x" src={x} />
                     <img className="company-logo" src={companyLogo} />
                 </div>
