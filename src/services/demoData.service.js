@@ -34,6 +34,7 @@ const game1 = {
                     "lifeSaver": [
                         "fifty"
                     ],
+                    "isRequired": false
 
 
                 },
@@ -60,7 +61,8 @@ const game1 = {
                     },
                     "textBefore": "הנה תמונה מרגשת להשראה לקראת השאלה הבאה",
                     "textAfter": "עוד תמונה מרגשת לסוף השאלה",
-                    "lifeSaver": null
+                    "lifeSaver": null,
+                    "isRequired": false
                 },
             ],
             "textBefore": "זו הודעה לפני השלב הראשון",
@@ -92,9 +94,8 @@ const game1 = {
                     "mediaAfter": null,
                     "textBefore": "הודעה לפני השאלה",
                     "textAfter": "הודעה אחרי השאלה",
-                    "lifeSaver": [
-                        "moreTime"
-                    ],
+                    "lifeSaver": null,
+                    "isRequired": false
 
                 }
             ],
@@ -183,7 +184,8 @@ const game2 = {
             },
             "textBefore": "sqe",
             "textAfter": "r3r3",
-            "lifeSaver": null
+            "lifeSaver": null,
+            "isRequired": true
         },
         {
             "text": "Updated Test Activity 2",
@@ -203,7 +205,8 @@ const game2 = {
             "textAfter": "ve",
             "lifeSaver": [
                 "skip"
-            ]
+            ],
+            "isRequired": true
         },
         {
             "text": "Updated Test Activity 3",
@@ -223,7 +226,8 @@ const game2 = {
             "textAfter": "fdwfdw",
             "lifeSaver": [
                 "skip"
-            ]
+            ],
+            "isRequired": true
         },
         {
             "id": null,
@@ -249,6 +253,7 @@ const game2 = {
             "lifeSaver": [
                 "fifty"
             ],
+            "isRequired": false
 
         }
     ],
@@ -317,7 +322,8 @@ const game3 = {
             },
             "textBefore": "textBefore",
             "textAfter": "textAfter",
-            "lifeSaver": null
+            "lifeSaver": null,
+            "isRequired": false
         },
         {
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar2?",
@@ -337,7 +343,8 @@ const game3 = {
             "textAfter": "textAfter2",
             "lifeSaver": [
                 "skip"
-            ]
+            ],
+            "isRequired": true
         },
         {
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar3?",
@@ -357,7 +364,8 @@ const game3 = {
             "textAfter": "textAfter3",
             "lifeSaver": [
                 "skip"
-            ]
+            ],
+            "isRequired": true
         }, {
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar4?",
             "isDeleted": false,
@@ -382,6 +390,7 @@ const game3 = {
             "lifeSaver": [
                 "fifty"
             ],
+            "isRequired": false
 
         },
     ],
@@ -460,6 +469,7 @@ const game4 = {
                     "lifeSaver": [
                         "fifty"
                     ],
+                    "isRequired": false
 
                 },
                 {
@@ -485,7 +495,8 @@ const game4 = {
                     },
                     "textBefore": "הנה תמונה מרגשת להשראה לקראת השאלה הבאה",
                     "textAfter": "עוד תמונה מרגשת לסוף השאלה",
-                    "lifeSaver": null
+                    "lifeSaver": null,
+                    "isRequired": false
                 },
             ],
             "textBefore": "זו הודעה לפני השלב הראשון",
@@ -514,9 +525,8 @@ const game4 = {
                     "mediaAfter": null,
                     "textBefore": "הודעה לפני השאלה",
                     "textAfter": "הודעה אחרי השאלה",
-                    "lifeSaver": [
-                        "moreTime"
-                    ],
+                    "lifeSaver": null,
+                    "isRequired": false
 
                 }
             ],
