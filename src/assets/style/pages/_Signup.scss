@@ -135,12 +135,16 @@
 
             li {
                 position: relative;
-                height: 100px;
+                // width: 340px;
+                height: 71px;
                 width: 100%;
                 border-radius: 10px;
                 @include flex(row, center, center);
                 cursor: pointer;
-                color: white;
+                background: linear-gradient(119.9deg, #f2f2f2 4.09%, #e9f0fc 97.2%);
+
+                font-weight: 600;
+                line-height: 24px;
 
                 &.selected {
                     border: 2.5px solid #54ca7c;
@@ -149,7 +153,7 @@
                     position: absolute;
                     width: 30px;
                     height: 30px;
-                    top: 34px;
+                    top: 18px;
                     right: 10px;
                 }
             }

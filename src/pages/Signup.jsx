@@ -251,7 +251,6 @@ export function Signup() {
                     <ul className="groups-container">
                         {shallowGame.groups?.map((group, i) =>
                             <li key={group.id}
-                                style={{ backgroundColor: "grey" }}
                                 className={credentials.groupId === group.id ? 'selected' : ''}
                                 onClick={() => setCredentials(prev => ({ ...prev, groupId: group.id }))}>
 
