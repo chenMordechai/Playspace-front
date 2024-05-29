@@ -262,7 +262,7 @@ export function Game({ setIsUserMsgOpen }) {
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
                     {/* game stages / activities */}
-                    {currGameStepIdx === 1 && <GameStep1 game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
+                    {currGameStepIdx === 1 && <GameStep1 setIsUserMsgOpen={setIsUserMsgOpen} game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
 
                     {/* end game */}
                     {currGameStepIdx === 2 && <GameStep2 textAfterGame={game.textAfter} />}

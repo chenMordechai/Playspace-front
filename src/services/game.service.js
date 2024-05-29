@@ -18,6 +18,7 @@ export const gameService = {
     getEmptyActivity,
     getDefaultFilter,
     getDefaultSort,
+    checkAnswer
     // getGames2
 }
 
@@ -88,6 +89,13 @@ async function save(game) {
         // work
         return httpService.post('Game', game)
     }
+}
+
+async function checkAnswer() {
+    // todo
+
+    return Promise.resolve(true)
+
 }
 
 ///////////////////////////////////////

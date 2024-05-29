@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Media } from './Media'
 
 import { ActivityType } from './ActivityType'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
+import { gameService } from '../services/game.service'
 
-export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
+export function ActivityPreview({ setIsUserMsgOpen, activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
     console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
@@ -12,33 +13,48 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     const [inputTypingValue, setInputTypingValue] = useState('')
 
     // maybe one func for checking
-    function checkMultipleAnswer(i) {
-        if (i === activity.correctAnswerId) setIsAnswerCorrect(true)
-        else {
-            // check max error
-        }
-        setCurrActivityStepIdx(prev => prev + 1)
-    }
+    // function checkMultipleAnswer(i) {
+    //     if (i === activity.correctAnswerId) setIsAnswerCorrect(true)
+    //     else {
+    //         // check max error
+    //     }
+    //     setCurrActivityStepIdx(prev => prev + 1)
+    // }
 
-    function checkOpenAnswer() {
-        console.log('checkOpenAnswer')
-        if (!inputOpenValue) setIsAnswerCorrect(false)
-        else {
-            setIsAnswerCorrect(true)
+    // function checkOpenAnswer() {
+    //     console.log('checkOpenAnswer')
+    //     if (!inputOpenValue) setIsAnswerCorrect(false)
+    //     else {
+    //         setIsAnswerCorrect(true)
+    //         setCurrActivityStepIdx(prev => prev + 1)
+    //     }
+    // }
+
+    // function checkTypingAnswer() {
+    //     if (!inputTypingValue) setIsAnswerCorrect(false)
+    //     else if (inputTypingValue === activity.correctAnswer) setIsAnswerCorrect(true)
+    //     setCurrActivityStepIdx(prev => prev + 1)
+    // }
+
+    // function checkYesNoAnswer(answer) {
+    //     if (answer === activity.correctAnswer) setIsAnswerCorrect(true)
+    //     setCurrActivityStepIdx(prev => prev + 1)
+    // }
+
+    async function checkAnswer() {
+        // todo : check answer from back
+        var res = await gameService.checkAnswer()
+        console.log('res:', res)
+        setIsAnswerCorrect(res)
+
+        setTimeout(() => {
             setCurrActivityStepIdx(prev => prev + 1)
-        }
+        }, 3000);
     }
 
-    function checkTypingAnswer() {
-        if (!inputTypingValue) setIsAnswerCorrect(false)
-        else if (inputTypingValue === activity.correctAnswer) setIsAnswerCorrect(true)
-        setCurrActivityStepIdx(prev => prev + 1)
-    }
-
-    function checkYesNoAnswer(answer) {
-        if (answer === activity.correctAnswer) setIsAnswerCorrect(true)
-        setCurrActivityStepIdx(prev => prev + 1)
-    }
+    useEffect(() => {
+        if (isAnswerCorrect) setIsUserMsgOpen(true)
+    }, [isAnswerCorrect])
 
     function onMoveToNextActivity() {
         moveToNextActivity()
@@ -100,25 +116,26 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
                 </div>
                 <section className="answer-container">
-                    <ActivityType activity={activity} checkMultipleAnswer={checkMultipleAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} checkOpenAnswer={checkOpenAnswer} checkYesNoAnswer={checkYesNoAnswer} inputTypingValue={inputTypingValue} checkTypingAnswer={checkTypingAnswer} />
+                    <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValue={inputTypingValue} />
                 </section>
 
-                {/*{isAnswerCorrect && <section>
-                    {/* תגובה נכונה לכל זוג של שאלה */}
-                {/* <h3>יופי !!  תשובה נכונה</h3>
+                {/* {isAnswerCorrect && <section>
+                    <h3>יופי !!  תשובה נכונה</h3>
                     <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>סיימתי</button>
                 </section>} */}
 
             </section>}
 
             {/* end activity */}
-            {currActivityStepIdx === 2 && <>
-                <TextBeforeAfterActivity activity={activity} buttonFunc={onMoveToNextActivity} before={false} />
-                {/* {activity.textAfter && <h3>ההודעה אחרי:{activity.textAfter}</h3>}
+            {
+                currActivityStepIdx === 2 && <>
+                    <TextBeforeAfterActivity activity={activity} buttonFunc={onMoveToNextActivity} before={false} />
+                    {/* {activity.textAfter && <h3>ההודעה אחרי:{activity.textAfter}</h3>}
                 <Media media={activity.mediaAfter} />
                 <button onClick={onMoveToNextActivity}>התקדם לשאלה הבאה</button> */}
-            </>}
+                </>
+            }
 
-        </section>
+        </section >
     )
 }
