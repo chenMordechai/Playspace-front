@@ -23,7 +23,7 @@ import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 
 // game/:gameId
 
-export function Game({ setIsUserMsgOpen }) {
+export function Game() {
     const [game, setGame] = useState(null)
     const [currGameStepIdx, setCurrGameStepIdx] = useState(utilService.loadFromStorage('currGameStepIdx') || 0) // 0:before ,1:stages/activities , 2:end
     const [currStageStepIdx, setCurrStageStepIdx] = useState(utilService.loadFromStorage('currStageStepIdx') || 0)
@@ -262,7 +262,7 @@ export function Game({ setIsUserMsgOpen }) {
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
                     {/* game stages / activities */}
-                    {currGameStepIdx === 1 && <GameStep1 setIsUserMsgOpen={setIsUserMsgOpen} game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
+                    {currGameStepIdx === 1 && <GameStep1 game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
 
                     {/* end game */}
                     {currGameStepIdx === 2 && <GameStep2 textAfterGame={game.textAfter} />}

@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Media } from './Media'
 
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { ActivityType } from './ActivityType'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 
-export function ActivityPreview({ setIsUserMsgOpen, activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
+export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
     console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
     const [inputTypingValue, setInputTypingValue] = useState('')
+
+    const firstRender = useRef(true)
 
     // maybe one func for checking
     // function checkMultipleAnswer(i) {
@@ -47,13 +50,23 @@ export function ActivityPreview({ setIsUserMsgOpen, activityProgressType, activi
         console.log('res:', res)
         setIsAnswerCorrect(res)
 
+        if (res) {
+            showSuccessMsg(`תשובה נכונה`)
+        } else {
+            showErrorMsg('תשובה לא נכונה')
+        }
+
         setTimeout(() => {
             setCurrActivityStepIdx(prev => prev + 1)
-        }, 3000);
+        }, 1000);
     }
 
     useEffect(() => {
-        if (isAnswerCorrect) setIsUserMsgOpen(true)
+        // if (firstRender.current) {
+        //     firstRender.current = false
+        //     return
+        // }
+
     }, [isAnswerCorrect])
 
     function onMoveToNextActivity() {

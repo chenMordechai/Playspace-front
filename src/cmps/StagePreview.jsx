@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { ActivityPreview } from './ActivityPreview'
 
-export function StagePreview({ setIsUserMsgOpen, stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity, currActivityIdx, currActivityStepIdx, setCurrActivityStepIdx, currStageStepIdx, setCurrStageStepIdx }) {
+export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity, currActivityIdx, currActivityStepIdx, setCurrActivityStepIdx, currStageStepIdx, setCurrStageStepIdx }) {
     console.log('stage:', stage)
 
     function isStageStart() {
@@ -46,7 +46,7 @@ export function StagePreview({ setIsUserMsgOpen, stage, moveToNextStage, onReset
                 <button onClick={() => setCurrStageStepIdx(prev => prev + 1)}>סיום שלב</button>
             </>} */}
             {/* real */}
-            {currStageStepIdx === 1 && <ActivityPreview setIsUserMsgOpen={setIsUserMsgOpen} activity={stage?.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
+            {currStageStepIdx === 1 && <ActivityPreview activity={stage?.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
 
             {/* end stage*/}
             {currStageStepIdx === 2 && <>
