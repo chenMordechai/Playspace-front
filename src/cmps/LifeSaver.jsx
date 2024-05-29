@@ -1,8 +1,14 @@
 
-export function LifeSaver() {
+export function LifeSaver({ lifeSaver, handleLifeSaver }) {
+    // console.log('lifeSaver:', lifeSaver)
+
+    if (!lifeSaver || !lifeSaver.length) return ''
     return (
         <section className="life-saver">
-            LifeSaver
+            <h3>Life Saver:</h3>
+            <ul>{lifeSaver.map(l => <li key={l}
+                onClick={() => handleLifeSaver(l)} >{l}
+            </li>)}</ul>
         </section>
     )
 }

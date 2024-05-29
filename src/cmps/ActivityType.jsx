@@ -1,7 +1,7 @@
 import pen from '../assets/img/pen.png'
 
 
-export function ActivityType({ activity, checkAnswer, textAreaValue, handlaChange, inputTypingValues }) {
+export function ActivityType({ activity, checkAnswer, textAreaValue, handlaChange, inputTypingValues, answersIdxToOff }) {
 
     // maybe one func for checking
     // function checkMultipleAnswer(i) {
@@ -37,7 +37,8 @@ export function ActivityType({ activity, checkAnswer, textAreaValue, handlaChang
             {activity.activityType === 'multiple' &&
                 <div className="multiple-answer">
                     {activity.activityAnswers.map((a, i) =>
-                        <button key={a}
+                        <button key={a} disabled={answersIdxToOff.includes(i)}
+                            style={{ background: (answersIdxToOff.includes(i)) ? '#a9a7a7' : '' }}
                             onClick={() => checkAnswer(i)}>
                             {a}
                         </button>)}

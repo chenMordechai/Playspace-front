@@ -6,6 +6,7 @@ import { ActivityType } from './ActivityType'
 import { LifeSaver } from './LifeSaver'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
+import { utilService } from '../services/util.service.js'
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
     console.log('activity:', activity)
@@ -13,24 +14,25 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     const [inputOpenValue, setInputOpenValue] = useState('')
     const [inputTypingValues, setInputTypingValues] = useState(null)
+    const [answersIdxToOff, setAnswersIdxToOff] = useState([])
 
     const firstRender = useRef(true)
 
     async function checkAnswer(x) {
         if (activity.activityType === 'multiple') {
-            console.log('idx', x)
+            // console.log('idx', x)
         } else if (activity.activityType === 'open') {
-            console.log('inputOpenValue:', inputOpenValue)
+            // console.log('inputOpenValue:', inputOpenValue)
         } else if (activity.activityType === 'yesno') {
-            console.log('res:', x)
+            // console.log('res:', x)
         } else if (activity.activityType === 'typing') {
             const res = inputTypingValues.join('')
-            console.log('res:', res)
+            // console.log('res:', res)
         }
 
         // todo : check answer from back
         var res = await gameService.checkAnswer()
-        console.log('res:', res)
+        // console.log('res:', res)
         res = true
         setIsAnswerCorrect(res)
 
@@ -58,11 +60,9 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     useEffect(() => {
         // console.log('hi1')
-        console.log('activity.activityType:', activity.activityType)
+        // console.log('activity.activityType:', activity.activityType)
         if (activity.activityType === 'typing') {
-            console.log('hi2')
             const answerArray = activity.correctAnswer.split('').map(l => '')
-            console.log('answerArray:', answerArray)
             setInputTypingValues(answerArray)
         }
     }, [activity])
@@ -85,7 +85,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             inputTypingValues.forEach((l, i) => {
                 if (i === idx) inputTypingValues[i] = value
             })
-            console.log('inputTypingValues:', inputTypingValues)
+            // console.log('inputTypingValues:', inputTypingValues)
             setInputTypingValues([...inputTypingValues])
         }
     }
@@ -98,6 +98,31 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     function isActivityEnd() {
         if (!activity.activityEndTimestamp) return false
         return activity.activityEndTimestamp < Date.now()
+    }
+
+    function handleLifeSaver(lifeSaver) {
+        // console.log('lifeSaver:', lifeSaver)
+        // console.log('activity.activityType:', activity.activityType)
+        // todo: from back player life saver
+
+
+        if (lifeSaver === 'fifty' && activity.activityType === 'multiple') {
+            const answers = activity.activityAnswers
+            const number = (answers.length / 2)
+
+            const answersIdxToOff = []
+            while (answersIdxToOff.length < number) {
+                const idx = utilService.getRandomIntInclusive(0, answers.length - 1)
+                if (answers[idx] !== activity.currectAnswer) {
+                    if (!answersIdxToOff.includes(idx)) answersIdxToOff.push(idx)
+                }
+            }
+
+            console.log('answersToOff:', answersIdxToOff)
+            setAnswersIdxToOff(answersIdxToOff)
+        }
+
+
     }
 
 
@@ -138,8 +163,8 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                     <p> {activity.text}</p>
                 </div>
                 <section className="answer-container">
-                    <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} />
-                    <LifeSaver />
+                    <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
+                    <LifeSaver lifeSaver={activity?.lifeSaver} handleLifeSaver={handleLifeSaver} />
 
                 </section>
             </section>}

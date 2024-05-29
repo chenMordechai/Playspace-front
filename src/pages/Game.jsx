@@ -218,8 +218,8 @@ export function Game() {
     }
 
     function onSetCurrGameStepIdx() {
-        console.log('onSetCurrGameStepIdx')
-        console.log('currGameStepIdx:', currGameStepIdx)
+        // console.log('onSetCurrGameStepIdx')
+        // console.log('currGameStepIdx:', currGameStepIdx)
         if (game.activityProgressType === 'onTime') {
             if (!isGameStart || isGameEnd()) return
         }

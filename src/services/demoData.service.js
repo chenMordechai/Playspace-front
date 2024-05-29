@@ -2,7 +2,7 @@
 // game with stages - onTime:
 const game1 = {
     "id": '123445', // back
-    "name": "המשחק הראשון שלי", // v
+    "name": "game1", // v
     "isDeleted": false, // back
     "activities": null,
     "stages": [
@@ -158,7 +158,7 @@ const game1 = {
 // game with activities - onProgress
 const game2 = {
     "id": '3fa85f64-5717-4562-b3fc-2c963f66afa6', //back
-    "name": "My Game",
+    "name": "game2",
     "isDeleted": false, // back
     "activities": [
         {
@@ -296,7 +296,7 @@ const game2 = {
 // game with activities - open
 const game3 = {
     "id": null, //back
-    "name": "My Game",
+    "name": "game3",
     "isDeleted": false, // back
     "activities": [
         {
@@ -370,7 +370,7 @@ const game3 = {
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar4?",
             "isDeleted": false,
             "activityType": "multiple",
-            "currectAnswer": "כן",
+            "currectAnswer": "Answer2",
             "activityAnswers": [
                 "Answer1",
                 "Answer2",

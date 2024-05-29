@@ -217,8 +217,6 @@ export function GameAdd() {
         setOpenActivities(prev => !prev)
     }
 
-
-
     function setGameTypeToStage() {
         setGame(prev => ({ ...prev, gameType: 'stages', activities: null, stages: [gameService.getEmptyStage()] }))
     }
