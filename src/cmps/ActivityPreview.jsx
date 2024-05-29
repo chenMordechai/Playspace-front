@@ -48,17 +48,29 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         // todo : check answer from back
         var res = await gameService.checkAnswer()
         console.log('res:', res)
+        res = false
         setIsAnswerCorrect(res)
 
         if (res) {
             showSuccessMsg(`תשובה נכונה`)
+            setTimeout(() => {
+                setCurrActivityStepIdx(prev => prev + 1)
+            }, 1000);
         } else {
-            showErrorMsg('תשובה לא נכונה')
+            // todo: check max error from stage or activity
+            // todo: gameService.getMaxError()
+            var maxError = 0
+            if (!maxError) {
+                showErrorMsg('תשובה לא נכונה')
+                setTimeout(() => {
+                    setCurrActivityStepIdx(prev => prev + 1)
+                }, 1000);
+            } else {
+                showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
+                // todo: maxError--
+            }
         }
 
-        setTimeout(() => {
-            setCurrActivityStepIdx(prev => prev + 1)
-        }, 1000);
     }
 
     useEffect(() => {
