@@ -3,6 +3,7 @@ import { Media } from './Media'
 
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { ActivityType } from './ActivityType'
+import { LifeSaver } from './LifeSaver'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 
@@ -11,44 +12,26 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
-    const [inputTypingValue, setInputTypingValue] = useState('')
+    const [inputTypingValues, setInputTypingValues] = useState(null)
 
     const firstRender = useRef(true)
 
-    // maybe one func for checking
-    // function checkMultipleAnswer(i) {
-    //     if (i === activity.correctAnswerId) setIsAnswerCorrect(true)
-    //     else {
-    //         // check max error
-    //     }
-    //     setCurrActivityStepIdx(prev => prev + 1)
-    // }
+    async function checkAnswer(x) {
+        if (activity.activityType === 'multiple') {
+            console.log('idx', x)
+        } else if (activity.activityType === 'open') {
+            console.log('inputOpenValue:', inputOpenValue)
+        } else if (activity.activityType === 'yesno') {
+            console.log('res:', x)
+        } else if (activity.activityType === 'typing') {
+            const res = inputTypingValues.join('')
+            console.log('res:', res)
+        }
 
-    // function checkOpenAnswer() {
-    //     console.log('checkOpenAnswer')
-    //     if (!inputOpenValue) setIsAnswerCorrect(false)
-    //     else {
-    //         setIsAnswerCorrect(true)
-    //         setCurrActivityStepIdx(prev => prev + 1)
-    //     }
-    // }
-
-    // function checkTypingAnswer() {
-    //     if (!inputTypingValue) setIsAnswerCorrect(false)
-    //     else if (inputTypingValue === activity.correctAnswer) setIsAnswerCorrect(true)
-    //     setCurrActivityStepIdx(prev => prev + 1)
-    // }
-
-    // function checkYesNoAnswer(answer) {
-    //     if (answer === activity.correctAnswer) setIsAnswerCorrect(true)
-    //     setCurrActivityStepIdx(prev => prev + 1)
-    // }
-
-    async function checkAnswer() {
         // todo : check answer from back
         var res = await gameService.checkAnswer()
         console.log('res:', res)
-        res = false
+        res = true
         setIsAnswerCorrect(res)
 
         if (res) {
@@ -59,7 +42,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         } else {
             // todo: check max error from stage or activity
             // todo: gameService.getMaxError()
-            var maxError = 0
+            var maxError = 3
             if (!maxError) {
                 showErrorMsg('תשובה לא נכונה')
                 setTimeout(() => {
@@ -74,22 +57,37 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     useEffect(() => {
-        // if (firstRender.current) {
-        //     firstRender.current = false
-        //     return
-        // }
+        // console.log('hi1')
+        console.log('activity.activityType:', activity.activityType)
+        if (activity.activityType === 'typing') {
+            console.log('hi2')
+            const answerArray = activity.correctAnswer.split('').map(l => '')
+            console.log('answerArray:', answerArray)
+            setInputTypingValues(answerArray)
+        }
+    }, [activity])
 
-    }, [isAnswerCorrect])
+    useEffect(() => {
+        // console.log('inputTypingValue', inputTypingValues)
+    }, [inputTypingValues])
 
     function onMoveToNextActivity() {
         moveToNextActivity()
         setIsAnswerCorrect(false)
     }
 
-    function handlaChange(ev) {
+    function handlaChange(ev, idx) {
         const { value, name } = ev.target
         if (name === 'open') setInputOpenValue(value)
-        else if (name === 'typing') setInputTypingValue(value)
+
+        else if (name === 'typing') {
+            if (value.length > 1) return
+            inputTypingValues.forEach((l, i) => {
+                if (i === idx) inputTypingValues[i] = value
+            })
+            console.log('inputTypingValues:', inputTypingValues)
+            setInputTypingValues([...inputTypingValues])
+        }
     }
 
     function isActivityStart() {
@@ -138,26 +136,18 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                 <div className="text-container">
                     <p>Question </p>
                     <p> {activity.text}</p>
-
                 </div>
                 <section className="answer-container">
-                    <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValue={inputTypingValue} />
+                    <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} />
+                    <LifeSaver />
+
                 </section>
-
-                {/* {isAnswerCorrect && <section>
-                    <h3>יופי !!  תשובה נכונה</h3>
-                    <button onClick={() => setCurrActivityStepIdx(prev => prev + 1)}>סיימתי</button>
-                </section>} */}
-
             </section>}
 
             {/* end activity */}
             {
                 currActivityStepIdx === 2 && <>
                     <TextBeforeAfterActivity activity={activity} buttonFunc={onMoveToNextActivity} before={false} />
-                    {/* {activity.textAfter && <h3>ההודעה אחרי:{activity.textAfter}</h3>}
-                <Media media={activity.mediaAfter} />
-                <button onClick={onMoveToNextActivity}>התקדם לשאלה הבאה</button> */}
                 </>
             }
 
