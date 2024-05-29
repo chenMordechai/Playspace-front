@@ -39,7 +39,7 @@ export function ActivityType({ activity, checkAnswer, textAreaValue, handlaChang
                     {activity.activityAnswers.map((a, i) =>
                         <button key={a} disabled={answersIdxToOff.includes(i)}
                             style={{ background: (answersIdxToOff.includes(i)) ? '#a9a7a7' : '' }}
-                            onClick={() => checkAnswer(i)}>
+                            onClick={() => checkAnswer(a)}>
                             {a}
                         </button>)}
                 </div>}

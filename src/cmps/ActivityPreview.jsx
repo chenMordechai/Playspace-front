@@ -18,16 +18,17 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     const firstRender = useRef(true)
 
-    async function checkAnswer(x) {
+    async function checkAnswer(answer) {
         if (activity.activityType === 'multiple') {
-            // console.log('idx', x)
+            // ?answer or answer idx?
+            // console.log('answer', answer) 
         } else if (activity.activityType === 'open') {
-            // console.log('inputOpenValue:', inputOpenValue)
+            // console.log('answer:', inputOpenValue)
         } else if (activity.activityType === 'yesno') {
-            // console.log('res:', x)
+            // console.log('answer:', answer)
         } else if (activity.activityType === 'typing') {
             const res = inputTypingValues.join('')
-            // console.log('res:', res)
+            // console.log('answer:', res)
         }
 
         // todo : check answer from back
@@ -61,7 +62,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     useEffect(() => {
         // console.log('hi1')
         // console.log('activity.activityType:', activity.activityType)
-        if (activity.activityType === 'typing') {
+        if (activity?.activityType === 'typing') {
             const answerArray = activity.correctAnswer.split('').map(l => '')
             setInputTypingValues(answerArray)
         }
@@ -100,11 +101,10 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         return activity.activityEndTimestamp < Date.now()
     }
 
-    function handleLifeSaver(lifeSaver) {
+    async function handleLifeSaver(lifeSaver) {
         // console.log('lifeSaver:', lifeSaver)
         // console.log('activity.activityType:', activity.activityType)
         // todo: from back player life saver
-
 
         if (lifeSaver === 'fifty' && activity.activityType === 'multiple') {
             const answers = activity.activityAnswers
@@ -120,6 +120,15 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
             console.log('answersToOff:', answersIdxToOff)
             setAnswersIdxToOff(answersIdxToOff)
+
+        } else if (lifeSaver === 'skip') {
+            console.log('hi')
+            // todo : check answer from back 
+            // var res = await gameService.checkAnswer()
+            showSuccessMsg(`דילגת על השאלה`)
+            setTimeout(() => {
+                setCurrActivityStepIdx(prev => prev + 1)
+            }, 1000);
         }
 
 
