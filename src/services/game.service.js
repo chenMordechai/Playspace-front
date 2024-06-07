@@ -32,7 +32,7 @@ async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
     }
     let games
     if (loggedinUser?.checkAdmin) {
-        games = await httpService.get(`Admin/Games`, filterBy)
+        games = await httpService.post(`Admin/Games`, filterBy)
     } else {
         games = await httpService.post(`User/Games`)
     }
