@@ -31,7 +31,10 @@ export function GameAdd() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loggedinUser && !loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        if (!loggedinUser && !loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) {
+            navigate('/')
+            return
+        }
         // after admin login push the admin id to game.admins (default in the form)
         setGame(prevGame => {
             // array of strings 

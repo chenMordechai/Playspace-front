@@ -4,6 +4,17 @@ import { SET_LOGGEDIN_USER, SET_LOGGEDIN_PLAYER, SET_LOGGEDIN_PLAYER_GROUP } fro
 import { store } from '../store.js'
 
 // get user
+export async function getUser() {
+    try {
+        const user = await authService.getUser()
+        console.log('user:', user)
+        // store.dispatch({ type: SET_LOGGEDIN_USER, user })
+        return user
+    } catch (err) {
+        console.log('user actions -> Cannot login', err)
+        throw err
+    }
+}
 
 export async function login(credentials) {
     try {

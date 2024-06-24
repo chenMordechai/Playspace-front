@@ -2,12 +2,10 @@ import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 
-import { login, adminLogin } from "../store/actions/auth.action"
+import { login, adminLogin, getUser } from "../store/actions/auth.action"
 import { authService } from '../services/auth.service'
 import { LoginSignup } from '../cmps/LoginSignup'
 import { AdminLogin } from '../cmps/AdminLogin'
-
-import Axios from 'axios'
 
 export function Login() {
 
@@ -18,7 +16,7 @@ export function Login() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // get user from back
+        getUserFromBack()
         if (loggedinUser) {
             if (!loggedinUser.isAdmin) navigate('/user')
             else navigate('/admin')
@@ -30,6 +28,17 @@ export function Login() {
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
+    // get user from back 
+    async function getUserFromBack() {
+        try {
+            const user = await getUser()
+            console.log('user:', user)
+            // if (!user.isAdmin) navigate('/user')
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
     // user login
     async function handleSubmitLoginForm(ev) {
         ev.preventDefault();

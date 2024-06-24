@@ -17,6 +17,7 @@ const STORAGE_KEY_USER = 'loggedinUser'
 const STORAGE_KEY_PLAYER = 'loggedinPlayer'
 
 export const authService = {
+    getUser,
     login,
     adminLogin,
     logout,
@@ -31,6 +32,11 @@ export const authService = {
 }
 
 // work
+async function getUser() {
+    const user = await httpService.get(`${BASE_URL_AUTH}User`)
+    return user
+}
+
 async function login(userCred) {
     const user = await httpService.post(`${BASE_URL_AUTH}Login`, userCred)
     // user.isAdmin = true  // for dev
@@ -145,14 +151,13 @@ function getEmptyCredentials() {
     return {
         // email: 'AAAA@GMAIL.COM',
         // name: 'AAAA',
-        email: 'system',
-        name: 'system',
-        // password: ''
-        password: 'system'
-        // email: 'AnatShapira@gmail.com',
-        // name: 'Anat Shapira',
+        // email: 'system',
+        // name: 'system',
         // // password: ''
-        // password: 'Aa1234$%'
+        // password: 'system'
+        email: 'AnatShapira@gmail.com',
+        name: 'Anat Shapira',
+        password: 'Aa1234$%'
     }
 }
 
