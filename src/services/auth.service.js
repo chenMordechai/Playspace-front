@@ -92,7 +92,7 @@ async function getPlayer(gameId) {
     const player = httpService.get(`Game/${gameId}/player`)
     // if (player) {
     //     _setLoggedinPlayer(player)
-    //     return player
+    return player
     // }
 
 }

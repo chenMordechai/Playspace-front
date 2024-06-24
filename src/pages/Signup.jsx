@@ -49,7 +49,7 @@ import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 
-// work : http://localhost:5173/signup/d752efce-17e0-4d2a-8627-08dc644c8fa4
+// work : http://localhost:5173/signup/4bd16a6e-6a43-4875-522f-08dc9442a5d4
 
 export function Signup() {
     const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
@@ -104,41 +104,42 @@ export function Signup() {
     }
 
     async function getShallowGame() {
-        // const shallowGame = await getShallowGameById(gameId)
-        const shallowGame = await getShallowGameById("83a19a02-8fe0-4442-dd7e-08dc7b5a30d0")
+        const shallowGame = await getShallowGameById(gameId)
+        // const shallowGame = await getShallowGameById("83a19a02-8fe0-4442-dd7e-08dc7b5a30d0")
 
-        shallowGame.groups = [
-            {
-                "id": "tHZmMy",
-                "name": "קבוצה א",
-                "adminAdditionalScore": 0
-            },
-            {
-                "id": "dbrl3A",
-                "name": "קבוצה ב",
-                "adminAdditionalScore": 0
-            },
-            {
-                "id": "iRIckp",
-                "name": "קבוצה ג",
-                "adminAdditionalScore": 0
-            },
-            {
-                "id": "tHZmM1",
-                "name": "קבוצה ד",
-                "adminAdditionalScore": 0
-            },
-            // {
-            //     "id": "dbrl32",
-            //     "name": "קבוצה ה",
-            //     "adminAdditionalScore": 0
-            // },
-            // {
-            //     "id": "iRIck3",
-            //     "name": "קבוצה ו",
-            //     "adminAdditionalScore": 0
-            // }
-        ]
+        console.log('shallowGame:', shallowGame)
+        // shallowGame.groups = [
+        //     {
+        //         "id": "tHZmMy",
+        //         "name": "קבוצה א",
+        //         "adminAdditionalScore": 0
+        //     },
+        //     {
+        //         "id": "dbrl3A",
+        //         "name": "קבוצה ב",
+        //         "adminAdditionalScore": 0
+        //     },
+        //     {
+        //         "id": "iRIckp",
+        //         "name": "קבוצה ג",
+        //         "adminAdditionalScore": 0
+        //     },
+        //     {
+        //         "id": "tHZmM1",
+        //         "name": "קבוצה ד",
+        //         "adminAdditionalScore": 0
+        //     },
+        //     // {
+        //     //     "id": "dbrl32",
+        //     //     "name": "קבוצה ה",
+        //     //     "adminAdditionalScore": 0
+        //     // },
+        //     // {
+        //     //     "id": "iRIck3",
+        //     //     "name": "קבוצה ו",
+        //     //     "adminAdditionalScore": 0
+        //     // }
+        // ]
         setShallowGame(shallowGame)
 
 

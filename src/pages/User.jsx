@@ -65,7 +65,7 @@ export function User() {
                         <span className="name">{loggedinUser.name}</span>
                         {/* <span className="name">Shanna Levy</span> */}
                         {/* <span className="email">@shanouna95</span> */}
-                        <span className="email">{`@${loggedinUser.email}`}</span>
+                        <span className="email">{`${loggedinUser.email}`}</span>
                     </div>
                 </div>
                 {/* <button>
@@ -78,15 +78,16 @@ export function User() {
             <section className="user-games-container">
                 <span>המשחקים שלי</span>
 
-                {/* {userGames?.map(game => */}
-                {/* <MiniGamePreview gameName={game.name} imgUrl={game.icon.url} gameId={game.id}/> */}
-                <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
+                {userGames?.map(game =>
+                    <MiniGamePreview gameName={game.name} imgUrl={game.icon.url} gameId={game.id} onMoveToGame={() => moveToGame(game.id)} />
+                )}
+
+                {/* <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
                 <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
                 <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
                 <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
                 <MiniGamePreview gameName="Trivia Quest" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
-                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />
-                {/* )} */}
+                <MiniGamePreview gameName="Quiz Dash" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} /> */}
             </section>
         </section>
     )
