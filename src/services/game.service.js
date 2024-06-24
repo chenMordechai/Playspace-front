@@ -34,7 +34,7 @@ async function getGames(isAdmin, filterBy = {}, sortBy = {}, currPage) {
     if (isAdmin) {
         games = await httpService.post(`Admin/Games`, filterBy)
     } else {
-        games = await httpService.post(`User/Games`)
+        games = await httpService.get(`User/Games`)
     }
     return games
 }

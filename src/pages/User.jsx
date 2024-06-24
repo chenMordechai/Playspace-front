@@ -20,7 +20,7 @@ export function User() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // if (!loggedinUser) navigate('/')
+        if (!loggedinUser) navigate('/')
 
         init()
     }, [])
@@ -28,8 +28,8 @@ export function User() {
     async function init() {
         try {
             // work
-            const userGames = await getGames(loggedinUser)
-
+            const userGames = await getGames(false)
+            console.log('userGames:', userGames)
             setUserGames(userGames)
 
         } catch (err) {
