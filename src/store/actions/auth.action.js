@@ -7,8 +7,7 @@ import { store } from '../store.js'
 export async function getUser() {
     try {
         const user = await authService.getUser()
-        console.log('user:', user)
-        // store.dispatch({ type: SET_LOGGEDIN_USER, user })
+        store.dispatch({ type: SET_LOGGEDIN_USER, user })
         return user
     } catch (err) {
         console.log('user actions -> Cannot login', err)

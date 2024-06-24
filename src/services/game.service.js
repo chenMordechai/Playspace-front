@@ -25,15 +25,14 @@ export const gameService = {
 
 // get demo data
 // work
-async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
+async function getGames(isAdmin, filterBy = {}, sortBy = {}, currPage) {
     filterBy = {
         filterBy,
         sortBy,
         currPage
     }
     let games
-    if (loggedinUser?.checkAdmin) {
-        
+    if (isAdmin) {
         games = await httpService.post(`Admin/Games`, filterBy)
     } else {
         games = await httpService.get(`User/Games`)

@@ -4,15 +4,15 @@ import { useNavigate, Link, NavLink } from "react-router-dom"
 
 import { getGames, deleteGame } from "../store/actions/game.action.js"
 import { httpService } from "../services/http.service.js"
-
 import gameImgDefault from '../assets/img/game-default.jpg'
 import { GameFilter } from "../cmps/GameFilter.jsx"
 import { gameService } from "../services/game.service.js"
 import { AdminGamePreview } from '../cmps/AdminGamePreview.jsx'
+import { getUser } from "../store/actions/auth.action.js"
 
 export function Admin() {
 
-    const [games, setGames] = useState([])
+    const [games, setGames] = useState(null)
     const [filterBy, setFilterBy] = useState(gameService.getDefaultFilter())
     const [sortBy, setSortBy] = useState(gameService.getDefaultSort())
 
@@ -21,30 +21,50 @@ export function Admin() {
     // const [prevPage, setPrevPage] = useState(0); // storing prev page number
     const [wasLastList, setWasLastList] = useState(false); // setting a flag to know the last list
 
-
-
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
     const navigate = useNavigate()
 
     const listInnerRef = useRef();
 
     useEffect(() => {
-        if (!loggedinUser || !loggedinUser.isAdmin) navigate('/')
-        // init()
+        // ! 429 from back avishay
+        // getUserFromBack()
+        if (!loggedinUser || !loggedinUser.isAdmin) {
+            navigate('/')
+            return
+        }
+        init()
     }, [])
 
-    useEffect(() => {
-        init()
-    }, [filterBy, sortBy])
+    // useEffect(() => {
+    //     init()
+    // }, [filterBy, sortBy])
 
-    useEffect(() => {
-        init()
-    }, [currPage, wasLastList])
+    // useEffect(() => {
+    //     init()
+    // }, [currPage, wasLastList])
+
+    // async function getUserFromBack() {
+    //     try {
+    //         const user = await getUser()
+    //         console.log('user:', user)
+    //         // if (user) {
+    //         //     if (!user.isAdmin) navigate('/user')
+    //         //     else init()
+    //         // } else {
+    //         //     navigate('/')
+    //         // }
+
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         navigate('/')
+    //     }
+    // }
 
     // get demo data
     async function init() {
         try {
-            const games = await getGames(loggedinUser, filterBy, sortBy, currPage)
+            const games = await getGames(true, filterBy, sortBy, currPage)
             if (!games.length) return;
             setGames(games)
             // setGames(prev => [...prev, ...games]);
@@ -87,16 +107,16 @@ export function Admin() {
 
 
     return (
-        <section className="admin" >
-            <h1>Hello {loggedinUser?.name}</h1>
+        <section className="admin rtl" >
+            <h1>שלום {loggedinUser?.name}</h1>
             <Link to="/game/add" title="Admin" >
-                Create New Game
+                יצירת משחק חדש
             </Link>
 
-            <h2>Games:</h2>
+            <h2>משחקים</h2>
             <GameFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} sortBy={sortBy} onSetSortBy={onSetSortBy} />
 
-            {games.length && <section className="games-container">
+            {games && <section className="games-container">
                 <ul
                     // onScroll={onScroll}
                     ref={listInnerRef}>

@@ -49,7 +49,7 @@ async function login(userCred) {
 // work
 async function adminLogin(adminCred) {
     const user = await httpService.post(`${BASE_URL_AUTH}AdminLogin`, adminCred)
-    user.checkAdmin = true  // for dev
+    // user.checkAdmin = true  // for dev
     // if (user) {
     //     _setLoggedinUser(user)
     return user
