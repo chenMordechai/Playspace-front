@@ -17,24 +17,26 @@ export function Admin() {
     const [sortBy, setSortBy] = useState(gameService.getDefaultSort())
 
     // pagination
-    const [currPage, setCurrPage] = useState(0); // storing current page number
+    const [currPage, setCurrPage] = useState(0) // storing current page number
     // const [prevPage, setPrevPage] = useState(0); // storing prev page number
-    const [wasLastList, setWasLastList] = useState(false); // setting a flag to know the last list
+    const [wasLastList, setWasLastList] = useState(false) // setting a flag to know the last list
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
     const navigate = useNavigate()
 
-    const listInnerRef = useRef();
+    const listInnerRef = useRef()
 
     useEffect(() => {
-        // ! 429 from back avishay
-        // getUserFromBack()
-        if (!loggedinUser || !loggedinUser.isAdmin) {
-            navigate('/')
-            return
-        }
-        init()
+        getUserFromBack()
     }, [])
+
+    // useEffect(() => {
+    //     if (!loggedinUser || !loggedinUser.isAdmin) {
+    //         navigate('/')
+    //         return
+    //     }
+    //     init()
+    // }, [])
 
     // useEffect(() => {
     //     init()
@@ -44,22 +46,19 @@ export function Admin() {
     //     init()
     // }, [currPage, wasLastList])
 
-    // async function getUserFromBack() {
-    //     try {
-    //         const user = await getUser()
-    //         console.log('user:', user)
-    //         // if (user) {
-    //         //     if (!user.isAdmin) navigate('/user')
-    //         //     else init()
-    //         // } else {
-    //         //     navigate('/')
-    //         // }
 
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         navigate('/')
-    //     }
-    // }
+    async function getUserFromBack() {
+        try {
+            const user = await getUser()
+            console.log('user:', user)
+            if (!user || !user.isAdmin) navigate('/')
+            else init()
+
+        } catch (error) {
+            // console.error('Error:', error);
+            navigate('/')
+        }
+    }
 
     // get demo data
     async function init() {

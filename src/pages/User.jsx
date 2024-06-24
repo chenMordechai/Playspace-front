@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom"
 import avatar9 from '../assets/img/avatar9.png'
 import plusBlue from '../assets/img/plus-blue.png'
 import avatar17 from '../assets/img/avatar17.jpg'
-import { getPlayer } from "../store/actions/auth.action"
-
+import { getPlayer, getUser } from "../store/actions/auth.action"
 
 import { MiniGamePreview } from "../cmps/MiniGamePreview"
 
@@ -20,10 +19,21 @@ export function User() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loggedinUser) navigate('/')
-
-        init()
+        getUserFromBack()
     }, [])
+
+    async function getUserFromBack() {
+        try {
+            const user = await getUser()
+            console.log('user:', user)
+            if (!user) navigate('/')
+            else init()
+
+        } catch (error) {
+            // console.error('Error:', error);
+            navigate('/')
+        }
+    }
 
     async function init() {
         try {
@@ -34,6 +44,7 @@ export function User() {
 
         } catch (err) {
             console.log('err:', err)
+
         }
     }
 

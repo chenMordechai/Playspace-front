@@ -294,7 +294,7 @@ export function GameAdd() {
                 <input required type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
                 <label htmlFor="admins">אדמינים</label>
-                <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                <select multiple required name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
                     {admins?.map((admin, i) => <option key={i} value={admin.id}>
                         {admin.name}
                     </option>)}
