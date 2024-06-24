@@ -68,9 +68,9 @@ async function getGameById(gameId) {
 
 
 async function getShallowGameById(gameId) {
-    // return httpService.get(BASE_URL + `${gameId}/Preview`)
+    return httpService.get(BASE_URL + `${gameId}/Preview`)
 
-    return demoDataService.getGame4()
+    // return demoDataService.getGame4()
 
 }
 

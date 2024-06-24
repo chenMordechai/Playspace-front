@@ -7,7 +7,7 @@ export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, te
         <section className="login-signup">
             <img className="playspace-logo-blue" src={playspaceLogoBlue} />
 
-            <form className="signup-form">
+            <form className="signup-form" id="signupForm">
                 <span>{text}</span>
                 <img className="input-img user" src={user} />
                 <input placeholder="Name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
