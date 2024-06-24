@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { ActivityPreview } from './ActivityPreview'
 
 export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity, currActivityIdx, currActivityStepIdx, setCurrActivityStepIdx, currStageStepIdx, setCurrStageStepIdx }) {
-    console.log('stage:', stage)
 
     function isStageStart() {
         if (!stage.stageStartTimestamp) return true

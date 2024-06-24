@@ -3,7 +3,6 @@ import { gameService } from "../../services/game.service.js";
 export async function getGames(loggedinUser, filterBy, sortBy, currPage) {
     try {
         const games = await gameService.getGames(loggedinUser, filterBy, sortBy, currPage)
-        console.log('games:', games)
         // store.dispatch({ type: SET_GAMES, games })
         return games
     } catch (err) {
@@ -15,7 +14,6 @@ export async function getGames(loggedinUser, filterBy, sortBy, currPage) {
 export async function getPlayers(gameId, filterBy) {
     try {
         const players = await gameService.getPlayers(gameId, filterBy)
-        console.log('players:', players)
         return players
     } catch (err) {
         console.log('game action -> Cannot load players', err)
@@ -26,7 +24,6 @@ export async function getPlayers(gameId, filterBy) {
 export async function getGroups(gameId, filterBy) {
     try {
         const groups = await gameService.getGroups(gameId, filterBy)
-        console.log('groups:', groups)
         return groups
     } catch (err) {
         console.log('game action -> Cannot load groups', err)

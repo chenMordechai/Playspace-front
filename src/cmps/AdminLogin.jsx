@@ -9,7 +9,6 @@ export function AdminLogin({ loggedinUser, handleSubmitAdminForm, credentials, h
 
     function onChangeInputType() {
         // input.type 
-        console.log('input.current.type :', input.current.type)
         input.current.type = (input.current.type === 'password') ? 'text' : 'password'
     }
 

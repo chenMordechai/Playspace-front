@@ -34,7 +34,6 @@ export function Admin() {
     }, [])
 
     useEffect(() => {
-        // console.log('filterBy, sortBy:', filterBy, sortBy)
         init()
     }, [filterBy, sortBy])
 
@@ -46,7 +45,6 @@ export function Admin() {
     async function init() {
         try {
             const games = await getGames(loggedinUser, filterBy, sortBy, currPage)
-            // console.log('games:', games)
             if (!games.length) return;
             setGames(games)
             // setGames(prev => [...prev, ...games]);
@@ -56,11 +54,9 @@ export function Admin() {
     }
 
     async function onDeleteGame(gameId) {
-        console.log('gameId:', gameId)
         if (!confirm('אתה בטוח שאתה רוצה למחוק את המשחק ?')) return
         try {
             await deleteGame(gameId)
-            console.log('deleted game')
             setGames(prev => prev.filter(g => g.id !== gameId))
         } catch (err) {
             console.log('err:', err)

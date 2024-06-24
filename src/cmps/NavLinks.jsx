@@ -14,7 +14,6 @@ export function NavLinks() {
     async function onLogout() {
         try {
             await logout()
-            console.log('Success Logout')
             navigate('/')
         } catch (err) {
             console.log('err:', err)

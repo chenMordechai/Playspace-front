@@ -46,7 +46,6 @@ async function getPlayers(gameId, filterBy = {}, sortBy = {}, currPage) {
         currPage
     }
     const players = await httpService.post(`Admin/Game/${gameId}/Player`, filterBy)
-    console.log('players:', players)
     return players
 }
 
@@ -57,7 +56,6 @@ async function getGroups(gameId) {
     //     currPage
     // }
     const groups = await httpService.post(`Admin/Game/${gameId}/Groups`)
-    console.log('groups:', groups)
     return groups
 }
 
@@ -81,7 +79,6 @@ async function remove(gameId) {
 }
 
 async function save(game) {
-    console.log('game service', game)
 
     if (game.id) {
         return httpService.put('Admin/Game', game)

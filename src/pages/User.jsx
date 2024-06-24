@@ -15,7 +15,6 @@ import { MiniGamePreview } from "../cmps/MiniGamePreview"
 export function User() {
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
-    console.log('loggedinUser:', loggedinUser)
     const [userGames, setUserGames] = useState(null)
 
     const navigate = useNavigate()
@@ -30,7 +29,6 @@ export function User() {
         try {
             // work
             const userGames = await getGames(loggedinUser)
-            console.log('userGames:', userGames)
 
             setUserGames(userGames)
 
@@ -40,9 +38,7 @@ export function User() {
     }
 
     async function moveToGame(gameId) {
-        console.log('gameId:', gameId)
         const player = await getPlayer(gameId) // player
-        console.log('success get player', player)
         if (player) navigate(`/game/${gameId}`)
     }
 

@@ -4,8 +4,6 @@ import goblet from '../assets/img/goblet.png'
 
 
 export function GameScore({ players, loggedinPlayerId }) {
-    console.log('loggedinPlayerId:', loggedinPlayerId)
-    console.log('players:', players)
     return (
         <section className="game-score">
             <img src={goblet} />

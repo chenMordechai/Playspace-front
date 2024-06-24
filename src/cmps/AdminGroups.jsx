@@ -71,7 +71,6 @@ export function AdminGroups() {
     }
 
     function onFilterGroups(ev) {
-        console.log('onFilterGroups')
         ev.preventDefault()
     }
 
@@ -81,7 +80,6 @@ export function AdminGroups() {
     }
 
     function onUpdateScore(groupId, diff) {
-        console.log('onUpdateScore')
         //! Avishay update group score
     }
 

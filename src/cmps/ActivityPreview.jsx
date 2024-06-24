@@ -9,7 +9,6 @@ import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
-    console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -21,19 +20,14 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     async function checkAnswer(answer) {
         if (activity.activityType === 'multiple') {
             // ?answer or answer idx?
-            // console.log('answer', answer) 
         } else if (activity.activityType === 'open') {
-            // console.log('answer:', inputOpenValue)
         } else if (activity.activityType === 'yesno') {
-            // console.log('answer:', answer)
         } else if (activity.activityType === 'typing') {
             const res = inputTypingValues.join('')
-            // console.log('answer:', res)
         }
 
         // todo : check answer from back
         var res = await gameService.checkAnswer()
-        // console.log('res:', res)
         res = true
         setIsAnswerCorrect(res)
 
@@ -60,8 +54,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     useEffect(() => {
-        // console.log('hi1')
-        // console.log('activity.activityType:', activity.activityType)
         if (activity?.activityType === 'typing') {
             const answerArray = activity.correctAnswer.split('').map(l => '')
             setInputTypingValues(answerArray)
@@ -69,7 +61,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }, [activity])
 
     useEffect(() => {
-        // console.log('inputTypingValue', inputTypingValues)
     }, [inputTypingValues])
 
     function onMoveToNextActivity() {
@@ -86,7 +77,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             inputTypingValues.forEach((l, i) => {
                 if (i === idx) inputTypingValues[i] = value
             })
-            // console.log('inputTypingValues:', inputTypingValues)
             setInputTypingValues([...inputTypingValues])
         }
     }
@@ -102,8 +92,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     async function handleLifeSaver(lifeSaver) {
-        // console.log('lifeSaver:', lifeSaver)
-        // console.log('activity.activityType:', activity.activityType)
         // todo: from back player life saver
 
         if (lifeSaver === 'fifty' && activity.activityType === 'multiple') {
@@ -118,11 +106,9 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                 }
             }
 
-            console.log('answersToOff:', answersIdxToOff)
             setAnswersIdxToOff(answersIdxToOff)
 
         } else if (lifeSaver === 'skip') {
-            console.log('hi')
             // todo : check answer from back 
             // var res = await gameService.checkAnswer()
             showSuccessMsg(`דילגת על השאלה`)

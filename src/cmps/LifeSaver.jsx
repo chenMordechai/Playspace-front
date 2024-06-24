@@ -1,6 +1,5 @@
 
 export function LifeSaver({ lifeSaver, handleLifeSaver }) {
-    // console.log('lifeSaver:', lifeSaver)
 
     if (!lifeSaver || !lifeSaver.length) return ''
     return (

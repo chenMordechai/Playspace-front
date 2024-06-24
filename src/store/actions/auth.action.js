@@ -44,7 +44,6 @@ export async function signup(credentials) {
     try {
         const user = await authService.signup(credentials)
         store.dispatch({ type: SET_LOGGEDIN_USER, player: user })
-        console.log('user:', user)
         return user
     } catch (err) {
         console.log('user actions -> Cannot signup', err)

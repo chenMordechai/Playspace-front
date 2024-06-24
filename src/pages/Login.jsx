@@ -11,11 +11,6 @@ import Axios from 'axios'
 
 export function Login() {
 
-    // const fetchData = async () => {
-    //     const response = await Axios.get('https://localhost:5173/api/Test/GetHelloWorld');
-    //     console.log(response.data);
-    // };
-    // fetchData()
     const [credentials, setCredentials] = useState(authService.getEmptyCredentials())
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
@@ -40,7 +35,6 @@ export function Login() {
         ev.preventDefault();
         try {
             const user = await login({ name: credentials.name, email: credentials.email })
-            console.log('success login', user)
             if (!user.isAdmin) navigate('/user')
 
         } catch (error) {
@@ -53,7 +47,6 @@ export function Login() {
         ev.preventDefault();
         try {
             const userAdmin = await adminLogin(credentials)
-            console.log('success AdminLogin', userAdmin)
             navigate('/admin')
         } catch (error) {
             console.error('Error:', error);

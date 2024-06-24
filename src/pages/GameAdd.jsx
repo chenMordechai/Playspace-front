@@ -43,7 +43,6 @@ export function GameAdd() {
     }
 
     useEffect(() => {
-        console.log('game:', game)
     }, [game])
 
     useEffect(() => {
@@ -91,7 +90,6 @@ export function GameAdd() {
     // colors from image for the divs 
     async function getColorsFromImg(imgUrl) {
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
-        console.log(colors)
         setLogoColors([...colors])
     }
 
@@ -137,7 +135,6 @@ export function GameAdd() {
         else if (type === 'number') value = +value
 
         if (name === 'activities') {
-            console.log('activities')
             const object = gameService.getEmptyActivity()
             setGame(prevGame => {
                 const diff = value - (prevGame.stages[i][name]?.length || 0)
@@ -195,12 +192,10 @@ export function GameAdd() {
         // work
         game.admins = game.admins.map(adminId => ({ adminId }))
 
-        console.log('game:', game)
 
         try {
             setIsLoading(true)
             const newGame = await addGame(game)
-            console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק הוסף בהצלחה')
             navigate('/admin')
             // setGame(gameService.getEmptyGame())
