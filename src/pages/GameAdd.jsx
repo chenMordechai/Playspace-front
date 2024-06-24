@@ -19,8 +19,8 @@ export function GameAdd() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
     const [openActivities, setOpenActivities] = useState(false)
-    const [colorIdx, setColorIdx] = useState(0)
-    const [iconColors, setLogoColors] = useState(null)
+    // const [colorIdx, setColorIdx] = useState(0)
+    const [iconColors, setIconColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isImgLoading, setIsImgLoading] = useState(false)
@@ -31,23 +31,32 @@ export function GameAdd() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        if (!loggedinUser && !loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) {
+            navigate('/')
+            return
+        }
         // after admin login push the admin id to game.admins (default in the form)
-        // game.admins.push(loggedinUser.id)
+        setGame(prevGame => {
+            // array of strings 
+            prevGame.admins = []
+            prevGame.admins.push(loggedinUser.id)
+            return { ...prevGame }
+        })
         loadAdmins()
     }, [])
 
     async function loadAdmins() {
         let admins = await getAdmins()
+        console.log('admins:', admins)
         setAdmins(admins)
     }
 
     useEffect(() => {
-        console.log('game:', game)
+        console.log(game)
     }, [game])
 
     useEffect(() => {
-        // when the game colors changes => change the css vars
+        // When the game colors changes => change the css vars
         const elRoot = document.querySelector(':root')
         game.themeColors.forEach((color, i) => {
             elRoot.style.setProperty(`--clr-${i}`, color);
@@ -58,7 +67,7 @@ export function GameAdd() {
         let { name, value, type } = ev.target
         if (type === 'number') value = +value
         if (type === 'checkbox') value = ev.target.checked
-        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => ({ adminId: option.value }))
+        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => (option.value))
 
         if (name === 'gameType') {
             value = (value) ? 'stages' : 'activities'
@@ -91,8 +100,7 @@ export function GameAdd() {
     // colors from image for the divs 
     async function getColorsFromImg(imgUrl) {
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
-        console.log(colors)
-        setLogoColors([...colors])
+        setIconColors([...colors])
     }
 
     // change game colors from color inputs 
@@ -112,12 +120,12 @@ export function GameAdd() {
             const parts = color.substring(4, color.length - 1).split(', ')
             color = utilService.rgbToHex(...parts)
         }
-        setColorIdx(prev => {
-            if (prev === 2) return 0
-            else return prev + 1
-        })
+        // setColorIdx(prev => {
+        //     if (prev === 0) return 0
+        //     else return prev + 1
+        // })
         setGame(prev => {
-            prev.themeColors[colorIdx] = color
+            prev.themeColors[0] = color
             prev.themeColors = [...prev.themeColors]
             return { ...prev }
         })
@@ -137,7 +145,6 @@ export function GameAdd() {
         else if (type === 'number') value = +value
 
         if (name === 'activities') {
-            console.log('activities')
             const object = gameService.getEmptyActivity()
             setGame(prevGame => {
                 const diff = value - (prevGame.stages[i][name]?.length || 0)
@@ -190,23 +197,32 @@ export function GameAdd() {
         // })
 
         // time changes
-        utilService.setTimesChangeToTimestamp(game)
+        setGame(prevGame => {
+            utilService.setTimesChangeToTimestamp(prevGame)
+            return { ...prevGame }
+        })
 
         // work
-        game.admins = game.admins.map(adminId => ({ adminId }))
+        // array of objects
+        setGame(prevGame => {
+            prevGame.admins = prevGame.admins.map(id => ({ adminId: id }))
+            return { ...prevGame }
+        })
 
-        console.log('game:', game)
 
         try {
             setIsLoading(true)
             const newGame = await addGame(game)
-            console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק הוסף בהצלחה')
             navigate('/admin')
             // setGame(gameService.getEmptyGame())
         } catch (err) {
             setMsgAfterGameAdd('שגיאה')
             console.log('err:', err)
+            setGame(prevGame => {
+                prevGame.admins = prevGame.admins.map(id => (id.adminId))
+                return { ...prevGame }
+            })
         } finally {
             setIsLoading(false)
 
@@ -270,16 +286,14 @@ export function GameAdd() {
         <section className="game-add rtl">
             <h2>יצירת משחק</h2>
 
-            <div className="clr1">First</div>
-            <div className="clr2">Second</div>
-            <div className="clr3">Third</div>
+            <div className="clr1">צבע ראשי</div>
 
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>
                 <input required type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
                 <label htmlFor="admins">אדמינים</label>
-                <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
                     {admins?.map((admin, i) => <option key={i} value={admin.id}>
                         {admin.name}
                     </option>)}
@@ -330,7 +344,7 @@ export function GameAdd() {
                         <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
                     </section>}
 
-                {!isLoading && <button type="submit" className="btn-sumbit">Create Game</button>}
+                {!isLoading && <button type="submit" className="btn-sumbit">צור משחק</button>}
                 {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
                 {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
 

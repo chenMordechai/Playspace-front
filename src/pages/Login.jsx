@@ -2,20 +2,13 @@ import { useState, useEffect } from "react"
 import { useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 
-import { login, adminLogin } from "../store/actions/auth.action"
+import { login, adminLogin, getUser } from "../store/actions/auth.action"
 import { authService } from '../services/auth.service'
 import { LoginSignup } from '../cmps/LoginSignup'
 import { AdminLogin } from '../cmps/AdminLogin'
 
-import Axios from 'axios'
-
 export function Login() {
 
-    // const fetchData = async () => {
-    //     const response = await Axios.get('https://localhost:5173/api/Test/GetHelloWorld');
-    //     console.log(response.data);
-    // };
-    // fetchData()
     const [credentials, setCredentials] = useState(authService.getEmptyCredentials())
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
@@ -23,6 +16,7 @@ export function Login() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        getUserFromBack()
         if (loggedinUser) {
             if (!loggedinUser.isAdmin) navigate('/user')
             else navigate('/admin')
@@ -34,12 +28,22 @@ export function Login() {
         setCredentials(prev => ({ ...prev, [name]: value }))
     }
 
+    // get user from back 
+    async function getUserFromBack() {
+        try {
+            const user = await getUser()
+            console.log('user:', user)
+            // if (!user.isAdmin) navigate('/user')
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
     // user login
     async function handleSubmitLoginForm(ev) {
         ev.preventDefault();
         try {
             const user = await login({ name: credentials.name, email: credentials.email })
-            console.log('success login', user)
             if (!user.isAdmin) navigate('/user')
 
         } catch (error) {
@@ -52,7 +56,6 @@ export function Login() {
         ev.preventDefault();
         try {
             const userAdmin = await adminLogin(credentials)
-            console.log('success AdminLogin', userAdmin)
             navigate('/admin')
         } catch (error) {
             console.error('Error:', error);

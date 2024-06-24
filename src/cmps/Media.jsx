@@ -1,6 +1,5 @@
 
 export function Media({ media }) {
-    // console.log('media:', media)
 
     function getMediaType() {
         if (media.type.includes('image')) return 'img'

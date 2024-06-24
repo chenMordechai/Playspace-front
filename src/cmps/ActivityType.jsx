@@ -13,7 +13,6 @@ export function ActivityType({ activity, checkAnswer, textAreaValue, handlaChang
     // }
 
     // function checkOpenAnswer() {
-    //     console.log('checkOpenAnswer')
     //     if (!inputOpenValue) setIsAnswerCorrect(false)
     //     else {
     //         setIsAnswerCorrect(true)

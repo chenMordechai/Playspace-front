@@ -87,7 +87,6 @@ export function Signup() {
 
     useEffect(() => {
         utilService.saveToStorage('signupStepIdx', stepIdx)
-        // console.log('shallowGame:', shallowGame)
     }, [stepIdx])
 
     useEffect(() => {
@@ -105,10 +104,8 @@ export function Signup() {
     }
 
     async function getShallowGame() {
-        console.log('getShallowGame')
         // const shallowGame = await getShallowGameById(gameId)
         const shallowGame = await getShallowGameById("83a19a02-8fe0-4442-dd7e-08dc7b5a30d0")
-        console.log('shallowGame:', shallowGame)
 
         shallowGame.groups = [
             {
@@ -146,22 +143,19 @@ export function Signup() {
 
 
         // colors.current = shallowGame.groups.map(g => utilService.getRandomColor())
-        // console.log('colors:', colors)
     }
 
     function changeColorsVars() {
-        console.log('shallowGame:', shallowGame)
         if (!shallowGame || !shallowGame.themeColors) return
         const elRoot = document.querySelector(':root')
         // shallowGame?.themeColors.forEach((color, i) => {
         //     elRoot.style.setProperty(`--clr-${i}`, color);
         // })
-        // console.log('shallowGame?.themeColors:', shallowGame?.themeColors)
 
-        elRoot.style.setProperty(`--primary`, shallowGame?.themeColors[0]);
-        elRoot.style.setProperty(`--primary-35`, shallowGame?.themeColors[1]);
-        elRoot.style.setProperty(`--gradient-clr-1`, shallowGame?.themeColors[2]);
-        elRoot.style.setProperty(`--gradient-clr-2`, shallowGame?.themeColors[0]);
+        // elRoot.style.setProperty(`--primary`, shallowGame?.themeColors[0]);
+        // elRoot.style.setProperty(`--primary-35`, shallowGame?.themeColors[1]);
+        // elRoot.style.setProperty(`--gradient-clr-1`, shallowGame?.themeColors[2]);
+        // elRoot.style.setProperty(`--gradient-clr-2`, shallowGame?.themeColors[0]);
     }
 
     async function onChangeFileInput(ev) {
@@ -179,12 +173,10 @@ export function Signup() {
     async function onSubmitSignupForm(ev) {
         ev.preventDefault()
         try {
-            console.log('credentials:', credentials)
             // work
             const user = await signup(credentials) // user
             const player = await getPlayer(gameId) // player
             // save to store = player
-            console.log('success signup', player)
             if (player) navigate(`/game/${shallowGame.id}`)
         } catch (error) {
             console.error('Error:', error);

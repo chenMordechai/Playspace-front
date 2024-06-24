@@ -233,7 +233,6 @@ function rgbToHex(r, g, b) {
 }
 
 function setTimesFormChanges(game) {
-    console.log('setTimesFormChanges')
 
     changeTimestampToTime(game, game.gameStartTimestamp, game.gameEndTimestamp)
 
@@ -280,11 +279,8 @@ function pad(num) {
 // add
 
 function changeFormattedTimeToTs(obj, key1, key2) {
-    console.log('obj:', obj)
     var startTimestamp = new Date(obj.dateStart + ' ' + obj.timeStart).getTime()
     var endTimestamp = new Date(obj.dateEnd + ' ' + obj.timeEnd).getTime()
-    console.log('startTimestamp:', startTimestamp)
-    console.log('endTimestamp:', endTimestamp)
     obj[key1] = startTimestamp || null
     obj[key2] = endTimestamp || null
 

@@ -36,7 +36,6 @@ export function Game() {
     const [players, setPlayers] = useState(null)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
-    // console.log('loggedinPlayer:', loggedinPlayer)
 
     const [openGameOptionModal, onToggleOpenGameOptionModal] = useToggle(false)
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
@@ -102,7 +101,6 @@ export function Game() {
             // game with stages - onProgress:
             // const game = await demoDataService.getGame4()
 
-            console.log('game:', game)
             setGame(game)
         } catch (err) {
             console.log('err:', err)
@@ -175,7 +173,6 @@ export function Game() {
     }
 
     function getClockForGame() {
-        // console.log('game:', game)
         const now = Date.now()
         let diff = game.gameStartTimestamp - now
         return diff
@@ -218,8 +215,6 @@ export function Game() {
     }
 
     function onSetCurrGameStepIdx() {
-        // console.log('onSetCurrGameStepIdx')
-        // console.log('currGameStepIdx:', currGameStepIdx)
         if (game.activityProgressType === 'onTime') {
             if (!isGameStart || isGameEnd()) return
         }

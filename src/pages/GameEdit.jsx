@@ -48,14 +48,12 @@ export function GameEdit() {
     }, [game?.themeColors])
 
     useEffect(() => {
-        console.log('game:', game)
     }, [game])
 
     // adit
     async function init() {
         try {
             const game = await getGameById(gameId)
-            console.log('game:', game)
             setGameFormChanges(game)
 
         } catch (err) {
@@ -65,7 +63,6 @@ export function GameEdit() {
 
     async function loadAdmins() {
         const admins = await getAdmins()
-        console.log('admins:', admins)
         setAdmins(admins)
     }
 
@@ -131,7 +128,6 @@ export function GameEdit() {
     }
 
     async function onChangeImg(ev) {
-        console.log('onChangeImg')
         try {
             setIsImgLoading(true)
             const media = await utilService.uploadImgToCloudinary(ev, game.id, true)
@@ -244,17 +240,13 @@ export function GameEdit() {
 
         // time changes
         utilService.setTimesChangeToTimestamp(gameToSend)
-        console.log('gameeee:', gameToSend)
 
         // adminsId to objects
         gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
 
-        console.log('gameToSend:', gameToSend)
-
         try {
             setIsLoading(true)
             const newGame = await addGame(gameToSend)
-            console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק נערך בהצלחה')
             navigate('/admin')
         } catch (err) {

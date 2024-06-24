@@ -1,6 +1,5 @@
 
 export function GameStep2({ textAfterGame }) {
-    console.log('textAfterGame:', textAfterGame)
     return (
         <div className="game-step-2">
             <h2> המשחק הסתיים</h2>

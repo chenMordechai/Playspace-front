@@ -52,7 +52,6 @@ async function getPlayers(gameId, filterBy = {}, sortBy = {}, currPage) {
         currPage
     }
     const players = await httpService.post(`Admin/Game/${gameId}/Player`, filterBy)
-    console.log('players:', players)
     return players
 }
 
@@ -63,7 +62,6 @@ async function getGroups(gameId) {
     //     currPage
     // }
     const groups = await httpService.post(`Admin/Game/${gameId}/Groups`)
-    console.log('groups:', groups)
     return groups
 }
 
@@ -93,7 +91,6 @@ async function remove(gameId) {
 }
 
 async function save(game) {
-    console.log('game service', game)
 
     if (game.id) {
         return httpService.put('Admin/Game', game)
@@ -126,12 +123,12 @@ function getEmptyGame() {
         timeEnd: '', // for form v // e
         gameStartTimestamp: null, // after form // e
         gameEndTimestamp: null, // after form // e
-        themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v // e
+        themeColors: ['#ffffff'], // v // e
         icon: null, // e
         groups: null, // v
         gameType: '', // stages or activities v 
         activityProgressType: 'open', // open/ time/ progress v
-        admins: [], // v // e
+        admins: [], // v // e // [{adminId:'212'}]
         textBefore: '', // v //e
         textAfter: '', // v //e
     }

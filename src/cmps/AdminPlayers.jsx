@@ -20,7 +20,6 @@ export function AdminPlayers() {
 
     function loadPlayers() {
         const players = getPlayers(gameId, filterBy)
-        console.log('players:', players)
 
         // const players = [
         //     {
@@ -64,7 +63,6 @@ export function AdminPlayers() {
     }
 
     function onFilterPlayers(ev) {
-        console.log('onFilterGroups')
         ev.preventDefault()
         // getPlayers(filterBy)
     }
@@ -75,7 +73,6 @@ export function AdminPlayers() {
     }
 
     function onUpdateScore(playerId, diff) {
-        console.log('onUpdateScore')
         //! Avishay update player score
     }
 
