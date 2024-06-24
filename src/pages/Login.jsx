@@ -17,10 +17,6 @@ export function Login() {
 
     useEffect(() => {
         getUserFromBack()
-        if (loggedinUser) {
-            if (!loggedinUser.isAdmin) navigate('/user')
-            else navigate('/admin')
-        }
     }, [])
 
     function handleChange(ev) {
@@ -33,10 +29,11 @@ export function Login() {
         try {
             const user = await getUser()
             console.log('user:', user)
-            // if (!user.isAdmin) navigate('/user')
+            if (!user.isAdmin) navigate('/user')
+            else navigate('/admin')
 
         } catch (error) {
-            console.error('Error:', error);
+            // console.error('Error:', error);
         }
     }
     // user login

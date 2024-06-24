@@ -126,8 +126,6 @@ const game1 = {
 
     "themeColors": [
         "#CC8B8C",
-        "#C69DD2",
-        "#A390E4",
     ],
     "icon": {
         "type": "image/png",
@@ -264,8 +262,6 @@ const game2 = {
     "gameEndTimestamp": 1718082000000,
     "themeColors": [
         "#8E3E63",
-        "#D2649A",
-        "#F6FAB9"
     ],
     "icon": {
         "type": "image/png",
@@ -405,8 +401,7 @@ const game3 = {
     "gameEndTimestampstamp": null,
     "themeColors": [
         "#74512D",
-        "#AF8F6F",
-        "#F8F4E1"
+
     ],
     "icon": {
         "type": "image/png",
@@ -546,8 +541,6 @@ const game4 = {
 
     "themeColors": [
         "#006769",
-        "#40A578",
-        "#9DDE8B"
     ],
     "icon": {
         "type": "image/png",
@@ -632,7 +625,7 @@ const game33 = {
             "name": "Group 2",
             "adminAdditionalScore": 15
         }],
-    "themeColors": ["blue", "green", "yellow"],
+    "themeColors": ["blue"],
     "icon": { "type": "png", "url": "https://example.com/icon.png" },
     "gameType": "activities",
     "activityProgressType": "Percentage",
@@ -713,7 +706,7 @@ const game44 = {
             "name": "Group 2",
             "adminAdditionalScore": 15
         }],
-    "themeColors": ["blue", "green", "yellow"],
+    "themeColors": ["blue"],
     "icon": { "type": "png", "url": "https://example.com/icon.png" },
     "gameType": "stages",
     "activityProgressType": "Percentage",

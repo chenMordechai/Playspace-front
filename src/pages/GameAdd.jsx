@@ -31,7 +31,8 @@ export function GameAdd() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loggedinUser && !loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) {
+        if (!loggedinUser && !loggedinUser?.isAdmin) {
+            // if (!loggedinUser && !loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) {
             navigate('/')
             return
         }

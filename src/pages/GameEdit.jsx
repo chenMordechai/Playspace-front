@@ -20,8 +20,8 @@ export function GameEdit() {
 
     const [game, setGame] = useState(null)
     const [openActivities, setOpenActivities] = useState(false)
-    const [colorIdx, setColorIdx] = useState(0)
-    const [iconColors, setLogoColors] = useState(null)
+    // const [colorIdx, setColorIdx] = useState(0)
+    const [iconColors, setIconColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isImgLoading, setIsImgLoading] = useState(false)
@@ -34,7 +34,8 @@ export function GameEdit() {
     const firstLoad = useRef(true)
 
     useEffect(() => {
-        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        if (!loggedinUser?.isAdmin) navigate('/')
+        // if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         init()
         loadAdmins()
     }, [])
@@ -144,7 +145,7 @@ export function GameEdit() {
     async function getColorsFromImg(imgUrl) {
         if (!imgUrl) return
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
-        setLogoColors([...colors])
+        setIconColors([...colors])
     }
 
     // change game colors from color inputs 
@@ -164,12 +165,12 @@ export function GameEdit() {
             const parts = color.substring(4, color.length - 1).split(', ')
             color = utilService.rgbToHex(...parts)
         }
-        setColorIdx(prev => {
-            if (prev === 2) return 0
-            else return prev + 1
-        })
+        // setColorIdx(prev => {
+        //     if (prev === 2) return 0
+        //     else return prev + 1
+        // })
         setGame(prev => {
-            prev.themeColors[colorIdx] = color
+            prev.themeColors[0] = color
             prev.themeColors = [...prev.themeColors]
             return { ...prev }
         })
@@ -243,6 +244,7 @@ export function GameEdit() {
 
         // adminsId to objects
         gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
+        console.log('gameToSend:', gameToSend)
 
         try {
             setIsLoading(true)
@@ -268,9 +270,7 @@ export function GameEdit() {
         <section className="game-add rtl">
             <h2>עריכת משחק</h2>
 
-            <div className="clr1">First</div>
-            <div className="clr2">Second</div>
-            <div className="clr3">Third</div>
+            <div className="clr1">Primary color</div>
 
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>
