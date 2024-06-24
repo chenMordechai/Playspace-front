@@ -107,13 +107,13 @@ export function Admin() {
 
 
     return (
-        <section className="admin" >
-            <h1>Hello {loggedinUser?.name}</h1>
+        <section className="admin rtl" >
+            <h1>שלום {loggedinUser?.name}</h1>
             <Link to="/game/add" title="Admin" >
-                Create New Game
+                יצירת משחק חדש
             </Link>
 
-            <h2>Games:</h2>
+            <h2>משחקים</h2>
             <GameFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} sortBy={sortBy} onSetSortBy={onSetSortBy} />
 
             {games && <section className="games-container">

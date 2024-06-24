@@ -44,7 +44,7 @@ export function User() {
 
     if (!loggedinUser) return ''
     return (
-        <section className="user-page">
+        <section className="user-page rtl">
             <section className="user-info-container">
                 <div className="user-info">
                     <div className="img-container">
@@ -65,7 +65,7 @@ export function User() {
             </section>
 
             <section className="user-games-container">
-                <span>My games</span>
+                <span>המשחקים שלי</span>
 
                 {/* {userGames?.map(game => */}
                 {/* <MiniGamePreview gameName={game.name} imgUrl={game.icon.url} gameId={game.id}/> */}

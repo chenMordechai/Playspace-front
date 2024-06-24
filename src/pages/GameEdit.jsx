@@ -246,6 +246,7 @@ export function GameEdit() {
         gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
         console.log('gameToSend:', gameToSend)
 
+        setGame(gameToSend)
         try {
             setIsLoading(true)
             const newGame = await addGame(gameToSend)

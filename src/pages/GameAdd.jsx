@@ -48,12 +48,11 @@ export function GameAdd() {
 
     async function loadAdmins() {
         let admins = await getAdmins()
-        console.log('admins:', admins)
         setAdmins(admins)
     }
 
     useEffect(() => {
-        console.log(game)
+        // console.log(game)
     }, [game])
 
     useEffect(() => {
@@ -196,27 +195,28 @@ export function GameAdd() {
         // game.groups?.forEach(group => {
         //     group.id += game.name.substring(0, 3)
         // })
+        const gameToSend = { ...game }
+        // setGame(prevGame => {
+        //     utilService.setTimesChangeToTimestamp(prevGame)
+        //     return { ...prevGame }
+        // })
+        utilService.setTimesChangeToTimestamp(gameToSend)
 
-        // time changes
-        setGame(prevGame => {
-            utilService.setTimesChangeToTimestamp(prevGame)
-            return { ...prevGame }
-        })
+        // setGame(prevGame => {
+        //     prevGame.admins = prevGame.admins.map(id => ({ adminId: id }))
+        //     return { ...prevGame }
+        // })
+        gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
+        console.log('gameToSend:', gameToSend)
 
-        // work
-        // array of objects
-        setGame(prevGame => {
-            prevGame.admins = prevGame.admins.map(id => ({ adminId: id }))
-            return { ...prevGame }
-        })
-
+        setGame(gameToSend)
 
         try {
             setIsLoading(true)
-            const newGame = await addGame(game)
+            const newGame = await addGame(gameToSend)
+            console.log('newGame:', newGame)
             setMsgAfterGameAdd('המשחק הוסף בהצלחה')
             navigate('/admin')
-            // setGame(gameService.getEmptyGame())
         } catch (err) {
             setMsgAfterGameAdd('שגיאה')
             console.log('err:', err)

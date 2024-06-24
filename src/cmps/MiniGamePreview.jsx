@@ -7,7 +7,7 @@ export function MiniGamePreview({ gameName, imgUrl, onMoveToGame }) {
         <div className="mini-game-container">
             <img src={imgUrl} />
             <span>{gameName}</span>
-            <button onClick={onMoveToGame} >Play</button>
+            <button onClick={onMoveToGame} >שחק</button>
         </div>
     )
 }
