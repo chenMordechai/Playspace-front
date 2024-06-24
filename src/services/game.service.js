@@ -111,7 +111,7 @@ function getEmptyGame() {
         timeEnd: '', // for form v // e
         gameStartTimestamp: null, // after form // e
         gameEndTimestamp: null, // after form // e
-        themeColors: ['#ffffff', '#9e9e9e', '#000000'], // v // e
+        themeColors: ['#ffffff'], // v // e
         icon: null, // e
         groups: null, // v
         gameType: '', // stages or activities v 

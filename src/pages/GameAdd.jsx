@@ -19,8 +19,8 @@ export function GameAdd() {
 
     const [game, setGame] = useState(gameService.getEmptyGame())
     const [openActivities, setOpenActivities] = useState(false)
-    const [colorIdx, setColorIdx] = useState(0)
-    const [iconColors, setLogoColors] = useState(null)
+    // const [colorIdx, setColorIdx] = useState(0)
+    const [iconColors, setIconColors] = useState(null)
     const [openColorPicker, setOpenColorPicker] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isImgLoading, setIsImgLoading] = useState(false)
@@ -31,14 +31,16 @@ export function GameAdd() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         // after admin login push the admin id to game.admins (default in the form)
-        // game.admins.push(loggedinUser.id)
+        game.admins.push(loggedinUser.id)
         loadAdmins()
     }, [])
 
     async function loadAdmins() {
+        // ! Avishay
         let admins = await getAdmins()
+        // console.log('admins:', admins)
         setAdmins(admins)
     }
 
@@ -46,7 +48,7 @@ export function GameAdd() {
     }, [game])
 
     useEffect(() => {
-        // when the game colors changes => change the css vars
+        // When the game colors changes => change the css vars
         const elRoot = document.querySelector(':root')
         game.themeColors.forEach((color, i) => {
             elRoot.style.setProperty(`--clr-${i}`, color);
@@ -90,7 +92,8 @@ export function GameAdd() {
     // colors from image for the divs 
     async function getColorsFromImg(imgUrl) {
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
-        setLogoColors([...colors])
+        console.log('colors:', colors)
+        setIconColors([...colors])
     }
 
     // change game colors from color inputs 
@@ -110,12 +113,12 @@ export function GameAdd() {
             const parts = color.substring(4, color.length - 1).split(', ')
             color = utilService.rgbToHex(...parts)
         }
-        setColorIdx(prev => {
-            if (prev === 2) return 0
-            else return prev + 1
-        })
+        // setColorIdx(prev => {
+        //     if (prev === 0) return 0
+        //     else return prev + 1
+        // })
         setGame(prev => {
-            prev.themeColors[colorIdx] = color
+            prev.themeColors[0] = color
             prev.themeColors = [...prev.themeColors]
             return { ...prev }
         })
@@ -265,9 +268,7 @@ export function GameAdd() {
         <section className="game-add rtl">
             <h2>יצירת משחק</h2>
 
-            <div className="clr1">First</div>
-            <div className="clr2">Second</div>
-            <div className="clr3">Third</div>
+            <div className="clr1">צבע ראשי</div>
 
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>

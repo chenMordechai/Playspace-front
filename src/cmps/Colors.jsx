@@ -21,7 +21,7 @@ export function Colors({ onChangeImg, gameLogo, gameColors, iconColors, onHandle
                 <button onClick={() => setOpenColorPicker(prev => !prev)}>בחר מהתמונה</button>
             </ul>}
 
-            <span>צבעים</span>
+            <span>צבע</span>
             <ul className="colors">
                 {gameColors.map((color, i) => <li key={i}>
                     <input type="color" name={i} id={`color${i + 1}`} value={color} onChange={onHandleChangeColor} />
