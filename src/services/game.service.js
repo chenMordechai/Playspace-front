@@ -116,7 +116,7 @@ function getEmptyGame() {
         groups: null, // v
         gameType: '', // stages or activities v 
         activityProgressType: 'open', // open/ time/ progress v
-        admins: [], // v // e
+        admins: [], // v // e // [{adminId:'212'}]
         textBefore: '', // v //e
         textAfter: '', // v //e
     }

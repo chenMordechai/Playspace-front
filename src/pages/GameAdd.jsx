@@ -31,20 +31,25 @@ export function GameAdd() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (!loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
+        if (!loggedinUser && !loggedinUser?.isAdmin && !loggedinUser?.checkAdmin) navigate('/')
         // after admin login push the admin id to game.admins (default in the form)
-        game.admins.push(loggedinUser.id)
+        setGame(prevGame => {
+            // array of strings 
+            prevGame.admins = []
+            prevGame.admins.push(loggedinUser.id)
+            return { ...prevGame }
+        })
         loadAdmins()
     }, [])
 
     async function loadAdmins() {
-        // ! Avishay
         let admins = await getAdmins()
-        // console.log('admins:', admins)
+        console.log('admins:', admins)
         setAdmins(admins)
     }
 
     useEffect(() => {
+        console.log(game)
     }, [game])
 
     useEffect(() => {
@@ -59,7 +64,7 @@ export function GameAdd() {
         let { name, value, type } = ev.target
         if (type === 'number') value = +value
         if (type === 'checkbox') value = ev.target.checked
-        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => ({ adminId: option.value }))
+        if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => (option.value))
 
         if (name === 'gameType') {
             value = (value) ? 'stages' : 'activities'
@@ -92,7 +97,6 @@ export function GameAdd() {
     // colors from image for the divs 
     async function getColorsFromImg(imgUrl) {
         const colors = await prominent(imgUrl, { format: 'hex', amount: 5, group: 100 })
-        console.log('colors:', colors)
         setIconColors([...colors])
     }
 
@@ -190,10 +194,17 @@ export function GameAdd() {
         // })
 
         // time changes
-        utilService.setTimesChangeToTimestamp(game)
+        setGame(prevGame => {
+            utilService.setTimesChangeToTimestamp(prevGame)
+            return { ...prevGame }
+        })
 
         // work
-        game.admins = game.admins.map(adminId => ({ adminId }))
+        // array of objects
+        setGame(prevGame => {
+            prevGame.admins = prevGame.admins.map(id => ({ adminId: id }))
+            return { ...prevGame }
+        })
 
 
         try {
@@ -205,6 +216,10 @@ export function GameAdd() {
         } catch (err) {
             setMsgAfterGameAdd('שגיאה')
             console.log('err:', err)
+            setGame(prevGame => {
+                prevGame.admins = prevGame.admins.map(id => (id.adminId))
+                return { ...prevGame }
+            })
         } finally {
             setIsLoading(false)
 
@@ -275,7 +290,7 @@ export function GameAdd() {
                 <input required type="text" name="name" id="name" value={game.name} onChange={onHandleChange} />
 
                 <label htmlFor="admins">אדמינים</label>
-                <select required multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
+                <select multiple name="admins" id="admins" value={game.admins} onChange={onHandleChange} >
                     {admins?.map((admin, i) => <option key={i} value={admin.id}>
                         {admin.name}
                     </option>)}
@@ -326,7 +341,7 @@ export function GameAdd() {
                         <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
                     </section>}
 
-                {!isLoading && <button type="submit" className="btn-sumbit">Create Game</button>}
+                {!isLoading && <button type="submit" className="btn-sumbit">צור משחק</button>}
                 {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
                 {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
 

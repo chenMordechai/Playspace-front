@@ -145,10 +145,14 @@ function getEmptyCredentials() {
     return {
         // email: 'AAAA@GMAIL.COM',
         // name: 'AAAA',
-        email: 'AnatShapira@gmail.com',
-        name: 'Anat Shapira',
+        email: 'system',
+        name: 'system',
         // password: ''
-        password: 'Aa1234$%'
+        password: 'system'
+        // email: 'AnatShapira@gmail.com',
+        // name: 'Anat Shapira',
+        // // password: ''
+        // password: 'Aa1234$%'
     }
 }
 
