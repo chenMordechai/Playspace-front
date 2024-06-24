@@ -23,6 +23,7 @@ export function Login() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // get user from back
         if (loggedinUser) {
             if (!loggedinUser.isAdmin) navigate('/user')
             else navigate('/admin')

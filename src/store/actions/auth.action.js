@@ -3,6 +3,8 @@ import { SET_LOGGEDIN_USER, SET_LOGGEDIN_PLAYER, SET_LOGGEDIN_PLAYER_GROUP } fro
 
 import { store } from '../store.js'
 
+// get user
+
 export async function login(credentials) {
     try {
         const user = await authService.login(credentials)

@@ -46,7 +46,7 @@ export function Admin() {
     async function init() {
         try {
             const games = await getGames(loggedinUser, filterBy, sortBy, currPage)
-            console.log('games:', games)
+            // console.log('games:', games)
             if (!games.length) return;
             setGames(games)
             // setGames(prev => [...prev, ...games]);

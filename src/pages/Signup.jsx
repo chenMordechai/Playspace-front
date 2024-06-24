@@ -158,10 +158,10 @@ export function Signup() {
         // })
         // console.log('shallowGame?.themeColors:', shallowGame?.themeColors)
 
-        elRoot.style.setProperty(`--primary`, shallowGame?.themeColors[0]);
-        elRoot.style.setProperty(`--primary-35`, shallowGame?.themeColors[1]);
-        elRoot.style.setProperty(`--gradient-clr-1`, shallowGame?.themeColors[2]);
-        elRoot.style.setProperty(`--gradient-clr-2`, shallowGame?.themeColors[0]);
+        // elRoot.style.setProperty(`--primary`, shallowGame?.themeColors[0]);
+        // elRoot.style.setProperty(`--primary-35`, shallowGame?.themeColors[1]);
+        // elRoot.style.setProperty(`--gradient-clr-1`, shallowGame?.themeColors[2]);
+        // elRoot.style.setProperty(`--gradient-clr-2`, shallowGame?.themeColors[0]);
     }
 
     async function onChangeFileInput(ev) {

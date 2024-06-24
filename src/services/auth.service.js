@@ -34,20 +34,20 @@ export const authService = {
 async function login(userCred) {
     const user = await httpService.post(`${BASE_URL_AUTH}Login`, userCred)
     // user.isAdmin = true  // for dev
-    if (user) {
-        _setLoggedinUser(user)
-        return user
-    }
+    // if (user) {
+    //     _setLoggedinUser(user)
+    return user
+    // }
 }
 
 // work
 async function adminLogin(adminCred) {
     const user = await httpService.post(`${BASE_URL_AUTH}AdminLogin`, adminCred)
     user.checkAdmin = true  // for dev
-    if (user) {
-        _setLoggedinUser(user)
-        return user
-    }
+    // if (user) {
+    //     _setLoggedinUser(user)
+    return user
+    // }
 }
 
 // logout for user and admin
@@ -75,19 +75,19 @@ async function signup({ email, gameId, groupId, name, media }) {
     //     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
     //     // groupId: 0
     // }
-    if (user) {
-        _setLoggedinUser(user)
-        return user
-    }
+    // if (user) {
+    //     _setLoggedinUser(user)
+    return user
+    // }
 
 }
 
 async function getPlayer(gameId) {
     const player = httpService.get(`Game/${gameId}/player`)
-    if (player) {
-        _setLoggedinPlayer(player)
-        return player
-    }
+    // if (player) {
+    //     _setLoggedinPlayer(player)
+    //     return player
+    // }
 
 }
 
