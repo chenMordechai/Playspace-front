@@ -18,8 +18,9 @@ export const gameService = {
     getEmptyActivity,
     getDefaultFilter,
     getDefaultSort,
-    checkAnswer
-    // getGames2
+    checkAnswer,
+    getStatistics,
+    getGameGroups
 }
 
 // get demo data
@@ -32,11 +33,16 @@ async function getGames(loggedinUser, filterBy = {}, sortBy = {}, currPage) {
     }
     let games
     if (loggedinUser?.checkAdmin) {
+        
         games = await httpService.post(`Admin/Games`, filterBy)
     } else {
-        games = await httpService.post(`User/Games`)
+        games = await httpService.get(`User/Games`)
     }
     return games
+}
+
+async function getStatistics() {
+    return await httpService.get(BASE_URL + `Statistics`)
 }
 
 async function getPlayers(gameId, filterBy = {}, sortBy = {}, currPage) {
@@ -63,9 +69,15 @@ async function getGroups(gameId) {
 
 async function getGameById(gameId) {
     return httpService.get(BASE_URL + gameId)
+}
 
-    // return Promise.resolve(demoDataService.getGame2())
-    // return demoDataService.getGame1()
+async function getGameGroups(gameId, filterBy = {}, sortBy = {}, currPage) {
+    const queryPayload = {
+        filterBy,
+        sortBy,
+        currPage
+    }
+    return httpService.post(`/Admin/Game/${gameId}/Groups`, queryPayload)
 }
 
 

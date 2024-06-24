@@ -2,76 +2,78 @@ import { useState, useEffect } from "react"
 
 import { FilterByName } from "./FilterByName"
 import { ScoreEdit } from "./ScoreEdit"
+import { gameService } from "../services/game.service"
 
 export function AdminGroups() {
     const [groups, setGroups] = useState(null)
     const [filterBy, setFilterBy] = useState({ name: '' })
-
+    const { gameId } = useParams();
     useEffect(() => {
-
-        //! Avishai get groups by filter
         getGroups(filterBy)
-
     }, [filterBy])
 
-    function getGroups() {
-        const groups = [
-            {
-                id: "iw5k9",
-                name: "קבוצה א",
-                adminAdditionalScore: 0,
-                score: 1000
-            },
-            {
-                id: "iw5k8",
-                name: "קבוצה ב",
-                adminAdditionalScore: 0,
-                score: 1000
-            },
-            {
-                id: "iw5k9",
-                name: "קבוצה א",
-                adminAdditionalScore: 0,
-                score: 1040
-            },
-            {
-                id: "iw5k8",
-                name: "קבוצה ב",
-                adminAdditionalScore: 0,
-                score: 1436
-            },
-            {
-                id: "iw5k9",
-                name: "קבוצה א",
-                adminAdditionalScore: 0,
-                score: 1430
-            },
-            {
-                id: "iw5k8",
-                name: "קבוצה ב",
-                adminAdditionalScore: 0,
-                score: 1320
-            },
-            {
-                id: "iw5k9",
-                name: "קבוצה א",
-                adminAdditionalScore: 0,
-                score: 1230
-            },
-            {
-                id: "iw5k8",
-                name: "קבוצה ב",
-                adminAdditionalScore: 0,
-                score: 1000
-            },
-
-        ]
-
-        setGroups(groups)
+    async function getGroups() {
+        try {
+            const groups = await gameService.getGameGroups(gameId, filterBy)
+            setGroups(groups)
+            // const groups = [
+            //     {
+            //         id: "iw5k9",
+            //         name: "קבוצה א",
+            //         adminAdditionalScore: 0,
+            //         score: 1000
+            //     },
+            //     {
+            //         id: "iw5k8",
+            //         name: "קבוצה ב",
+            //         adminAdditionalScore: 0,
+            //         score: 1000
+            //     },
+            //     {
+            //         id: "iw5k9",
+            //         name: "קבוצה א",
+            //         adminAdditionalScore: 0,
+            //         score: 1040
+            //     },
+            //     {
+            //         id: "iw5k8",
+            //         name: "קבוצה ב",
+            //         adminAdditionalScore: 0,
+            //         score: 1436
+            //     },
+            //     {
+            //         id: "iw5k9",
+            //         name: "קבוצה א",
+            //         adminAdditionalScore: 0,
+            //         score: 1430
+            //     },
+            //     {
+            //         id: "iw5k8",
+            //         name: "קבוצה ב",
+            //         adminAdditionalScore: 0,
+            //         score: 1320
+            //     },
+            //     {
+            //         id: "iw5k9",
+            //         name: "קבוצה א",
+            //         adminAdditionalScore: 0,
+            //         score: 1230
+            //     },
+            //     {
+            //         id: "iw5k8",
+            //         name: "קבוצה ב",
+            //         adminAdditionalScore: 0,
+            //         score: 1000
+            //     },
+    
+            // ]
+        }
+        catch (err) {
+            console.log('err:', err)
+        }
     }
 
     function onFilterGroups(ev) {
-        console.log('onFilterGroups')
         ev.preventDefault()
     }
 
@@ -81,11 +83,9 @@ export function AdminGroups() {
     }
 
     function onUpdateScore(groupId, diff) {
-        console.log('onUpdateScore')
-        //! Avishay update group score
     }
 
-    if (!groups) return ''
+    if (!groups) return (<p>There are no groups to show.</p>)
     return (
         <section className="admin-groups">
             <h1>Groups</h1>
