@@ -1,4 +1,7 @@
 import { gameService } from "../../services/game.service.js";
+import { SET_LOGGEDIN_PLAYER } from "../reducers/auth.reducer.js";
+
+import { store } from '../store.js'
 
 export async function getGames(isAdmin, filterBy, sortBy, currPage) {
     try {
@@ -72,5 +75,15 @@ export async function deleteGame(gameId) {
     }
 }
 
+export async function checkGameAnswer(answerData) {
+    try {
+        const player = await gameService.checkAnswer(answerData)
+        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+        return player
+    } catch (err) {
+        console.log('user action -> Cannot get player', err)
+        throw err
+    }
+}
 
 

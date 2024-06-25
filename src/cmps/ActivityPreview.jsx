@@ -7,6 +7,8 @@ import { LifeSaver } from './LifeSaver'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
+import { checkGameAnswer } from '../store/actions/game.action.js'
+
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId }) {
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
@@ -18,20 +20,19 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     const firstRender = useRef(true)
 
     async function checkAnswer(answer) {
-        console.log('answer:', answer)
+        // console.log('answer:', answer)
         if (activity.activityType === 'multiple') {
             // ?answer or answer idx?
         } else if (activity.activityType === 'open') {
-            answer = ''
             // !Avishai- How to check?
+            answer = ''
         } else if (activity.activityType === 'yesno') {
 
         } else if (activity.activityType === 'typing') {
 
-            const res = inputTypingValues.join('')
+            answer = inputTypingValues.join('')
         }
 
-        // todo : check answer from back
         const answerData = {
             answer,
             activityId: activity.id,
@@ -41,30 +42,28 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             isActivitySkipped: false,
             isStageSkipped: false
         }
-        // var res = await gameService.checkAnswer(answerData)
-        // console.log('res:', res)
-        // setIsAnswerCorrect(res)
+        var res = await checkGameAnswer(answerData)
 
-        // if (res) {
-        //     showSuccessMsg(`תשובה נכונה`)
-        //     setTimeout(() => {
-        setCurrActivityStepIdx(prev => prev + 1)
-        //     }, 1000);
-        // } else {
-        //     // todo: check max error from stage or activity
-        //     // todo: gameService.getMaxError()
-        //     var maxError = 3
-        //     if (!maxError) {
-        //         showErrorMsg('תשובה לא נכונה')
-        //         setTimeout(() => {
-        //             setCurrActivityStepIdx(prev => prev + 1)
-        //         }, 1000);
-        //     } else {
-        //         showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
-        //         // todo: maxError--
-        //     }
-        // }
+        if (res.lastAnswerState) {
+            showSuccessMsg(`תשובה נכונה`)
+            setTimeout(() => {
+                setCurrActivityStepIdx(prev => prev + 1)
+            }, 1000)
 
+        } else {
+            if (res.submittedActivitiesIds.includes(activity.id)) {
+                console.log('includes')
+                showErrorMsg('תשובה לא נכונה')
+                setTimeout(() => {
+                    setCurrActivityStepIdx(prev => prev + 1)
+                }, 1000)
+
+            } else {
+                const activityError = res.activityErrors.find(a => a.activityId === activity.id)
+                const maxError = activity.maxError - activityError.errorCount
+                showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
+            }
+        }
     }
 
     useEffect(() => {
