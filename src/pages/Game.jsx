@@ -59,6 +59,7 @@ export function Game() {
     }, [])
 
     useEffect(() => {
+        console.log('game:', game)
         changeColorsVars()
     }, [game])
 
@@ -259,7 +260,7 @@ export function Game() {
 
     if (!game) return ''
     return (
-        <section className="game-container">
+        <section className="game-container rtl">
             <div className="game-bgi">
                 <img src={logoBig} />
             </div>

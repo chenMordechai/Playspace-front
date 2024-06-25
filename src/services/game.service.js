@@ -88,10 +88,11 @@ async function save(game) {
     }
 }
 
-async function checkAnswer() {
+async function checkAnswer(answer) {
     // todo
+    return httpService.post(`Player/Answer`, answer)
 
-    return Promise.resolve(true)
+    // return Promise.resolve(true)
 
 }
 
