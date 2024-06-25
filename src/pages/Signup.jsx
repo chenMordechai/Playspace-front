@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
 import { utilService } from '../services/util.service'
-import { signup, getPlayer } from "../store/actions/auth.action"
+import { signup, getPlayer, getUser } from "../store/actions/auth.action"
 import { getShallowGameById } from "../store/actions/game.action"
 import { Carousel } from '../cmps/Carousel'
 import { UserImgAddModal } from "../cmps/UserImgAddModal"
@@ -52,6 +52,7 @@ import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 // work : http://localhost:5173/signup/4bd16a6e-6a43-4875-522f-08dc9442a5d4
 
 export function Signup() {
+    console.log('Signup')
     const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
     const [shallowGame, setShallowGame] = useState(null)
 
@@ -73,6 +74,28 @@ export function Signup() {
     const sectionRef = useRef(null);
     const colors = useRef(null);
 
+
+    useEffect(() => {
+        // getUserFromBack()
+    }, [])
+
+    async function getUserFromBack() {
+        console.log('getUserFromBack')
+        try {
+            // work
+            const user = await getUser() // user
+            console.log('user:', user)
+            // didn't work
+            //! Avishai we need to get the player after we have playspace-player-cookie
+            const player = await getPlayer(gameId) // player
+            console.log('player:', player)
+            // save to store = player
+            // if (player) navigate(`/game/${shallowGame.id}`)
+        } catch (error) {
+            // console.error('Error:', error);
+        }
+    }
+
     useEffect(() => {
         // todo
         setTimeout(() => {
@@ -81,7 +104,10 @@ export function Signup() {
         setCredentials(prev => ({ ...prev, gameId }))
         // setCredentials(prev => ({ ...prev, gameId, groupId }))
 
+        // get user
+        // get player
         getShallowGame()
+
 
     }, [])
 
@@ -106,43 +132,13 @@ export function Signup() {
     async function getShallowGame() {
         const shallowGame = await getShallowGameById(gameId)
         // const shallowGame = await getShallowGameById("83a19a02-8fe0-4442-dd7e-08dc7b5a30d0")
-
         console.log('shallowGame:', shallowGame)
-        // shallowGame.groups = [
-        //     {
-        //         "id": "tHZmMy",
-        //         "name": "קבוצה א",
-        //         "adminAdditionalScore": 0
-        //     },
-        //     {
-        //         "id": "dbrl3A",
-        //         "name": "קבוצה ב",
-        //         "adminAdditionalScore": 0
-        //     },
-        //     {
-        //         "id": "iRIckp",
-        //         "name": "קבוצה ג",
-        //         "adminAdditionalScore": 0
-        //     },
-        //     {
-        //         "id": "tHZmM1",
-        //         "name": "קבוצה ד",
-        //         "adminAdditionalScore": 0
-        //     },
-        //     // {
-        //     //     "id": "dbrl32",
-        //     //     "name": "קבוצה ה",
-        //     //     "adminAdditionalScore": 0
-        //     // },
-        //     // {
-        //     //     "id": "iRIck3",
-        //     //     "name": "קבוצה ו",
-        //     //     "adminAdditionalScore": 0
-        //     // }
-        // ]
+
         setShallowGame(shallowGame)
 
-
+        if (loggedinPlayer && shallowGame) {
+            navigate(`/game/${shallowGame.id}`)
+        }
         // colors.current = shallowGame.groups.map(g => utilService.getRandomColor())
     }
 
@@ -177,12 +173,21 @@ export function Signup() {
             // work
             const user = await signup(credentials) // user
             const player = await getPlayer(gameId) // player
+
+            resetSignup()
+
             // save to store = player
             if (player) navigate(`/game/${shallowGame.id}`)
         } catch (error) {
             console.error('Error:', error);
         }
 
+    }
+
+    function resetSignup() {
+        console.log('resetSignup')
+        utilService.saveToStorage('signupStepIdx', 0)
+        utilService.saveToStorage('credentials', authService.getEmptySignupCred())
     }
 
     function onCloseModal() {

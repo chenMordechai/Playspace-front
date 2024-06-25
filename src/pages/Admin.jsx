@@ -51,7 +51,7 @@ export function Admin() {
         try {
             const user = await getUser()
             console.log('user:', user)
-            if (!user || !user.isAdmin) navigate('/')
+            if (!user || !user) navigate('/')
             else init()
 
         } catch (error) {

@@ -21,14 +21,16 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         if (activity.activityType === 'multiple') {
             // ?answer or answer idx?
         } else if (activity.activityType === 'open') {
+
         } else if (activity.activityType === 'yesno') {
+
         } else if (activity.activityType === 'typing') {
+
             const res = inputTypingValues.join('')
         }
 
         // todo : check answer from back
         var res = await gameService.checkAnswer()
-        res = true
         setIsAnswerCorrect(res)
 
         if (res) {

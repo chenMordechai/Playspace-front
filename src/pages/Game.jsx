@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import { getGameById } from "../store/actions/game.action.js"
 
@@ -19,7 +19,7 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
-
+import { getPlayer, getUser } from "../store/actions/auth.action.js"
 
 // game/:gameId
 
@@ -36,19 +36,26 @@ export function Game() {
     const [players, setPlayers] = useState(null)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
-
+    console.log('loggedinPlayer:', loggedinPlayer)
     const [openGameOptionModal, onToggleOpenGameOptionModal] = useToggle(false)
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
     useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal])
     useEffectCloseModal(isScreenOpen, [onToggleOpenGameOptionModal])
 
+    const navigate = useNavigate()
+
     const { gameId } = useParams()
 
+    // useEffect(() => {
+    //     // todo: // if !loggdinPlayer return
+
+    //     init()
+    //     // saveIdxsToStorage()
+    //     getPlayers()
+    // }, [])
+
     useEffect(() => {
-        // todo: // if !loggdinPlayer return
-        init()
-        // saveIdxsToStorage()
-        getPlayers()
+        getUserFromBack()
     }, [])
 
     useEffect(() => {
@@ -85,10 +92,30 @@ export function Game() {
     }, [currActivityStepIdx])
 
 
+    async function getUserFromBack() {
+        try {
+            const user = await getUser()
+            // const player = await getPlayer(gameId) // player
+            // console.log('user:', user)
+            // console.log('player:', player)
+            // // save to store = player
+            // console.log('user:', user)
+            // if (!user || !player) navigate(`/signup/${gameId}`)
+            // else {
+            init()
+            // }
+
+        } catch (error) {
+            // console.error('Error:', error);
+
+            navigate(`/signup/${gameId}`)
+        }
+    }
+
     async function init() {
         try {
             // work : http://localhost:5173/game/96ebb7e2-abf2-46df-1727-08dc75a038e2
-            // const game = await getGameById(gameId)
+            const game = await getGameById(gameId)
 
             // demo data
             // game with stages - onTime:
@@ -97,7 +124,7 @@ export function Game() {
             // game with activities - onProgress:
             // const game = await demoDataService.getGame2()
             // game with activities - open:
-            const game = await demoDataService.getGame3()
+            // const game = await demoDataService.getGame3()
             // game with stages - onProgress:
             // const game = await demoDataService.getGame4()
 
