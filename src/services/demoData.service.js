@@ -441,7 +441,7 @@ const game4 = {
             "name": "שלב ראשון",
             "activities": [
                 {
-                    "id": null,
+                    "id": "123",
                     "text": "מה קורה הכל בסדר?",
                     "isDeleted": false,
                     "activityType": "multiple",
@@ -468,7 +468,7 @@ const game4 = {
 
                 },
                 {
-                    "id": null,
+                    "id": "124",
                     "text": "עכשיו באמת איך אתה מרגיש?",
                     "isDeleted": false,
                     "activityType": "open",
@@ -498,7 +498,7 @@ const game4 = {
             "textAfter": "זו הודעה אחרי השלב הראשון",
             "stageStartTimestamp": 0,
             "stageEndTimestamp": 0,
-            "maxError": 1,
+            "maxError": 3,
             "isRequired": true,
         },
         {

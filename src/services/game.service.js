@@ -60,10 +60,9 @@ async function getGroups(gameId) {
 }
 
 async function getGameById(gameId) {
-    return httpService.get(BASE_URL + gameId)
+    // return httpService.get(BASE_URL + gameId)
 
-    // return Promise.resolve(demoDataService.getGame2())
-    // return demoDataService.getGame1()
+    return Promise.resolve(demoDataService.getGame4())
 }
 
 
@@ -105,10 +104,10 @@ async function checkAnswer(answer) {
         ],
         "score": 0,
         "activityErrors": [
-            // {
-            //             "stageId": "2c5e971a-b465-4d19-e6bc-08dc94f292da",
-            //             "errorCount": 1
-            // }
+            {
+                "activityId": "123",
+                "errorCount": 1
+            }
         ],
         "stageErrors": [],
         "lifeSavers": [],

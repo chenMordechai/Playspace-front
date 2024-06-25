@@ -10,7 +10,7 @@ import { utilService } from '../services/util.service.js'
 import { checkGameAnswer } from '../store/actions/game.action.js'
 
 
-export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId }) {
+export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -59,9 +59,24 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                 }, 1000)
 
             } else {
-                const activityError = res.activityErrors.find(a => a.activityId === activity.id)
-                const maxError = activity.maxError - activityError.errorCount
-                showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
+                if (gameType === 'activities') {
+                    const activityError = res.activityErrors.find(a => a.activityId === activity.id)
+                    const maxError = activity.maxError - activityError.errorCount
+                    showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
+
+                } else if (gameType === 'stages') {
+
+                    let activitiesErrorCount = 0
+                    stageActivitiesIds.forEach(id => {
+                        const activity = res.activityErrors.find(a => a.activityId === id)
+                        if (activity) activitiesErrorCount += activity.errorCount
+                    })
+                    console.log('activitiesErrorCount:', activitiesErrorCount)
+                    console.log('stageMaxError:', stageMaxError)
+                    const maxError = stageMaxError - activitiesErrorCount
+                    showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
+                }
+
             }
         }
     }
