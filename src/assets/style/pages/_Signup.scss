@@ -1,5 +1,30 @@
 .signup,
 .login {
+    .playspace-logo,
+    .playspace-logo-blue {
+        animation-delay: 800ms;
+        animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
+        animation-duration: 3500ms;
+        animation-fill-mode: forwards;
+        width: 200px;
+        height: 35.85px;
+    }
+
+    .playspace-logo {
+        animation-name: smart;
+        position: relative;
+        // width: 200px;
+        // height: 35.85px;
+    }
+    .playspace-logo-blue {
+        animation-name: smart2;
+        position: absolute;
+        left: calc(50% - 200px / 2);
+        top: calc(50% - 35.85px / 2 - 50px);
+        // width: 178.54px;
+        // height: 32px;
+        z-index: 5;
+    }
     // width: 250px;
     // width: 100%;
     // max-width: 400px;
@@ -196,55 +221,43 @@
             top: 266px;
         }
 
-        .content > * {
+        .content {
             position: absolute;
             left: calc(50% - 220px / 2);
+            top: calc(50% - 135px / 2);
             z-index: 10;
+
+            @include flex(column, center, space-between, 25px);
         }
 
         .playspace-logo {
-            width: 200px;
-            height: 35.85px;
-            top: 252px;
-            animation-name: smart;
-            animation-delay: 800ms;
-            animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
-            animation-duration: 3500ms;
+            // position: relative;
+            // width: 200px;
+            // height: 35.85px;
+            // animation-name: smart;
+            // animation-delay: 800ms;
+            // animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
+            // animation-duration: 3500ms;
+            // animation-fill-mode: forwards;
         }
 
         .x {
             width: 22px;
             height: 22px;
-            left: calc(50% - 22px / 2);
-            top: 310px;
-            z-index: 10;
         }
 
         .company-logo {
             width: 220px;
             height: 26.6px;
-            top: 362px;
         }
     }
 
     &.fade {
         .loading-screen {
-            // After delay
-            // animation-delay: 800ms;
-            // // Navigate to: "Screen 2";
-            // // Animate: Smart animate;
-            // animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
-            // animation-duration: 3500ms;
-
-            // background-color: #ffffff00;
-            // background: #2769e1;
-            // background: linear-gradient(106.96deg, #4c83e6 7.65%, #11367a 94.96%);
-            // background: linear-gradient(140deg, #0c2655, #2769e1, #0c2655);
-            // linear-gradient(139deg, rgba(2,0,36,1) 0%, rgba(30,30,198,1) 49%, rgba(12,12,76,1) 96%);
-            .content {
-                opacity: 0;
-                transition: 0.5s;
-            }
+            // .content {
+            opacity: 0;
+            transition: 1s;
+            // }
         }
         .step-0 {
             h2.playspace {
@@ -257,15 +270,22 @@
 
 @keyframes smart {
     0% {
-        top: 252px;
-    }
-    25% {
-        top: 262px;
-    }
-    50% {
-        top: 252px;
+        top: 0px;
     }
     100% {
-        top: 242px;
+        top: -170px;
+        width: 178.54px;
+        height: 32px;
+    }
+}
+@keyframes smart2 {
+    0% {
+        top: calc(50% - 35.85px / 2 - 50px);
+    }
+    100% {
+        top: calc((50% - 32px / 2) - 220px);
+        left: calc(50% - 178.54px / 2);
+        width: 178.54px;
+        height: 32px;
     }
 }

@@ -99,11 +99,10 @@ export function Signup() {
     }
 
     useEffect(() => {
-
         // todo
         setTimeout(() => {
-            // sectionRef.current.classList.add('fade')
-        }, 2000)
+            sectionRef.current.classList.add('fade')
+        }, 2500)
         setCredentials(prev => ({ ...prev, gameId }))
         // setCredentials(prev => ({ ...prev, gameId, groupId }))
 
@@ -203,8 +202,8 @@ export function Signup() {
     return (
         <section ref={sectionRef} className="signup">
 
-            {/* todo */}
-            {/* <section className="loading-screen">
+            {/*// todo */}
+            <section className="loading-screen">
                 <img className="vector vector1" src={vectorLeft} />
                 <div className="content">
                     <img className="playspace-logo" src={playspaceLogo} />
@@ -212,7 +211,7 @@ export function Signup() {
                     <img className="company-logo" src={companyLogo} />
                 </div>
                 <img className="vector vector2" src={vectorRight} />
-            </section> */}
+            </section>
 
             {stepIdx === 0 && !loggedinPlayer &&
                 <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />
