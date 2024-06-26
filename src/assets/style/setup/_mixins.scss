@@ -125,6 +125,7 @@
     border-radius: 10px;
 
     @include for-mobile-layout {
+        // position: relative;
         position: absolute;
         bottom: 0px;
         left: 0;

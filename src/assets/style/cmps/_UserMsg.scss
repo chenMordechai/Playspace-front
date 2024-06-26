@@ -1,10 +1,11 @@
 .user-msg {
     @include modal();
+    transition: 1s;
     background-color: white;
     // height: 200px;
     padding: 20px;
     padding-bottom: 30px;
-    border: 1px solid black;
+    // border: 1px solid black;
     @include flex(column, center, center, 10px);
 
     @include for-mobile-layout {

@@ -43,26 +43,21 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             isStageSkipped: false
         }
         var res = await checkGameAnswer(answerData)
-
+        // console.log('res:', res)
+        console.log('activity:', activity)
         if (res.lastAnswerState) {
-            showSuccessMsg(`תשובה נכונה`)
-            // setTimeout(() => {
-            //     setCurrActivityStepIdx(prev => prev + 1)
-            // }, 1000)
+            showSuccessMsg({ txt: `+תשובה נכונה ${activity.pointsValue}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
 
         } else {
             if (res.submittedActivitiesIds.includes(activity.id)) {
                 console.log('includes')
-                showErrorMsg('תשובה לא נכונה')
-                setTimeout(() => {
-                    setCurrActivityStepIdx(prev => prev + 1)
-                }, 1000)
+                showErrorMsg({ txt: `תשובה לא נכונה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
 
             } else {
                 if (gameType === 'activities') {
                     const activityError = res.activityErrors.find(a => a.activityId === activity.id)
                     const maxError = activity.maxError - activityError.errorCount
-                    showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
+                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
 
                 } else if (gameType === 'stages') {
 
@@ -74,7 +69,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                     console.log('activitiesErrorCount:', activitiesErrorCount)
                     console.log('stageMaxError:', stageMaxError)
                     const maxError = stageMaxError - activitiesErrorCount
-                    showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
+                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
                 }
 
             }

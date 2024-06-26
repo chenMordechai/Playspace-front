@@ -62,7 +62,7 @@ async function getGroups(gameId) {
 async function getGameById(gameId) {
     // return httpService.get(BASE_URL + gameId)
 
-    return Promise.resolve(demoDataService.getGame4())
+    return Promise.resolve(demoDataService.getGame3())
 }
 
 

@@ -99,7 +99,7 @@ export function Signup() {
     }
 
     useEffect(() => {
-        showSuccessMsg(`תשובה נכונה`)
+
         // todo
         setTimeout(() => {
             // sectionRef.current.classList.add('fade')
