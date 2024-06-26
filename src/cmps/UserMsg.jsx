@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { eventBusService } from "../services/event-bus.service.js"
 
 import x from "../assets/img/x.png"
+import v from "../assets/img/v.png"
 
 export function UserMsg() {
 
@@ -18,7 +19,7 @@ export function UserMsg() {
                 timeoutIdRef.current = null
                 clearTimeout(timeoutIdRef.current)
             }
-            timeoutIdRef.current = setTimeout(closeMsg, 1500)
+            // timeoutIdRef.current = setTimeout(closeMsg, 1500)
         })
         return unsubscribe
     }, [])
@@ -30,10 +31,14 @@ export function UserMsg() {
     if (!msg) return ''
     return (
         <section className={`user-msg ${msg.type}`}>
-            <button onClick={closeMsg}>
-                <img src={x} alt="" />
+            <span className="sign">
+                {msg.type === 'success' && <img src={v} alt="" />}
+                {msg.type === 'error' && <img src={x} alt="" />}
+            </span>
+            <span className="txt">{msg.txt}</span>
+            <button className="next-btn" onClick={closeMsg}>
+                continue
             </button>
-            <span>{msg.txt}</span>
         </section>
     )
 }

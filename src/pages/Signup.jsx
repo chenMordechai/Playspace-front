@@ -48,6 +48,7 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
+import { showSuccessMsg } from "../services/event-bus.service.js"
 
 // work : http://localhost:5173/signup/ee659c2a-6a6a-4186-24a0-08dc94f292d0
 // work : http://localhost:5173/signup/f5b1ccd9-38c8-48b3-24a1-08dc94f292d0
@@ -98,6 +99,7 @@ export function Signup() {
     }
 
     useEffect(() => {
+        showSuccessMsg(`תשובה נכונה`)
         // todo
         setTimeout(() => {
             // sectionRef.current.classList.add('fade')
