@@ -7,6 +7,7 @@ import { GameLine } from "../cmps/GameLine"
 import { demoDataService } from "../services/demoData.service.js"
 import { utilService } from "../services/util.service.js"
 import logoBig from '../assets/img/logo-big.png'
+import arrow from '../assets/img/arrow-left.png'
 import points from '../assets/img/3points.png'
 import { GameScore } from "../cmps/GameScore.jsx"
 import { useSelector } from "react-redux"
@@ -266,9 +267,9 @@ export function Game() {
             </div>
             <div className="layer-1">
                 <div className="game-header">
-                    <span className="space"></span>
-                    <button className="game-name">{game.name}</button>
                     <button onClick={onToggleOpenGameOptionModal} className="points"><img src={points} /></button>
+                    <button className="game-name">{game.name}</button>
+                    <span className="arrow"> <img src={arrow} /></span>
                     {openGameOptionModal && <GameOptionModal />}
 
                 </div>

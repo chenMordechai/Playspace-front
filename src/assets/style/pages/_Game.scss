@@ -57,9 +57,15 @@
                 }
             }
 
-            span.space {
+            span.arrow {
                 width: 41px;
                 height: 41px;
+                @include flex(row, center, center);
+
+                img {
+                    width: 29px;
+                    height: 29px;
+                }
             }
         }
 
