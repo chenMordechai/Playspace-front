@@ -8,6 +8,7 @@ import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
 import { checkGameAnswer } from '../store/actions/game.action.js'
+import wheel from '../assets/img/wheel.png'
 
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
@@ -179,6 +180,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                 <div className="text-container">
                     <p>Question </p>
                     <p> {activity.text}</p>
+                    <span className="wheel"><img src={wheel} /></span>
                 </div>
                 <section className="answer-container">
                     <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
