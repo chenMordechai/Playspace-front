@@ -46,9 +46,9 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
         if (res.lastAnswerState) {
             showSuccessMsg(`תשובה נכונה`)
-            setTimeout(() => {
-                setCurrActivityStepIdx(prev => prev + 1)
-            }, 1000)
+            // setTimeout(() => {
+            //     setCurrActivityStepIdx(prev => prev + 1)
+            // }, 1000)
 
         } else {
             if (res.submittedActivitiesIds.includes(activity.id)) {

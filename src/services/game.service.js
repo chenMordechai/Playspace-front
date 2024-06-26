@@ -111,7 +111,7 @@ async function checkAnswer(answer) {
         ],
         "stageErrors": [],
         "lifeSavers": [],
-        "lastAnswerState": false
+        "lastAnswerState": true
     }
     return Promise.resolve(newPlayer)
 
