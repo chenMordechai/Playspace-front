@@ -86,4 +86,15 @@ export async function checkGameAnswer(answerData) {
     }
 }
 
+export async function usingLifeSaver(answerData) {
+    try {
+        const player = await gameService.usingLifeSaver(answerData)
+        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+        return player
+    } catch (err) {
+        console.log('user action -> Cannot get player', err)
+        throw err
+    }
+}
+
 

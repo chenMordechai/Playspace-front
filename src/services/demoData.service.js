@@ -291,12 +291,12 @@ const game2 = {
 
 // game with activities - open
 const game3 = {
-    "id": null, //back
+    "id": '123', //back
     "name": "game3",
     "isDeleted": false, // back
     "activities": [
         {
-            "id": null, //back
+            "id": '254', //back
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar?",
             "isDeleted": false,
             "activityType": "open",
@@ -322,6 +322,7 @@ const game3 = {
             "isRequired": false
         },
         {
+            "id": "234",
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar2?",
             "activityType": "yesno",
             "isDeleted": false,
@@ -343,6 +344,7 @@ const game3 = {
             "isRequired": true
         },
         {
+            "id": "237",
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar3?",
             "activityType": "typing",
             "isDeleted": false,
@@ -363,6 +365,7 @@ const game3 = {
             ],
             "isRequired": true
         }, {
+            "id": "274",
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar4?",
             "isDeleted": false,
             "activityType": "multiple",

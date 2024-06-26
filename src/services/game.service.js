@@ -18,7 +18,8 @@ export const gameService = {
     getEmptyActivity,
     getDefaultFilter,
     getDefaultSort,
-    checkAnswer
+    checkAnswer,
+    usingLifeSaver
     // getGames2
 }
 
@@ -117,6 +118,11 @@ async function checkAnswer(answer) {
 
 }
 
+
+async function usingLifeSaver(data) {
+    const newPlayer = httpService.post(`Player/LifeSaver`, data)
+    return newPlayer
+}
 ///////////////////////////////////////
 
 function getEmptyGame() {

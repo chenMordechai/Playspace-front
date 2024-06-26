@@ -7,7 +7,7 @@ import { LifeSaver } from './LifeSaver'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
-import { checkGameAnswer } from '../store/actions/game.action.js'
+import { checkGameAnswer, usingLifeSaver } from '../store/actions/game.action.js'
 import wheel from '../assets/img/wheel.png'
 
 
@@ -19,6 +19,17 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     const [answersIdxToOff, setAnswersIdxToOff] = useState([])
 
     const firstRender = useRef(true)
+
+    useEffect(() => {
+        if (activity?.activityType === 'typing') {
+            const answerArray = activity.correctAnswer.split('').map(l => '')
+            setInputTypingValues(answerArray)
+        }
+    }, [activity])
+
+    useEffect(() => {
+    }, [inputTypingValues])
+
 
     async function checkAnswer(answer) {
         // console.log('answer:', answer)
@@ -77,16 +88,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         }
     }
 
-    useEffect(() => {
-        if (activity?.activityType === 'typing') {
-            const answerArray = activity.correctAnswer.split('').map(l => '')
-            setInputTypingValues(answerArray)
-        }
-    }, [activity])
-
-    useEffect(() => {
-    }, [inputTypingValues])
-
     function onMoveToNextActivity() {
         moveToNextActivity()
         setIsAnswerCorrect(false)
@@ -116,7 +117,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     async function handleLifeSaver(lifeSaver) {
-        // todo: from back player life saver
 
         if (lifeSaver === 'fifty' && activity.activityType === 'multiple') {
             const answers = activity.activityAnswers
@@ -132,16 +132,22 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
             setAnswersIdxToOff(answersIdxToOff)
 
+            const data = {
+                lifeSaver: 'fifty',
+                activityId: activity.id,
+                gameId
+            }
+            await gameService.usingLifeSaver(data)
+
         } else if (lifeSaver === 'skip') {
-            // todo : check answer from back 
-            // var res = await gameService.checkAnswer()
-            showSuccessMsg(`דילגת על השאלה`)
-            setTimeout(() => {
-                setCurrActivityStepIdx(prev => prev + 1)
-            }, 1000);
+            const data = {
+                lifeSaver: 'skip',
+                activityId: activity.id,
+                gameId
+            }
+            await gameService.usingLifeSaver(data)
+            showSuccessMsg({ txt: `דילגת על השאלה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
         }
-
-
     }
 
 
