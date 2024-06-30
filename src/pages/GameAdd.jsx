@@ -52,7 +52,7 @@ export function GameAdd() {
     }
 
     useEffect(() => {
-        // console.log(game)
+        console.log(game)
     }, [game])
 
     useEffect(() => {
@@ -172,12 +172,12 @@ export function GameAdd() {
         else if (name === 'activityAnswers') {
             value = value.split(',')
             if (value.length > 4) return
-        }
-        else if (name === 'lifeSaver') value = Array.from(ev.target.selectedOptions, option => option.value)
+        } else if (name === 'lifeSavers') value = Array.from(ev.target.selectedOptions, option => option.value)
 
         if (i === undefined) { // game.activities
             setGame(prevGame => {
                 prevGame.activities[j][name] = value
+                console.log('prevGame:', prevGame)
                 return { ...prevGame }
             })
         } else { // game.stage.activities

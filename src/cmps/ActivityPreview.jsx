@@ -3,7 +3,7 @@ import { Media } from './Media'
 
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { ActivityType } from './ActivityType'
-import { LifeSaver } from './LifeSaver'
+import { LifeSavers } from './LifeSavers'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
@@ -156,6 +156,9 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     async function onSkipQwestion() {
         console.log('onSkipQwestion')
+        if (activity.activityType === 'open') {
+            continueBtn.current.style.display = 'none'
+        }
         const answerData = {
             answer: '',
             activityId: activity.id,
@@ -216,7 +219,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                 </div>
                 <section className="answer-container">
                     <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
-                    <LifeSaver lifeSaver={activity?.lifeSaver} handleLifeSaver={handleLifeSaver} />
+                    <LifeSavers lifeSavers={activity?.lifeSavers} handleLifeSaver={handleLifeSaver} />
 
 
 

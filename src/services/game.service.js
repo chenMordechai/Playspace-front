@@ -93,7 +93,7 @@ async function updateGroup(gameId, groupIdentifier, scoreDiff) {
         groupIdentifier,
         scoreDiff,
     }
-    
+
     const isUpdated = await httpService.put(`Admin/Game/${gameId}/Group`, groupUpdatePayload)
     return isUpdated;
 }
@@ -104,7 +104,7 @@ async function updatePlayerScore(playerId, gameId, newScore) {
         gameId,
         newScore
     }
-    
+
     const isUpdated = await httpService.put(`Player/UpdateScore`, playerUpdatePayload)
     return isUpdated;
 }
@@ -196,6 +196,8 @@ function getEmptyGame() {
         admins: [], // v // e // [{adminId:'212'}]
         textBefore: '', // v //e
         textAfter: '', // v //e
+        lifeSavers: null
+
     }
 }
 

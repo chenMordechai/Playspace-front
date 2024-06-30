@@ -51,6 +51,9 @@ import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 import { showSuccessMsg } from "../services/event-bus.service.js"
 
 // work : http://localhost:5173/signup/80c6face-668b-4d14-82e8-08dc98ddb702
+// lifeSaver:
+// work : http://localhost:5173/signup/2e1586e7-112a-4a57-3a40-08dc98f4555f
+// work : http://localhost:5173/signup/6538762c-c0e7-4fcc-3a41-08dc98f4555f
 
 export function Signup() {
     const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
@@ -117,6 +120,7 @@ export function Signup() {
     }
 
     async function getShallowGame() {
+        console.log('getShallowGame')
         const shallowGame = await getShallowGameById(gameId)
         console.log('shallowGame:', shallowGame)
         setShallowGame(shallowGame)
