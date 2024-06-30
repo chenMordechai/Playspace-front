@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import { getGameById } from "../store/actions/game.action.js"
 
@@ -7,6 +7,7 @@ import { GameLine } from "../cmps/GameLine"
 import { demoDataService } from "../services/demoData.service.js"
 import { utilService } from "../services/util.service.js"
 import logoBig from '../assets/img/logo-big.png'
+import arrow from '../assets/img/arrow-left.png'
 import points from '../assets/img/3points.png'
 import { GameScore } from "../cmps/GameScore.jsx"
 import { useSelector } from "react-redux"
@@ -19,7 +20,7 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
-
+import { getPlayer, getUser } from "../store/actions/auth.action.js"
 
 // game/:gameId
 
@@ -36,22 +37,30 @@ export function Game() {
     const [players, setPlayers] = useState(null)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
-
+    console.log('loggedinPlayer:', loggedinPlayer)
     const [openGameOptionModal, onToggleOpenGameOptionModal] = useToggle(false)
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
     useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal])
     useEffectCloseModal(isScreenOpen, [onToggleOpenGameOptionModal])
 
+    const navigate = useNavigate()
+
     const { gameId } = useParams()
 
+    // useEffect(() => {
+    //     // todo: // if !loggdinPlayer return
+
+    //     init()
+    //     // saveIdxsToStorage()
+    //     getPlayers()
+    // }, [])
+
     useEffect(() => {
-        // todo: // if !loggdinPlayer return
-        init()
-        // saveIdxsToStorage()
-        getPlayers()
+        getUserFromBack()
     }, [])
 
     useEffect(() => {
+        console.log('game:', game)
         changeColorsVars()
     }, [game])
 
@@ -85,10 +94,30 @@ export function Game() {
     }, [currActivityStepIdx])
 
 
+    async function getUserFromBack() {
+        try {
+            const user = await getUser()
+            // const player = await getPlayer(gameId) // player
+            // console.log('user:', user)
+            // console.log('player:', player)
+            // // save to store = player
+            // console.log('user:', user)
+            // if (!user || !player) navigate(`/signup/${gameId}`)
+            // else {
+            init()
+            // }
+
+        } catch (error) {
+            // console.error('Error:', error);
+
+            navigate(`/signup/${gameId}`)
+        }
+    }
+
     async function init() {
         try {
             // work : http://localhost:5173/game/96ebb7e2-abf2-46df-1727-08dc75a038e2
-            // const game = await getGameById(gameId)
+            const game = await getGameById(gameId)
 
             // demo data
             // game with stages - onTime:
@@ -97,7 +126,7 @@ export function Game() {
             // game with activities - onProgress:
             // const game = await demoDataService.getGame2()
             // game with activities - open:
-            const game = await demoDataService.getGame3()
+            // const game = await demoDataService.getGame3()
             // game with stages - onProgress:
             // const game = await demoDataService.getGame4()
 
@@ -232,15 +261,15 @@ export function Game() {
 
     if (!game) return ''
     return (
-        <section className="game-container">
+        <section className="game-container rtl">
             <div className="game-bgi">
                 <img src={logoBig} />
             </div>
             <div className="layer-1">
                 <div className="game-header">
-                    <span className="space"></span>
-                    <button className="game-name">{game.name}</button>
                     <button onClick={onToggleOpenGameOptionModal} className="points"><img src={points} /></button>
+                    <button className="game-name">{game.name}</button>
+                    <span className="arrow"> <img src={arrow} /></span>
                     {openGameOptionModal && <GameOptionModal />}
 
                 </div>

@@ -291,12 +291,12 @@ const game2 = {
 
 // game with activities - open
 const game3 = {
-    "id": null, //back
+    "id": '123', //back
     "name": "game3",
     "isDeleted": false, // back
     "activities": [
         {
-            "id": null, //back
+            "id": '254', //back
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar?",
             "isDeleted": false,
             "activityType": "open",
@@ -322,6 +322,7 @@ const game3 = {
             "isRequired": false
         },
         {
+            "id": "234",
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar2?",
             "activityType": "yesno",
             "isDeleted": false,
@@ -343,6 +344,7 @@ const game3 = {
             "isRequired": true
         },
         {
+            "id": "237",
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar3?",
             "activityType": "typing",
             "isDeleted": false,
@@ -363,6 +365,7 @@ const game3 = {
             ],
             "isRequired": true
         }, {
+            "id": "274",
             "text": "Lorem ipsum dolor sit amet consectetur. Elit sed arcu donec et a. Pulvinar est aliquet pulvinar4?",
             "isDeleted": false,
             "activityType": "multiple",
@@ -441,7 +444,7 @@ const game4 = {
             "name": "שלב ראשון",
             "activities": [
                 {
-                    "id": null,
+                    "id": "123",
                     "text": "מה קורה הכל בסדר?",
                     "isDeleted": false,
                     "activityType": "multiple",
@@ -468,7 +471,7 @@ const game4 = {
 
                 },
                 {
-                    "id": null,
+                    "id": "124",
                     "text": "עכשיו באמת איך אתה מרגיש?",
                     "isDeleted": false,
                     "activityType": "open",
@@ -498,7 +501,7 @@ const game4 = {
             "textAfter": "זו הודעה אחרי השלב הראשון",
             "stageStartTimestamp": 0,
             "stageEndTimestamp": 0,
-            "maxError": 1,
+            "maxError": 3,
             "isRequired": true,
         },
         {
@@ -537,7 +540,7 @@ const game4 = {
     "createdDate": "2024-04-08T18:57:43.474Z", // back
     "updatedDate": "2024-04-08T18:57:43.474Z", // back 
     "gameStartTimestamp": 1706767200000, // past
-    "gameEndTimestamp": 1717218000000, // v // future
+    "gameEndTimestamp": 1719218000000, // v // future
 
     "themeColors": [
         "#006769",

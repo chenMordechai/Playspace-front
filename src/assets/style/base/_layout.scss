@@ -5,6 +5,7 @@
 
   main {
     // min-height: 100vh;
+    position: relative;
     width: 100%;
     min-width: 250px;
     // min-height: 87vh;
@@ -12,7 +13,7 @@
     // overflow-y: scroll;
     .main-container {
       // @include flex(column, center, center, 10px);
-      height: 100%;
+      height: 100vh;
     }
     @include for-narrow-layout {
     }

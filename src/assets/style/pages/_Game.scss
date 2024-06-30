@@ -41,7 +41,7 @@
                     font-size: 14px;
                     font-weight: 600;
                     line-height: 21px;
-                    width: 110px;
+                    // width: 110px;
                     height: 41px;
                     padding: 10px 20px 10px 20px;
                 }
@@ -57,9 +57,15 @@
                 }
             }
 
-            span.space {
+            span.arrow {
                 width: 41px;
                 height: 41px;
+                @include flex(row, center, center);
+
+                img {
+                    width: 29px;
+                    height: 29px;
+                }
             }
         }
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { ActivityPreview } from './ActivityPreview'
 
-export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity, currActivityIdx, currActivityStepIdx, setCurrActivityStepIdx, currStageStepIdx, setCurrStageStepIdx }) {
+export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMoveToNextActivity, currActivityIdx, currActivityStepIdx, setCurrActivityStepIdx, currStageStepIdx, setCurrStageStepIdx, gameId, gameType }) {
 
     function isStageStart() {
         if (!stage.stageStartTimestamp) return true
@@ -12,6 +12,10 @@ export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMov
     function isStageEnd() {
         if (!stage.stageEndTimestamp) return false
         return stage.stageEndTimestamp < Date.now()
+    }
+
+    function getStageActivitiesIds() {
+        return stage.activities.map(a => a.id)
     }
 
     if (!stage) return ''
@@ -45,7 +49,7 @@ export function StagePreview({ stage, moveToNextStage, onResetActivityIdx, onMov
                 <button onClick={() => setCurrStageStepIdx(prev => prev + 1)}>סיום שלב</button>
             </>} */}
             {/* real */}
-            {currStageStepIdx === 1 && <ActivityPreview activity={stage?.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} />}
+            {currStageStepIdx === 1 && <ActivityPreview activity={stage?.activities[currActivityIdx]} moveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} gameId={gameId} stageId={stage.id} gameType={gameType} stageMaxError={stage.maxError} stageActivitiesIds={getStageActivitiesIds()} />}
 
             {/* end stage*/}
             {currStageStepIdx === 2 && <>

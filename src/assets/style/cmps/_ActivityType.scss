@@ -32,8 +32,9 @@
             width: 24px;
             height: 24px;
             position: absolute;
-            right: 37px;
+            left: 37px;
             bottom: 34px;
+            transform: rotateY(180deg);
         }
 
         input {

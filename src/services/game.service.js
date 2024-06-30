@@ -19,8 +19,12 @@ export const gameService = {
     getDefaultFilter,
     getDefaultSort,
     checkAnswer,
-    getStatistics,
-    getGameGroups
+    usingLifeSaver,
+    getGameGroups,
+    getGamePlayers,
+    updateGroup,
+    updatePlayerScore
+    // getGames2
 }
 
 // get demo data
@@ -64,17 +68,51 @@ async function getGroups(gameId) {
     return groups
 }
 
-async function getGameById(gameId) {
-    return httpService.get(BASE_URL + gameId)
-}
-
 async function getGameGroups(gameId, filterBy = {}, sortBy = {}, currPage) {
-    const queryPayload = {
+    filterBy = {
         filterBy,
         sortBy,
         currPage
     }
-    return httpService.post(`/Admin/Game/${gameId}/Groups`, queryPayload)
+    const groups = await httpService.post(`Admin/Game/${gameId}/Groups`, filterBy)
+    return groups
+}
+
+async function getGamePlayers(gameId, filterBy = {}, sortBy = {}, currPage) {
+    filterBy = {
+        filterBy,
+        sortBy,
+        currPage
+    }
+    const groups = await httpService.post(`Admin/Game/${gameId}/Player`, filterBy)
+    return groups
+}
+
+async function updateGroup(gameId, groupIdentifier, scoreDiff) {
+    const groupUpdatePayload = {
+        groupIdentifier,
+        scoreDiff,
+    }
+    
+    const isUpdated = await httpService.put(`Admin/Game/${gameId}/Group`, groupUpdatePayload)
+    return isUpdated;
+}
+
+async function updatePlayerScore(playerId, gameId, newScore) {
+    const playerUpdatePayload = {
+        playerId,
+        gameId,
+        newScore
+    }
+    
+    const isUpdated = await httpService.put(`Player/UpdateScore`, playerUpdatePayload)
+    return isUpdated;
+}
+
+async function getGameById(gameId) {
+    // return httpService.get(BASE_URL + gameId)
+
+    return Promise.resolve(demoDataService.getGame3())
 }
 
 
@@ -99,13 +137,41 @@ async function save(game) {
     }
 }
 
-async function checkAnswer() {
+async function checkAnswer(answer) {
     // todo
+    // const newPlayer= httpService.post(`Player/Answer`, answer)
 
-    return Promise.resolve(true)
+    const newPlayer = {
+        "id": "361d759c-217d-4400-cf87-08dc94e76129",
+        "name": "33",
+        "gameId": "ee659c2a-6a6a-4186-24a0-08dc94f292d0",
+        "groupId": "3HLEya",
+        "image": null,
+        "email": null,
+        "submittedActivitiesIds": [
+            "a35d60a4-ee4b-4075-e6bb-08dc94f292da",
+            // "2c5e971a-b465-4d19-e6bc-08dc94f292da"
+        ],
+        "score": 0,
+        "activityErrors": [
+            {
+                "activityId": "123",
+                "errorCount": 1
+            }
+        ],
+        "stageErrors": [],
+        "lifeSavers": [],
+        "lastAnswerState": true
+    }
+    return Promise.resolve(newPlayer)
 
 }
 
+
+async function usingLifeSaver(data) {
+    const newPlayer = httpService.post(`Player/LifeSaver`, data)
+    return newPlayer
+}
 ///////////////////////////////////////
 
 function getEmptyGame() {

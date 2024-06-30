@@ -79,7 +79,7 @@ export function User() {
                 <span>המשחקים שלי</span>
 
                 {userGames?.map(game =>
-                    <MiniGamePreview gameName={game.name} imgUrl={game.icon.url} gameId={game.id} onMoveToGame={() => moveToGame(game.id)} />
+                    <MiniGamePreview key={game.id} gameName={game.name} imgUrl={game.icon.url} gameId={game.id} onMoveToGame={() => moveToGame(game.id)} />
                 )}
 
                 {/* <MiniGamePreview gameName="Brain Blitz" imgUrl={avatar17} onMoveToGame={() => moveToGame("d752efce-17e0-4d2a-8627-08dc644c8fa4")} />

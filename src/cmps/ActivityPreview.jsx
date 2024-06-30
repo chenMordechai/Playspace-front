@@ -7,8 +7,11 @@ import { LifeSaver } from './LifeSaver'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
+import { checkGameAnswer, usingLifeSaver } from '../store/actions/game.action.js'
+import wheel from '../assets/img/wheel.png'
 
-export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx }) {
+
+export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -16,42 +19,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     const [answersIdxToOff, setAnswersIdxToOff] = useState([])
 
     const firstRender = useRef(true)
-
-    async function checkAnswer(answer) {
-        if (activity.activityType === 'multiple') {
-            // ?answer or answer idx?
-        } else if (activity.activityType === 'open') {
-        } else if (activity.activityType === 'yesno') {
-        } else if (activity.activityType === 'typing') {
-            const res = inputTypingValues.join('')
-        }
-
-        // todo : check answer from back
-        var res = await gameService.checkAnswer()
-        res = true
-        setIsAnswerCorrect(res)
-
-        if (res) {
-            showSuccessMsg(`תשובה נכונה`)
-            setTimeout(() => {
-                setCurrActivityStepIdx(prev => prev + 1)
-            }, 1000);
-        } else {
-            // todo: check max error from stage or activity
-            // todo: gameService.getMaxError()
-            var maxError = 3
-            if (!maxError) {
-                showErrorMsg('תשובה לא נכונה')
-                setTimeout(() => {
-                    setCurrActivityStepIdx(prev => prev + 1)
-                }, 1000);
-            } else {
-                showErrorMsg(`תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`)
-                // todo: maxError--
-            }
-        }
-
-    }
 
     useEffect(() => {
         if (activity?.activityType === 'typing') {
@@ -62,6 +29,64 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     useEffect(() => {
     }, [inputTypingValues])
+
+
+    async function checkAnswer(answer) {
+        // console.log('answer:', answer)
+        if (activity.activityType === 'multiple') {
+            // ?answer or answer idx?
+        } else if (activity.activityType === 'open') {
+            // !Avishai- How to check?
+            answer = ''
+        } else if (activity.activityType === 'yesno') {
+
+        } else if (activity.activityType === 'typing') {
+
+            answer = inputTypingValues.join('')
+        }
+
+        const answerData = {
+            answer,
+            activityId: activity.id,
+            gameId,
+            stageId,
+            timeTaken: 0,
+            isActivitySkipped: false,
+            isStageSkipped: false
+        }
+        var res = await checkGameAnswer(answerData)
+        // console.log('res:', res)
+        console.log('activity:', activity)
+        if (res.lastAnswerState) {
+            showSuccessMsg({ txt: `+תשובה נכונה ${activity.pointsValue}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+
+        } else {
+            if (res.submittedActivitiesIds.includes(activity.id)) {
+                console.log('includes')
+                showErrorMsg({ txt: `תשובה לא נכונה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+
+            } else {
+                if (gameType === 'activities') {
+                    const activityError = res.activityErrors.find(a => a.activityId === activity.id)
+                    const maxError = activity.maxError - activityError.errorCount
+                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+
+                } else if (gameType === 'stages') {
+
+                    let activitiesErrorCount = 0
+                    stageActivitiesIds.forEach(id => {
+                        const activity = res.activityErrors.find(a => a.activityId === id)
+                        if (activity) activitiesErrorCount += activity.errorCount
+                    })
+                    console.log('activitiesErrorCount:', activitiesErrorCount)
+                    console.log('stageMaxError:', stageMaxError)
+                    const maxError = stageMaxError - activitiesErrorCount
+                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+                }
+
+            }
+        }
+    }
 
     function onMoveToNextActivity() {
         moveToNextActivity()
@@ -92,7 +117,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     async function handleLifeSaver(lifeSaver) {
-        // todo: from back player life saver
 
         if (lifeSaver === 'fifty' && activity.activityType === 'multiple') {
             const answers = activity.activityAnswers
@@ -108,16 +132,22 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
             setAnswersIdxToOff(answersIdxToOff)
 
+            const data = {
+                lifeSaver: 'fifty',
+                activityId: activity.id,
+                gameId
+            }
+            await gameService.usingLifeSaver(data)
+
         } else if (lifeSaver === 'skip') {
-            // todo : check answer from back 
-            // var res = await gameService.checkAnswer()
-            showSuccessMsg(`דילגת על השאלה`)
-            setTimeout(() => {
-                setCurrActivityStepIdx(prev => prev + 1)
-            }, 1000);
+            const data = {
+                lifeSaver: 'skip',
+                activityId: activity.id,
+                gameId
+            }
+            await gameService.usingLifeSaver(data)
+            showSuccessMsg({ txt: `דילגת על השאלה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
         }
-
-
     }
 
 
@@ -156,6 +186,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                 <div className="text-container">
                     <p>Question </p>
                     <p> {activity.text}</p>
+                    <span className="wheel"><img src={wheel} /></span>
                 </div>
                 <section className="answer-container">
                     <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />

@@ -1,88 +1,56 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useParams } from "react-router-dom"
-
 import { FilterByName } from "./FilterByName"
 import { ScoreEdit } from "./ScoreEdit"
 import { getPlayers } from "../store/actions/game.action"
+import { gameService } from "../services/game.service"
+import { utilService } from "../services/util.service"
 
 export function AdminPlayers() {
     const [players, setPlayers] = useState(null)
     const [filterBy, setFilterBy] = useState({ name: '' })
+    const { gameId } = useParams();
 
-    const { gameId } = useParams()
+    const loadPlayers = useCallback(async () => {
+        try {
+            const groups = await gameService.getGamePlayers(gameId, filterBy)
+            setPlayers(groups)
+        }
+        catch (err) {
+            console.log('err:', err)
+        }
+    }, [gameId, filterBy])
+
+    const loadPlayersDebounced = useCallback(utilService.debounce(loadPlayers, 300), [loadPlayers])
 
     useEffect(() => {
-
-        //! Avishai get players by filter
-        loadPlayers(filterBy)
-
-    }, [filterBy])
-
-    function loadPlayers() {
-        const players = getPlayers(gameId, filterBy)
-
-        // const players = [
-        //     {
-        //         id: "GR1rkr",
-        //         name: "שחקן א",
-        //         groupId: "iw5k9",
-        //         score: 100
-        //     },
-        //     {
-        //         id: "GR1rke",
-        //         name: "שחקן ב",
-        //         groupId: "iw5k9",
-        //         score: 100
-        //     },
-        //     {
-        //         id: "GR1rky",
-        //         name: "שחקן ג",
-        //         groupId: "iw5k9",
-        //         score: 100
-        //     },
-        //     {
-        //         id: "GR1rkw",
-        //         name: "שחקן ד",
-        //         groupId: "iw5k8",
-        //         score: 100
-        //     },
-        //     {
-        //         id: "GR1rka",
-        //         name: "שחקן ה",
-        //         groupId: "iw5k8",
-        //         score: 100
-        //     },
-        //     {
-        //         id: "GR1rkv",
-        //         name: "שחקן ו",
-        //         groupId: "iw5k8",
-        //         score: 100
-        //     }]
-
-        // setPlayers(players)
-    }
+        loadPlayersDebounced()
+    }, [filterBy, loadPlayersDebounced])
 
     function onFilterPlayers(ev) {
         ev.preventDefault()
-        // getPlayers(filterBy)
+        loadPlayersDebounced()
     }
 
-    function handlaChange(ev) {
+    function handleChange(ev) {
         const { value, name } = ev.target
-        setFilterBy({ [name]: value })
+        setFilterBy(prevFilterBy => ({ ...prevFilterBy, [name]: value }))
     }
 
-    function onUpdateScore(playerId, diff) {
-        //! Avishay update player score
+    async function onUpdateScore(playerId, newScore) {
+        const player = players.find(player => player.id === playerId)
+        const isUpdated = await gameService.updatePlayerScore(playerId, gameId, newScore)
+        player.score = (isUpdated) ? newScore : player.score
+        setPlayers(players => players.map(p => p.id === playerId ? player : p))
     }
 
-    if (!players) return
+    if (!players) return (<p>There are no players to show.</p>)
 
     return (
         <section className="admin-players">
             <h1>Players</h1>
 
-            <FilterByName onSubmitFilter={onFilterPlayers} filterBy={filterBy} handlaChange={handlaChange} />
+            <FilterByName onSubmitFilter={onFilterPlayers} filterBy={filterBy} handleChange={handleChange} />
 
             <ul className="players-container">
                 {players.map((player, i) => <li key={i}>

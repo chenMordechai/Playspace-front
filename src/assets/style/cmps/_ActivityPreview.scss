@@ -3,6 +3,7 @@
 
     .activity-step-1 {
         .text-container {
+            position: relative;
             border-radius: 10px;
             background-color: white;
             padding: 10px 25px;
@@ -11,6 +12,16 @@
                 font-size: 16px;
                 font-weight: 500;
                 line-height: 24px;
+            }
+
+            .wheel {
+                position: absolute;
+                right: 10px;
+                top: 10px;
+                img {
+                    width: 25px;
+                    height: 25px;
+                }
             }
         }
     }
