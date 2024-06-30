@@ -19,6 +19,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     const [answersIdxToOff, setAnswersIdxToOff] = useState([])
 
     const firstRender = useRef(true)
+    const continueBtn = useRef(true)
 
     useEffect(() => {
         if (activity?.activityType === 'typing') {
@@ -34,16 +35,16 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     async function checkAnswer(answer) {
         // console.log('answer:', answer)
         if (activity.activityType === 'multiple') {
-            // ?answer or answer idx?
+            // answer
         } else if (activity.activityType === 'open') {
-            // !Avishai- How to check?
-            answer = ''
+            continueBtn.current.style.display = 'none'
+            // txt
         } else if (activity.activityType === 'yesno') {
-
-        } else if (activity.activityType === 'typing') {
-
-            answer = inputTypingValues.join('')
+            // yes / no
         }
+        // else if (activity.activityType === 'typing') {
+        //     answer = inputTypingValues.join('')
+        // }
 
         const answerData = {
             answer,
@@ -189,7 +190,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                     <span className="wheel"><img src={wheel} /></span>
                 </div>
                 <section className="answer-container">
-                    <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
+                    <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
                     <LifeSaver lifeSaver={activity?.lifeSaver} handleLifeSaver={handleLifeSaver} />
 
                 </section>

@@ -28,7 +28,8 @@ export const authService = {
     getEmptyCredentials,
     getEmptySignupCred,
     getUserData,
-    getPlayer
+    getPlayer,
+    getPlayerByCookie
 }
 
 // work
@@ -95,6 +96,11 @@ async function getPlayer(gameId) {
     return player
     // }
 
+}
+
+async function getPlayerByCookie() {
+    const player = httpService.get(`Player/GetPlayerByCookie`)
+    return player
 }
 
 

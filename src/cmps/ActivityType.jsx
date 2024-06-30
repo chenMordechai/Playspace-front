@@ -1,35 +1,7 @@
 import pen from '../assets/img/pen.png'
 
 
-export function ActivityType({ activity, checkAnswer, textAreaValue, handlaChange, inputTypingValues, answersIdxToOff }) {
-
-    // maybe one func for checking
-    // function checkMultipleAnswer(i) {
-    //     if (i === activity.correctAnswerId) setIsAnswerCorrect(true)
-    //     else {
-    //         // check max error
-    //     }
-    //     setCurrActivityStepIdx(prev => prev + 1)
-    // }
-
-    // function checkOpenAnswer() {
-    //     if (!inputOpenValue) setIsAnswerCorrect(false)
-    //     else {
-    //         setIsAnswerCorrect(true)
-    //         setCurrActivityStepIdx(prev => prev + 1)
-    //     }
-    // }
-
-    // function checkTypingAnswer() {
-    //     if (!inputTypingValue) setIsAnswerCorrect(false)
-    //     else if (inputTypingValue === activity.correctAnswer) setIsAnswerCorrect(true)
-    //     setCurrActivityStepIdx(prev => prev + 1)
-    // }
-
-    // function checkYesNoAnswer(answer) {
-    //     if (answer === activity.correctAnswer) setIsAnswerCorrect(true)
-    //     setCurrActivityStepIdx(prev => prev + 1)
-    // }
+export function ActivityType({ continueBtn, activity, checkAnswer, textAreaValue, handlaChange, inputTypingValues, answersIdxToOff }) {
 
     return (
         <section className="activity-type">
@@ -48,7 +20,7 @@ export function ActivityType({ activity, checkAnswer, textAreaValue, handlaChang
                     <img className="pen" src={pen} />
                     <input name="open" value={textAreaValue} onChange={handlaChange} />
                 </div>
-                <button className="open" onClick={checkAnswer}>continue</button>
+                <button ref={continueBtn} className="open" onClick={checkAnswer}>continue</button>
             </>}
 
             {activity.activityType === 'yesno' && <>
