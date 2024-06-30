@@ -94,8 +94,8 @@ export function Game() {
 
     async function getUserFromBack() {
         try {
-            const user = await getUser()
-            const player = await getPlayerByCookie() // player
+            await getUser()
+            await getPlayerByCookie() // player
 
         } catch (error) {
             // console.error('Error:', error);

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 import avatar9 from '../assets/img/avatar9.png'
 import plusBlue from '../assets/img/plus-blue.png'
 import avatar17 from '../assets/img/avatar17.jpg'
-import { getPlayer, getUser } from "../store/actions/auth.action"
+import { getPlayer, getPlayerByCookie, getUser } from "../store/actions/auth.action"
 
 import { MiniGamePreview } from "../cmps/MiniGamePreview"
 
@@ -14,6 +14,7 @@ import { MiniGamePreview } from "../cmps/MiniGamePreview"
 export function User() {
 
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
+    const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
     const [userGames, setUserGames] = useState(null)
 
     const navigate = useNavigate()
@@ -37,9 +38,7 @@ export function User() {
 
     async function init() {
         try {
-            // work
             const userGames = await getGames(false)
-            console.log('userGames:', userGames)
             setUserGames(userGames)
 
         } catch (err) {
@@ -49,8 +48,11 @@ export function User() {
     }
 
     async function moveToGame(gameId) {
-        const player = await getPlayer(gameId) // player
-        if (player) navigate(`/game/${gameId}`)
+        if (loggedinPlayer) navigate(`/game/${gameId}`)
+        else {
+            const player = await getPlayerByCookie(gameId) // player
+            if (player) navigate(`/game/${gameId}`)
+        }
     }
 
     if (!loggedinUser) return ''

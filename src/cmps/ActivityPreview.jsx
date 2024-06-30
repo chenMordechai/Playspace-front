@@ -19,6 +19,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     const [answersIdxToOff, setAnswersIdxToOff] = useState([])
 
     const firstRender = useRef(true)
+    const continueBtn = useRef(true)
 
     useEffect(() => {
         if (activity?.activityType === 'typing') {
@@ -36,6 +37,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         if (activity.activityType === 'multiple') {
             // answer
         } else if (activity.activityType === 'open') {
+            continueBtn.current.style.display = 'none'
             // txt
         } else if (activity.activityType === 'yesno') {
             // yes / no
@@ -188,7 +190,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                     <span className="wheel"><img src={wheel} /></span>
                 </div>
                 <section className="answer-container">
-                    <ActivityType activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
+                    <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
                     <LifeSaver lifeSaver={activity?.lifeSaver} handleLifeSaver={handleLifeSaver} />
 
                 </section>
