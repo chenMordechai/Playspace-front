@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
 import { utilService } from '../services/util.service'
-import { signup, getPlayer, getUser } from "../store/actions/auth.action"
+import { signup, getPlayer, getUser, getPlayerByCookie } from "../store/actions/auth.action"
 import { getShallowGameById } from "../store/actions/game.action"
 import { Carousel } from '../cmps/Carousel'
 import { UserImgAddModal } from "../cmps/UserImgAddModal"
@@ -50,11 +50,9 @@ import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 import { showSuccessMsg } from "../services/event-bus.service.js"
 
-// work : http://localhost:5173/signup/ee659c2a-6a6a-4186-24a0-08dc94f292d0
-// work : http://localhost:5173/signup/f5b1ccd9-38c8-48b3-24a1-08dc94f292d0
+// work : http://localhost:5173/signup/80c6face-668b-4d14-82e8-08dc98ddb702
 
 export function Signup() {
-    console.log('Signup')
     const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
     const [shallowGame, setShallowGame] = useState(null)
 
@@ -76,42 +74,17 @@ export function Signup() {
     // const sectionRef = useRef(null);
     const colors = useRef(null);
 
-
     useEffect(() => {
-        // getUserFromBack()
-    }, [])
-
-    async function getUserFromBack() {
-        console.log('getUserFromBack')
-        try {
-            // work
-            const user = await getUser() // user
-            console.log('user:', user)
-            // didn't work
-            //! Avishai we need to get the player after we have playspace-player-cookie
-            const player = await getPlayer(gameId) // player
-            console.log('player:', player)
-            // save to store = player
-            // if (player) navigate(`/game/${shallowGame.id}`)
-        } catch (error) {
-            // console.error('Error:', error);
-        }
-    }
-
-    useEffect(() => {
-        // todo
-        // setTimeout(() => {
-        //     sectionRef.current.classList.add('fade')
-        // }, 2500)
-        // setCredentials(prev => ({ ...prev, gameId }))
-        // setCredentials(prev => ({ ...prev, gameId, groupId }))
-
-        // get user
-        // get player
+        setCredentials(prev => ({ ...prev, gameId }))
         getShallowGame()
-
-
     }, [])
+
+    useEffect(() => {
+        if (loggedinPlayer && shallowGame) {
+            navigate(`/game/${shallowGame.id}`)
+            return
+        }
+    }, [loggedinPlayer])
 
     useEffect(() => {
         utilService.saveToStorage('signupStepIdx', stepIdx)
@@ -125,6 +98,18 @@ export function Signup() {
         changeColorsVars()
     }, [shallowGame])
 
+    async function getUserFromBack() {
+        try {
+            const user = await getUser() // user
+            console.log('user:', user)
+
+            const player = await getPlayerByCookie() // player
+            console.log('player:', player)
+
+        } catch (error) {
+            // console.error('Error:', error);
+        }
+    }
 
     function handleChange(ev) {
         let { name, value } = ev.target
@@ -133,14 +118,12 @@ export function Signup() {
 
     async function getShallowGame() {
         const shallowGame = await getShallowGameById(gameId)
-        // const shallowGame = await getShallowGameById("83a19a02-8fe0-4442-dd7e-08dc7b5a30d0")
         console.log('shallowGame:', shallowGame)
-
         setShallowGame(shallowGame)
-
-        if (loggedinPlayer && shallowGame) {
-            navigate(`/game/${shallowGame.id}`)
-        }
+        // console.log('loggedinPlayer:', loggedinPlayer)
+        // if (loggedinPlayer && shallowGame) {
+        //     navigate(`/game/${shallowGame.id}`)
+        // }
         // colors.current = shallowGame.groups.map(g => utilService.getRandomColor())
     }
 
@@ -202,20 +185,12 @@ export function Signup() {
     return (
         <section className="signup">
 
-            {/*// todo */}
-            {/* <section className="loading-screen">
-                <img className="vector vector1" src={vectorLeft} />
-                <div className="content">
-                    <img className="playspace-logo" src={playspaceLogo} />
-                    <img className="x" src={x} />
-                    <img className="company-logo" src={companyLogo} />
-                </div>
-                <img className="vector vector2" src={vectorRight} />
-            </section> */}
-
-            {stepIdx === 0 && !loggedinPlayer &&
-                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />
+            {stepIdx === 0 &&
+                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" useEffectFunc={getUserFromBack} />
             }
+            {/* {stepIdx === 0 && !loggedinPlayer &&
+                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />
+            } */}
 
             {stepIdx === 1 &&
                 <section className="step-1">

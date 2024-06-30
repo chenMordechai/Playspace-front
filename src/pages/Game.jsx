@@ -20,7 +20,7 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
-import { getPlayer, getUser } from "../store/actions/auth.action.js"
+import { getPlayer, getPlayerByCookie, getUser } from "../store/actions/auth.action.js"
 
 // game/:gameId
 
@@ -38,6 +38,8 @@ export function Game() {
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
     console.log('loggedinPlayer:', loggedinPlayer)
+    const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
+    console.log('loggedinUser:', loggedinUser)
     const [openGameOptionModal, onToggleOpenGameOptionModal] = useToggle(false)
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
     useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal])
@@ -47,17 +49,13 @@ export function Game() {
 
     const { gameId } = useParams()
 
-    // useEffect(() => {
-    //     // todo: // if !loggdinPlayer return
-
-    //     init()
-    //     // saveIdxsToStorage()
-    //     getPlayers()
-    // }, [])
-
     useEffect(() => {
-        getUserFromBack()
-    }, [])
+        if (loggedinPlayer) {
+            init()
+        } else {
+            getUserFromBack()
+        }
+    }, [loggedinPlayer])
 
     useEffect(() => {
         console.log('game:', game)
@@ -97,27 +95,18 @@ export function Game() {
     async function getUserFromBack() {
         try {
             const user = await getUser()
-            // const player = await getPlayer(gameId) // player
-            // console.log('user:', user)
-            // console.log('player:', player)
-            // // save to store = player
-            // console.log('user:', user)
-            // if (!user || !player) navigate(`/signup/${gameId}`)
-            // else {
-            init()
-            // }
+            const player = await getPlayerByCookie() // player
 
         } catch (error) {
             // console.error('Error:', error);
-
             navigate(`/signup/${gameId}`)
         }
     }
 
     async function init() {
         try {
-            // work : http://localhost:5173/game/96ebb7e2-abf2-46df-1727-08dc75a038e2
             const game = await getGameById(gameId)
+            console.log('game:', game)
 
             // demo data
             // game with stages - onTime:
@@ -134,64 +123,6 @@ export function Game() {
         } catch (err) {
             console.log('err:', err)
         }
-    }
-
-    async function getPlayers() {
-        // todo: get players from my group
-
-        const players = [
-            {
-                id: '01',
-                name: 'you',
-                score: 1067,
-                media: { url: "/src/assets/img/avatar4.png", type: "image" }
-            },
-            {
-                id: '02',
-                name: '1189',
-                score: 1389,
-                media: { url: "/src/assets/img/avatar3.png", type: "image" }
-            },
-            {
-                id: '03',
-                name: 'shirel',
-                score: 645,
-                media: { url: "/src/assets/img/avatar1.png", type: "image" }
-            },
-            {
-                id: '04',
-                name: 'yaniv',
-                score: 800,
-                media: { url: "/src/assets/img/avatar2.png", type: "image" }
-            },
-            {
-                id: '05',
-                name: 'moshe',
-                score: 765,
-                media: { url: "/src/assets/img/avatar6.png", type: "image" }
-            },
-            // {
-            //     id: '06',
-            //     name: 'moshe',
-            //     score: 765,
-            //     media: { url: "/src/assets/img/avatar6.png", type: "image" }
-            // },
-            // {
-            //     id: '07',
-            //     name: 'moshe',
-            //     score: 765,
-            //     media: { url: "/src/assets/img/avatar6.png", type: "image" }
-            // },
-            // {
-            //     id: '08',
-            //     name: 'moshe',
-            //     score: 765,
-            //     media: { url: "/src/assets/img/avatar6.png", type: "image" }
-            // },
-        ]
-        // todo: move to service
-        players.sort((a, b) => a.score - b.score)
-        setPlayers(players)
     }
 
     function changeColorsVars() {

@@ -9,13 +9,18 @@ import x from '../assets/img/x.png'
 import companyLogo from '../assets/img/company-logo.png'
 
 
-export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, text }) {
+export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, text, useEffectFunc }) {
 
     const sectionRef = useRef(null);
 
     useEffect(() => {
         setTimeout(() => {
-            sectionRef.current.classList.add('fade')
+            if (sectionRef.current) {
+                sectionRef.current.classList.add('fade')
+                if (useEffectFunc) {
+                    useEffectFunc()
+                }
+            }
         }, 2500)
 
     }, [])
