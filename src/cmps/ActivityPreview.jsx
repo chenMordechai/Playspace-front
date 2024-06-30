@@ -121,7 +121,10 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     async function handleLifeSaver(lifeSaver) {
-
+        console.log('handleLifeSaver')
+        if (activity.activityType === 'open') {
+            continueBtn.current.style.display = 'none'
+        }
         if (lifeSaver === 'fifty' && activity.activityType === 'multiple') {
             const answers = activity.activityAnswers
             const number = (answers.length / 2)
