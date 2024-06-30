@@ -14,7 +14,7 @@ export function AdminLogin({ loggedinUser, handleSubmitAdminForm, credentials, h
 
     return (
         <section className="admin-login">
-            <img className="playspace-logo-blue" src={playspaceLogoBlue} />
+            <img className="playspace-logo-blue-admin" src={playspaceLogoBlue} />
 
             <form className="admin-login-form" onSubmit={handleSubmitAdminForm}>
                 <span>Hello {loggedinUser.name}</span>
