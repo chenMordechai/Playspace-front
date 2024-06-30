@@ -37,9 +37,8 @@ export function Game() {
     const [players, setPlayers] = useState(null)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
-    console.log('loggedinPlayer:', loggedinPlayer)
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
-    console.log('loggedinUser:', loggedinUser)
+
     const [openGameOptionModal, onToggleOpenGameOptionModal] = useToggle(false)
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
     useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal])
@@ -106,7 +105,6 @@ export function Game() {
     async function init() {
         try {
             const game = await getGameById(gameId)
-            console.log('game:', game)
 
             // demo data
             // game with stages - onTime:

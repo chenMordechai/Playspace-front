@@ -12,6 +12,7 @@ import wheel from '../assets/img/wheel.png'
 
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
+    console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -33,11 +34,11 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
 
     async function checkAnswer(answer) {
-        // console.log('answer:', answer)
         if (activity.activityType === 'multiple') {
             // answer
         } else if (activity.activityType === 'open') {
             continueBtn.current.style.display = 'none'
+            answer = inputOpenValue
             // txt
         } else if (activity.activityType === 'yesno') {
             // yes / no
@@ -45,6 +46,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         // else if (activity.activityType === 'typing') {
         //     answer = inputTypingValues.join('')
         // }
+        console.log('answer:', answer)
 
         const answerData = {
             answer,
@@ -55,11 +57,12 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             isActivitySkipped: false,
             isStageSkipped: false
         }
+        // showSuccessMsg({ txt: `יאללה קדימה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
         var res = await checkGameAnswer(answerData)
-        // console.log('res:', res)
+        console.log('res:', res)
         console.log('activity:', activity)
         if (res.lastAnswerState) {
-            showSuccessMsg({ txt: `+תשובה נכונה ${activity.pointsValue}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+            showSuccessMsg({ txt: `+תשובה נכונה ${res.lastAnswerScore}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
 
         } else {
             if (res.submittedActivitiesIds.includes(activity.id)) {
@@ -151,6 +154,27 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         }
     }
 
+    async function onSkipQwestion() {
+        console.log('onSkipQwestion')
+        const answerData = {
+            answer: '',
+            activityId: activity.id,
+            gameId,
+            stageId,
+            timeTaken: 0,
+            isActivitySkipped: true,
+            isStageSkipped: false
+        }
+        var res = await checkGameAnswer(answerData)
+        console.log('res:', res)
+        if (res.lastAnswerSkipped) {
+            showSuccessMsg({ txt: `דילגת על השאלה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+        } else {
+            showErrorMsg({ txt: `אי אפשר לדלג על השאלה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+
+        }
+    }
+
 
     if (!activity) return ''
     return (
@@ -188,10 +212,13 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
                     <p>Question </p>
                     <p> {activity.text}</p>
                     <span className="wheel"><img src={wheel} /></span>
+                    {!activity.isRequired && <button onClick={onSkipQwestion}>דלג</button>}
                 </div>
                 <section className="answer-container">
                     <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
                     <LifeSaver lifeSaver={activity?.lifeSaver} handleLifeSaver={handleLifeSaver} />
+
+
 
                 </section>
             </section>}
