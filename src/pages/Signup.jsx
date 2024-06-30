@@ -33,12 +33,12 @@ import avatar21 from '../assets/img/avatar21.jpg'
 import avatar22 from '../assets/img/avatar22.jpg'
 import avatar23 from '../assets/img/avatar23.jpg'
 import avatar24 from '../assets/img/avatar24.jpg'
-import vectorLeft from '../assets/img/vector-left.png'
-import vectorRight from '../assets/img/vector-right.png'
-import playspaceLogo from '../assets/img/playspace-logo.png'
-import x from '../assets/img/x.png'
+// import vectorLeft from '../assets/img/vector-left.png'
+// import vectorRight from '../assets/img/vector-right.png'
+// import playspaceLogo from '../assets/img/playspace-logo.png'
+// import x from '../assets/img/x.png'
+// import companyLogo from '../assets/img/company-logo.png'
 import v from '../assets/img/green-v.png'
-import companyLogo from '../assets/img/company-logo.png'
 import eye from '../assets/img/eye.png'
 import plus from '../assets/img/plus.png'
 import { LoginSignup } from "../cmps/LoginSignup.jsx"
@@ -73,7 +73,7 @@ export function Signup() {
 
     const { gameId } = useParams()
     const navigate = useNavigate()
-    const sectionRef = useRef(null);
+    // const sectionRef = useRef(null);
     const colors = useRef(null);
 
 
@@ -100,10 +100,10 @@ export function Signup() {
 
     useEffect(() => {
         // todo
-        setTimeout(() => {
-            sectionRef.current.classList.add('fade')
-        }, 2500)
-        setCredentials(prev => ({ ...prev, gameId }))
+        // setTimeout(() => {
+        //     sectionRef.current.classList.add('fade')
+        // }, 2500)
+        // setCredentials(prev => ({ ...prev, gameId }))
         // setCredentials(prev => ({ ...prev, gameId, groupId }))
 
         // get user
@@ -200,10 +200,10 @@ export function Signup() {
 
     // if (isLoading) return
     return (
-        <section ref={sectionRef} className="signup">
+        <section className="signup">
 
             {/*// todo */}
-            <section className="loading-screen">
+            {/* <section className="loading-screen">
                 <img className="vector vector1" src={vectorLeft} />
                 <div className="content">
                     <img className="playspace-logo" src={playspaceLogo} />
@@ -211,7 +211,7 @@ export function Signup() {
                     <img className="company-logo" src={companyLogo} />
                 </div>
                 <img className="vector vector2" src={vectorRight} />
-            </section>
+            </section> */}
 
             {stepIdx === 0 && !loggedinPlayer &&
                 <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />

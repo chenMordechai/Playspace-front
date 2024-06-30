@@ -34,16 +34,15 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     async function checkAnswer(answer) {
         // console.log('answer:', answer)
         if (activity.activityType === 'multiple') {
-            // ?answer or answer idx?
+            // answer
         } else if (activity.activityType === 'open') {
-            // !Avishai- How to check?
-            answer = ''
+            // txt
         } else if (activity.activityType === 'yesno') {
-
-        } else if (activity.activityType === 'typing') {
-
-            answer = inputTypingValues.join('')
+            // yes / no
         }
+        // else if (activity.activityType === 'typing') {
+        //     answer = inputTypingValues.join('')
+        // }
 
         const answerData = {
             answer,

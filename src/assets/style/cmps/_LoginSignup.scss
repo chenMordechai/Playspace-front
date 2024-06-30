@@ -1,3 +1,69 @@
+.loading-screen {
+    &.fade {
+        opacity: 0;
+        transition: 1s;
+        z-index: 0;
+    }
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background: #2769e1;
+    // transition: background-color 1s;
+
+    .vector {
+        position: absolute;
+        background: #0c2655;
+        filter: blur(128px);
+    }
+    .vector1 {
+        width: 534px;
+        height: 500px;
+        left: -267px;
+        top: -278px;
+    }
+    .vector2 {
+        width: 558px;
+        height: 486px;
+        right: -267px;
+        top: 266px;
+    }
+
+    .content {
+        position: absolute;
+        left: calc(50% - 220px / 2);
+        top: calc(50% - 135px / 2);
+        z-index: 10;
+
+        @include flex(column, center, space-between, 25px);
+    }
+
+    .playspace-logo {
+        // position: relative;
+        // width: 200px;
+        // height: 35.85px;
+        // animation-name: smart;
+        // animation-delay: 800ms;
+        // animation-timing-function: cubic-bezier(0.7, -0.4, 0.4, 1.4);
+        // animation-duration: 3500ms;
+        // animation-fill-mode: forwards;
+    }
+
+    .x {
+        width: 22px;
+        height: 22px;
+    }
+
+    .company-logo {
+        width: 220px;
+        height: 26.6px;
+    }
+}
+
 .login-signup,
 .admin-login {
     margin-top: 142px;
