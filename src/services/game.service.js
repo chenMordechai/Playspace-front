@@ -19,7 +19,11 @@ export const gameService = {
     getDefaultFilter,
     getDefaultSort,
     checkAnswer,
-    usingLifeSaver
+    usingLifeSaver,
+    getGameGroups,
+    getGamePlayers,
+    updateGroup,
+    updatePlayerScore
     // getGames2
 }
 
@@ -40,6 +44,10 @@ async function getGames(isAdmin, filterBy = {}, sortBy = {}, currPage) {
     return games
 }
 
+async function getStatistics() {
+    return await httpService.get(BASE_URL + `Statistics`)
+}
+
 async function getPlayers(gameId, filterBy = {}, sortBy = {}, currPage) {
     filterBy = {
         filterBy,
@@ -58,6 +66,47 @@ async function getGroups(gameId) {
     // }
     const groups = await httpService.post(`Admin/Game/${gameId}/Groups`)
     return groups
+}
+
+async function getGameGroups(gameId, filterBy = {}, sortBy = {}, currPage) {
+    filterBy = {
+        filterBy,
+        sortBy,
+        currPage
+    }
+    const groups = await httpService.post(`Admin/Game/${gameId}/Groups`, filterBy)
+    return groups
+}
+
+async function getGamePlayers(gameId, filterBy = {}, sortBy = {}, currPage) {
+    filterBy = {
+        filterBy,
+        sortBy,
+        currPage
+    }
+    const groups = await httpService.post(`Admin/Game/${gameId}/Player`, filterBy)
+    return groups
+}
+
+async function updateGroup(gameId, groupIdentifier, scoreDiff) {
+    const groupUpdatePayload = {
+        groupIdentifier,
+        scoreDiff,
+    }
+    
+    const isUpdated = await httpService.put(`Admin/Game/${gameId}/Group`, groupUpdatePayload)
+    return isUpdated;
+}
+
+async function updatePlayerScore(playerId, gameId, newScore) {
+    const playerUpdatePayload = {
+        playerId,
+        gameId,
+        newScore
+    }
+    
+    const isUpdated = await httpService.put(`Player/UpdateScore`, playerUpdatePayload)
+    return isUpdated;
 }
 
 async function getGameById(gameId) {
