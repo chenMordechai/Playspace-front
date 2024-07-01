@@ -223,7 +223,7 @@ export function Game() {
                 </div>}
 
                 {isGameScoreOpen && <>
-                    <GameScore players={players} loggedinPlayerId={loggedinPlayer?.id || '01'} />
+                    <GameScore />
                     <button className="score-btn">continue</button>
                 </>}
 

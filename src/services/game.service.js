@@ -23,7 +23,8 @@ export const gameService = {
     getGameGroups,
     getGamePlayers,
     updateGroup,
-    updatePlayerScore
+    updatePlayerScore,
+    GetGameScores
     // getGames2
 }
 
@@ -171,6 +172,12 @@ async function checkAnswer(answer) {
 async function usingLifeSaver(data) {
     const newPlayer = httpService.post(`Player/LifeSaver`, data)
     return newPlayer
+}
+
+async function GetGameScores() {
+    
+    const gameScores = await httpService.get("Game/Statistics")
+    return gameScores;
 }
 ///////////////////////////////////////
 
