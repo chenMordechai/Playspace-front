@@ -66,8 +66,8 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                     <img className="media" src={activity.mediaAfter.url} />
                 </>}
 
-                <label htmlFor="lifeSaver">גלגלי הצלה</label>
-                <select multiple name="lifeSaver" id="lifeSaver" value={activities.lifeSaver} onChange={() => onHandleActivityChange(event, i, j)} >
+                <label htmlFor="lifeSavers">גלגלי הצלה</label>
+                <select multiple name="lifeSavers" id="lifeSavers" value={activities.lifeSavers} onChange={() => onHandleActivityChange(event, i, j)} >
                     {activity.activityType === 'multiple' && <option value="fifty">50/50</option>}
                     {/* <option value="moreTime">תוספת זמן</option> */}
                     {activity.isRequired && <option value="skip">דלג</option>}

@@ -93,7 +93,7 @@ async function updateGroup(gameId, groupIdentifier, scoreDiff) {
         groupIdentifier,
         scoreDiff,
     }
-    
+
     const isUpdated = await httpService.put(`Admin/Game/${gameId}/Group`, groupUpdatePayload)
     return isUpdated;
 }
@@ -104,7 +104,7 @@ async function updatePlayerScore(playerId, gameId, newScore) {
         gameId,
         newScore
     }
-    
+
     const isUpdated = await httpService.put(`Player/UpdateScore`, playerUpdatePayload)
     return isUpdated;
 }
@@ -138,32 +138,32 @@ async function save(game) {
 }
 
 async function checkAnswer(answer) {
-    // todo
-    // const newPlayer= httpService.post(`Player/Answer`, answer)
+    const newPlayer = httpService.post(`Player/Answer`, answer)
+    return newPlayer
 
-    const newPlayer = {
-        "id": "361d759c-217d-4400-cf87-08dc94e76129",
-        "name": "33",
-        "gameId": "ee659c2a-6a6a-4186-24a0-08dc94f292d0",
-        "groupId": "3HLEya",
-        "image": null,
-        "email": null,
-        "submittedActivitiesIds": [
-            "a35d60a4-ee4b-4075-e6bb-08dc94f292da",
-            // "2c5e971a-b465-4d19-e6bc-08dc94f292da"
-        ],
-        "score": 0,
-        "activityErrors": [
-            {
-                "activityId": "123",
-                "errorCount": 1
-            }
-        ],
-        "stageErrors": [],
-        "lifeSavers": [],
-        "lastAnswerState": true
-    }
-    return Promise.resolve(newPlayer)
+    // const newPlayer = {
+    //     "id": "361d759c-217d-4400-cf87-08dc94e76129",
+    //     "name": "33",
+    //     "gameId": "ee659c2a-6a6a-4186-24a0-08dc94f292d0",
+    //     "groupId": "3HLEya",
+    //     "image": null,
+    //     "email": null,
+    //     "submittedActivitiesIds": [
+    //         "a35d60a4-ee4b-4075-e6bb-08dc94f292da",
+    //         // "2c5e971a-b465-4d19-e6bc-08dc94f292da"
+    //     ],
+    //     "score": 0,
+    //     "activityErrors": [
+    //         {
+    //             "activityId": "123",
+    //             "errorCount": 1
+    //         }
+    //     ],
+    //     "stageErrors": [],
+    //     "lifeSavers": [],
+    //     "lastAnswerState": true
+    // }
+    // return Promise.resolve(newPlayer)
 
 }
 
@@ -196,6 +196,8 @@ function getEmptyGame() {
         admins: [], // v // e // [{adminId:'212'}]
         textBefore: '', // v //e
         textAfter: '', // v //e
+        lifeSavers: null
+
     }
 }
 
