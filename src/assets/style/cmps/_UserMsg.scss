@@ -1,59 +1,9 @@
 .user-msg {
-    @include modal();
-    // transition: 1s;
-    background-color: white;
-    // height: 200px;
+    position: fixed;
+    width: 100%;
+    z-index: 20;
+    background-color: black;
+    color: white;
     padding: 20px;
-    padding-bottom: 30px;
-    // border: 1px solid black;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-    @include flex(column, center, center, 10px);
-
-    @include for-mobile-layout {
-        // height: 356px;
-    }
-
-    position: relative;
-
-    .sign {
-        position: absolute;
-        top: -18px;
-
-        border-radius: 50%;
-        height: 36px;
-        width: 36px;
-        @include flex(column, center, center);
-
-        img {
-            height: 25px;
-        }
-    }
-
-    .txt {
-        font-weight: 700;
-        font-size: 20px;
-        margin-bottom: 10px;
-    }
-
-    &.success {
-        .sign {
-            background-color: green;
-        }
-        .txt {
-            color: green;
-        }
-    }
-
-    &.error {
-        .sign {
-            background-color: red;
-        }
-        .text {
-            color: red;
-        }
-    }
+    text-align: center;
 }
-
-//  .close {
-//     display: none;
-// }

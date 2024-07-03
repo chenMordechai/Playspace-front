@@ -8,38 +8,31 @@ import v from "../assets/img/v.png"
 
 export function UserMsg() {
 
-    const [data, setData] = useState()
+    const [txt, setTxt] = useState()
     const timeoutIdRef = useRef()
 
     useEffect(() => {
-        const unsubscribe = eventBusService.on('show-user-msg', (data) => {
-            setData(data)
+        const unsubscribe = eventBusService.on('show-user-msg', (txt) => {
+            setTxt(txt)
             // window.scrollTo({top: 0, behavior: 'smooth'});
             if (timeoutIdRef.current) {
                 timeoutIdRef.current = null
                 clearTimeout(timeoutIdRef.current)
             }
-            // timeoutIdRef.current = setTimeout(closeMsg, 1500)
+            timeoutIdRef.current = setTimeout(closeMsg, 2000)
         })
         return unsubscribe
     }, [])
 
     function closeMsg() {
-        if (data.func) data.func()
-        setData(null)
+        // if (txt.func) txt.func()
+        setTxt(null)
     }
 
-    if (!data) return ''
+    if (!txt) return ''
     return (
-        <section className={`user-msg ${data.type}`}>
-            <span className="sign">
-                {data.type === 'success' && <img src={v} alt="" />}
-                {data.type === 'error' && <img src={x} alt="" />}
-            </span>
-            <span className="txt">{data.txt}</span>
-            <button className="next-btn" onClick={closeMsg}>
-                continue
-            </button>
+        <section className="user-msg">
+            <span className="txt">{txt}</span>
         </section>
     )
 }

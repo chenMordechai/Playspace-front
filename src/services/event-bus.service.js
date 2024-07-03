@@ -18,9 +18,9 @@ function createEventEmitter() {
 
 export const eventBusService = createEventEmitter()
 
-// export function showUserMsg(msg) {
-//     eventBusService.emit('show-user-msg', msg)
-// }
+export function showUserMsg(msg) {
+    eventBusService.emit('show-user-msg', msg)
+}
 export function showSuccessMsg(data) {
     showAnswerMsg({ ...data, type: 'success' }) // {txt,type,func}
 }

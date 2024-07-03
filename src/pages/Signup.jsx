@@ -43,7 +43,7 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
-import { showSuccessMsg } from "../services/event-bus.service.js"
+import { showUserMsg } from "../services/event-bus.service.js"
 
 // work : http://localhost:5173/signup/80c6face-668b-4d14-82e8-08dc98ddb702
 // lifeSaver:
@@ -185,7 +185,8 @@ export function Signup() {
             const res = await isUserExist(miniCredentials)
             console.log('res:', res)
             if (!res) setStepIdx(prev => prev + 1)
-            else console.log('user alredy exist')
+            else showUserMsg('שם או מייל קיימים כבר במערכת')
+
         } catch (error) {
             console.error('Error:', error);
         }
