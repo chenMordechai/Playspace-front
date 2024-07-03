@@ -31,7 +31,7 @@ export function AnswerModal() {
 
     if (!data) return ''
     return (
-        <section className={`user-msg ${data.type}`}>
+        <section className={`answer-modal ${data.type}`}>
             <span className="sign">
                 {data.type === 'success' && <img src={v} alt="" />}
                 {data.type === 'error' && <img src={x} alt="" />}
