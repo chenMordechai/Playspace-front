@@ -21,6 +21,7 @@ import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
 import { getPlayer, getPlayerByCookie, getUser } from "../store/actions/auth.action.js"
+import { AnswerModal } from "../cmps/AnswerModal.jsx"
 
 // game/:gameId
 
@@ -191,6 +192,7 @@ export function Game() {
     if (!game) return ''
     return (
         <section className="game-container rtl">
+            <AnswerModal />
             <div className="game-bgi">
                 <img src={logoBig} />
             </div>

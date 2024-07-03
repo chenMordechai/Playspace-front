@@ -184,10 +184,10 @@ export function Signup() {
             }
             const res = await isUserExist(miniCredentials)
             console.log('res:', res)
-            // setStepIdx(prev => prev + 1)
+            if (!res) setStepIdx(prev => prev + 1)
+            else console.log('user alredy exist')
         } catch (error) {
             console.error('Error:', error);
-            console.log('name alredy exist')
         }
 
     }

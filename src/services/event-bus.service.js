@@ -18,22 +18,18 @@ function createEventEmitter() {
 
 export const eventBusService = createEventEmitter()
 
-export function showUserMsg(msg) {
-    eventBusService.emit('show-user-msg', msg)
-}
+// export function showUserMsg(msg) {
+//     eventBusService.emit('show-user-msg', msg)
+// }
 export function showSuccessMsg(data) {
-    showUserMsg({ ...data, type: 'success' }) // {txt,type,func}
+    showAnswerMsg({ ...data, type: 'success' }) // {txt,type,func}
 }
 export function showErrorMsg(data) {
-    showUserMsg({ ...data, type: 'error' })
+    showAnswerMsg({ ...data, type: 'error' })
 }
-// export function showSuccessMsg(txt) {
-//     showUserMsg({txt, type: 'success'})
-// }
-// export function showErrorMsg(txt) {
-//     showUserMsg({txt, type: 'error'})
-// }
-
+export function showAnswerMsg(msg) {
+    eventBusService.emit('show-answer-msg', msg)
+}
 
 // Service Testing:
 

@@ -16,6 +16,8 @@ export async function getUser() {
     }
 }
 
+
+
 export async function login(credentials) {
     try {
         const user = await authService.login(credentials)
@@ -58,6 +60,16 @@ export async function signup(credentials) {
         return user
     } catch (err) {
         console.log('user actions -> Cannot signup', err)
+        throw err
+    }
+}
+
+export async function isUserExist(credentials) {
+    try {
+        const res = await authService.isUserExist(credentials)
+        return res
+    } catch (err) {
+        console.log('user actions -> Cannot login', err)
         throw err
     }
 }
