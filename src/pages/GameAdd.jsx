@@ -341,7 +341,7 @@ export function GameAdd() {
 
                 {game.gameType === "activities" &&
                     <section className="activities-container">
-                        {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} onRemoveActivity={onRemoveActivity} />}
+                        {game.activities && <ActivityFormList gameType={game.gameType} activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} onRemoveActivity={onRemoveActivity} />}
                         <button type="button" className="add-activity" onClick={onAddActivity}>הוסף שאלה</button>
                     </section>}
 

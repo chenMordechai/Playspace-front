@@ -1,6 +1,6 @@
 import { DateForm } from "./DateForm"
 
-export function ActivityFormList({ activities, i, onHandleActivityChange, activityProgressType, onRemoveActivity, isEdit }) {
+export function ActivityFormList({ gameType, activities, i, onHandleActivityChange, activityProgressType, onRemoveActivity, isEdit }) {
     return (
         <ul className="activity-list">
             {activities?.map((activity, j) => <li key={j}>
@@ -41,9 +41,10 @@ export function ActivityFormList({ activities, i, onHandleActivityChange, activi
                 <label htmlFor="isRequired">האם השאלה חובה?</label>
                 <input type="checkbox" name="isRequired" id="isRequired" value={activity.isRequired} onChange={() => onHandleActivityChange(event, i, j)} />
 
-                <label htmlFor="maxError">כמה טעויות מותר</label>
-                <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() => onHandleActivityChange(event, i, j)} />
-
+                {gameType === 'activities' && <>
+                    <label htmlFor="maxError">כמה טעויות מותר</label>
+                    <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() => onHandleActivityChange(event, i, j)} />
+                </>}
                 <label htmlFor="textBefore">הודעה לפני השאלה</label>
                 <textarea name="textBefore" id="textBefore" value={activity.textBefore} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
 

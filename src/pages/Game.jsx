@@ -27,12 +27,19 @@ import { AnswerModal } from "../cmps/AnswerModal.jsx"
 
 export function Game() {
     const [game, setGame] = useState(null)
-    const [currGameStepIdx, setCurrGameStepIdx] = useState(utilService.loadFromStorage('currGameStepIdx') || 0) // 0:before ,1:stages/activities , 2:end
-    const [currStageStepIdx, setCurrStageStepIdx] = useState(utilService.loadFromStorage('currStageStepIdx') || 0)
-    const [currActivityStepIdx, setCurrActivityStepIdx] = useState(utilService.loadFromStorage('currActivityStepIdx') || 0)
+    const [currGameStepIdx, setCurrGameStepIdx] = useState(0) // 0:before ,1:stages/activities , 2:end
+    const [currStageStepIdx, setCurrStageStepIdx] = useState(0)
+    const [currActivityStepIdx, setCurrActivityStepIdx] = useState(0)
 
-    const [currStageIdx, setCurrStageIdx] = useState(utilService.loadFromStorage('currStageIdx') || 0)
-    const [currActivityIdx, setCurrActivityIdx] = useState(utilService.loadFromStorage('currActivityIdx') || 0)
+    const [currStageIdx, setCurrStageIdx] = useState(0)
+    const [currActivityIdx, setCurrActivityIdx] = useState(0)
+
+    // const [currGameStepIdx, setCurrGameStepIdx] = useState(utilService.loadFromStorage('currGameStepIdx') || 0) // 0:before ,1:stages/activities , 2:end
+    // const [currStageStepIdx, setCurrStageStepIdx] = useState(utilService.loadFromStorage('currStageStepIdx') || 0)
+    // const [currActivityStepIdx, setCurrActivityStepIdx] = useState(utilService.loadFromStorage('currActivityStepIdx') || 0)
+
+    // const [currStageIdx, setCurrStageIdx] = useState(utilService.loadFromStorage('currStageIdx') || 0)
+    // const [currActivityIdx, setCurrActivityIdx] = useState(utilService.loadFromStorage('currActivityIdx') || 0)
 
     const [isGameScoreOpen, setIsGameScoreOpen] = useState(false)
     const [players, setPlayers] = useState([])
@@ -55,6 +62,12 @@ export function Game() {
         } else {
             getUserFromBack()
         }
+    }, []) // loggedinPlayer
+
+    useEffect(() => {
+        console.log('loggedinPlayer:', loggedinPlayer)
+        console.log('loggedinPlayer.submittedActivitiesIds:', loggedinPlayer?.submittedActivitiesIds)
+
     }, [loggedinPlayer])
 
     useEffect(() => {
@@ -93,10 +106,11 @@ export function Game() {
 
 
     async function getUserFromBack() {
+        console.log('getUserFromBack')
         try {
             await getUser()
             await getPlayerByCookie() // player
-
+            init()
         } catch (error) {
             // console.error('Error:', error);
             navigate(`/signup/${gameId}`)
@@ -119,6 +133,7 @@ export function Game() {
             // const game = await demoDataService.getGame4()
 
             setGame(game)
+
         } catch (err) {
             console.log('err:', err)
         }
