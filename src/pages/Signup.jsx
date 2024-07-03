@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { authService } from '../services/auth.service'
 import { utilService } from '../services/util.service'
-import { signup, getPlayer, getUser, getPlayerByCookie } from "../store/actions/auth.action"
+import { signup, getPlayer, getUser, getPlayerByCookie, isUserExist } from "../store/actions/auth.action"
 import { getShallowGameById } from "../store/actions/game.action"
 import { Carousel } from '../cmps/Carousel'
 import { UserImgAddModal } from "../cmps/UserImgAddModal"
@@ -51,7 +51,8 @@ import { showSuccessMsg } from "../services/event-bus.service.js"
 // work : http://localhost:5173/signup/6538762c-c0e7-4fcc-3a41-08dc98f4555f
 
 export function Signup() {
-    const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
+    // const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
+    const [credentials, setCredentials] = useState(authService.getEmptySignupCred())
     const [shallowGame, setShallowGame] = useState(null)
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
@@ -170,12 +171,33 @@ export function Signup() {
         setStepIdx(prev => prev + 1)
     }
 
+    async function onSignUpNameEmail(ev) {
+        ev.preventDefault()
+        console.log('onSignUpNameEmail:')
+        try {
+            const { email, name } = credentials
+            const miniCredentials = {
+                email,
+                name,
+                gameId: shallowGame.id,
+
+            }
+            const res = await isUserExist(miniCredentials)
+            console.log('res:', res)
+            // setStepIdx(prev => prev + 1)
+        } catch (error) {
+            console.error('Error:', error);
+            console.log('name alredy exist')
+        }
+
+    }
+
     // if (isLoading) return
     return (
         <section className="signup">
 
             {stepIdx === 0 &&
-                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" useEffectFunc={getUserFromBack} />
+                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={onSignUpNameEmail} btnType="submit" text="Sign up" useEffectFunc={getUserFromBack} />
             }
             {/* {stepIdx === 0 && !loggedinPlayer &&
                 <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />

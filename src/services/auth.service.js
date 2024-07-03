@@ -29,32 +29,23 @@ export const authService = {
     getEmptySignupCred,
     getUserData,
     getPlayer,
-    getPlayerByCookie
+    getPlayerByCookie,
+    isUserExist
 }
 
 // work
 async function getUser() {
-    const user = await httpService.get(`${BASE_URL_AUTH}User`)
-    return user
+    return await httpService.get(`${BASE_URL_AUTH}User`)
+
 }
 
 async function login(userCred) {
-    const user = await httpService.post(`${BASE_URL_AUTH}Login`, userCred)
-    // user.isAdmin = true  // for dev
-    // if (user) {
-    //     _setLoggedinUser(user)
-    return user
-    // }
+    return await httpService.post(`${BASE_URL_AUTH}Login`, userCred)
 }
 
 // work
 async function adminLogin(adminCred) {
-    const user = await httpService.post(`${BASE_URL_AUTH}AdminLogin`, adminCred)
-    // user.checkAdmin = true  // for dev
-    // if (user) {
-    //     _setLoggedinUser(user)
-    return user
-    // }
+    return await httpService.post(`${BASE_URL_AUTH}AdminLogin`, adminCred)
 }
 
 // logout for user and admin
@@ -70,66 +61,29 @@ async function logout() {
 // work
 async function signup({ email, gameId, groupId, name, media }) {
     const playerToSave = { email, gameId, groupId, name, media }
+    return await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
+}
 
-    const user = await httpService.post(BASE_URL_AUTH + 'Signup', playerToSave)
-
-    // demoData:
-    // const player = {
-    //     id: utilService.makeId(),
-    //     email: 'BBBB@GMAIL.COM',
-    //     name: 'BBBB',
-    //     password: 'string$%',
-    //     gameId: "779CF2C1-3529-4DB2-366B-08DC51029963",
-    //     // groupId: 0
-    // }
-    // if (user) {
-    //     _setLoggedinUser(user)
-    return user
-    // }
-
+async function isUserExist({ email, gameId, name }) {
+    const userToCheck = { email, gameId, name }
+    return await httpService.post(BASE_URL_AUTH + 'IsUserExist', userToCheck)
 }
 
 async function getPlayer(gameId) {
-    const player = httpService.get(`Game/${gameId}/player`)
-    // if (player) {
-    //     _setLoggedinPlayer(player)
-    return player
-    // }
-
+    return httpService.get(`Game/${gameId}/player`)
 }
 
 async function getPlayerByCookie() {
-    const player = httpService.get(`Player/GetPlayerByCookie`)
-    return player
+    return httpService.get(`Player/GetPlayerByCookie`)
 }
 
-
 async function getAdmins() {
-
-    const admins = await httpService.get('Game/Admins')
-    return admins
-
-    // return Promise.resolve([
-    //     {
-    //         userId: "c25ca045-9b0b-4c67-d356-08dc57bf9c72",
-    //         name: 'Anat Shapira',
-    //         isAdmin: true
-    //     }, {
-    //         userId: "3fa85f64-5717-4562-b3fc-2c963frrrrr",
-    //         name: 'Adam',
-    //         isAdmin: true
-    //     }])
-
+    return await httpService.get('Game/Admins')
 }
 
 async function getUserData(userId) {
-    // ??
     return Promise.resolve({ id: userId })
-
 }
-
-
-
 
 function getLoggedinUser() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY_USER))
