@@ -174,22 +174,22 @@ export function Signup() {
     async function onSignUpNameEmail(ev) {
         ev.preventDefault()
         console.log('onSignUpNameEmail:')
-        try {
-            const { email, name } = credentials
-            const miniCredentials = {
-                email,
-                name,
-                gameId: shallowGame.id,
+        // try {
+        //     const { email, name } = credentials
+        //     const miniCredentials = {
+        //         email,
+        //         name,
+        //         gameId: shallowGame.id,
 
-            }
-            const res = await isUserExist(miniCredentials)
-            console.log('res:', res)
-            if (!res) setStepIdx(prev => prev + 1)
-            else showUserMsg('שם או מייל קיימים כבר במערכת')
+        //     }
+        //     const res = await isUserExist(miniCredentials)
+        //     console.log('res:', res)
+        //     if (!res) setStepIdx(prev => prev + 1)
+        //     else showUserMsg('שם או מייל קיימים כבר במערכת')
 
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        // } catch (error) {
+        //     console.error('Error:', error);
+        // }
 
     }
 

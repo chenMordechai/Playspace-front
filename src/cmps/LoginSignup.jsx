@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import playspaceLogoBlue from '../assets/img/playspace-logo-blue.png'
 import user from '../assets/img/user.png'
-import password from '../assets/img/password.png'
+import email from '../assets/img/email.png'
 import vectorLeft from '../assets/img/vector-left.png'
 import vectorRight from '../assets/img/vector-right.png'
 import playspaceLogo from '../assets/img/playspace-logo.png'
@@ -44,7 +44,7 @@ export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, te
                     <img className="input-img user" src={user} />
                     <input placeholder="Name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required />
 
-                    <img className="input-img email" src={password} />
+                    <img className="input-img email" src={email} />
                     {/* <img className="input-img eye" src={eye} /> */}
                     <input placeholder="Email" type="email" id="email" name="email" value={credentials.email} onChange={handleChange} required />
 
