@@ -33,11 +33,6 @@ import avatar21 from '../assets/img/avatar21.jpg'
 import avatar22 from '../assets/img/avatar22.jpg'
 import avatar23 from '../assets/img/avatar23.jpg'
 import avatar24 from '../assets/img/avatar24.jpg'
-// import vectorLeft from '../assets/img/vector-left.png'
-// import vectorRight from '../assets/img/vector-right.png'
-// import playspaceLogo from '../assets/img/playspace-logo.png'
-// import x from '../assets/img/x.png'
-// import companyLogo from '../assets/img/company-logo.png'
 import v from '../assets/img/green-v.png'
 import eye from '../assets/img/eye.png'
 import plus from '../assets/img/plus.png'
@@ -74,7 +69,6 @@ export function Signup() {
 
     const { gameId } = useParams()
     const navigate = useNavigate()
-    // const sectionRef = useRef(null);
     const colors = useRef(null);
 
     useEffect(() => {
@@ -120,14 +114,10 @@ export function Signup() {
     }
 
     async function getShallowGame() {
-        console.log('getShallowGame')
         const shallowGame = await getShallowGameById(gameId)
         console.log('shallowGame:', shallowGame)
         setShallowGame(shallowGame)
-        // console.log('loggedinPlayer:', loggedinPlayer)
-        // if (loggedinPlayer && shallowGame) {
-        //     navigate(`/game/${shallowGame.id}`)
-        // }
+
         // colors.current = shallowGame.groups.map(g => utilService.getRandomColor())
     }
 
@@ -159,13 +149,10 @@ export function Signup() {
     async function onSubmitSignupForm(ev) {
         ev.preventDefault()
         try {
-            // work
-            const user = await signup(credentials) // user
-            const player = await getPlayer(gameId) // player
+            const user = await signup(credentials)
+            const player = await getPlayer(gameId)
 
             resetSignup()
-
-            // save to store = player
             if (player) navigate(`/game/${shallowGame.id}`)
         } catch (error) {
             console.error('Error:', error);
@@ -174,7 +161,6 @@ export function Signup() {
     }
 
     function resetSignup() {
-        console.log('resetSignup')
         utilService.saveToStorage('signupStepIdx', 0)
         utilService.saveToStorage('credentials', authService.getEmptySignupCred())
     }
@@ -182,7 +168,6 @@ export function Signup() {
     function onCloseModal() {
         onToggleOpenUserImgAddModal()
         setStepIdx(prev => prev + 1)
-
     }
 
     // if (isLoading) return
