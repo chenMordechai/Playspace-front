@@ -4,6 +4,8 @@ import email from '../assets/img/email.png'
 import { LoadingScreen } from './LoadingScreen'
 import React from 'react';
 import { useFormik } from 'formik'
+import { showUserMsg } from '../services/event-bus.service';
+
 
 export function LoginSignup({ credentials, handleChange, onBtnClick, text, useEffectFunc, companyIcon }) {
 
@@ -14,10 +16,14 @@ export function LoginSignup({ credentials, handleChange, onBtnClick, text, useEf
         },
         validate: (values) => {
             const errors = {}
-            if (!values.email) {
-                errors.email = 'Required'
+            if (!values.email || !values.name) {
+                // errors.email = 'Required'
+                showUserMsg('Required')
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address'
+                // errors.email = 'Invalid email address'
+                showUserMsg('Invalid email address')
+            } else {
+                showUserMsg('')
             }
             return errors
         },
@@ -40,15 +46,15 @@ export function LoginSignup({ credentials, handleChange, onBtnClick, text, useEf
                 <form onSubmit={formik.handleSubmit} className="signup-form" id="signupForm" >
                     <span>{text}</span>
                     <img className="input-img user" src={user} />
-                    <input placeholder="Name" type="text" id="name" name="name" onChange={handleInputChange} onBlur={formik.handleBlur} value={formik.values.name} required />
+                    <input placeholder="Name*" type="text" id="name" name="name" onChange={handleInputChange} onBlur={formik.handleBlur} value={formik.values.name} required />
                     {/* <input placeholder="Name" type="text" id="name" name="name" value={credentials.name} onChange={handleChange} required /> */}
 
                     <img className="input-img email" src={email} />
                     {/* <img className="input-img eye" src={eye} /> */}
-                    <input placeholder="Email" type="email" id="email" name="email" onChange={handleInputChange} onBlur={formik.handleBlur} value={formik.values.email} required />
-                    {formik.touched.email && formik.errors.email ? (
-                        <span>{formik.errors.email}</span>
-                    ) : null}
+                    <input placeholder="Email*" type="email" id="email" name="email" onChange={handleInputChange} onBlur={formik.handleBlur} value={formik.values.email} required />
+                    {/* {formik.touched.email && formik.errors.email ? (
+                        <span className="error">{formik.errors.email}</span>
+                    ) : null} */}
                     <button type='submit'>{text}</button>
                     {/* <button type={btnType} disabled={!(credentials.name && credentials.email)} onClick={onBtnClick}>{text}</button> */}
 

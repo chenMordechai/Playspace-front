@@ -18,6 +18,13 @@
             font-size: 16px;
             line-height: 24px;
             color: var(--primary-35);
+
+            &.error {
+                background-color: black;
+                color: white;
+                padding: 5px 8px;
+                font-weight: 400;
+            }
         }
         .end-span {
             align-self: end;
