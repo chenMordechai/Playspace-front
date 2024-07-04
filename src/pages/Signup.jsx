@@ -173,15 +173,13 @@ export function Signup() {
         setStepIdx(prev => prev + 1)
     }
 
-    async function onSignUpNameEmail(ev) {
-        ev.preventDefault()
+    async function onSignUpNameEmail() {
         try {
             const { email, name } = credentials
             const miniCredentials = {
                 email,
                 name,
                 gameId: shallowGame.id,
-
             }
             const res = await isUserExist(miniCredentials)
             if (!res) setStepIdx(prev => prev + 1)
@@ -198,7 +196,7 @@ export function Signup() {
         <section className="signup">
 
             {stepIdx === 0 &&
-                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={onSignUpNameEmail} btnType="submit" text="Sign up" useEffectFunc={getUserFromBack} companyIcon={shallowGame?.icon} />
+                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={onSignUpNameEmail} text="Sign up" useEffectFunc={getUserFromBack} companyIcon={shallowGame?.icon} />
             }
             {/* {stepIdx === 0 && !loggedinPlayer &&
                 <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />
