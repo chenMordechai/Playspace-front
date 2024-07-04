@@ -71,10 +71,83 @@
 
         .game-step-0 {
             margin: 0 10px;
-            margin-top: 58px;
-            button {
-                @include btn;
-                margin-top: 20px;
+            // margin-top: 58px;
+
+            .game-info {
+                border-radius: 20px;
+                background-color: white;
+                padding: 15px;
+                @include flex(column, center, space-between, 10px);
+                font-size: 14px;
+                line-height: 21px;
+
+                h4 {
+                    font-size: 16px;
+                    font-weight: 700;
+                }
+                span,
+                p {
+                    font-weight: 500;
+                }
+            }
+
+            .game-stat {
+                border-radius: 20px;
+                margin-top: 15px;
+                background-color: var(--primary-95);
+                padding: 15px;
+
+                h5 {
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 24px;
+                    color: var(--primary-35);
+                }
+                .stat-info-container {
+                    @include flex(row-reverse, center, space-between, 10px);
+                    margin-top: 35px;
+                    & > div {
+                        width: 144px;
+                        height: 130px;
+                        border-radius: 10px;
+                        background-color: white;
+                        @include flex(column, center, start, 10px);
+                        .txt {
+                            width: 94%;
+                            height: 69px;
+                            border-radius: 10px 10px 20px 20px;
+                            margin-top: 5px;
+                            color: white;
+                            padding: 8px;
+
+                            font-size: 13px;
+                            font-weight: 600;
+                            line-height: 18px;
+
+                            @include flex(column, center, end, 3px);
+
+                            ~ span {
+                                font-size: 20px;
+                                font-weight: 600;
+                                line-height: 30px;
+                                text-align: center;
+                            }
+
+                            &.points {
+                                background: #b637ce;
+                                ~ span {
+                                    color: #b637ce;
+                                }
+                            }
+                            &.place {
+                                background: #6057c8;
+                                ~ span {
+                                    color: #6057c8;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

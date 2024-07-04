@@ -4,9 +4,10 @@ import leave from '../assets/img/leave.png'
 export function GameOptionModal() {
     return (
         <section className="game-option-modal">
-            <span>Leave the game</span>
-            <Link to="/user"><img src={leave} /></Link>
-
+            <Link to="/user">
+                <span>Leave the game</span>
+                <img src={leave} />
+            </Link>
         </section>
     )
 }

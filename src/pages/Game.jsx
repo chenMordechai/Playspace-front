@@ -41,7 +41,7 @@ export function Game() {
     // const [currStageIdx, setCurrStageIdx] = useState(utilService.loadFromStorage('currStageIdx') || 0)
     // const [currActivityIdx, setCurrActivityIdx] = useState(utilService.loadFromStorage('currActivityIdx') || 0)
 
-    const [isGameScoreOpen, setIsGameScoreOpen] = useState(true)
+    const [isGameScoreOpen, setIsGameScoreOpen] = useState(false)
     const [players, setPlayers] = useState([])
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
@@ -160,6 +160,7 @@ export function Game() {
     }
 
     function onMoveToNextActivity() {
+        setIsGameScoreOpen(true)
         setCurrActivityIdx(prev => prev + 1)
         setCurrActivityStepIdx(0)
     }
@@ -241,7 +242,7 @@ export function Game() {
 
                 {isGameScoreOpen && <>
                     <GameScore />
-                    <button className="score-btn">continue</button>
+                    <button className="score-btn" onClick={() => setIsGameScoreOpen(false)}>continue</button>
                 </>}
 
             </div>
