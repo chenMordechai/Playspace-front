@@ -57,27 +57,18 @@
                 section {
                     width: 100%;
                     @include flex(row, center);
-
-                    // &.you {
-                    //     background-color: #fff;
-                    //     color: var(--primary);
-                    //     border-radius: 10px;
-                    //     padding: 7px;
-                    //     // margin: 15px 0px;
-                    // }
-
-                    span.score {
-                        // margin-inline-end: 10px;
-                    }
-
                     span.img-container {
-                        @include flex(row, center, center, 25px);
-                        // margin-inline-start: 10px;
-
+                        @include flex(row, center, center, 23px);
                         img {
                             width: 40px;
                             height: 40px;
                             border-radius: 50%;
+
+                            &.crown {
+                                height: 26px;
+                                width: 26px;
+                                margin-bottom: 7px;
+                            }
                         }
                     }
 

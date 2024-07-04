@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import dimond from '../assets/img/dimond.png'
-import goblet from '../assets/img/goblet.png'
+import crown from '../assets/img/crown.png'
 import { gameService } from '../services/game.service'
 
 
@@ -70,6 +69,7 @@ export function GameScore() {
                                         <span>{idx + 1}</span>
                                         {(player?.image?.url) && <img src={player.image.url} alt="" />}
                                         <span className="name">{player.name}</span>
+                                        {(player.name === "Me") ? <img className="crown" src={crown} /> : ''}
                                     </span>
                                     <span className="score">{player.score}</span>
                                 </section>
