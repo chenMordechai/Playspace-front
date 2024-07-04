@@ -1,16 +1,23 @@
 .game-score {
-    background-color: var(--primary-35);
-    padding: 40px 40px 30px;
-    margin-top: 10px;
-    margin-bottom: 40px;
+    .list-header {
+        padding: 10px 27px;
+        @include flex(row, center, space-around, 15px);
+        li {
+            cursor: pointer;
+            padding: 6px 10px 6px 10px;
+            border-radius: 59px;
+            background-color: white;
 
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    color: white;
-    border-radius: 10px;
-
-    position: relative;
+            &:last-child {
+                margin-inline-start: auto;
+                background: none;
+                padding: 0;
+            }
+            &.active {
+                background-color: var(--primary);
+            }
+        }
+    }
 
     & > img {
         position: absolute;
@@ -27,26 +34,41 @@
         }
     }
     .players-container {
+        background: linear-gradient(180deg, #16469d 0%, #d2def9 100%);
+        padding: 30px;
+        margin-top: 10px;
+        margin-bottom: 40px;
+
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        color: white;
+        border-radius: 10px;
         ul {
             li {
-                padding: 10px 0px;
+                padding: 10px;
                 border-top: 1px solid white;
                 &:last-child {
                     border-bottom: 1px solid white;
                 }
                 section {
-                    @include flex(row, center, space-evenly);
+                    @include flex(row, center);
 
-                    &.you {
-                        background-color: #fff;
-                        color: var(--primary);
-                        border-radius: 10px;
-                        padding: 7px;
-                        // margin: 15px 0px;
+                    // &.you {
+                    //     background-color: #fff;
+                    //     color: var(--primary);
+                    //     border-radius: 10px;
+                    //     padding: 7px;
+                    //     // margin: 15px 0px;
+                    // }
+
+                    span.score {
+                        // margin-inline-end: 10px;
                     }
 
                     span.img-container {
-                        @include flex(row, center, center, 13px);
+                        @include flex(row, center, center, 25px);
+                        // margin-inline-start: 10px;
 
                         img {
                             width: 40px;

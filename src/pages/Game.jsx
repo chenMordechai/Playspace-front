@@ -41,7 +41,7 @@ export function Game() {
     // const [currStageIdx, setCurrStageIdx] = useState(utilService.loadFromStorage('currStageIdx') || 0)
     // const [currActivityIdx, setCurrActivityIdx] = useState(utilService.loadFromStorage('currActivityIdx') || 0)
 
-    const [isGameScoreOpen, setIsGameScoreOpen] = useState(false)
+    const [isGameScoreOpen, setIsGameScoreOpen] = useState(true)
     const [players, setPlayers] = useState([])
 
     const loggedinPlayer = useSelector(storeState => storeState.authModule.loggedinPlayer)
