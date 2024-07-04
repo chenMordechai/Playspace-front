@@ -3,13 +3,13 @@ import user from '../assets/img/user.png'
 import email from '../assets/img/email.png'
 import { LoadingScreen } from './LoadingScreen'
 
-export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, text, useEffectFunc }) {
+export function LoginSignup({ credentials, handleChange, onBtnClick, btnType, text, useEffectFunc, companyIcon }) {
 
 
 
     return (
         <>
-            <LoadingScreen useEffectFunc={useEffectFunc} />
+            <LoadingScreen useEffectFunc={useEffectFunc} companyIcon={companyIcon} />
             <section className="login-signup">
                 <img className="playspace-logo-blue" src={playspaceLogoBlue} />
 

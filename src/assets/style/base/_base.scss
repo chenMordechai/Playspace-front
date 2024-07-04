@@ -14,7 +14,10 @@
 
 :root {
   // css vars
+  // primary from the company icon:
   --clr-0: blue;
+  --clr-0-lighten: #{lighten(blue, 40%)}; //?
+
   --clr-1: rgb(143, 143, 232);
   --clr-2: rgb(218, 218, 238);
 

@@ -49,6 +49,8 @@ import { showUserMsg } from "../services/event-bus.service.js"
 // lifeSaver:
 // work : http://localhost:5173/signup/2e1586e7-112a-4a57-3a40-08dc98f4555f
 // work : http://localhost:5173/signup/6538762c-c0e7-4fcc-3a41-08dc98f4555f
+// icon
+// work : http://localhost:5173/signup/cd8b9f9d-cf81-4a4b-8761-08dc9b505fc1
 
 export function Signup() {
     // const [credentials, setCredentials] = useState(utilService.loadFromStorage('credentials') || authService.getEmptySignupCred())
@@ -196,7 +198,7 @@ export function Signup() {
         <section className="signup">
 
             {stepIdx === 0 &&
-                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={onSignUpNameEmail} btnType="submit" text="Sign up" useEffectFunc={getUserFromBack} />
+                <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={onSignUpNameEmail} btnType="submit" text="Sign up" useEffectFunc={getUserFromBack} companyIcon={shallowGame?.icon} />
             }
             {/* {stepIdx === 0 && !loggedinPlayer &&
                 <LoginSignup credentials={credentials} handleChange={handleChange} onBtnClick={() => setStepIdx(prev => prev + 1)} btnType="button" text="Sign up" />
