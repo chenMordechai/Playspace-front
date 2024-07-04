@@ -40,9 +40,8 @@ export function GameScore() {
         const top4 = gameScores.top4Groups;
         const currPlayerGroup = {
             score: gameScores.playerGroupScore,
-            name: `My Group - ${gameScores.playerGroupName}`
+            name: `${gameScores.playerGroupName} - הקבוצה שלי`
         }
-
 
         const allGroups = [...top4, currPlayerGroup]
         allGroups.sort((g1, g2) => g1.score - g2.score)
@@ -86,9 +85,9 @@ export function GameScore() {
                                 <section className={(group.name.startsWith("My Group")) ? 'you' : ''}>
                                     <span className="img-container">
                                         <span>{idx + 1}</span>
+                                        <span className="name">{group.name}</span>
                                     </span>
-                                    <span className="name">{group.name}</span>
-                                    <span>{group.score}</span>
+                                    <span className="score">{group.score}</span>
                                 </section>
                             </li>)
                         }

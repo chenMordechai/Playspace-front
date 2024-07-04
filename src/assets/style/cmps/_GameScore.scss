@@ -37,7 +37,7 @@
         background: linear-gradient(180deg, #16469d 0%, #d2def9 100%);
         padding: 30px;
         margin-top: 10px;
-        margin-bottom: 40px;
+        margin-bottom: 20px;
 
         font-size: 16px;
         font-weight: 600;
@@ -46,12 +46,16 @@
         border-radius: 10px;
         ul {
             li {
+                height: 60.67px;
                 padding: 10px;
                 border-top: 1px solid white;
                 &:last-child {
                     border-bottom: 1px solid white;
                 }
+                display: flex;
+                align-items: center;
                 section {
+                    width: 100%;
                     @include flex(row, center);
 
                     // &.you {
