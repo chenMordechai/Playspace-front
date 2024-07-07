@@ -103,7 +103,7 @@ export function Signup() {
             const user = await getUser() // user
             console.log('user:', user)
 
-            const player = await getPlayerByCookie() // player
+            const player = await getPlayerByCookie(gameId) // player
             console.log('player:', player)
 
         } catch (error) {

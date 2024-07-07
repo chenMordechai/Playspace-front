@@ -85,9 +85,9 @@ export async function getPlayer(gameId) {
     }
 }
 
-export async function getPlayerByCookie() {
+export async function getPlayerByCookie(gameId) {
     try {
-        const player = await authService.getPlayerByCookie()
+        const player = await authService.getPlayer(gameId)
         store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
         return player
     } catch (err) {
