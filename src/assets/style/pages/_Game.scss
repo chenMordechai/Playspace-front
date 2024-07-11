@@ -161,12 +161,20 @@
                     line-height: 21px;
                     color: #16469d;
                     text-decoration: underline;
-                    @include flex(row, center, center, 3px);
+                    @include flex(row, start, center, 3px);
+                    // height: 100px;
 
                     img {
                         height: 18px;
                         width: 18px;
                     }
+                }
+
+                .placeholder {
+                    height: 100px;
+                }
+                .more-details-container {
+                    margin-top: 10px;
                 }
             }
             .game-play {

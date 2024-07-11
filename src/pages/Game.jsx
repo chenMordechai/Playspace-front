@@ -66,9 +66,33 @@ export function Game() {
 
     useEffect(() => {
         console.log('loggedinPlayer:', loggedinPlayer)
-        console.log('loggedinPlayer.submittedActivitiesIds:', loggedinPlayer?.submittedActivitiesIds)
+        if (!loggedinPlayer || !game) return
+        if (!loggedinPlayer.submittedActivitiesIds.length) {
+            // game start now
+            setCurrGameStepIdx(0)
+        } else if (loggedinPlayer.submittedActivitiesIds.length === game.activities.length) {
+            // game end
+            setCurrGameStepIdx(2)
+        } else {
+            // console.log('else')
+            setCurrGameStepIdx(1)
+            setCurrActivityStepIdx(0)
 
-    }, [loggedinPlayer])
+            if (game.gameType === 'activities') {
+                // game alredy start
+                // const activities
+                setCurrActivityIdx(loggedinPlayer.submittedActivitiesIds.length)
+
+            } else {
+                // ! ? 
+                setCurrStageIdx()
+                setCurrActivityIdx()
+
+            }
+
+        }
+
+    }, [loggedinPlayer, game])
 
     useEffect(() => {
         console.log('game:', game)
@@ -228,7 +252,7 @@ export function Game() {
                    <div className="clr3">Third</div> */}
 
                     {/* start game */}
-                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{score: loggedinPlayer.score, position: loggedinPlayer.position}}/>}
+                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{ score: loggedinPlayer.score, position: loggedinPlayer.position }} />}
 
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}

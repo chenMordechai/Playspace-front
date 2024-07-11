@@ -48,13 +48,3 @@ async function ajax(endpoint, method = 'GET', data = null) {
         throw err
     }
 }
-
-// async function getGames() {
-//     try {
-//         const response = await axios.get('https://playspace/api/Admin/Games');
-//         return response.data; // Assuming the response contains the game data
-//     } catch (error) {
-//         console.error('Error fetching games:', error);
-//         throw error; // Throw error for handling in caller function
-//     }
-// }

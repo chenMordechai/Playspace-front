@@ -4,13 +4,11 @@ import arrow from '../assets/img/arrow-down.png'
 import play from '../assets/img/play.png'
 import { useState } from 'react'
 
-export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSetCurrGameStepIdx }) {
+export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats, onSetCurrGameStepIdx }) {
+    const [isDetailsOpen, setIsDetailsOpen] = useState(false)
     return (
         <section className="game-step-0">
             <section className="game-info">
-                <h4>ברוך הבא למשחק</h4>
-                <h4>ברוך הבא למשחק</h4>
-                <h4>ברוך הבא למשחק</h4>
                 <h4>ברוך הבא למשחק</h4>
                 <h4>{game.name}</h4>
                 {/* {game.gameStartTimestamp && game.gameEndTimestamp && <> */}
@@ -60,11 +58,12 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSet
 
 
                 <button className="details"
-                    onClick={() => setisDetailsOpen(prev => !prev)}>עוד פרטים
+                    onClick={() => setIsDetailsOpen(prev => !prev)}>עוד פרטים
                     <img src={arrow} />
                 </button>
 
 
+                {!isDetailsOpen && <section className='placeholder'></section>}
                 {isDetailsOpen && <section className="more-details-container">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit velit architecto, incidunt deserunt perferendis laboriosam eum nulla corporis reprehenderit sunt impedit ad illo obcaecati animi inventore, porro nesciunt saepe laborum!
                 </section>}
@@ -73,7 +72,7 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSet
             <section className="game-play">
                 <div className="btn-container">
                     <button>
-                        <img src={play} />
+                        <img onClick={onSetCurrGameStepIdx} src={play} />
                     </button>
                     {/* <button onClick={onSetCurrGameStepIdx}>Play</button> */}
                 </div>
