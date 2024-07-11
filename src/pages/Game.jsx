@@ -34,6 +34,8 @@ export function Game() {
     const [currStageIdx, setCurrStageIdx] = useState(0)
     const [currActivityIdx, setCurrActivityIdx] = useState(0)
 
+    const [isBackToStep0, setIsBackToStep0] = useState(false)
+
     // const [currGameStepIdx, setCurrGameStepIdx] = useState(utilService.loadFromStorage('currGameStepIdx') || 0) // 0:before ,1:stages/activities , 2:end
     // const [currStageStepIdx, setCurrStageStepIdx] = useState(utilService.loadFromStorage('currStageStepIdx') || 0)
     // const [currActivityStepIdx, setCurrActivityStepIdx] = useState(utilService.loadFromStorage('currActivityStepIdx') || 0)
@@ -66,7 +68,7 @@ export function Game() {
 
     useEffect(() => {
         console.log('loggedinPlayer:', loggedinPlayer)
-        if (!loggedinPlayer || !game) return
+        if (!isBackToStep0 && !loggedinPlayer || !game) return
         if (!loggedinPlayer.submittedActivitiesIds.length) {
             // game start now
             setCurrGameStepIdx(0)
@@ -229,6 +231,17 @@ export function Game() {
         return game.gameEndTimestamp < Date.now()
     }
 
+    function getBackToStep0() {
+        if (currGameStepIdx === 0) {
+            console.log('hi')
+        } else {
+            setIsBackToStep0(true)
+            setCurrGameStepIdx(0)
+        }
+
+
+    }
+
     if (!game) return ''
     return (
         <section className="game-container rtl">
@@ -240,7 +253,7 @@ export function Game() {
                 <div className="game-header">
                     <button onClick={onToggleOpenGameOptionModal} className="points"><img src={points} /></button>
                     <button className="game-name">{game.name}</button>
-                    <span className="arrow"> <img src={arrow} /></span>
+                    <span onClick={getBackToStep0} className="arrow"> <img src={arrow} /></span>
                     {openGameOptionModal && <GameOptionModal />}
 
                 </div>
@@ -252,7 +265,7 @@ export function Game() {
                    <div className="clr3">Third</div> */}
 
                     {/* start game */}
-                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{ score: loggedinPlayer.score, position: loggedinPlayer.position }} />}
+                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{ score: loggedinPlayer.score, position: loggedinPlayer.position }} doneTasks={loggedinPlayer?.submittedActivitiesIds} />}
 
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}

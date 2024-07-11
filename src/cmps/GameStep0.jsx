@@ -3,8 +3,9 @@ import goblet from '../assets/img/goblet.png'
 import arrow from '../assets/img/arrow-down.png'
 import play from '../assets/img/play.png'
 import { useState } from 'react'
+import { GameTasks } from './GameTasks'
 
-export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats, onSetCurrGameStepIdx }) {
+export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats, onSetCurrGameStepIdx, doneTasks }) {
     const [isDetailsOpen, setIsDetailsOpen] = useState(false)
     return (
         <section className="game-step-0">
@@ -59,13 +60,14 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats
 
                 <button className="details"
                     onClick={() => setIsDetailsOpen(prev => !prev)}>עוד פרטים
-                    <img src={arrow} />
+                    <img className={isDetailsOpen ? 'rotate' : ''} src={arrow} />
                 </button>
 
 
-                {!isDetailsOpen && <section className='placeholder'></section>}
                 {isDetailsOpen && <section className="more-details-container">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit velit architecto, incidunt deserunt perferendis laboriosam eum nulla corporis reprehenderit sunt impedit ad illo obcaecati animi inventore, porro nesciunt saepe laborum!
+
+                    <GameTasks tasks={game.gameType === 'stages' ? game.stages : game.activities} doneTasks={doneTasks} />
+
                 </section>}
             </section>
 
