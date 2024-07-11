@@ -5,9 +5,6 @@ import play from '../assets/img/play.png'
 import { useState } from 'react'
 
 export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSetCurrGameStepIdx }) {
-
-    const [isDetailsOpen, setisDetailsOpen] = useState(false)
-
     return (
         <section className="game-step-0">
             <section className="game-info">
@@ -49,7 +46,7 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSet
                             <img src={dimond} />
                             <span>נקודות</span>
                         </div>
-                        <span>2394</span>
+                        <span>{stats.score}</span>
                     </div>
 
                     <div >
@@ -57,7 +54,7 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSet
                             <img src={goblet} />
                             <span>מקום</span>
                         </div>
-                        <span>13/43</span>
+                        <span>{stats.position.position}/{stats.position.totalPlayers}</span>
                     </div>
                 </div>
 

@@ -109,7 +109,7 @@ export function Game() {
         console.log('getUserFromBack')
         try {
             await getUser()
-            await getPlayerByCookie() // player
+            await getPlayerByCookie(gameId) // player
             init()
         } catch (error) {
             // console.error('Error:', error);
@@ -228,7 +228,7 @@ export function Game() {
                    <div className="clr3">Third</div> */}
 
                     {/* start game */}
-                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} />}
+                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{score: loggedinPlayer.score, position: loggedinPlayer.position}}/>}
 
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
