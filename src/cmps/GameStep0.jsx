@@ -1,12 +1,19 @@
 import dimond from '../assets/img/dimond.png'
 import goblet from '../assets/img/goblet.png'
-
-
+import arrow from '../assets/img/arrow-down.png'
+import play from '../assets/img/play.png'
+import { useState } from 'react'
 
 export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSetCurrGameStepIdx }) {
+
+    const [isDetailsOpen, setisDetailsOpen] = useState(false)
+
     return (
         <section className="game-step-0">
             <section className="game-info">
+                <h4>ברוך הבא למשחק</h4>
+                <h4>ברוך הבא למשחק</h4>
+                <h4>ברוך הבא למשחק</h4>
                 <h4>ברוך הבא למשחק</h4>
                 <h4>{game.name}</h4>
                 {/* {game.gameStartTimestamp && game.gameEndTimestamp && <> */}
@@ -54,13 +61,25 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, onSet
                     </div>
                 </div>
 
-                <button>More Details
-                    <img src="" alt="" />
+
+                <button className="details"
+                    onClick={() => setisDetailsOpen(prev => !prev)}>עוד פרטים
+                    <img src={arrow} />
                 </button>
+
+
+                {isDetailsOpen && <section className="more-details-container">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit velit architecto, incidunt deserunt perferendis laboriosam eum nulla corporis reprehenderit sunt impedit ad illo obcaecati animi inventore, porro nesciunt saepe laborum!
+                </section>}
             </section>
 
             <section className="game-play">
-                <button onClick={onSetCurrGameStepIdx}>Play</button>
+                <div className="btn-container">
+                    <button>
+                        <img src={play} />
+                    </button>
+                    {/* <button onClick={onSetCurrGameStepIdx}>Play</button> */}
+                </div>
             </section>
             {/* } */}
 
