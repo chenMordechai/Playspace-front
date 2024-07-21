@@ -13,6 +13,8 @@ import { DateForm } from '../cmps/DateForm'
 import { ActivityFormList } from '../cmps/ActivityFormList'
 import { StagesFormList } from '../cmps/StagesFormList.jsx'
 import loader from '../assets/img/loader.gif'
+import { toastService } from '../services/toast.service.js'
+
 
 // game/add
 export function GameAdd() {
@@ -181,6 +183,7 @@ export function GameAdd() {
                 return { ...prevGame }
             })
         } else { // game.stage.activities
+
             setGame(prevGame => {
                 prevGame.stages[i].activities[j][name] = value
                 return { ...prevGame }
@@ -207,7 +210,6 @@ export function GameAdd() {
         //     return { ...prevGame }
         // })
         gameToSend.admins = gameToSend.admins.map(adminId => ({ adminId }))
-        console.log('gameToSend:', gameToSend)
 
         setGame(gameToSend)
 
@@ -215,10 +217,10 @@ export function GameAdd() {
             setIsLoading(true)
             const newGame = await addGame(gameToSend)
             console.log('newGame:', newGame)
-            setMsgAfterGameAdd('המשחק הוסף בהצלחה')
+            toastService.toast.success('המשחק נוסף בהצלחה')
             navigate('/admin')
         } catch (err) {
-            setMsgAfterGameAdd('שגיאה')
+            toastService.toast.error('שגיאה')
             console.log('err:', err)
             setGame(prevGame => {
                 prevGame.admins = prevGame.admins.map(id => (id.adminId))

@@ -40,6 +40,7 @@ async function getUser() {
 }
 
 async function login(userCred) {
+    console.log("🚀 ~ login ~ userCred:", userCred)
     return await httpService.post(`${BASE_URL_AUTH}Login`, userCred)
 }
 
@@ -111,7 +112,7 @@ function getEmptyCredentials() {
     return {
         // email: 'AAAA@GMAIL.COM',
         // name: 'AAAA',
-        email: 'system',
+        email: 'system@system.com',
         name: 'system',
         // password: ''
         password: 'system'

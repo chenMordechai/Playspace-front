@@ -22,7 +22,8 @@ import { useToggle } from './customHooks/useToggle'
 import { AdminGroups } from './cmps/AdminGroups'
 import { AdminPlayers } from './cmps/AdminPlayers'
 import { UserMsg } from './cmps/UserMsg'
-
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isScreenOpen, setIsScreenOpen] = useToggle(false)
@@ -68,6 +69,7 @@ function App() {
             </main>
             {/* <NavLinks /> */}
           </section>
+          <ToastContainer />
         </ScreenOpenContext.Provider>
       </Router>
     </Provider >

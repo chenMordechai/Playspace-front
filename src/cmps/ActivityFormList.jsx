@@ -1,5 +1,5 @@
 import { DateForm } from "./DateForm"
-
+import CorrectAnswerEdit from "./CorrectAnswerEdit"
 export function ActivityFormList({ gameType, activities, i, onHandleActivityChange, activityProgressType, onRemoveActivity, isEdit }) {
     return (
         <ul className="activity-list">
@@ -33,7 +33,12 @@ export function ActivityFormList({ gameType, activities, i, onHandleActivityChan
                 </>}
 
                 <label htmlFor="correctAnswer">התשובה</label>
-                <input required type="text" name="correctAnswer" id="correctAnswer" value={activity.correctAnswer} onChange={() => onHandleActivityChange(event, i, j)} />
+                <CorrectAnswerEdit 
+                    activity={activity} 
+                    i={i} 
+                    j={j} 
+                    onHandleActivityChange={onHandleActivityChange} />
+                {/* <input required type="text" name="correctAnswer" id="correctAnswer" value={activity.correctAnswer} onChange={() => onHandleActivityChange(event, i, j)} /> */}
 
                 <label htmlFor="pointsValue">ניקוד</label>
                 <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />

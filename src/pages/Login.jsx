@@ -38,7 +38,7 @@ export function Login() {
     }
     // user login
     async function handleSubmitLoginForm(ev) {
-        ev.preventDefault();
+        ev?.preventDefault();
         try {
             const user = await login({ name: credentials.name, email: credentials.email })
             if (!user.isAdmin) navigate('/user')

@@ -1,0 +1,13 @@
+.yes-no-buttons-container {
+    display: flex;
+    gap: 1rem;
+
+    button {
+        padding-inline: 1rem;
+
+        &.active {
+            border-color: black;
+            border: 2px solid;
+        }
+    }
+}

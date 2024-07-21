@@ -210,6 +210,7 @@ export function GameEdit() {
     }
 
     async function onHandleActivityChange(ev, i, j) {
+        
         let { value, name, type } = ev.target
         if (type === 'number') value = +value
         else if (type === 'checkbox') value = ev.target.checked
