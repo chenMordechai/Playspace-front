@@ -26,7 +26,6 @@ export function GameAdd() {
     const [openColorPicker, setOpenColorPicker] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isImgLoading, setIsImgLoading] = useState(false)
-    const [msgAfterGameAdd, setMsgAfterGameAdd] = useState('')
     const [admins, setAdmins] = useState(null)
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
 
@@ -348,8 +347,7 @@ export function GameAdd() {
                     </section>}
 
                 {!isLoading && <button type="submit" className="btn-sumbit">צור משחק</button>}
-                {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
-                {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
+                {isLoading && <img className="game-add-loader" src={loader} />}
 
             </form>
         </section >
