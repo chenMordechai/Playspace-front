@@ -1,8 +1,11 @@
 import { ActivityFormList } from "./ActivityFormList"
 import { DateForm } from "./DateForm"
+import { enumService } from "../services/enum.service"
 
 
 export function StagesFormList({ stages, activityProgressType, onHandleStageChange, onOpenActivities, openActivities, onHandleActivityChange, onRemoveStage, onRemoveActivity, onAddActivityToStage, isEdit }) {
+    console.log("🚀 ~ StagesFormList ~ openActivities:", openActivities)
+    
     return (
         <>
             <ul className="stage-list">
@@ -15,16 +18,18 @@ export function StagesFormList({ stages, activityProgressType, onHandleStageChan
                     <label htmlFor="name">שם השלב</label>
                     <input required type="text" name="name" id="name" value={stage.name} onChange={() => onHandleStageChange(event, i)} />
 
-                    {activityProgressType === 'onTime' && <>
+                    {activityProgressType === 'onTime' && !isEdit && <>
 
                         <DateForm obj={stage} onHandleChange={() => onHandleStageChange(event, i)} />
                     </>}
 
                     <label htmlFor="maxError">כמה טעויות מותר</label>
-                    <input type="number" min="0" max={stage.activities?.length} name="maxError" id="maxError" value={stage.maxError} onChange={() => onHandleStageChange(event, i)} />
+                    {!isEdit && <input type="number" min="0" max={stage.activities?.length} name="maxError" id="maxError" value={stage.maxError} onChange={() => onHandleStageChange(event, i)} />}
+                    {isEdit && <span>{stage.maxError}</span>}
 
                     <label htmlFor="isRequired">האם השלב חובה?</label>
-                    <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />
+                    {!isEdit && <input type="checkbox" name="isRequired" id="isRequired" value={stage.isRequired} onChange={() => onHandleStageChange(event, i)} />}
+                    {isEdit && <span>{stage.isRequired ? "כן" : "לא"}</span>}
 
                     <label htmlFor="textBefore">הודעה לפני השלב</label>
                     <textarea name="textBefore" id="textBefore" value={stage.textBefore} onChange={() => onHandleStageChange(event, i)} cols="30" rows="3"></textarea>
@@ -36,8 +41,15 @@ export function StagesFormList({ stages, activityProgressType, onHandleStageChan
                     <button type="button" onClick={onOpenActivities}>{openActivities ? 'סגירה' : 'פתיחה'}</button>
 
                     {openActivities && <>
-                        <ActivityFormList activities={stage.activities} i={i} activityProgressType={activityProgressType} onHandleActivityChange={onHandleActivityChange} onRemoveActivity={onRemoveActivity} isEdit={isEdit} />
-                        <button type="button" className="add-activity" onClick={() => onAddActivityToStage(i)}>הוסף שאלה</button>
+                        <ActivityFormList 
+                            activities={stage.activities} 
+                            i={i} 
+                            activityProgressType={activityProgressType} 
+                            onHandleActivityChange={onHandleActivityChange} 
+                            onRemoveActivity={onRemoveActivity} 
+                            isEdit={isEdit} 
+                        />
+                        {!isEdit && <button type="button" className="add-activity" onClick={() => onAddActivityToStage(i)}>הוסף שאלה</button>}
                     </>}
                 </li>)}
             </ul>

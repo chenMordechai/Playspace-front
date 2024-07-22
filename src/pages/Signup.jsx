@@ -140,7 +140,7 @@ export function Signup() {
     async function onChangeFileInput(ev) {
         try {
             setIsLoading(true)
-            const media = await utilService.uploadImgToCloudinary(ev)
+            const media = await utilService.uploadImgToCloudinary(ev, gameId)
             setCredentials(prev => ({ ...prev, media }))
         } catch (err) {
             console.log('err:', err)

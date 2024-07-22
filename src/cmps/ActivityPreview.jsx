@@ -157,7 +157,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
         }
     }
 
-    async function onSkipQwestion() {
+    async function onSkipQuestion() {
         console.log('onSkipQwestion')
         if (activity.activityType === 'open') {
             continueBtn.current.style.display = 'none'
@@ -212,13 +212,15 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
             </>}
 
+            {!activity.isRequired && <button className='skip-btn' onClick={onSkipQuestion}>דלג</button>}
+
+
             {/* activity */}
             {currActivityStepIdx === 1 && <section className='activity-step-1'>
                 <div className="text-container">
-                    <p>Question </p>
+                    <p>שאלה </p>
                     <p> {activity.text}</p>
                     <span className="wheel"><img src={wheel} /></span>
-                    {!activity.isRequired && <button onClick={onSkipQwestion}>דלג</button>}
                 </div>
                 <section className="answer-container">
                     <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />

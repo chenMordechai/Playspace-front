@@ -1,4 +1,6 @@
 import { DateForm } from "./DateForm"
+import { enumService } from "../services/enum.service"
+
 import CorrectAnswerEdit from "./CorrectAnswerEdit"
 export function ActivityFormList({ gameType, activities, i, onHandleActivityChange, activityProgressType, onRemoveActivity, isEdit }) {
     return (
@@ -12,14 +14,12 @@ export function ActivityFormList({ gameType, activities, i, onHandleActivityChan
                 <label htmlFor="text">הטקסט</label>
                 <input required type="text" name="text" id="text" value={activity.text} onChange={() => onHandleActivityChange(event, i, j)} />
 
-                {activityProgressType === 'onTime' && <>
-
+                {activityProgressType === 'onTime' && !isEdit && <>
                     <DateForm obj={activity} onHandleChange={() => onHandleActivityChange(event, i, j)} />
-
                 </>}
 
                 <label htmlFor="activityType">סוג השאלה</label>
-                {isEdit && <span>{activity.activityType}</span>}
+                {isEdit && <span>{enumService.getActivityType(activity.activityType)}</span>}
                 {!isEdit && <select required name="activityType" id="activityType" value={activity.activityType} onChange={() => onHandleActivityChange(event, i, j)} >
                     <option value="open">פתוחה</option>
                     <option value="multiple">רב ברירה</option>
@@ -41,14 +41,27 @@ export function ActivityFormList({ gameType, activities, i, onHandleActivityChan
                 {/* <input required type="text" name="correctAnswer" id="correctAnswer" value={activity.correctAnswer} onChange={() => onHandleActivityChange(event, i, j)} /> */}
 
                 <label htmlFor="pointsValue">ניקוד</label>
-                <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />
+                {!isEdit ? 
+                    <input type="number" min="0" name="pointsValue" id="pointsValue" value={activity.pointsValue} onChange={() => onHandleActivityChange(event, i, j)} />
+                    :
+                    <span>{activity.pointsValue}</span>
+                }
 
                 <label htmlFor="isRequired">האם השאלה חובה?</label>
-                <input type="checkbox" name="isRequired" id="isRequired" value={activity.isRequired} onChange={() => onHandleActivityChange(event, i, j)} />
+                
+                {!isEdit ? 
+                    <input type="checkbox" name="isRequired" id="isRequired" value={activity.isRequired} onChange={() => onHandleActivityChange(event, i, j)} />
+                    :
+                    <span>{activity.isRequired ? "כן" : "לא"}</span>
+                }
 
                 {gameType === 'activities' && <>
                     <label htmlFor="maxError">כמה טעויות מותר</label>
-                    <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() => onHandleActivityChange(event, i, j)} />
+                    {!isEdit ? 
+                        <input type="number" min="0" max="10" name="maxError" id="maxError" value={activity.maxError} onChange={() => onHandleActivityChange(event, i, j)} />
+                        :
+                        <span>{activity.maxError}</span>
+                    }
                 </>}
                 <label htmlFor="textBefore">הודעה לפני השאלה</label>
                 <textarea name="textBefore" id="textBefore" value={activity.textBefore} onChange={() => onHandleActivityChange(event, i, j)} cols="30" rows="3"></textarea>
@@ -73,11 +86,17 @@ export function ActivityFormList({ gameType, activities, i, onHandleActivityChan
                 </>}
 
                 <label htmlFor="lifeSavers">גלגלי הצלה</label>
-                <select multiple name="lifeSavers" id="lifeSavers" value={activities.lifeSavers} onChange={() => onHandleActivityChange(event, i, j)} >
-                    {activity.activityType === 'multiple' && <option value="fifty">50/50</option>}
-                    {/* <option value="moreTime">תוספת זמן</option> */}
-                    {activity.isRequired && <option value="skip">דלג</option>}
-                </select>
+                {
+                    !isEdit ? 
+                    <select multiple name="lifeSavers" id="lifeSavers" value={activities.lifeSavers} onChange={() => onHandleActivityChange(event, i, j)} >
+                        {activity.activityType === 'multiple' && <option value="fifty">50/50</option>}
+                        {/* <option value="moreTime">תוספת זמן</option> */}
+                        {activity.isRequired && <option value="skip">דלג</option>}
+                    </select>
+                    :
+                    <span>{JSON.stringify(activities.lifeSavers)}</span>
+                }
+
 
 
 

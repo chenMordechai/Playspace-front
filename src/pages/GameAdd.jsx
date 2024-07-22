@@ -14,6 +14,8 @@ import { ActivityFormList } from '../cmps/ActivityFormList'
 import { StagesFormList } from '../cmps/StagesFormList.jsx'
 import loader from '../assets/img/loader.gif'
 import { toastService } from '../services/toast.service.js'
+import GroupListEdit from '../cmps/GroupListEdit.jsx'
+import GameGroupsEdit from '../cmps/GroupListEdit.jsx'
 
 
 // game/add
@@ -64,8 +66,12 @@ export function GameAdd() {
         })
     }, [game.themeColors])
 
+    
+
     function onHandleChange(ev) {
+        
         let { name, value, type } = ev.target
+        console.log("🚀 ~ onHandleChange ~ name, value, type:", name, value, type)
         if (type === 'number') value = +value
         if (type === 'checkbox') value = ev.target.checked
         if (name === 'admins') value = Array.from(ev.target.selectedOptions, option => (option.value))
@@ -84,6 +90,29 @@ export function GameAdd() {
             setGame(prevGame => ({ ...prevGame, [name]: value }))
         }
     }
+
+    const onAddGroup = () => {
+        setGame(prevGame => {
+            const hasGroups = (prevGame.groups?.length);
+            return { 
+                ...prevGame, 
+                groups: (hasGroups) ? [...prevGame.groups, gameService.getEmptyGroup()] : [gameService.getEmptyGroup()] 
+            };
+        });
+    };
+
+    const onRemoveGroup = () => {
+        if (game.groups.length > 0) {
+            setGame(prevGame => {
+                const newGroups = [...prevGame.groups];
+                newGroups.splice(-1, 1); // Remove the last element
+                return { 
+                    ...prevGame, 
+                    groups: newGroups 
+                };
+            });
+        }
+    };
 
     async function onChangeImg(ev) {
         try {
@@ -304,18 +333,15 @@ export function GameAdd() {
                 <DateForm obj={game} onHandleChange={onHandleChange} />
                 <Colors onChangeImg={onChangeImg} gameLogo={game.icon} gameColors={game.themeColors} iconColors={iconColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isImgLoading={isImgLoading} />
 
-                <label htmlFor="groups">מספר הקבוצות</label>
-                <input type="number" min="0" name="groups" id="groups" value={game.groups?.length || 0} onChange={onHandleChange} />
+                {/* <label htmlFor="groups">מספר הקבוצות</label>
+                <input type="number" min="0" name="groups" id="groups" value={game.groups?.length || 0} onChange={onHandleChange} /> */}
 
-                {game.groups && <>
-                    <label >שמות הקבוצות</label>
-                    <ul className="groups">
-                        {game.groups.map((group, i) => <li key={group.id}>
-                            <label htmlFor="groupName">קבוצה  {i + 1}</label>
-                            <input type="text" name="teamName" id="groupName" value={group.name} onChange={() => onHandleGroupNameChange(event, i)} />
-                        </li>)}
-                    </ul>
-                </>}
+                <GameGroupsEdit
+                    groups={game.groups} 
+                    onHandleGroupNameChange={onHandleGroupNameChange} 
+                    onAddGroup={onAddGroup}
+                    onRemoveGroup={onRemoveGroup}
+                />
 
                 <label htmlFor="textBefore">הודעה לפני המשחק</label>
                 <textarea name="textBefore" id="textBefore" value={game.textBefore} onChange={onHandleChange} cols="30" rows="3"></textarea>

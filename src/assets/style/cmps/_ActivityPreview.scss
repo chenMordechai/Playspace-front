@@ -26,6 +26,20 @@
         }
     }
 
+    .skip-btn {
+        background: transparent;
+        outline: 0;
+        border: 0;
+        margin-block-end: 1rem;
+        cursor: pointer;
+        text-shadow: 0 0 1px transparent;
+
+        // &:hover {
+        //     color: var(--primary);
+        //     text-shadow: 0 0 7px var(--primary);
+        // }
+    }
+
     // button {
     //     @include btn;
     // }

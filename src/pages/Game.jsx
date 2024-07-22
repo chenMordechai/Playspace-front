@@ -132,7 +132,6 @@ export function Game() {
 
 
     async function getUserFromBack() {
-        console.log('getUserFromBack')
         try {
             await getUser()
             await getPlayerByCookie(gameId) // player

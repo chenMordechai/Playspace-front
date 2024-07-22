@@ -8,12 +8,15 @@ import { gameService } from '../services/game.service.js'
 import { utilService } from '../services/util.service.js'
 import { getAdmins } from '../store/actions/auth.action.js'
 import { addGame, getGameById } from '../store/actions/game.action.js'
+import { toastService } from '../services/toast.service.js'
+import { enumService } from '../services/enum.service.js'
 
 import { Colors } from '../cmps/Colors'
 import { DateForm } from '../cmps/DateForm'
 import { ActivityFormList } from '../cmps/ActivityFormList'
 import { StagesFormList } from '../cmps/StagesFormList.jsx'
 import loader from '../assets/img/loader.gif'
+
 
 // game/add
 export function GameEdit() {
@@ -25,7 +28,6 @@ export function GameEdit() {
     const [openColorPicker, setOpenColorPicker] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isImgLoading, setIsImgLoading] = useState(false)
-    const [msgAfterGameAdd, setMsgAfterGameAdd] = useState('')
     const [admins, setAdmins] = useState(null)
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
 
@@ -251,10 +253,10 @@ export function GameEdit() {
         try {
             setIsLoading(true)
             const newGame = await addGame(gameToSend)
-            setMsgAfterGameAdd('המשחק נערך בהצלחה')
+            toastService.toast.success('המשחק נערך בהצלחה')
             navigate('/admin')
         } catch (err) {
-            setMsgAfterGameAdd('שגיאה')
+            toastService.toast.error('שגיאה')
             console.log('err:', err)
         } finally {
             setIsLoading(false)
@@ -272,7 +274,7 @@ export function GameEdit() {
         <section className="game-add rtl">
             <h2>עריכת משחק</h2>
 
-            <div className="clr1">Primary color</div>
+            <div className="clr1">הצבע המרכזי של המשחק</div>
 
             <form onSubmit={onSubmitForm} className="create-game">
                 <label htmlFor="name">שם המשחק</label>
@@ -285,18 +287,21 @@ export function GameEdit() {
                     </option>)}
                 </select>
 
-                <DateForm obj={game} onHandleChange={onHandleChange} />
+                {/*<DateForm obj={game} onHandleChange={onHandleChange} />*/}
                 <Colors onChangeImg={onChangeImg} gameLogo={game.icon} gameColors={game.themeColors} iconColors={iconColors} onHandleChangeColor={onHandleChangeColor} onHandleColorPick={onHandleColorPick} openColorPicker={openColorPicker} setOpenColorPicker={setOpenColorPicker} isImgLoading={isImgLoading} />
 
                 <label htmlFor="groups">מספר הקבוצות</label>
-                <span>{game.groups?.length}</span>
+                <span>{game.groups?.length || 'אין קבוצות'}</span>
 
                 {game.groups && <>
                     <label >שמות הקבוצות</label>
                     <ul className="groups">
                         {game.groups.map((group, i) => <li key={i}>
                             <label htmlFor="groupName">קבוצה  {i + 1}</label>
-                            <input type="text" name="teamName" id="groupName" value={group.name} onChange={() => onHandleGroupNameChange(event, i)} />
+                            <p>
+                                {group.name}
+                            </p>
+                            {/* <input type="text" name="teamName" id="groupName" value={group.name} onChange={() => onHandleGroupNameChange(event, i)} /> */}
                         </li>)}
                     </ul>
                 </>}
@@ -308,7 +313,7 @@ export function GameEdit() {
                 <textarea name="textAfter" id="textAfter" value={game.textAfter} onChange={onHandleChange} cols="30" rows="3"></textarea>
 
                 <label htmlFor="activityProgressType">אופי המשחק</label>
-                <span>{game.activityProgressType}</span>
+                <span>{enumService.getActivityProgressType(game.activityProgressType)}</span>
                 {/* <select name="activityProgressType" id="activityProgressType" value={game.activityProgressType} onChange={onHandleChange} >
                     <option value="open">פתוח</option>
                     <option value="onTime">לפי זמנים</option>
@@ -321,7 +326,14 @@ export function GameEdit() {
 
                 {game.gameType === "stages" &&
                     <section className="stages-container">
-                        <StagesFormList stages={game.stages} activityProgressType={game.activityProgressType} onHandleStageChange={onHandleStageChange} onOpenActivities={onOpenActivities} openActivities={openActivities} onHandleActivityChange={onHandleActivityChange} isEdit={true} />
+                        <StagesFormList 
+                            stages={game.stages} 
+                            activityProgressType={game.activityProgressType} 
+                            onHandleStageChange={onHandleStageChange} 
+                            onOpenActivities={onOpenActivities} 
+                            openActivities={openActivities} 
+                            onHandleActivityChange={onHandleActivityChange} 
+                            isEdit={true} />
                     </section>}
 
                 {game.gameType === "activities" &&
@@ -329,9 +341,8 @@ export function GameEdit() {
                         {game.activities && <ActivityFormList activities={game.activities} onHandleActivityChange={onHandleActivityChange} activityProgressType={game.activityProgressType} isEdit={true} />}
                     </section>}
 
-                {!isLoading && <button type="submit" className="btn-sumbit">Edit Game</button>}
-                {isLoading && !msgAfterGameAdd && <img className="game-add-loader" src={loader} />}
-                {!isLoading && msgAfterGameAdd && <span className="msg-after-game-add">{msgAfterGameAdd}</span>}
+                {!isLoading && <button type="submit" className="btn-sumbit">עדכן משחק</button>}
+                {isLoading  && <img className="game-add-loader" src={loader} />}
 
             </form>
         </section >
