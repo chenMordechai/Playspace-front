@@ -57,7 +57,6 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
         // else if (activity.activityType === 'typing') {
         //     answer = inputTypingValues.join('')
         // }
-        console.log('answer:', answer)
 
         const answerData = {
             answer,
@@ -70,8 +69,6 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
         }
         // showSuccessMsg({ txt: `יאללה קדימה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
         var res = await checkGameAnswer(answerData)
-        console.log('res:', res)
-        console.log('activity:', activity)
         if (res.lastAnswerState) {
             showSuccessMsg({ txt: `+תשובה נכונה ${res.lastAnswerScore}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
 

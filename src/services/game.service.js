@@ -147,10 +147,11 @@ async function checkAnswer(answer) {
 }
 
 async function adminCheckAnswer(player, answer) {
-    const newPlayer = httpService.post(`Player/AdminAnswerTest`, {
-        player,
+    const payload = {
+        player: {...player, lastAnswerState: false, lastAnswerSkipped: false},
         answer
-    })
+    }
+    const newPlayer = httpService.post(`Player/AdminAnswerTest`, payload)
     return newPlayer
 }
 

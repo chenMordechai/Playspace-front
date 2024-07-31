@@ -83,7 +83,7 @@ export async function checkGameAnswer(answerData, currectAnswer) {
         let player
         if (loggedinUser?.isAdmin) {
             console.log('user is admin')
-            player = await gameService.adminCheckAnswer(player, answerData)
+            player = await gameService.adminCheckAnswer(loggedinPlayer, answerData)
         } else {
             player = await gameService.checkAnswer(answerData)
         }
