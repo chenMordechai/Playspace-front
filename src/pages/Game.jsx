@@ -261,7 +261,11 @@ export function Game() {
             <div className="layer-1">
                 <div className="game-header">
                     <button onClick={onToggleOpenGameOptionModal} className="points"><img src={points} /></button>
-                    <button className="game-name">{game.name}</button>
+
+                    <button className="game-name">
+                        {loggedinUser.isAdmin && <span style={{ color: 'red' }}>Demo</span>}
+                        {game.name}
+                    </button>
                     <span onClick={getBackToStep0} className="arrow"> <img src={arrow} /></span>
                     {openGameOptionModal && <GameOptionModal />}
 

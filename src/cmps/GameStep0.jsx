@@ -10,6 +10,7 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats
     return (
         <section className="game-step-0">
             <section className="game-info">
+
                 <h4>ברוך הבא למשחק</h4>
                 <h4>{game.name}</h4>
                 {/* {game.gameStartTimestamp && game.gameEndTimestamp && <> */}
@@ -82,6 +83,6 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats
             {/* } */}
 
 
-        </section>
+        </section >
     )
 }
