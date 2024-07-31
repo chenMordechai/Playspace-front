@@ -104,6 +104,8 @@ function getPlayerLocal(gameId, userId, userName) {
         }
     }
 }
+
+
 async function getAdmins() {
     return await httpService.get('Game/Admins')
 }

@@ -76,22 +76,31 @@ export async function deleteGame(gameId) {
 }
 
 export async function checkGameAnswer(answerData, currectAnswer) {
-    // const { loggedinUser } = store.getState().authModule
-    // const { loggedinPlayer } = store.getState().authModule
-    // if (loggedinUser?.isAdmin) {
-    //     console.log('user is admin')
-    //     const player = await gameService.checkAnswerLocal(answerData, currectAnswer, loggedinPlayer)
-    //     store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
-    //     return player
-    // }
-    try {
-        const player = await gameService.checkAnswer(answerData)
-        // store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
-        return player
-    } catch (err) {
-        console.log('user action -> Cannot get player', err)
-        throw err
+    const { loggedinUser } = store.getState().authModule
+    const { loggedinPlayer } = store.getState().authModule
+    if (loggedinUser?.isAdmin) {
+        // const player = await gameService.checkAnswerLocal(answerData, currectAnswer, loggedinPlayer)
+        try {
+            const player = await gameService.adminCheckAnswer(player, answerData)
+            store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+            return player
+        }
+        catch(ex) {
+            console.log('user action -> Cannot get player', err)
+            throw err
+        }
     }
+    else {
+        try {
+            const player = await gameService.checkAnswer(answerData)
+            store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+            return player
+        } catch (err) {
+            console.log('user action -> Cannot get player', err)
+            throw err
+        }
+    }
+
 }
 
 export async function usingLifeSaver(answerData) {
