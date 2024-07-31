@@ -77,29 +77,24 @@ export async function deleteGame(gameId) {
 
 export async function checkGameAnswer(answerData, currectAnswer) {
     const { loggedinUser } = store.getState().authModule
+    console.log('loggedinUser:', loggedinUser)
     const { loggedinPlayer } = store.getState().authModule
-    if (loggedinUser?.isAdmin) {
-        // const player = await gameService.checkAnswerLocal(answerData, currectAnswer, loggedinPlayer)
-        try {
-            const player = await gameService.adminCheckAnswer(player, answerData)
-            store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
-            return player
+    try {
+        let player
+        if (loggedinUser?.isAdmin) {
+            console.log('user is admin')
+            player = await gameService.adminCheckAnswer(player, answerData)
+        } else {
+            player = await gameService.checkAnswer(answerData)
         }
-        catch(ex) {
-            console.log('user action -> Cannot get player', err)
-            throw err
-        }
+        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+        return player
     }
-    else {
-        try {
-            const player = await gameService.checkAnswer(answerData)
-            store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
-            return player
-        } catch (err) {
-            console.log('user action -> Cannot get player', err)
-            throw err
-        }
+    catch (ex) {
+        console.log('user action -> Cannot get player', err)
+        throw err
     }
+
 
 }
 
