@@ -145,7 +145,6 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
     }
 
     async function handleLifeSaver(lifeSaver) {
-        console.log('handleLifeSaver')
         if (activity.activityType === 'open') {
             continueBtn.current.style.display = 'none'
         }
@@ -168,7 +167,7 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
                 activityId: activity.id,
                 gameId
             }
-            await gameService.usingLifeSaver(data)
+            await usingLifeSaver(data)
 
         } else if (lifeSaver === 'skip') {
             const data = {
@@ -176,7 +175,7 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
                 activityId: activity.id,
                 gameId
             }
-            await gameService.usingLifeSaver(data)
+            await usingLifeSaver(data)
             showSuccessMsg({ txt: `דילגת על השאלה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
         }
     }

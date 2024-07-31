@@ -22,6 +22,7 @@ export const gameService = {
     checkAnswer,
     adminCheckAnswer,
     usingLifeSaver,
+    adminUseLifeSaver,
     getGameGroups,
     getGamePlayers,
     updateGroup,
@@ -170,6 +171,14 @@ async function checkAnswerLocal(answerData, currectAnswer, loggedinPlayer) {
 
 async function usingLifeSaver(data) {
     return httpService.post(`Player/LifeSaver`, data)
+}
+
+async function adminUseLifeSaver(player, lifeSaver) {
+    const payload = {
+        player: {...player, lastAnswerState: false, lastAnswerSkipped: false},
+        lifeSaver
+    }
+    return httpService.post(`Player/LifeSaverTest`, payload)
 }
 
 async function getGameScores() {
