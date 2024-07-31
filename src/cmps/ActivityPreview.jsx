@@ -11,7 +11,8 @@ import { checkGameAnswer, usingLifeSaver } from '../store/actions/game.action.js
 import wheel from '../assets/img/wheel.png'
 
 
-export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
+export function ActivityPreview({ setIsClickOnContinue, activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
+    setIsClickOnContinue(false)
     console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
@@ -58,13 +59,17 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             isStageSkipped: false
         }
         // showSuccessMsg({ txt: `יאללה קדימה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
-        var res = await checkGameAnswer(answerData)
+        var res = await checkGameAnswer(answerData, activity.correctAnswer)
         console.log('res:', res)
-        console.log('activity:', activity)
+        // console.log('activity:', activity)
         if (res.lastAnswerState) {
             showSuccessMsg({ txt: `+תשובה נכונה ${res.lastAnswerScore}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
 
         } else {
+            // if (isUserAdmin) {
+            //     showErrorMsg({ txt: `תשובה לא נכונה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+            //     return
+            // }
             if (res.submittedActivitiesIds.includes(activity.id)) {
                 console.log('includes')
                 showErrorMsg({ txt: `תשובה לא נכונה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
@@ -93,8 +98,12 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     function onMoveToNextActivity() {
+        console.log('onMoveToNextActivity:', onMoveToNextActivity)
         moveToNextActivity()
         setIsAnswerCorrect(false)
+        // updatePlayerInStore(answerData, activity.correctAnswer)
+        setIsClickOnContinue(true)
+
     }
 
     function handlaChange(ev, idx) {

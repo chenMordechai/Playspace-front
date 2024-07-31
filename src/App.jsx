@@ -24,6 +24,7 @@ import { AdminPlayers } from './cmps/AdminPlayers'
 import { UserMsg } from './cmps/UserMsg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AdminGame } from './pages/AdminGame'
 
 function App() {
   const [isScreenOpen, setIsScreenOpen] = useToggle(false)
@@ -55,6 +56,7 @@ function App() {
                   <Route path="/game/edit/:gameId?" element={<GameEdit />} />
                   <Route path="/game/:gameId" element={<Game />} />
                   <Route path="/admin" element={<Admin />} />
+                  {/* <Route path="/admin/game/:gameId" element={<AdminGame />} /> */}
 
                   <Route path="/game/:gameId/scores/edit" element={<AdminPlayersScores />}   >
                     <Route path="/game/:gameId/scores/edit/groups" element={<AdminGroups />} />

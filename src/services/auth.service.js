@@ -30,7 +30,8 @@ export const authService = {
     getUserData,
     getPlayer,
     getPlayerByCookie,
-    isUserExist
+    isUserExist,
+    getPlayerLocal
 }
 
 // work
@@ -78,6 +79,33 @@ async function getPlayerByCookie() {
     return httpService.get(`Player/GetPlayerByCookie`)
 }
 
+function getPlayerLocal(gameId, userId, userName) {
+    return {
+        "id": userId,
+        "name": userName,
+        "gameId": gameId,
+        "groupId": "string",
+        "image": {
+            "type": "string",
+            "url": "string"
+        },
+        "email": "string",
+        "submittedActivitiesIds": [
+            "string"
+        ],
+        "score": 0,
+        "activityErrors": [],
+        "stageErrors": [],
+        "lifeSavers": [],
+        "lastAnswerState": null,
+        "lastAnswerScore": 0,
+        "lastAnswerSkipped": null,
+        "position": {
+            "position": 0,
+            "totalPlayers": 0
+        }
+    }
+}
 async function getAdmins() {
     return await httpService.get('Game/Admins')
 }
