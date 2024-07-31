@@ -147,7 +147,7 @@ async function checkAnswer(answer) {
 }
 
 async function adminCheckAnswer(player, answer) {
-    const newPlayer = httpService.post(`Player/AdminAnswer`, {
+    const newPlayer = httpService.post(`Player/AdminAnswerTest`, {
         player,
         answer
     })
