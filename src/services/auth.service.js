@@ -91,8 +91,9 @@ function getPlayerLocal(gameId, userId, userName) {
         },
         "email": "string",
         "submittedActivitiesIds": [
-            "string"
         ],
+        "submittedStageIds": [],
+
         "score": 0,
         "activityErrors": [],
         "stageErrors": [],
@@ -106,6 +107,8 @@ function getPlayerLocal(gameId, userId, userName) {
         }
     }
 }
+
+
 async function getAdmins() {
     return await httpService.get('Game/Admins')
 }

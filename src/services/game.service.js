@@ -20,6 +20,7 @@ export const gameService = {
     getDefaultFilter,
     getDefaultSort,
     checkAnswer,
+    adminCheckAnswer,
     usingLifeSaver,
     getGameGroups,
     getGamePlayers,
@@ -142,6 +143,14 @@ async function save(game) {
 
 async function checkAnswer(answer) {
     const newPlayer = httpService.post(`Player/Answer`, answer)
+    return newPlayer
+}
+
+async function adminCheckAnswer(player, answer) {
+    const newPlayer = httpService.post(`Player/AdminAnswer`, {
+        player,
+        answer
+    })
     return newPlayer
 }
 
