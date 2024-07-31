@@ -12,7 +12,6 @@ import wheel from '../assets/img/wheel.png'
 
 
 export function ActivityPreview({ activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
-    console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
 
     const [inputOpenValue, setInputOpenValue] = useState('')
@@ -21,6 +20,16 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
     const firstRender = useRef(true)
     const continueBtn = useRef(true)
+    const elapsedTimeRef = useRef(0);
+
+    useEffect(() => {
+        elapsedTimeRef.current = 0
+        const timer = setInterval(() => {
+          elapsedTimeRef.current += 100;
+        }, 100);
+    
+        return () => clearInterval(timer); // Clean up the interval on component unmount
+      }, []);
 
     useEffect(() => {
         if (activity?.activityType === 'typing') {
@@ -53,14 +62,12 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
             activityId: activity.id,
             gameId,
             stageId,
-            timeTaken: 0,
+            timeTaken: elapsedTimeRef.current,
             isActivitySkipped: false,
             isStageSkipped: false
         }
         // showSuccessMsg({ txt: `יאללה קדימה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
         var res = await checkGameAnswer(answerData)
-        console.log('res:', res)
-        console.log('activity:', activity)
         if (res.lastAnswerState) {
             showSuccessMsg({ txt: `+תשובה נכונה ${res.lastAnswerScore}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
 
@@ -90,6 +97,7 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
 
             }
         }
+        elapsedTimeRef.current = 0
     }
 
     function onMoveToNextActivity() {
@@ -158,7 +166,6 @@ export function ActivityPreview({ activityProgressType, activity, moveToNextActi
     }
 
     async function onSkipQuestion() {
-        console.log('onSkipQwestion')
         if (activity.activityType === 'open') {
             continueBtn.current.style.display = 'none'
         }

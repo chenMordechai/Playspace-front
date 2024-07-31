@@ -63,8 +63,16 @@ export function Admin() {
     // get demo data
     async function init() {
         try {
-            const games = await getGames(true, filterBy, sortBy, currPage)
-            if (!games.length) return;
+            await loadAndSetGames();
+            // setGames(prev => [...prev, ...games]);
+        } catch (err) {
+            console.log('err:', err)
+        }
+    }
+
+    async function loadAndSetGames(isAdmin = true, filter = filterBy, sort = sortBy, page = currPage) {
+        try {
+            const games = await getGames(isAdmin, filter, sort, page)
             setGames(games)
             // setGames(prev => [...prev, ...games]);
         } catch (err) {
@@ -84,13 +92,19 @@ export function Admin() {
 
     function onSetFilterBy(ev) {
         let { name, value } = ev.target
-        setFilterBy(prev => ({ ...prev, [name]: value }))
+        setFilterBy(prev => {
+            loadAndSetGames(true, { ...prev, [name]: value }, sortBy, currPage);
+            return ({ ...prev, [name]: value })
+        })
     }
 
     function onSetSortBy(ev) {
         let { name, value, type, checked } = ev.target
         if (type === 'checkbox') value = (checked) ? -1 : 1
-        setSortBy(prev => ({ ...prev, [name]: value }))
+        setSortBy(prev => {
+            loadAndSetGames(true, filterBy, { ...prev, [name]: value }, currPage);
+            return ({ ...prev, [name]: value })
+        })
     }
 
     function onScroll() {
@@ -99,9 +113,21 @@ export function Admin() {
             if (Math.floor(scrollTop + clientHeight) === scrollHeight || Math.ceil(scrollTop + clientHeight) === scrollHeight) {
                 // This will be triggered after hitting the last element.
                 // API call should be made here while implementing pagination.
-                setCurrPage(prev => prev + 1)
+                setCurrPage(prev => {
+                    loadAndSetGames(true, filterBy, sortBy, prev + 1);
+                    return prev + 1
+                })
             }
         }
+    }
+
+    function onMoveToPage(diff) {
+
+        setCurrPage(prev => {
+            if ((prev + diff) <= 0) return prev; 
+            loadAndSetGames(true, filterBy, sortBy, prev + diff);
+            return prev + diff
+        })
     }
 
 
@@ -113,16 +139,30 @@ export function Admin() {
             </Link>
 
             <h2>משחקים</h2>
-            <GameFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy} sortBy={sortBy} onSetSortBy={onSetSortBy} />
+            <GameFilter 
+            filterBy={filterBy} 
+            onSetFilterBy={onSetFilterBy} 
+            sortBy={sortBy} 
+            onSetSortBy={onSetSortBy}
+            onMoveToPage={onMoveToPage} />
 
-            {games && <section className="games-container">
-                <ul
-                    // onScroll={onScroll}
-                    ref={listInnerRef}>
-                    {games.map((game, i) =>
-                        <AdminGamePreview key={i} img={gameImgDefault} name={game.name} id={game.id} onDeleteGame={onDeleteGame} />)}
+        <section className="games-container">
+            {games && games.length > 0 ? (
+                <ul ref={listInnerRef}>
+                    {games.map((game, i) => (
+                        <AdminGamePreview
+                            key={i}
+                            img={gameImgDefault}
+                            name={game.name}
+                            id={game.id}
+                            onDeleteGame={onDeleteGame}
+                        />
+                    ))}
                 </ul>
-            </section>}
+            ) : (
+                <p>No games found...</p>
+            )}
+        </section>
         </section>
     )
 }
