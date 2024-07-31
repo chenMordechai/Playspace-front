@@ -114,7 +114,7 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
 
     function onMoveToNextActivity() {
         // console.log('onMoveToNextActivity:')
-        // moveToNextActivity()
+        moveToNextActivity()
         // setIsAnswerCorrect(false)
         // updatePlayerInStore(answerData, activity.correctAnswer)
         setIsClickOnContinue(true)

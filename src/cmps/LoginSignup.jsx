@@ -29,7 +29,6 @@ export function LoginSignup({ credentials, handleChange, onBtnClick, text, useEf
             return errors
         },
         onSubmit: (values) => {
-            console.log('values:', values)
             onBtnClick()
         },
     })

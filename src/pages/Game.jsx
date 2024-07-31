@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect, useContext, useRef } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 import { getGameById } from "../store/actions/game.action.js"
@@ -58,6 +58,7 @@ export function Game() {
     const navigate = useNavigate()
 
     const { gameId } = useParams()
+    const isCheckGameStep = useRef(false)
 
     useEffect(() => {
         if (loggedinPlayer) {
@@ -68,20 +69,24 @@ export function Game() {
     }, []) // loggedinPlayer
 
     useEffect(() => {
-        if (isClickOnContinue) return
-        console.log('useEffect,loggedinPlayer:', loggedinPlayer)
-        if (!isBackToStep0 && !loggedinPlayer || !game) return
+        // if (isClickOnContinue) return
+        console.log('loggedinPlayer:', loggedinPlayer)
+        console.log('game:', game)
+        console.log('isCheckGameStep.current:', isCheckGameStep.current)
+        if (!isBackToStep0 && !loggedinPlayer || !game || isCheckGameStep.current) return
+        isCheckGameStep.current = true
+        console.log('hi')
         if (!loggedinPlayer.submittedActivitiesIds.length) {
             // game start now
             setCurrGameStepIdx(0)
         } else if (loggedinPlayer.submittedActivitiesIds.length === game.activities.length) {
             // game end
-            console.log('hihi')
             setCurrGameStepIdx(2)
         } else {
             // console.log('else')
             setCurrGameStepIdx(1)
-            setCurrActivityStepIdx(0)
+            // console.log('setCurrActivityStepIdx = 0')
+            setCurrActivityStepIdx(utilService.loadFromStorage('currActivityStepIdx') || 0)
 
             if (game.gameType === 'activities') {
                 // game alredy start
@@ -99,6 +104,39 @@ export function Game() {
 
     }, [loggedinPlayer, game])
     // }, [])
+
+    function checkGameStep() {
+        console.log('checkGameStep:')
+        // if (isClickOnContinue) return
+        console.log('loggedinPlayer', loggedinPlayer)
+        console.log('game:', game)
+        // if (!isBackToStep0 && !loggedinPlayer || !game) return
+        if (!loggedinPlayer.submittedActivitiesIds.length) {
+            // game start now
+            setCurrGameStepIdx(0)
+        } else if (loggedinPlayer.submittedActivitiesIds.length === game.activities.length) {
+            // game end
+            setCurrGameStepIdx(2)
+        } else {
+            // console.log('else')
+            setCurrGameStepIdx(1)
+            // console.log('setCurrActivityStepIdx = 0')
+            setCurrActivityStepIdx(utilService.loadFromStorage('currActivityStepIdx') || 0)
+
+            if (game.gameType === 'activities') {
+                // game alredy start
+                // const activities
+                setCurrActivityIdx(loggedinPlayer.submittedActivitiesIds.length)
+
+            } else {
+                // ! ? 
+                setCurrStageIdx()
+                setCurrActivityIdx()
+
+            }
+
+        }
+    }
 
     useEffect(() => {
         console.log('game:', game)
@@ -140,6 +178,7 @@ export function Game() {
     async function getUserFromBack() {
         try {
             const user = await getUser()
+            console.log('user:', user)
             if (user.isAdmin) {
                 console.log('user is admin')
                 getPlayerLocal(gameId, user.id, user.name)
@@ -170,6 +209,7 @@ export function Game() {
             // const game = await demoDataService.getGame4()
 
             setGame(game)
+            // checkGameStep()
 
         } catch (err) {
             console.log('err:', err)
@@ -198,7 +238,7 @@ export function Game() {
 
     function onMoveToNextActivity() {
         // setIsClickOnContinue(false)
-        if (!loggedinUser.isAdmin) {
+        if (!loggedinUser?.isAdmin) {
             setIsGameScoreOpen(true)
         }
         setCurrActivityIdx(prev => prev + 1)
@@ -270,7 +310,7 @@ export function Game() {
                     <button onClick={onToggleOpenGameOptionModal} className="points"><img src={points} /></button>
 
                     <button className="game-name">
-                        {loggedinUser.isAdmin && <span style={{ color: 'red' }}>Demo</span>}
+                        {loggedinUser?.isAdmin && <span style={{ color: 'red' }}>Demo</span>}
                         {game.name}
                     </button>
                     <span onClick={getBackToStep0} className="arrow"> <img src={arrow} /></span>
