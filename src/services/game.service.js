@@ -1,6 +1,7 @@
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 import { demoDataService } from './demoData.service.js'
+import { authService } from './auth.service.js'
 
 const BASE_URL = 'Game/'
 
@@ -24,7 +25,8 @@ export const gameService = {
     getGamePlayers,
     updateGroup,
     updatePlayerScore,
-    getGameScores
+    getGameScores,
+    checkAnswerLocal
     // getGames2
 }
 
@@ -141,31 +143,19 @@ async function save(game) {
 async function checkAnswer(answer) {
     const newPlayer = httpService.post(`Player/Answer`, answer)
     return newPlayer
+}
 
-    // const newPlayer = {
-    //     "id": "361d759c-217d-4400-cf87-08dc94e76129",
-    //     "name": "33",
-    //     "gameId": "ee659c2a-6a6a-4186-24a0-08dc94f292d0",
-    //     "groupId": "3HLEya",
-    //     "image": null,
-    //     "email": null,
-    //     "submittedActivitiesIds": [
-    //         "a35d60a4-ee4b-4075-e6bb-08dc94f292da",
-    //         // "2c5e971a-b465-4d19-e6bc-08dc94f292da"
-    //     ],
-    //     "score": 0,
-    //     "activityErrors": [
-    //         {
-    //             "activityId": "123",
-    //             "errorCount": 1
-    //         }
-    //     ],
-    //     "stageErrors": [],
-    //     "lifeSavers": [],
-    //     "lastAnswerState": true
-    // }
-    // return Promise.resolve(newPlayer)
-
+async function checkAnswerLocal(answerData, currectAnswer, loggedinPlayer) {
+    console.log('answerData:', answerData)
+    console.log('currectAnswer:', currectAnswer)
+    console.log('loggedinPlayer:', loggedinPlayer)
+    const newPlayer = { ...loggedinPlayer }
+    if (answerData.answer === currectAnswer) {
+        newPlayer.lastAnswerState = true
+    } else {
+        newPlayer.lastAnswerState = false
+    }
+    return Promise.resolve(newPlayer)
 }
 
 async function usingLifeSaver(data) {

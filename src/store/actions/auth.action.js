@@ -8,6 +8,7 @@ import { store } from '../store.js'
 export async function getUser() {
     try {
         const user = await authService.getUser()
+        console.log('user:', user)
         store.dispatch({ type: SET_LOGGEDIN_USER, user })
         return user
     } catch (err) {
@@ -88,6 +89,18 @@ export async function getPlayer(gameId) {
 export async function getPlayerByCookie(gameId) {
     try {
         const player = await authService.getPlayer(gameId)
+        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+        return player
+    } catch (err) {
+        console.log('user action -> Cannot get player', err)
+        throw err
+    }
+}
+
+export function getPlayerLocal(gameId, userId, userName) {
+    try {
+        const player = authService.getPlayerLocal(gameId, userId, userName)
+        console.log('player:', player)
         store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
         return player
     } catch (err) {

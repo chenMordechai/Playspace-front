@@ -20,12 +20,12 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
-import { getPlayer, getPlayerByCookie, getUser } from "../store/actions/auth.action.js"
+import { getPlayer, getPlayerByCookie, getPlayerLocal, getUser } from "../store/actions/auth.action.js"
 import { AnswerModal } from "../cmps/AnswerModal.jsx"
 
-// game/:gameId
+// admin/game/:gameId
 
-export function Game() {
+export function AdminGame() {
     const [game, setGame] = useState(null)
     const [currGameStepIdx, setCurrGameStepIdx] = useState(0) // 0:before ,1:stages/activities , 2:end
     const [currStageStepIdx, setCurrStageStepIdx] = useState(0)
@@ -54,7 +54,6 @@ export function Game() {
     useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal])
     useEffectCloseModal(isScreenOpen, [onToggleOpenGameOptionModal])
 
-    const [isClickOnContinue, setIsClickOnContinue] = useState(false)
     const navigate = useNavigate()
 
     const { gameId } = useParams()
@@ -63,41 +62,39 @@ export function Game() {
         if (loggedinPlayer) {
             init()
         } else {
-            getUserFromBack()
+            getUserFromLocal()
         }
     }, []) // loggedinPlayer
 
     useEffect(() => {
-        if (isClickOnContinue) return
         console.log('loggedinPlayer:', loggedinPlayer)
         if (!isBackToStep0 && !loggedinPlayer || !game) return
-        if (!loggedinPlayer.submittedActivitiesIds.length) {
-            // game start now
-            setCurrGameStepIdx(0)
-        } else if (loggedinPlayer.submittedActivitiesIds.length === game.activities.length) {
-            // game end
-            setCurrGameStepIdx(2)
-        } else {
-            // console.log('else')
-            setCurrGameStepIdx(1)
-            setCurrActivityStepIdx(0)
+        // if (!loggedinPlayer.submittedActivitiesIds.length) {
+        //     // game start now
+        //     setCurrGameStepIdx(0)
+        // } else if (loggedinPlayer.submittedActivitiesIds.length === game.activities.length) {
+        //     // game end
+        //     setCurrGameStepIdx(2)
+        // } else {
+        //     // console.log('else')
+        //     setCurrGameStepIdx(1)
+        //     setCurrActivityStepIdx(0)
 
-            if (game.gameType === 'activities') {
-                // game alredy start
-                // const activities
-                setCurrActivityIdx(loggedinPlayer.submittedActivitiesIds.length)
+        //     if (game.gameType === 'activities') {
+        //         // game alredy start
+        //         // const activities
+        //         setCurrActivityIdx(loggedinPlayer.submittedActivitiesIds.length)
 
-            } else {
-                // ! ? 
-                setCurrStageIdx()
-                setCurrActivityIdx()
+        //     } else {
+        //         // ! ? 
+        //         setCurrStageIdx()
+        //         setCurrActivityIdx()
 
-            }
+        //     }
 
-        }
+        // }
 
     }, [loggedinPlayer, game])
-    // }, [])
 
     useEffect(() => {
         console.log('game:', game)
@@ -134,37 +131,20 @@ export function Game() {
     }, [currActivityStepIdx])
 
 
-    async function getUserFromBack() {
+    async function getUserFromLocal() {
         try {
             const user = await getUser()
-            if (user.isAdmin) {
-                console.log('user is admin')
-                getPlayerLocal(gameId, user.id, user.name)
-            } else {
-                await getPlayerByCookie(gameId) // player
-            }
+            getPlayerLocal(gameId, user.id, user.name)
             init()
         } catch (error) {
-            // console.error('Error:', error);
-            navigate(`/signup/${gameId}`)
+            console.error('Error:', error);
+            navigate(`/`)
         }
     }
 
     async function init() {
         try {
             const game = await getGameById(gameId)
-
-            // demo data
-            // game with stages - onTime:
-            // const game = await demoDataService.getGame1()
-            // utilService.setTimesFormChanges(game)
-            // game with activities - onProgress:
-            // const game = await demoDataService.getGame2()
-            // game with activities - open:
-            // const game = await demoDataService.getGame3()
-            // game with stages - onProgress:
-            // const game = await demoDataService.getGame4()
-
             setGame(game)
 
         } catch (err) {
@@ -193,7 +173,6 @@ export function Game() {
     }
 
     function onMoveToNextActivity() {
-        // setIsClickOnContinue(false)
         setIsGameScoreOpen(true)
         setCurrActivityIdx(prev => prev + 1)
         setCurrActivityStepIdx(0)
@@ -273,12 +252,12 @@ export function Game() {
                    <div className="clr3">Third</div> */}
 
                     {/* start game */}
-                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{ score: loggedinPlayer.score, position: loggedinPlayer.position }} doneTasks={loggedinPlayer?.submittedActivitiesIds} />}
+                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{ score: loggedinPlayer?.score, position: loggedinPlayer?.position }} doneTasks={loggedinPlayer?.submittedActivitiesIds} />}
 
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
                     {/* game stages / activities */}
-                    {currGameStepIdx === 1 && <GameStep1 setIsClickOnContinue={setIsClickOnContinue} game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
+                    {currGameStepIdx === 1 && <GameStep1 isUserAdmin={loggedinUser.isAdmin} game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
 
                     {/* end game */}
                     {currGameStepIdx === 2 && <GameStep2 textAfterGame={game.textAfter} />}
