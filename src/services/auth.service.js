@@ -90,9 +90,7 @@ function getPlayerLocal(gameId, userId, userName) {
             "url": "string"
         },
         "email": "string",
-        "submittedActivitiesIds": [
-            "string"
-        ],
+        "submittedActivitiesIds": [],
         "score": 0,
         "activityErrors": [],
         "stageErrors": [],
