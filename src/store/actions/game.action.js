@@ -87,10 +87,10 @@ export async function checkGameAnswer(answerData, currectAnswer) {
         } else {
             player = await gameService.checkAnswer(answerData)
         }
-        store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
+        // store.dispatch({ type: SET_LOGGEDIN_PLAYER, player })
         return player
     }
-    catch (ex) {
+    catch (err) {
         console.log('user action -> Cannot get player', err)
         throw err
     }

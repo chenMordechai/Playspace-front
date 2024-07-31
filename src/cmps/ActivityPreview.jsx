@@ -9,6 +9,7 @@ import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
 import { checkGameAnswer, usingLifeSaver } from '../store/actions/game.action.js'
 import wheel from '../assets/img/wheel.png'
+import { store } from '../store/store.js'
 
 
 export function ActivityPreview({ setIsClickOnContinue, activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
@@ -21,17 +22,17 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
     const [answersIdxToOff, setAnswersIdxToOff] = useState([])
 
     const firstRender = useRef(true)
-    const continueBtn = useRef(true)
+    const continueBtn = useRef()
     const elapsedTimeRef = useRef(0);
 
     useEffect(() => {
         elapsedTimeRef.current = 0
         const timer = setInterval(() => {
-          elapsedTimeRef.current += 100;
+            elapsedTimeRef.current += 100;
         }, 100);
-    
+
         return () => clearInterval(timer); // Clean up the interval on component unmount
-      }, []);
+    }, []);
 
     useEffect(() => {
         if (activity?.activityType === 'typing') {
@@ -48,6 +49,7 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
         if (activity.activityType === 'multiple') {
             // answer
         } else if (activity.activityType === 'open') {
+            console.log('checkAnswer')
             continueBtn.current.style.display = 'none'
             answer = inputOpenValue
             // txt
@@ -70,7 +72,7 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
         // showSuccessMsg({ txt: `יאללה קדימה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
         var res = await checkGameAnswer(answerData)
         if (res.lastAnswerState) {
-            showSuccessMsg({ txt: `+תשובה נכונה ${res.lastAnswerScore}`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+            showSuccessMsg({ txt: `+תשובה נכונה ${res.lastAnswerScore}`, func: () => onSetCurrActivityStepIdx(res) })
 
         } else {
             // if (isUserAdmin) {
@@ -79,13 +81,13 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
             // }
             if (res.submittedActivitiesIds.includes(activity.id)) {
                 console.log('includes')
-                showErrorMsg({ txt: `תשובה לא נכונה`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+                showErrorMsg({ txt: `תשובה לא נכונה`, func: () => onSetCurrActivityStepIdx(res) })
 
             } else {
                 if (gameType === 'activities') {
                     const activityError = res.activityErrors.find(a => a.activityId === activity.id)
                     const maxError = activity.maxError - activityError.errorCount
-                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => onSetCurrActivityStepIdx(res) })
 
                 } else if (gameType === 'stages') {
 
@@ -97,7 +99,7 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
                     console.log('activitiesErrorCount:', activitiesErrorCount)
                     console.log('stageMaxError:', stageMaxError)
                     const maxError = stageMaxError - activitiesErrorCount
-                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => setCurrActivityStepIdx(prev => prev + 1) })
+                    showErrorMsg({ txt: `תשובה לא נכונה יש לך ${maxError} ניסיונות לתקן`, func: () => onSetCurrActivityStepIdx(res) })
                 }
 
             }
@@ -105,10 +107,15 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
         elapsedTimeRef.current = 0
     }
 
+    function onSetCurrActivityStepIdx(player) {
+        setCurrActivityStepIdx(prev => prev + 1)
+        store.dispatch({ type: 'SET_LOGGEDIN_PLAYER', player })
+    }
+
     function onMoveToNextActivity() {
-        console.log('onMoveToNextActivity:', onMoveToNextActivity)
-        moveToNextActivity()
-        setIsAnswerCorrect(false)
+        // console.log('onMoveToNextActivity:')
+        // moveToNextActivity()
+        // setIsAnswerCorrect(false)
         // updatePlayerInStore(answerData, activity.correctAnswer)
         setIsClickOnContinue(true)
 

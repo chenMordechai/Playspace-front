@@ -69,13 +69,14 @@ export function Game() {
 
     useEffect(() => {
         if (isClickOnContinue) return
-        console.log('loggedinPlayer:', loggedinPlayer)
+        console.log('useEffect,loggedinPlayer:', loggedinPlayer)
         if (!isBackToStep0 && !loggedinPlayer || !game) return
         if (!loggedinPlayer.submittedActivitiesIds.length) {
             // game start now
             setCurrGameStepIdx(0)
         } else if (loggedinPlayer.submittedActivitiesIds.length === game.activities.length) {
             // game end
+            console.log('hihi')
             setCurrGameStepIdx(2)
         } else {
             // console.log('else')
@@ -124,6 +125,8 @@ export function Game() {
     }, [currActivityIdx])
 
     useEffect(() => {
+        if (currGameStepIdx === 3) setCurrGameStepIdx(2)
+        console.log('currGameStepIdx:', currGameStepIdx)
         utilService.saveToStorage('currGameStepIdx', currGameStepIdx)
     }, [currGameStepIdx])
     useEffect(() => {
@@ -195,7 +198,9 @@ export function Game() {
 
     function onMoveToNextActivity() {
         // setIsClickOnContinue(false)
-        setIsGameScoreOpen(true)
+        if (!loggedinUser.isAdmin) {
+            setIsGameScoreOpen(true)
+        }
         setCurrActivityIdx(prev => prev + 1)
         setCurrActivityStepIdx(0)
     }
@@ -225,6 +230,8 @@ export function Game() {
     }
 
     function onSetCurrGameStepIdx() {
+        console.log('onSetCurrGameStepIdx')
+        console.log('currGameStepIdx:', currGameStepIdx)
         if (game.activityProgressType === 'onTime') {
             if (!isGameStart || isGameEnd()) return
         }
