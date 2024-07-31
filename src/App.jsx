@@ -24,7 +24,6 @@ import { AdminPlayers } from './cmps/AdminPlayers'
 import { UserMsg } from './cmps/UserMsg'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { AdminGame } from './pages/AdminGame'
 
 function App() {
   const [isScreenOpen, setIsScreenOpen] = useToggle(false)

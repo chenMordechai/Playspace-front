@@ -20,7 +20,7 @@ import { ScreenOpenContext } from "../contexts/ScreenOpenConext.js";
 import { useToggle } from '../customHooks/useToggle'
 import { useEffectToggleModal } from '../customHooks/useEffectToggleModal'
 import { useEffectCloseModal } from '../customHooks/useEffectCloseModal'
-import { getPlayer, getPlayerByCookie, getUser } from "../store/actions/auth.action.js"
+import { getPlayer, getPlayerByCookie, getUser, getPlayerLocal } from "../store/actions/auth.action.js"
 import { AnswerModal } from "../cmps/AnswerModal.jsx"
 
 // game/:gameId
@@ -140,10 +140,11 @@ export function Game() {
             if (user.isAdmin) {
                 console.log('user is admin')
                 getPlayerLocal(gameId, user.id, user.name)
+                init()
             } else {
                 await getPlayerByCookie(gameId) // player
+                init()
             }
-            init()
         } catch (error) {
             // console.error('Error:', error);
             navigate(`/signup/${gameId}`)
