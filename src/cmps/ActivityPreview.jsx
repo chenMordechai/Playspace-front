@@ -234,15 +234,14 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
 
             </>}
 
-            {!activity.isRequired && <button className='skip-btn' onClick={onSkipQuestion}>דלג</button>}
-
-
             {/* activity */}
             {currActivityStepIdx === 1 && <section className='activity-step-1'>
                 <div className="text-container">
                     <p>שאלה </p>
                     <p> {activity.text}</p>
                     <span className="wheel"><img src={wheel} /></span>
+                    {!activity.isRequired && <button className='skip-btn' onClick={onSkipQuestion}>דלג</button>}
+
                 </div>
                 <section className="answer-container">
                     <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />

@@ -124,7 +124,7 @@
     border-radius: 10px;
 
     @include for-mobile-layout {
-        position: absolute;
+        // position: absolute;
         bottom: 0px;
         left: 0;
         translate: 0;

@@ -81,7 +81,7 @@ export function GameScore() {
                 {(scoreOfType === SCORE_OF_GROUPS) &&
                     <ul>
                         {getSortedGroups().map((group, idx) =>
-                            <li key={player.id} >
+                            <li key={group.id} >
                                 <section className={(group.name.startsWith("My Group")) ? 'you' : ''}>
                                     <span className="img-container">
                                         <span>{idx + 1}</span>
