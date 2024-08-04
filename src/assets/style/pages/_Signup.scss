@@ -13,6 +13,10 @@
     .playspace-logo {
         animation-name: smart;
         position: relative;
+
+        @include for-short-layout {
+            animation-name: smart1;
+        }
     }
     .playspace-logo-blue {
         animation-name: smart2;
@@ -20,6 +24,10 @@
         left: calc(50% - 200px / 2);
         top: calc(50% - 35.85px / 2 - 50px);
         z-index: 5;
+
+        @include for-short-layout {
+            animation-name: smart3;
+        }
     }
 
     .playspace-logo-blue-admin {
@@ -133,12 +141,40 @@
         height: 32px;
     }
 }
+// for short layout
+@keyframes smart1 {
+    0% {
+        top: 0px;
+    }
+    100% {
+        // top: 50px;
+        top: -130px;
+        width: 178.54px;
+        height: 32px;
+    }
+}
+
 @keyframes smart2 {
     0% {
         top: calc(50% - 35.85px / 2 - 50px);
     }
     100% {
         top: calc((50% - 32px / 2) - 220px);
+        left: calc(50% - 178.54px / 2);
+        width: 178.54px;
+        height: 32px;
+    }
+}
+
+// for short layout
+@keyframes smart3 {
+    0% {
+        top: calc(50% - 35.85px / 2 - 50px);
+    }
+    100% {
+        // top: calc((50% - 32px / 2) - 220px);
+        top: 50px;
+        // top: 50px;
         left: calc(50% - 178.54px / 2);
         width: 178.54px;
         height: 32px;
