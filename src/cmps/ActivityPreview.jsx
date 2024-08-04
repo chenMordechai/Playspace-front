@@ -3,7 +3,7 @@ import { Media } from './Media'
 
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
 import { ActivityType } from './ActivityType'
-import { LifeSavers } from './LifeSavers'
+import { LifeSaversModal } from './LifeSaversModal.jsx'
 import { TextBeforeAfterActivity } from './TextBeforeAfterActivity'
 import { gameService } from '../services/game.service'
 import { utilService } from '../services/util.service.js'
@@ -12,7 +12,7 @@ import wheel from '../assets/img/wheel.png'
 import { store } from '../store/store.js'
 
 
-export function ActivityPreview({ setIsClickOnContinue, activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
+export function ActivityPreview({ openLiveSaversModal, onToggleOpenLiveSaversModal, setIsClickOnContinue, activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
     setIsClickOnContinue(false)
     console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
@@ -239,13 +239,13 @@ export function ActivityPreview({ setIsClickOnContinue, activityProgressType, ac
                 <div className="text-container">
                     <p>שאלה </p>
                     <p> {activity.text}</p>
-                    <span className="wheel"><img src={wheel} /></span>
+                    <span onClick={onToggleOpenLiveSaversModal} className="wheel"><img src={wheel} /></span>
                     {!activity.isRequired && <button className='skip-btn' onClick={onSkipQuestion}>דלג</button>}
 
                 </div>
                 <section className="answer-container">
                     <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
-                    <LifeSavers lifeSavers={activity?.lifeSavers} handleLifeSaver={handleLifeSaver} />
+                    {openLiveSaversModal && <LifeSaversModal lifeSavers={activity?.lifeSavers} handleLifeSaver={handleLifeSaver} />}
 
 
 

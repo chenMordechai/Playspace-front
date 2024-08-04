@@ -50,9 +50,10 @@ export function Game() {
     const loggedinUser = useSelector(storeState => storeState.authModule.loggedinUser)
 
     const [openGameOptionModal, onToggleOpenGameOptionModal] = useToggle(false)
+    const [openLiveSaversModal, onToggleOpenLiveSaversModal] = useToggle(false)
     const { isScreenOpen, onOpenScreen, onCloseScreen, } = useContext(ScreenOpenContext)
-    useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal])
-    useEffectCloseModal(isScreenOpen, [onToggleOpenGameOptionModal])
+    useEffectToggleModal(onOpenScreen, onCloseScreen, [openGameOptionModal, openLiveSaversModal])
+    useEffectCloseModal(isScreenOpen, [onToggleOpenGameOptionModal, onToggleOpenLiveSaversModal])
 
     const [isClickOnContinue, setIsClickOnContinue] = useState(false)
     const navigate = useNavigate()
@@ -315,6 +316,7 @@ export function Game() {
                     </button>
                     <span onClick={getBackToStep0} className="arrow"> <img src={arrow} /></span>
                     {openGameOptionModal && <GameOptionModal />}
+                    {/* {openLiveSaversModal && <LiveSaversModal />} */}
 
                 </div>
 
@@ -330,7 +332,7 @@ export function Game() {
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}
                     {/* game stages / activities */}
-                    {currGameStepIdx === 1 && <GameStep1 setIsClickOnContinue={setIsClickOnContinue} game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
+                    {currGameStepIdx === 1 && <GameStep1 openLiveSaversModal={openLiveSaversModal} onToggleOpenLiveSaversModal={onToggleOpenLiveSaversModal} setIsClickOnContinue={setIsClickOnContinue} game={game} currStageIdx={currStageIdx} moveToNextStage={moveToNextStage} onResetActivityIdx={onResetActivityIdx} currActivityIdx={currActivityIdx} onMoveToNextActivity={onMoveToNextActivity} currActivityStepIdx={currActivityStepIdx} setCurrActivityStepIdx={setCurrActivityStepIdx} currStageStepIdx={currStageStepIdx} setCurrStageStepIdx={setCurrStageStepIdx} />}
 
                     {/* end game */}
                     {currGameStepIdx === 2 && <GameStep2 textAfterGame={game.textAfter} />}
