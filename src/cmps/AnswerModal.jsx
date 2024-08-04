@@ -3,8 +3,10 @@
 import { useEffect, useRef, useState } from "react"
 import { eventBusService } from "../services/event-bus.service.js"
 
-import x from "../assets/img/x.png"
-import v from "../assets/img/v.png"
+// import x from "../assets/img/x.png"
+// import v from "../assets/img/v.png"
+import x from "../assets/img/circle-x.png"
+import v from "../assets/img/circle-v.png"
 
 export function AnswerModal() {
 

@@ -1,31 +1,27 @@
 .answer-modal {
     @include modal();
-    // transition: 1s;
+    position: absolute;
+    bottom: 0px;
+    left: calc(50% - 380px / 2);
+    translate: 0;
+
     background-color: white;
-    // height: 200px;
     padding: 20px;
     padding-bottom: 30px;
-    // border: 1px solid black;
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
     @include flex(column, center, center, 10px);
 
     @include for-mobile-layout {
-        // height: 356px;
     }
-
-    position: relative;
 
     .sign {
         position: absolute;
         top: -18px;
-
-        border-radius: 50%;
-        height: 36px;
-        width: 36px;
         @include flex(column, center, center);
 
         img {
-            height: 25px;
+            height: 41px;
+            width: 41px;
         }
     }
 
@@ -36,24 +32,14 @@
     }
 
     &.success {
-        .sign {
-            background-color: green;
-        }
         .txt {
-            color: green;
+            color: #3ade72;
         }
     }
 
     &.error {
-        .sign {
-            background-color: red;
-        }
-        .text {
+        .txt {
             color: red;
         }
     }
 }
-
-//  .close {
-//     display: none;
-// }
