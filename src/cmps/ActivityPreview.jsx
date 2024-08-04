@@ -145,6 +145,7 @@ export function ActivityPreview({ openLiveSaversModal, onToggleOpenLiveSaversMod
     }
 
     async function handleLifeSaver(lifeSaver) {
+        onToggleOpenLiveSaversModal()
         if (activity.activityType === 'open') {
             continueBtn.current.style.display = 'none'
         }
