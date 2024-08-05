@@ -180,33 +180,59 @@
                     ul {
                         @include flex(column, stretch, center, 10px);
                         li {
-                            @include flex(row, center, space-between);
                             background-color: #fff;
-                            padding: 5px;
                             border-radius: 8px;
+                            .content {
+                                padding: 5px;
+                                @include flex(row, center, space-between);
 
-                            .img-container {
-                                @include flex(row, center, center);
-                                background-color: var(--primary-95);
-                                padding: 14px;
-                                border-radius: 15px 10px 10px 15px;
-                                img {
-                                    height: 20px;
+                                .img-container {
+                                    @include flex(row, center, center);
+                                    background-color: var(--primary-95);
+                                    padding: 14px;
+                                    border-radius: 15px 10px 10px 15px;
+                                    img {
+                                        height: 20px;
+                                    }
+                                }
+
+                                span {
+                                    margin-inline-end: auto;
+                                    padding: 10px;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                    line-height: 21px;
+                                    color: #16469d;
+                                }
+
+                                img.arrow {
+                                    height: 18px;
+                                    margin-inline-end: 8px;
+                                    cursor: pointer;
+
+                                    &.rotate {
+                                        transform: rotate(180deg);
+                                    }
                                 }
                             }
-
-                            span {
-                                margin-inline-end: auto;
-                                padding: 10px;
-                                font-size: 14px;
-                                font-weight: 500;
-                                line-height: 21px;
-                                color: #16469d;
-                            }
-
-                            img.arrow {
-                                height: 18px;
-                                margin-inline-end: 8px;
+                            .more-content {
+                                ul {
+                                    margin-top: 10px;
+                                    margin-bottom: 15px;
+                                    li {
+                                        @include flex(row, center, center, 10px);
+                                        img {
+                                            margin-inline-start: 20px;
+                                            width: 21.83px;
+                                            height: 22.84px;
+                                        }
+                                        span {
+                                            margin-inline-end: auto;
+                                            font-size: 14px;
+                                            line-height: 21px;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
