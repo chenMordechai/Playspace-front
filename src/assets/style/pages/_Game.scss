@@ -187,13 +187,25 @@
                                 @include flex(row, center, space-between);
 
                                 .img-container {
-                                    @include flex(row, center, center);
-                                    background-color: var(--primary-95);
-                                    padding: 14px;
-                                    border-radius: 15px 10px 10px 15px;
-                                    img {
-                                        height: 20px;
+                                    &.open {
+                                        background-color: #fef1bd;
+                                        img {
+                                            height: 27px;
+                                            width: 28px;
+                                        }
                                     }
+                                    &.close {
+                                        background-color: var(--primary-95);
+                                        img {
+                                            height: 34px;
+                                            width: 21px;
+                                        }
+                                    }
+                                    @include flex(row, center, center);
+                                    // padding: 14px;
+                                    width: 65px;
+                                    height: 57px;
+                                    border-radius: 15px 10px 10px 15px;
                                 }
 
                                 span {

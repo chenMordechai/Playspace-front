@@ -8,6 +8,7 @@ export function GameTasks({ tasks, doneTasks, gameType }) {
         <ul className="game-tasks">
             {tasks.map((task, idx) =>
                 <GameTask gameType={gameType} key={task.id} task={task} idx={idx} doneTasks={doneTasks} />)}
+            {/* <GameTask gameType={gameType} key={task.id} task={task} idx={idx} doneTasks={doneTasks} />)} */}
         </ul>
     )
 }
