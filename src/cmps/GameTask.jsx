@@ -3,11 +3,11 @@ import arrow from '../assets/img/arrow-down.png'
 import goblet from '../assets/img/goblet.png'
 import v from '../assets/img/gold-v.png'
 
-export function GameTask({ task, idx, doneTasks }) {
+export function GameTask({ task, idx, doneTasks, gameType }) {
     const [openTask, setOpenTask] = useState(false)
 
     function onOpenTask() {
-
+        setOpenTask(prev => !prev)
     }
     return (
         <li className={doneTasks.includes(task.id) ? 'open' : 'close'}>
@@ -17,7 +17,8 @@ export function GameTask({ task, idx, doneTasks }) {
                     <img src={goblet} />
                 </div>
                 <span> משימה {idx + 1}</span>
-                <img className={'arrow ' + (openTask ? 'rotate' : '')} onClick={() => { setOpenTask(prev => !prev) }} src={arrow} />
+                {gameType === 'stages' && < img className={'arrow ' + (openTask ? 'rotate' : '')}
+                    onClick={onOpenTask} src={arrow} />}
             </div>
             {openTask && <div className="more-content">
                 <ul>

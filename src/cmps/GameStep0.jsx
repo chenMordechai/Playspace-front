@@ -67,7 +67,7 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats
 
                 {isDetailsOpen && <section className="more-details-container">
 
-                    <GameTasks tasks={game.gameType === 'stages' ? game.stages : game.activities} doneTasks={doneTasks} />
+                    <GameTasks tasks={game.gameType === 'stages' ? game.stages : game.activities} gameType={game.gameType} doneTasks={doneTasks} />
 
                 </section>}
             </section>
