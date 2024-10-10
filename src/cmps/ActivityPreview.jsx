@@ -13,6 +13,7 @@ import { store } from '../store/store.js'
 
 
 export function ActivityPreview({ openLiveSaversModal, onToggleOpenLiveSaversModal, setIsClickOnContinue, activityProgressType, activity, moveToNextActivity, currActivityStepIdx, setCurrActivityStepIdx, gameId, stageId, gameType, stageMaxError, stageActivitiesIds }) {
+    console.log('currActivityStepIdx:', currActivityStepIdx)
     setIsClickOnContinue(false)
     console.log('activity:', activity)
     const [isAnswerCorrect, setIsAnswerCorrect] = useState(false)
@@ -24,6 +25,15 @@ export function ActivityPreview({ openLiveSaversModal, onToggleOpenLiveSaversMod
     const firstRender = useRef(true)
     const continueBtn = useRef()
     const elapsedTimeRef = useRef(0);
+
+    //! time 
+    useEffect(() => {
+        console.log('currActivityStepIdx:', currActivityStepIdx)
+        if (!isActivityStart()) {
+            console.log('hi')
+            setCurrActivityStepIdx(0)
+        }
+    }, [currActivityStepIdx])
 
     useEffect(() => {
         elapsedTimeRef.current = 0
@@ -221,6 +231,7 @@ export function ActivityPreview({ openLiveSaversModal, onToggleOpenLiveSaversMod
 
                     {isActivityEnd() && <h2>
                         השאלה הסתיימה
+                        <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} before={true} />
                     </h2>}
 
                     {isActivityStart() && !isActivityEnd() && <>
@@ -229,7 +240,7 @@ export function ActivityPreview({ openLiveSaversModal, onToggleOpenLiveSaversMod
                     </>}
                 </>}
 
-                {activityProgressType !== 'onTine' && <>
+                {activityProgressType !== 'onTime' && <>
                     <TextBeforeAfterActivity activity={activity} buttonFunc={() => setCurrActivityStepIdx(prev => prev + 1)} before={true} />
                 </>}
 
@@ -247,8 +258,6 @@ export function ActivityPreview({ openLiveSaversModal, onToggleOpenLiveSaversMod
                 <section className="answer-container">
                     <ActivityType continueBtn={continueBtn} activity={activity} checkAnswer={checkAnswer} textAreaValue={inputOpenValue} handlaChange={handlaChange} inputTypingValues={inputTypingValues} answersIdxToOff={answersIdxToOff} />
                     {openLiveSaversModal && <LifeSaversModal lifeSavers={activity?.lifeSavers} handleLifeSaver={handleLifeSaver} />}
-
-
 
                 </section>
             </section>}

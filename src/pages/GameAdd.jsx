@@ -66,10 +66,10 @@ export function GameAdd() {
         })
     }, [game.themeColors])
 
-    
+
 
     function onHandleChange(ev) {
-        
+
         let { name, value, type } = ev.target
         console.log("🚀 ~ onHandleChange ~ name, value, type:", name, value, type)
         if (type === 'number') value = +value
@@ -94,9 +94,9 @@ export function GameAdd() {
     const onAddGroup = () => {
         setGame(prevGame => {
             const hasGroups = (prevGame.groups?.length);
-            return { 
-                ...prevGame, 
-                groups: (hasGroups) ? [...prevGame.groups, gameService.getEmptyGroup()] : [gameService.getEmptyGroup()] 
+            return {
+                ...prevGame,
+                groups: (hasGroups) ? [...prevGame.groups, gameService.getEmptyGroup()] : [gameService.getEmptyGroup()]
             };
         });
     };
@@ -106,9 +106,9 @@ export function GameAdd() {
             setGame(prevGame => {
                 const newGroups = [...prevGame.groups];
                 newGroups.splice(-1, 1); // Remove the last element
-                return { 
-                    ...prevGame, 
-                    groups: newGroups 
+                return {
+                    ...prevGame,
+                    groups: newGroups
                 };
             });
         }
@@ -337,8 +337,8 @@ export function GameAdd() {
                 <input type="number" min="0" name="groups" id="groups" value={game.groups?.length || 0} onChange={onHandleChange} /> */}
 
                 <GameGroupsEdit
-                    groups={game.groups} 
-                    onHandleGroupNameChange={onHandleGroupNameChange} 
+                    groups={game.groups}
+                    onHandleGroupNameChange={onHandleGroupNameChange}
                     onAddGroup={onAddGroup}
                     onRemoveGroup={onRemoveGroup}
                 />

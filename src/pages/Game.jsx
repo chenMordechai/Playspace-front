@@ -76,7 +76,7 @@ export function Game() {
         console.log('isCheckGameStep.current:', isCheckGameStep.current)
         if (!isBackToStep0 && !loggedinPlayer || !game || isCheckGameStep.current) return
         isCheckGameStep.current = true
-        console.log('hi')
+        // console.log('hi')
         if (!loggedinPlayer.submittedActivitiesIds.length) {
             // game start now
             setCurrGameStepIdx(0)
@@ -84,7 +84,7 @@ export function Game() {
             // game end
             setCurrGameStepIdx(2)
         } else {
-            // console.log('else')
+            console.log('else')
             setCurrGameStepIdx(1)
             // console.log('setCurrActivityStepIdx = 0')
             setCurrActivityStepIdx(utilService.loadFromStorage('currActivityStepIdx') || 0)
@@ -172,6 +172,7 @@ export function Game() {
         utilService.saveToStorage('currStageStepIdx', currStageStepIdx)
     }, [currStageStepIdx])
     useEffect(() => {
+        console.log('use effect currActivityStepIdx:', currActivityStepIdx)
         utilService.saveToStorage('currActivityStepIdx', currActivityStepIdx)
     }, [currActivityStepIdx])
 
@@ -269,12 +270,11 @@ export function Game() {
 
         }
     }
-
+    //!
     function onSetCurrGameStepIdx() {
-        console.log('onSetCurrGameStepIdx')
-        console.log('currGameStepIdx:', currGameStepIdx)
         if (game.activityProgressType === 'onTime') {
-            if (!isGameStart || isGameEnd()) return
+            console.log('on time')
+            if (!isGameStart() || isGameEnd()) return
         }
         if (currGameStepIdx === 2) return
         setCurrGameStepIdx(prev => prev + 1)
@@ -290,7 +290,7 @@ export function Game() {
 
     function getBackToStep0() {
         if (currGameStepIdx === 0) {
-            console.log('hi')
+            // console.log('hi')
         } else {
             setIsBackToStep0(true)
             setCurrGameStepIdx(0)
@@ -327,7 +327,7 @@ export function Game() {
                    <div className="clr3">Third</div> */}
 
                     {/* start game */}
-                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{ score: loggedinPlayer.score, position: loggedinPlayer.position }} doneTasks={loggedinPlayer?.submittedActivitiesIds} />}
+                    {currGameStepIdx === 0 && <GameStep0 game={game} getClockForGame={getClockForGame} isGameEnd={isGameEnd} isGameStart={isGameStart} onSetCurrGameStepIdx={onSetCurrGameStepIdx} stats={{ score: loggedinPlayer.score, position: loggedinPlayer?.position }} doneTasks={loggedinPlayer?.submittedActivitiesIds} />}
 
                     {/* gameline  */}
                     {/* {currGameStepIdx === 1 && <GameLine stages={game.stages} activities={game.activities} onChangeStageIdx={onChangeStageIdx} onChangeActivityIdx={onChangeActivityIdx} />} */}

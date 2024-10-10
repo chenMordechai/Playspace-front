@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { GameTasks } from './GameTasks'
 
 export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats, onSetCurrGameStepIdx, doneTasks }) {
+    console.log('game:', game)
     const [isDetailsOpen, setIsDetailsOpen] = useState(false)
     return (
         <section className="game-step-0">
@@ -54,7 +55,7 @@ export function GameStep0({ game, getClockForGame, isGameEnd, isGameStart, stats
                             <img src={goblet} />
                             <span>מקום</span>
                         </div>
-                        <span>{stats.position.position}/{stats.position.totalPlayers}</span>
+                        <span>{stats?.position?.position}/{stats?.position.totalPlayers}</span>
                     </div>
                 </div>
 
